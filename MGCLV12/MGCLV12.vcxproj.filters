@@ -1,0 +1,2153 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="ソース ファイル">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="ヘッダー ファイル">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="リソース ファイル">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="ソース ファイル\CSKernel">
+      <UniqueIdentifier>{6d550d60-5829-44d9-8a01-e32ebb235f4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Geo">
+      <UniqueIdentifier>{786a62af-9bbb-4f2e-a869-8eb0bc4c7a6f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\GL">
+      <UniqueIdentifier>{b449fdbd-3cd4-4837-8c9d-ea98441ec478}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Topo">
+      <UniqueIdentifier>{84f27f30-5eec-4af8-91c6-09412a07d625}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\TL">
+      <UniqueIdentifier>{eccf536d-3e72-487e-add8-d99758fef3f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\IGES">
+      <UniqueIdentifier>{a7c7f5a0-04ae-47f9-bd75-6ee6f5d4214b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\CSKernel">
+      <UniqueIdentifier>{3d2b4977-1098-4e98-8a92-2f6e0a3ebf89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\Geo">
+      <UniqueIdentifier>{676c45de-86c3-47db-8bc7-f0ea3937cf73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\GL">
+      <UniqueIdentifier>{8f8e282c-8b0a-4c5c-be32-c563aedc6da5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\IGES">
+      <UniqueIdentifier>{4c08f2d1-3a9c-4769-b0d1-3bacb683128d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\topo">
+      <UniqueIdentifier>{032f3b40-cd24-4361-adbf-747b6cb77914}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\TL">
+      <UniqueIdentifier>{2c82a5df-0394-44c2-93bf-299b5169a19b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\ftgl">
+      <UniqueIdentifier>{46b84c63-5ecd-42dc-bf13-048f0abff518}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\ftgl">
+      <UniqueIdentifier>{c281c194-b2c4-41f3-ac71-8cc883a34cad}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="MGCLV12.def">
+      <Filter>ソース ファイル</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\mg\AbstractGels.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Appearance.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\AttribedGel.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B1a.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bz3sol.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B1bfac.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B1bslv.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B1hfac.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B1hslv.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B1nk.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B2dv.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\B2vb.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\BezierMove.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\bisection.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bk1fli.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bk2fli.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkcdtn.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkcrng.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkdmix.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkdnp.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkdtkt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkdtpg.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkdtwe.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkktdp.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bkmlt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bla2d.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blcbp.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blcbpn.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blcpb.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blcpb2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blctpb.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bldrw1.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bldrwc.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bldrwcr.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bldrwg.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Ble.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blel.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blelin.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bler.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bleval.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blg4s1.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blg4sc.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blg4sp2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blg4sq.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgcs.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgcs1.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgcs2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgcs3.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgcs7.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgi2d.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgint.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgl2a.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgopt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgsm1.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blgsm2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bli1sp.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blip1.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blip2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blipp.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\BLIPP3.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blqbox.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bluakt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blucon.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blucpr.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bludec.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bludkt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blumi1.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blumi2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blumix.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blumor.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blumov.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blunk.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blunk1.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bluprt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Blurev.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\Boundary.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Box.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\BPointSeq.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bpval.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bpval2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bse.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bsepl.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bsgsmt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bspnml.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bstper.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bsudec.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\BSumCurve.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\BSumSurf.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bsunk.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvabs.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvavpl.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvcang.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvcsl.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvdist.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvdpsl.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\BVertex.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvi2pl.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvi2sl.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvinpd.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvivec.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvltan.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvltn2.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvs3pd.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvstan.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvtptw.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvtwst.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvunit.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvutan.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvvpd.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\Bvvrt.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CCisect.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Color.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\ConstructionPlane.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Context.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\CPointsVec.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\defint.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\defintArea.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\Edge.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\Face.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\FPoint.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\FOuterCurve.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\FPline.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CompositeCurve.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Coons.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\EReal.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CParam_list.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CSisect.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Curve.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CurveContinuity.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CurveParameter.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Cylinder.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Default.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\DefaultVector.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Ellipse.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Attrib.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\FSurface.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Gausp.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Gel.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Geometry.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\GelFactory.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\GelPosition.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\GelPositions.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\GLAttrib.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\glslprogram.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\glViewAttrib.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Group.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\HHisect.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Ifstream.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\Iges.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesVertexListMap.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\iges504EdgeListMap.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\IgesDEStatusNumber.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\IgesDirectoryEntry.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\Igesfstream.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\IgesGSec.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\IgesIfstream.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\IgesOfstream.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\IgesParamLine.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesPD.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesPD100.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesPD102.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd104.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesPD108.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd110.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd112.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd116.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd118.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd120.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd122.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd123.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd124.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd126.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd128.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd141.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd142.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd143.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd144.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesPD158.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd186.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd190.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd192.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd196.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd314.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd402.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesPD502.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igesPD504.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd508.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd510.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgIges\igespd514.h">
+      <Filter>ヘッダー ファイル\IGES</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Image.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Interval.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\LBRepEndC.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\isect.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\isects.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Knot.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\KnotArray.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\KnotVector.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\LBRep.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LCisect.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LEPoint.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LCisect_vector.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Light.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Lights.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\LinearEquation.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\LineStipple.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\LineWidth.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LLisect.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LSPoint_vector.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LLisect_vector.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\Loop.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LPoint.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\LSPoint.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Material.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Matrix.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\mgBLGSQ.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\mgGLFrameBufferObject.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\MGStl.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\MGStringWriter.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Name.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\NDDArray.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Ofstream.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\nlbit.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Object.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\openglView.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\OscuCircleData.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\OscuCircle.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\PickObject.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\PickObjectSB.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\PickObjectCB.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\PickObjectFB.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\PickObjects.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Pixel.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Plane.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\PlaneImage.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Plist.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Point.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2Face.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TLInputParam.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2Fan.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2Fans.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2LPline.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2LPlines.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2parameter.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2Polyline.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2Triangle.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Tl2\TL2Triangles.h">
+      <Filter>ヘッダー ファイル\TL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\PointLight.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Position.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\PVertex.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Position_list.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\PPRep.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\RenderAttr.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\RLBRep.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SBRepVecTP.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\RSBRep.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SBRep.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SBRepEndC.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SBRepTP.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\Shell.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\SnapAttrib.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\SnapPositions.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Sphere.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SPointSeq.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\Complex.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\SpotLight.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\SRSmooth2.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SSisect.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\StaticGLAttrib.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Straight.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SurfCurve.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Surface.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Sys2GL.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\sysGLList.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\sysGL.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\targetver.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\Texture.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Tolerance.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\cskernel\tolerance.h">
+      <Filter>ヘッダー ファイル\CSKernel</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Transf.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\TrimLoop.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\TrimmedCurve.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\types.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Unit_vector.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\VBO.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\VBOPointer.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\VBObyAnchorPt.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\VBOByScreen.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\VBOElement.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\VBOLeaf.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\VBOLeafBuilder.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\Vector.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\perimTP.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\TPmaker.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\TPOnFaceBoundary.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\PCell.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\BCell.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\MGCLDefs.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\MGCL.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mgGL\DirectionalLight.h">
+      <Filter>ヘッダー ファイル\GL</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\DNameControl.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\drawParam.h">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\Cell.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\CFisect.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\CFisects.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\topo\HHisects.h">
+      <Filter>ヘッダー ファイル\topo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CCisects.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\CSisects.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\SSisects.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
+    </ClInclude>
+    <ClInclude Include="include\StdAfx.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTGlyphImpl.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTPolygonGlyphImpl.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTBBox.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTBuffer.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTFont.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\ftgl.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTGLPolygonFont.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTGlyph.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTFontImpl.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTPolygonFontImpl.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTCharmap.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTCharToGlyphIndexMap.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTContour.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFace.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyphContainer.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTInternals.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTLibrary.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTList.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTSize.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTUnicode.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTVector.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTVectoriser.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTPoint.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTPolyGlyph.h">
+      <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\cskernel\B1A.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B2VB.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1BFAC.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1BSLV.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1HFAC.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1HSLV.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1NK.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B2DV.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BK1FLI.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUREV.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BK2FLI.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKCDTN.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKCRNG.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDMIX.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDNP.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDTKT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDTPG.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDTWE.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKKTDP.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKMLT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLA2D.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCBP.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCBPN.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCPB.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCPB2.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCTPB.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRW1.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRWC.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRWCR.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRWG.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLE.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLEL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLELIN.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLER.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLEVAL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLG4S1.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLG4SC.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\Blg4sp2.cpp">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLG4SQ.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS1.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS2.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS3.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS7.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGI2D.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGINT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGL2A.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGOPT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGSM1.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGSM2.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLI1SP.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIBP.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLILB.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIP1.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIP2.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIPP.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIPP3.cpp">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLQBOX.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUAKT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\Blucon.cpp">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUCPR.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUDEC.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUDKT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\Blumi1.cpp">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMI2.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMIX.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMOR.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMOV.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUNK.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUNK1.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUPRT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BPVAL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSUDEC.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BPVAL2.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSE.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSEPL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSGSMT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSPNML.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSTPER.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSUNK.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVDPSL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVABS.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVAVPL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVCANG.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVCSL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVDIST.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVI2PL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BZ3SOL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVI2SL.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVINPD.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVIVEC.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVLTAN.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVLTN2.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVS3PD.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVSTAN.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVTPTW.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVTWST.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVUNIT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVUTAN.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVVPD.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVVRT.CPP">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Appearance.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\AttribedGel.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\bisection.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\BVertex.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Color.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Complex.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\ConstructionPlane.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\CompositeCurve.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\CompositeCurve2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Context.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\CPointsVec.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\CurveContinuity.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\Cylinder.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\defintArea.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\DNameControl.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\DrawParam.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\Draw3Dgeo.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Draw3Dtopo.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Edge.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\FPoint.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Edge2.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Edge3.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Face.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Face2.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Face3.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\FaceOffset.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\FOuterCurve.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\FPline.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\FSurface.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\GelFactory.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\GelPosition.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\GelPositions.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\geoprint.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\geoserialize.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\GLAttrib.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\GLDrawFunc.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\glslprogram.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\glViewAttrib.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\Group.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\HHisect.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\Iges.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesVertexListMap.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\iges504EdgeListMap.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesDEStatusNumber.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesDirectoryEntry.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\Igesfstream.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesGSec.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesGSec2.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesIfstream.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesOfstream.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesOfstream2.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\IgesParamLine.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD100.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD102.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD104.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD108.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD110.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD112.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD116.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD118.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD120.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD122.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD123.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD124.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD126.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD128.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD141.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD142.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD143.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD144.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD158.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD186.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD190.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD192.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD196.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD314.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD402.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD502.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD504.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD508.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD510.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgIges\igesPD514.cpp">
+      <Filter>ソース ファイル\IGES</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\image.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\isects.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LCisect.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LSPoint_vector.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LCisect_vector.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LEPoint.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LLisect.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LLisect_vector.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Loop.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Loop2.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Loop3.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Loop4.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LPoint.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\LSPoint.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Material.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGAttrib.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\mgBLGSQ.cpp">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgbox.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgBPointSeq.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgccisect.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgcl.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGCornerR.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGCParam_list.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGCrvOffset.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgcsisect.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgcurve.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgcurve2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgcurve3.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgdefault.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGDump.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgellipse.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgellipse2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGEReal.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGGel.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGGeometry.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\mgGLFrameBufferObject.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgLBRep2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRep2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgLBRep3.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgLBRep5.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgLBRep6.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGLBRepEndC.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgmatrix.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgNDDArray.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGObject.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGOfstream.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGOfstream2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgOscuCircle.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgOscuCircleData.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgplane.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgplane2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGPoint.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGPosition.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGPosition_list.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgPPRep.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGProject.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGRebuildKnot.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGRemoveKnot.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGRLBRep.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGRLBRep2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgRLBRep3.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGRSBRep.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGRSBRep2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRep.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGIfstream.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGIfstream2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mginterval.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgKnot.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgKnotArray.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgKnotVector.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgLBRep.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRep3.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRep4.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRep5.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRepEndC.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRepTP.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSBRepVecTP.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSPointSeq.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSrfBlend.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSrfBlend2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSrfOffset.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSrfRib.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSSisect.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGStl.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgstraight2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgstraight.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\MGStringWriter.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgsurface.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgvector.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSurface2.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSurface3.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSurface4.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSurfCurve.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSweep.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgtolerance.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgtransf.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGTrimmedCurve.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\mgunit_vector.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Name.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\OpenglView.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\OpenGLView2.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2Face.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TLInputParam.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2Fan.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2Fans.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2LPline.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2LPlines.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2LPlines2.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2LPlines3.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2parameter.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2Polyline.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2Split.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2Triangle.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2Triangles.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\VBO.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\VBOPointer.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\VBO2.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\VBObyAnchorPt.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\VBOByScreen.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\VBOLeaf.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\trimloop.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\toposerialize.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\PickObject.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\PickObjectSB.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\PickObjectCB.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\PickObjectFB.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\PickObjects.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\RenderAttr.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Shell2.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\PVertex.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Shell.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\SnapAttrib.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\SnapPositions.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\Sphere.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\SRSmooth2.cpp">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\SRSmooth.cpp">
+      <Filter>ソース ファイル\CSKernel</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Sys2GL.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\sysGLList.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\sysGL.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\StaticGLAttrib.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\StlForTl2.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StdAfx.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\OpenglView3.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\PerimTP.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\TPmaker.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\TPOnFaceBoundary.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\PCell.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\BCell.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Light.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Lights.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\LinearEquation.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\PlaneImage.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Texture.cpp">
+      <Filter>ソース ファイル\GL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\Cell.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\CFisect.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\HHisects.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\topo\CFisects.cpp">
+      <Filter>ソース ファイル\Topo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGCCisects.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGCSisects.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\MGSSisects.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\BSumCurve.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\BSumSurf.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\Coons.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\mg\AbstractGels.cpp">
+      <Filter>ソース ファイル\Geo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tl2\TL2LPlines4.cpp">
+      <Filter>ソース ファイル\TL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTBuffer.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTCharmap.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTContour.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFace.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyphContainer.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTLibrary.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTPoint.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTSize.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTVectoriser.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTFont.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTPolygonFont.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTGlyph.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTPolygonGlyph.cpp">
+      <Filter>ソース ファイル\ftgl</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

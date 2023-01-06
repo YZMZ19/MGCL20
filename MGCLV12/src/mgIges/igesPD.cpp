@@ -1,0 +1,29 @@
+/********************************************************************/
+/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
+/* All rights reserved.                                             */
+/********************************************************************/
+//! @file
+//!	@brief  Declaration for class MGIgesPD.
+//!	@author System fugen
+
+#include "StdAfx.h"
+#include "mgIges/IgesPD.h"
+
+#ifdef _DEBUG
+#undef THIS_FILE
+static char THIS_FILE[]=__FILE__;
+#define new DEBUG_NEW
+#endif
+
+// Constructors.
+
+//! Constructs an object of class MGIgesPDSec.
+MGIgesPD::MGIgesPD()
+:m_type_number(0),m_DEpointer(0){;}
+
+//! Constructs an object of class MGIgesPDSec.
+MGIgesPD::MGIgesPD(int type_number, MGIgesDirectoryEntry* DEpointer)
+:m_type_number(type_number),m_DEpointer(DEpointer){;}
+
+//Destructor;
+MGIgesPD::~MGIgesPD(){;}

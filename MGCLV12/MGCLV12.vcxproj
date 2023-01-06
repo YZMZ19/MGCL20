@@ -1,0 +1,1531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{31883D8E-53B5-437B-9A31-CFB37B79AE4F}</ProjectGuid>
+    <RootNamespace>MGCLV12</RootNamespace>
+    <Keyword>MFCDLLProj</Keyword>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>MGCLV12</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+    <UseOfMfc>Dynamic</UseOfMfc>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\MGCLSolution.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\MGCLSolution.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\MGCLSolution.props" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="..\MGCLSolution.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(BIN_DIR)</OutDir>
+    <IntDir>$(OUT_DIR)\obj\$(TargetName)\$(Configuration)\$(Platform)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(BIN_DIR)</OutDir>
+    <IntDir>$(OUT_DIR)\obj\$(TargetName)\$(Configuration)\$(Platform)\</IntDir>
+    <IgnoreImportLibrary>false</IgnoreImportLibrary>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(OUT_DIR)\obj\$(TargetName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(BIN_DIR)</OutDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <IntDir>$(OUT_DIR)\obj\$(TargetName)\$(Configuration)\$(Platform)\</IntDir>
+    <OutDir>$(BIN_DIR)</OutDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>x64;_WINDOWS;_DEBUG;_USRDLL;FTGL_DLL;MGCLDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(FTGL_INC_DIR);$(FREETYPE_INC_DIR);$(GLM_INC_DIR);$(GLEW_INC_DIR);$(MGCL_INC_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>.\MGCLV12.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;gdiplus.lib;mfcs140ud.lib</AdditionalDependencies>
+      <ImportLibrary>$(LIB_DIR)\$(TargetName).lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0411</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy /B $(BIN_DIR) $(FUGEN_MGCL_DIR)\bin\$(Configuration)\$(PlatformName)
+copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)\lib\$(Configuration)\$(PlatformName)</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>x64;WIN32;_WINDOWS;_DEBUG;_USRDLL;FTGL_LIBRARY;MGCLDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(GLM_INC_DIR);$(GLEW_INC_DIR);$(FREETYPE_INC_DIR);$(FTGL_INC_DIR);$(MGCL_INC_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ModuleDefinitionFile>
+      </ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;gdiplus.lib;mfcs140ud.lib;freetype.lib</AdditionalDependencies>
+      <ImportLibrary>$(LIB_DIR)$(TargetName).lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0411</Culture>
+      <PreprocessorDefinitions>_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy /B $(BIN_DIR) $(FUGEN_MGCL_DIR)bin\$(Configuration)\$(PlatformName)
+copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\$(Configuration)\$(PlatformName)
+copy  $(MGCLProject)\include\mg $(FUGEN_MGCL_DIR)MGCLinclude\mg
+copy  $(MGCLProject)\include\mgGL $(FUGEN_MGCL_DIR)MGCLinclude\mgGL
+copy  $(MGCLProject)\include\tl2 $(FUGEN_MGCL_DIR)MGCLinclude\tl2
+copy  $(MGCLProject)\include\topo $(FUGEN_MGCL_DIR)MGCLinclude\topo
+
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;NDEBUG;_USRDLL;FTGL_DLL;MGCLDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(FTGL_INC_DIR);$(FREETYPE_INC_DIR);$(GLM_INC_DIR);$(GLEW_INC_DIR);$(MGCL_INC_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\MGCLV12.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glu32.lib;gdiplus.lib;mfcs140u.lib</AdditionalDependencies>
+      <ImportLibrary>$(LIB_DIR)\$(TargetName).lib</ImportLibrary>
+      <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0411</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy /B $(BIN_DIR) $(FUGEN_MGCL_DIR)bin\$(Configuration)\$(PlatformName)
+copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\$(Configuration)\$(PlatformName)
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>Use</PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>x64;WIN32;_WINDOWS;NDEBUG;_USRDLL;FTGL_LIBRARY;MGCLDLL_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(FTGL_INC_DIR);$(FREETYPE_INC_DIR);$(GLM_INC_DIR);$(GLEW_INC_DIR);$(MGCL_INC_DIR);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <ModuleDefinitionFile>.\MGCLV12.def</ModuleDefinitionFile>
+      <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;gdiplus.lib;mfcs140u.lib;freetype.lib</AdditionalDependencies>
+      <ImportLibrary>$(LIB_DIR)\$(TargetName).lib</ImportLibrary>
+    </Link>
+    <Midl>
+      <MkTypLibCompatible>false</MkTypLibCompatible>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+    </Midl>
+    <ResourceCompile>
+      <Culture>0x0411</Culture>
+      <PreprocessorDefinitions>NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <PostBuildEvent>
+      <Command>copy /B $(BIN_DIR) $(FUGEN_MGCL_DIR)bin\$(Configuration)\$(PlatformName)
+copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\$(Configuration)\$(PlatformName)
+copy  $(MGCLProject)\include\mg $(FUGEN_MGCL_DIR)MGCLinclude\mg
+copy  $(MGCLProject)\include\mgGL $(FUGEN_MGCL_DIR)MGCLinclude\mgGL
+copy  $(MGCLProject)\include\tl2 $(FUGEN_MGCL_DIR)MGCLinclude\tl2
+copy  $(MGCLProject)\include\topo $(FUGEN_MGCL_DIR)MGCLinclude\topo
+
+</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <None Include="MGCLV12.def" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTCharmap.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTCharToGlyphIndexMap.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTContour.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFace.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTFontImpl.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTPolygonFontImpl.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyphContainer.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTGlyphImpl.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTPolygonGlyphImpl.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTBBox.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTBuffer.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTFont.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\ftgl.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTGLPolygonFont.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTGlyph.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTPoint.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTPolyGlyph.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTInternals.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTLibrary.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTList.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTSize.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTUnicode.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTVector.h" />
+    <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTVectoriser.h" />
+    <ClInclude Include="include\cskernel\B1a.h" />
+    <ClInclude Include="include\cskernel\B1bfac.h" />
+    <ClInclude Include="include\cskernel\B1bslv.h" />
+    <ClInclude Include="include\cskernel\B1hfac.h" />
+    <ClInclude Include="include\cskernel\B1hslv.h" />
+    <ClInclude Include="include\cskernel\B1nk.h" />
+    <ClInclude Include="include\cskernel\B2dv.h" />
+    <ClInclude Include="include\cskernel\B2vb.h" />
+    <ClInclude Include="include\cskernel\Bk1fli.h" />
+    <ClInclude Include="include\cskernel\Bk2fli.h" />
+    <ClInclude Include="include\cskernel\Bkcdtn.h" />
+    <ClInclude Include="include\cskernel\Bkcrng.h" />
+    <ClInclude Include="include\cskernel\Bkdmix.h" />
+    <ClInclude Include="include\cskernel\Bkdnp.h" />
+    <ClInclude Include="include\cskernel\Bkdtkt.h" />
+    <ClInclude Include="include\cskernel\Bkdtpg.h" />
+    <ClInclude Include="include\cskernel\Bkdtwe.h" />
+    <ClInclude Include="include\cskernel\Bkktdp.h" />
+    <ClInclude Include="include\cskernel\Bkmlt.h" />
+    <ClInclude Include="include\cskernel\Bla2d.h" />
+    <ClInclude Include="include\cskernel\Blcbp.h" />
+    <ClInclude Include="include\cskernel\Blcbpn.h" />
+    <ClInclude Include="include\cskernel\Blcpb.h" />
+    <ClInclude Include="include\cskernel\Blcpb2.h" />
+    <ClInclude Include="include\cskernel\Blctpb.h" />
+    <ClInclude Include="include\cskernel\Bldrw1.h" />
+    <ClInclude Include="include\cskernel\Bldrwc.h" />
+    <ClInclude Include="include\cskernel\Bldrwcr.h" />
+    <ClInclude Include="include\cskernel\Bldrwg.h" />
+    <ClInclude Include="include\cskernel\Ble.h" />
+    <ClInclude Include="include\cskernel\Blel.h" />
+    <ClInclude Include="include\cskernel\Blelin.h" />
+    <ClInclude Include="include\cskernel\Bler.h" />
+    <ClInclude Include="include\cskernel\Bleval.h" />
+    <ClInclude Include="include\cskernel\Blg4s1.h" />
+    <ClInclude Include="include\cskernel\Blg4sc.h" />
+    <ClInclude Include="include\cskernel\Blg4sp2.h" />
+    <ClInclude Include="include\cskernel\Blg4sq.h" />
+    <ClInclude Include="include\cskernel\Blgcs.h" />
+    <ClInclude Include="include\cskernel\Blgcs1.h" />
+    <ClInclude Include="include\cskernel\Blgcs2.h" />
+    <ClInclude Include="include\cskernel\Blgcs3.h" />
+    <ClInclude Include="include\cskernel\Blgcs7.h" />
+    <ClInclude Include="include\cskernel\Blgi2d.h" />
+    <ClInclude Include="include\cskernel\Blgint.h" />
+    <ClInclude Include="include\cskernel\Blgl2a.h" />
+    <ClInclude Include="include\cskernel\Blgopt.h" />
+    <ClInclude Include="include\cskernel\Blgsm1.h" />
+    <ClInclude Include="include\cskernel\Blgsm2.h" />
+    <ClInclude Include="include\cskernel\Bli1sp.h" />
+    <ClInclude Include="include\cskernel\Blip1.h" />
+    <ClInclude Include="include\cskernel\Blip2.h" />
+    <ClInclude Include="include\cskernel\Blipp.h" />
+    <ClInclude Include="include\cskernel\BLIPP3.h" />
+    <ClInclude Include="include\cskernel\Blqbox.h" />
+    <ClInclude Include="include\cskernel\Bluakt.h" />
+    <ClInclude Include="include\cskernel\Blucon.h" />
+    <ClInclude Include="include\cskernel\Blucpr.h" />
+    <ClInclude Include="include\cskernel\Bludec.h" />
+    <ClInclude Include="include\cskernel\Bludkt.h" />
+    <ClInclude Include="include\cskernel\Blumi1.h" />
+    <ClInclude Include="include\cskernel\Blumi2.h" />
+    <ClInclude Include="include\cskernel\Blumix.h" />
+    <ClInclude Include="include\cskernel\Blumor.h" />
+    <ClInclude Include="include\cskernel\Blumov.h" />
+    <ClInclude Include="include\cskernel\Blunk.h" />
+    <ClInclude Include="include\cskernel\Blunk1.h" />
+    <ClInclude Include="include\cskernel\Bluprt.h" />
+    <ClInclude Include="include\cskernel\Blurev.h" />
+    <ClInclude Include="include\cskernel\Bpval.h" />
+    <ClInclude Include="include\cskernel\Bpval2.h" />
+    <ClInclude Include="include\cskernel\Bse.h" />
+    <ClInclude Include="include\cskernel\Bsepl.h" />
+    <ClInclude Include="include\cskernel\Bsgsmt.h" />
+    <ClInclude Include="include\cskernel\Bspnml.h" />
+    <ClInclude Include="include\cskernel\Bstper.h" />
+    <ClInclude Include="include\cskernel\Bsudec.h" />
+    <ClInclude Include="include\cskernel\Bsunk.h" />
+    <ClInclude Include="include\cskernel\Bvabs.h" />
+    <ClInclude Include="include\cskernel\Bvavpl.h" />
+    <ClInclude Include="include\cskernel\Bvcang.h" />
+    <ClInclude Include="include\cskernel\Bvcsl.h" />
+    <ClInclude Include="include\cskernel\Bvdist.h" />
+    <ClInclude Include="include\cskernel\Bvdpsl.h" />
+    <ClInclude Include="include\cskernel\Bvi2pl.h" />
+    <ClInclude Include="include\cskernel\Bvi2sl.h" />
+    <ClInclude Include="include\cskernel\Bvinpd.h" />
+    <ClInclude Include="include\cskernel\Bvivec.h" />
+    <ClInclude Include="include\cskernel\Bvltan.h" />
+    <ClInclude Include="include\cskernel\Bvltn2.h" />
+    <ClInclude Include="include\cskernel\Bvs3pd.h" />
+    <ClInclude Include="include\cskernel\Bvstan.h" />
+    <ClInclude Include="include\cskernel\Bvtptw.h" />
+    <ClInclude Include="include\cskernel\Bvtwst.h" />
+    <ClInclude Include="include\cskernel\Bvunit.h" />
+    <ClInclude Include="include\cskernel\Bvutan.h" />
+    <ClInclude Include="include\cskernel\Bvvpd.h" />
+    <ClInclude Include="include\cskernel\Bvvrt.h" />
+    <ClInclude Include="include\cskernel\Bz3sol.h" />
+    <ClInclude Include="include\cskernel\mgBLGSQ.h" />
+    <ClInclude Include="include\cskernel\SRSmooth2.h" />
+    <ClInclude Include="include\cskernel\tolerance.h" />
+    <ClInclude Include="include\mgGL\Appearance.h" />
+    <ClInclude Include="include\mgGL\Color.h" />
+    <ClInclude Include="include\mgGL\ConstructionPlane.h" />
+    <ClInclude Include="include\mgGL\Context.h" />
+    <ClInclude Include="include\mgGL\DirectionalLight.h" />
+    <ClInclude Include="include\mgGL\GLAttrib.h" />
+    <ClInclude Include="include\mgGL\glslprogram.h" />
+    <ClInclude Include="include\mgGL\glViewAttrib.h" />
+    <ClInclude Include="include\mgGL\Image.h" />
+    <ClInclude Include="include\mgGL\Light.h" />
+    <ClInclude Include="include\mgGL\Lights.h" />
+    <ClInclude Include="include\mgGL\LineStipple.h" />
+    <ClInclude Include="include\mgGL\LineWidth.h" />
+    <ClInclude Include="include\mgGL\Material.h" />
+    <ClInclude Include="include\mgGL\mgGLFrameBufferObject.h" />
+    <ClInclude Include="include\mgGL\MGStringWriter.h" />
+    <ClInclude Include="include\mgGL\Name.h" />
+    <ClInclude Include="include\mgGL\openglView.h" />
+    <ClInclude Include="include\mgGL\Pixel.h" />
+    <ClInclude Include="include\mgGL\PlaneImage.h" />
+    <ClInclude Include="include\mgGL\PointLight.h" />
+    <ClInclude Include="include\mgGL\RenderAttr.h" />
+    <ClInclude Include="include\mgGL\SnapAttrib.h" />
+    <ClInclude Include="include\mgGL\SnapPositions.h" />
+    <ClInclude Include="include\mgGL\SpotLight.h" />
+    <ClInclude Include="include\mgGL\StaticGLAttrib.h" />
+    <ClInclude Include="include\mgGL\Sys2GL.h" />
+    <ClInclude Include="include\mgGL\sysGL.h" />
+    <ClInclude Include="include\mgGL\sysGLList.h" />
+    <ClInclude Include="include\mgGL\Texture.h" />
+    <ClInclude Include="include\mgGL\VBO.h" />
+    <ClInclude Include="include\mgGL\VBObyAnchorPt.h" />
+    <ClInclude Include="include\mgGL\VBOByScreen.h" />
+    <ClInclude Include="include\mgGL\VBOElement.h" />
+    <ClInclude Include="include\mgGL\VBOLeaf.h" />
+    <ClInclude Include="include\mgGL\VBOLeafBuilder.h" />
+    <ClInclude Include="include\mgGL\VBOPointer.h" />
+    <ClInclude Include="include\mgIges\Iges.h" />
+    <ClInclude Include="include\mgIges\iges504EdgeListMap.h" />
+    <ClInclude Include="include\mgIges\IgesDEStatusNumber.h" />
+    <ClInclude Include="include\mgIges\IgesDirectoryEntry.h" />
+    <ClInclude Include="include\mgIges\Igesfstream.h" />
+    <ClInclude Include="include\mgIges\IgesGSec.h" />
+    <ClInclude Include="include\mgIges\IgesIfstream.h" />
+    <ClInclude Include="include\mgIges\IgesOfstream.h" />
+    <ClInclude Include="include\mgIges\IgesParamLine.h" />
+    <ClInclude Include="include\mgIges\igesPD.h" />
+    <ClInclude Include="include\mgIges\igesPD100.h" />
+    <ClInclude Include="include\mgIges\igesPD102.h" />
+    <ClInclude Include="include\mgIges\igespd104.h" />
+    <ClInclude Include="include\mgIges\igesPD108.h" />
+    <ClInclude Include="include\mgIges\igespd110.h" />
+    <ClInclude Include="include\mgIges\igespd112.h" />
+    <ClInclude Include="include\mgIges\igespd116.h" />
+    <ClInclude Include="include\mgIges\igespd118.h" />
+    <ClInclude Include="include\mgIges\igespd120.h" />
+    <ClInclude Include="include\mgIges\igespd122.h" />
+    <ClInclude Include="include\mgIges\igespd123.h" />
+    <ClInclude Include="include\mgIges\igespd124.h" />
+    <ClInclude Include="include\mgIges\igespd126.h" />
+    <ClInclude Include="include\mgIges\igespd128.h" />
+    <ClInclude Include="include\mgIges\igespd141.h" />
+    <ClInclude Include="include\mgIges\igespd142.h" />
+    <ClInclude Include="include\mgIges\igespd143.h" />
+    <ClInclude Include="include\mgIges\igespd144.h" />
+    <ClInclude Include="include\mgIges\igesPD158.h" />
+    <ClInclude Include="include\mgIges\igespd186.h" />
+    <ClInclude Include="include\mgIges\igespd190.h" />
+    <ClInclude Include="include\mgIges\igespd192.h" />
+    <ClInclude Include="include\mgIges\igespd196.h" />
+    <ClInclude Include="include\mgIges\igespd314.h" />
+    <ClInclude Include="include\mgIges\igespd402.h" />
+    <ClInclude Include="include\mgIges\igesPD502.h" />
+    <ClInclude Include="include\mgIges\igesPD504.h" />
+    <ClInclude Include="include\mgIges\igespd508.h" />
+    <ClInclude Include="include\mgIges\igespd510.h" />
+    <ClInclude Include="include\mgIges\igespd514.h" />
+    <ClInclude Include="include\mgIges\igesVertexListMap.h" />
+    <ClInclude Include="include\mg\AbstractGels.h" />
+    <ClInclude Include="include\mg\Attrib.h" />
+    <ClInclude Include="include\mg\AttribedGel.h" />
+    <ClInclude Include="include\mg\BezierMove.h" />
+    <ClInclude Include="include\mg\bisection.h" />
+    <ClInclude Include="include\mg\Box.h" />
+    <ClInclude Include="include\mg\BPointSeq.h" />
+    <ClInclude Include="include\mg\BSumCurve.h" />
+    <ClInclude Include="include\mg\BSumSurf.h" />
+    <ClInclude Include="include\mg\CCisect.h" />
+    <ClInclude Include="include\mg\CCisects.h" />
+    <ClInclude Include="include\mg\CompositeCurve.h" />
+    <ClInclude Include="include\mg\Coons.h" />
+    <ClInclude Include="include\mg\CParam_list.h" />
+    <ClInclude Include="include\mg\CSisect.h" />
+    <ClInclude Include="include\mg\CSisects.h" />
+    <ClInclude Include="include\mg\Curve.h" />
+    <ClInclude Include="include\mg\CurveContinuity.h" />
+    <ClInclude Include="include\mg\CurveParameter.h" />
+    <ClInclude Include="include\mg\Cylinder.h" />
+    <ClInclude Include="include\mg\Default.h" />
+    <ClInclude Include="include\mg\DefaultVector.h" />
+    <ClInclude Include="include\mg\defint.h" />
+    <ClInclude Include="include\mg\defintArea.h" />
+    <ClInclude Include="include\mg\DNameControl.h" />
+    <ClInclude Include="include\mg\drawParam.h" />
+    <ClInclude Include="include\mg\Ellipse.h" />
+    <ClInclude Include="include\mg\EReal.h" />
+    <ClInclude Include="include\mg\FPline.h" />
+    <ClInclude Include="include\mg\FPoint.h" />
+    <ClInclude Include="include\mg\FSurface.h" />
+    <ClInclude Include="include\mg\Gausp.h" />
+    <ClInclude Include="include\mg\Gel.h" />
+    <ClInclude Include="include\mg\GelFactory.h" />
+    <ClInclude Include="include\mg\GelPosition.h" />
+    <ClInclude Include="include\mg\GelPositions.h" />
+    <ClInclude Include="include\mg\Geometry.h" />
+    <ClInclude Include="include\mg\Group.h" />
+    <ClInclude Include="include\mg\Ifstream.h" />
+    <ClInclude Include="include\mg\Interval.h" />
+    <ClInclude Include="include\mg\isect.h" />
+    <ClInclude Include="include\mg\isects.h" />
+    <ClInclude Include="include\mg\Knot.h" />
+    <ClInclude Include="include\mg\KnotArray.h" />
+    <ClInclude Include="include\mg\KnotVector.h" />
+    <ClInclude Include="include\mg\LBRep.h" />
+    <ClInclude Include="include\mg\LBRepEndC.h" />
+    <ClInclude Include="include\mg\LinearEquation.h" />
+    <ClInclude Include="include\mg\Matrix.h" />
+    <ClInclude Include="include\mg\MGCL.h" />
+    <ClInclude Include="include\mg\MGCLDefs.h" />
+    <ClInclude Include="include\mg\MGStl.h" />
+    <ClInclude Include="include\mg\NDDArray.h" />
+    <ClInclude Include="include\mg\nlbit.h" />
+    <ClInclude Include="include\mg\Object.h" />
+    <ClInclude Include="include\mg\Ofstream.h" />
+    <ClInclude Include="include\mg\OscuCircle.h" />
+    <ClInclude Include="include\mg\OscuCircleData.h" />
+    <ClInclude Include="include\mg\perimTP.h" />
+    <ClInclude Include="include\mg\PickObject.h" />
+    <ClInclude Include="include\mg\PickObjectCB.h" />
+    <ClInclude Include="include\mg\PickObjectFB.h" />
+    <ClInclude Include="include\mg\PickObjects.h" />
+    <ClInclude Include="include\mg\PickObjectSB.h" />
+    <ClInclude Include="include\mg\Plane.h" />
+    <ClInclude Include="include\mg\Plist.h" />
+    <ClInclude Include="include\mg\Point.h" />
+    <ClInclude Include="include\mg\Position.h" />
+    <ClInclude Include="include\mg\Position_list.h" />
+    <ClInclude Include="include\mg\PPRep.h" />
+    <ClInclude Include="include\mg\RLBRep.h" />
+    <ClInclude Include="include\mg\RSBRep.h" />
+    <ClInclude Include="include\mg\SBRep.h" />
+    <ClInclude Include="include\mg\SBRepEndC.h" />
+    <ClInclude Include="include\mg\SBRepTP.h" />
+    <ClInclude Include="include\mg\SBRepVecTP.h" />
+    <ClInclude Include="include\mg\Sphere.h" />
+    <ClInclude Include="include\mg\SPointSeq.h" />
+    <ClInclude Include="include\mg\SSisect.h" />
+    <ClInclude Include="include\mg\SSisects.h" />
+    <ClInclude Include="include\mg\Straight.h" />
+    <ClInclude Include="include\mg\Surface.h" />
+    <ClInclude Include="include\mg\SurfCurve.h" />
+    <ClInclude Include="include\mg\Tolerance.h" />
+    <ClInclude Include="include\mg\TPmaker.h" />
+    <ClInclude Include="include\mg\TPOnFaceBoundary.h" />
+    <ClInclude Include="include\mg\Transf.h" />
+    <ClInclude Include="include\mg\TrimmedCurve.h" />
+    <ClInclude Include="include\mg\types.h" />
+    <ClInclude Include="include\mg\Unit_vector.h" />
+    <ClInclude Include="include\mg\Vector.h" />
+    <ClInclude Include="include\StdAfx.h" />
+    <ClInclude Include="include\targetver.h" />
+    <ClInclude Include="include\Tl2\TL2Face.h" />
+    <ClInclude Include="include\Tl2\TL2Fan.h" />
+    <ClInclude Include="include\Tl2\TL2Fans.h" />
+    <ClInclude Include="include\Tl2\TL2LPline.h" />
+    <ClInclude Include="include\Tl2\TL2LPlines.h" />
+    <ClInclude Include="include\Tl2\TL2parameter.h" />
+    <ClInclude Include="include\Tl2\TL2Polyline.h" />
+    <ClInclude Include="include\Tl2\TL2Triangle.h" />
+    <ClInclude Include="include\Tl2\TL2Triangles.h" />
+    <ClInclude Include="include\Tl2\TLInputParam.h" />
+    <ClInclude Include="include\topo\BCell.h" />
+    <ClInclude Include="include\topo\Boundary.h" />
+    <ClInclude Include="include\topo\BVertex.h" />
+    <ClInclude Include="include\topo\Cell.h" />
+    <ClInclude Include="include\topo\CFisect.h" />
+    <ClInclude Include="include\topo\CFisects.h" />
+    <ClInclude Include="include\topo\Complex.h" />
+    <ClInclude Include="include\topo\CPointsVec.h" />
+    <ClInclude Include="include\topo\Edge.h" />
+    <ClInclude Include="include\topo\Face.h" />
+    <ClInclude Include="include\topo\FOuterCurve.h" />
+    <ClInclude Include="include\topo\HHisect.h" />
+    <ClInclude Include="include\topo\HHisects.h" />
+    <ClInclude Include="include\topo\LCisect.h" />
+    <ClInclude Include="include\topo\LCisect_vector.h" />
+    <ClInclude Include="include\topo\LEPoint.h" />
+    <ClInclude Include="include\topo\LLisect.h" />
+    <ClInclude Include="include\topo\LLisect_vector.h" />
+    <ClInclude Include="include\topo\Loop.h" />
+    <ClInclude Include="include\topo\LPoint.h" />
+    <ClInclude Include="include\topo\LSPoint.h" />
+    <ClInclude Include="include\topo\LSPoint_vector.h" />
+    <ClInclude Include="include\topo\PCell.h" />
+    <ClInclude Include="include\topo\PVertex.h" />
+    <ClInclude Include="include\topo\Shell.h" />
+    <ClInclude Include="include\topo\TrimLoop.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTBuffer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTCharmap.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTContour.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFace.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTFont.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTFont\FTPolygonFont.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyphContainer.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTGlyph.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGlyph\FTPolygonGlyph.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTLibrary.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTPoint.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTSize.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTVectoriser.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1A.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1BFAC.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1BSLV.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1HFAC.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1HSLV.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B1NK.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B2DV.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\B2VB.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BK1FLI.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BK2FLI.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKCDTN.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKCRNG.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDMIX.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDNP.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDTKT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDTPG.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKDTWE.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKKTDP.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BKMLT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLA2D.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCBP.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCBPN.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCPB.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCPB2.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLCTPB.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRW1.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRWC.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRWCR.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLDRWG.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLE.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLEL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLELIN.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLER.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLEVAL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLG4S1.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLG4SC.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\Blg4sp2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLG4SQ.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS1.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS2.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS3.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGCS7.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGI2D.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGINT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGL2A.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGOPT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGSM1.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLGSM2.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLI1SP.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIBP.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLILB.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIP1.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIP2.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIPP.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLIPP3.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLQBOX.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUAKT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\Blucon.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUCPR.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUDEC.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUDKT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\Blumi1.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMI2.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMIX.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMOR.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUMOV.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUNK.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUNK1.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUPRT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BLUREV.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BPVAL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BPVAL2.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSE.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSEPL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSGSMT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSPNML.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSTPER.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSUDEC.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BSUNK.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVABS.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVAVPL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVCANG.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVCSL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVDIST.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVDPSL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVI2PL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVI2SL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVINPD.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVIVEC.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVLTAN.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVLTN2.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVS3PD.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVSTAN.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVTPTW.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVTWST.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVUNIT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVUTAN.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVVPD.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BVVRT.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\BZ3SOL.CPP">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\mgBLGSQ.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\SRSmooth.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\cskernel\SRSmooth2.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">NotUsing</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">NotUsing</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\mgGL\Appearance.cpp" />
+    <ClCompile Include="src\mgGL\Color.cpp" />
+    <ClCompile Include="src\mgGL\ConstructionPlane.cpp" />
+    <ClCompile Include="src\mgGL\Context.cpp" />
+    <ClCompile Include="src\mgGL\Draw3Dtopo.cpp" />
+    <ClCompile Include="src\mgGL\GLAttrib.cpp" />
+    <ClCompile Include="src\mgGL\GLDrawFunc.cpp" />
+    <ClCompile Include="src\mgGL\glslprogram.cpp" />
+    <ClCompile Include="src\mgGL\glViewAttrib.cpp" />
+    <ClCompile Include="src\mgGL\image.cpp" />
+    <ClCompile Include="src\mgGL\Light.cpp" />
+    <ClCompile Include="src\mgGL\Lights.cpp" />
+    <ClCompile Include="src\mgGL\Material.cpp" />
+    <ClCompile Include="src\mgGL\mgGLFrameBufferObject.cpp" />
+    <ClCompile Include="src\mgGL\MGStringWriter.cpp" />
+    <ClCompile Include="src\mgGL\Name.cpp" />
+    <ClCompile Include="src\mgGL\OpenglView.cpp" />
+    <ClCompile Include="src\mgGL\OpenGLView2.cpp" />
+    <ClCompile Include="src\mgGL\OpenglView3.cpp" />
+    <ClCompile Include="src\mgGL\PlaneImage.cpp" />
+    <ClCompile Include="src\mgGL\RenderAttr.cpp" />
+    <ClCompile Include="src\mgGL\SnapAttrib.cpp" />
+    <ClCompile Include="src\mgGL\SnapPositions.cpp" />
+    <ClCompile Include="src\mgGL\StaticGLAttrib.cpp" />
+    <ClCompile Include="src\mgGL\Sys2GL.cpp" />
+    <ClCompile Include="src\mgGL\sysGL.cpp" />
+    <ClCompile Include="src\mgGL\sysGLList.cpp" />
+    <ClCompile Include="src\mgGL\Texture.cpp" />
+    <ClCompile Include="src\mgGL\VBO.cpp" />
+    <ClCompile Include="src\mgGL\VBO2.cpp" />
+    <ClCompile Include="src\mgGL\VBObyAnchorPt.cpp" />
+    <ClCompile Include="src\mgGL\VBOByScreen.cpp" />
+    <ClCompile Include="src\mgGL\VBOLeaf.cpp" />
+    <ClCompile Include="src\mgGL\VBOPointer.cpp" />
+    <ClCompile Include="src\mgIges\Iges.cpp" />
+    <ClCompile Include="src\mgIges\iges504EdgeListMap.cpp" />
+    <ClCompile Include="src\mgIges\IgesDEStatusNumber.cpp" />
+    <ClCompile Include="src\mgIges\IgesDirectoryEntry.cpp" />
+    <ClCompile Include="src\mgIges\Igesfstream.cpp" />
+    <ClCompile Include="src\mgIges\IgesGSec.cpp" />
+    <ClCompile Include="src\mgIges\IgesGSec2.cpp" />
+    <ClCompile Include="src\mgIges\IgesIfstream.cpp" />
+    <ClCompile Include="src\mgIges\IgesOfstream.cpp" />
+    <ClCompile Include="src\mgIges\IgesOfstream2.cpp" />
+    <ClCompile Include="src\mgIges\IgesParamLine.cpp" />
+    <ClCompile Include="src\mgIges\igesPD.cpp" />
+    <ClCompile Include="src\mgIges\igesPD100.cpp" />
+    <ClCompile Include="src\mgIges\igesPD102.cpp" />
+    <ClCompile Include="src\mgIges\igesPD104.cpp" />
+    <ClCompile Include="src\mgIges\igesPD108.cpp" />
+    <ClCompile Include="src\mgIges\igesPD110.cpp" />
+    <ClCompile Include="src\mgIges\igesPD112.cpp" />
+    <ClCompile Include="src\mgIges\igesPD116.cpp" />
+    <ClCompile Include="src\mgIges\igesPD118.cpp" />
+    <ClCompile Include="src\mgIges\igesPD120.cpp" />
+    <ClCompile Include="src\mgIges\igesPD122.cpp" />
+    <ClCompile Include="src\mgIges\igesPD123.cpp" />
+    <ClCompile Include="src\mgIges\igesPD124.cpp" />
+    <ClCompile Include="src\mgIges\igesPD126.cpp" />
+    <ClCompile Include="src\mgIges\igesPD128.cpp" />
+    <ClCompile Include="src\mgIges\igesPD141.cpp" />
+    <ClCompile Include="src\mgIges\igesPD142.cpp" />
+    <ClCompile Include="src\mgIges\igesPD143.cpp" />
+    <ClCompile Include="src\mgIges\igesPD144.cpp" />
+    <ClCompile Include="src\mgIges\igesPD158.cpp" />
+    <ClCompile Include="src\mgIges\igesPD186.cpp" />
+    <ClCompile Include="src\mgIges\igesPD190.cpp" />
+    <ClCompile Include="src\mgIges\igesPD192.cpp" />
+    <ClCompile Include="src\mgIges\igesPD196.cpp" />
+    <ClCompile Include="src\mgIges\igesPD314.cpp" />
+    <ClCompile Include="src\mgIges\igesPD402.cpp" />
+    <ClCompile Include="src\mgIges\igesPD502.cpp" />
+    <ClCompile Include="src\mgIges\igesPD504.cpp" />
+    <ClCompile Include="src\mgIges\igesPD508.cpp" />
+    <ClCompile Include="src\mgIges\igesPD510.cpp" />
+    <ClCompile Include="src\mgIges\igesPD514.cpp" />
+    <ClCompile Include="src\mgIges\igesVertexListMap.cpp" />
+    <ClCompile Include="src\mg\AbstractGels.cpp" />
+    <ClCompile Include="src\mg\AttribedGel.cpp" />
+    <ClCompile Include="src\mg\bisection.cpp" />
+    <ClCompile Include="src\mg\BSumCurve.cpp" />
+    <ClCompile Include="src\mg\BSumSurf.cpp" />
+    <ClCompile Include="src\mg\CompositeCurve.cpp" />
+    <ClCompile Include="src\mg\CompositeCurve2.cpp" />
+    <ClCompile Include="src\mg\Coons.cpp" />
+    <ClCompile Include="src\mg\CurveContinuity.cpp" />
+    <ClCompile Include="src\mg\Cylinder.cpp" />
+    <ClCompile Include="src\mg\defintArea.cpp" />
+    <ClCompile Include="src\mg\DNameControl.cpp" />
+    <ClCompile Include="src\mg\Draw3Dgeo.cpp" />
+    <ClCompile Include="src\mg\DrawParam.cpp" />
+    <ClCompile Include="src\mg\FPline.cpp" />
+    <ClCompile Include="src\mg\FPoint.cpp" />
+    <ClCompile Include="src\mg\FSurface.cpp" />
+    <ClCompile Include="src\mg\GelFactory.cpp" />
+    <ClCompile Include="src\mg\GelPosition.cpp" />
+    <ClCompile Include="src\mg\GelPositions.cpp" />
+    <ClCompile Include="src\mg\geoprint.cpp" />
+    <ClCompile Include="src\mg\geoserialize.cpp" />
+    <ClCompile Include="src\mg\Group.cpp" />
+    <ClCompile Include="src\mg\isects.cpp" />
+    <ClCompile Include="src\mg\LinearEquation.cpp" />
+    <ClCompile Include="src\mg\MGAttrib.cpp" />
+    <ClCompile Include="src\mg\mgbox.cpp" />
+    <ClCompile Include="src\mg\mgBPointSeq.cpp" />
+    <ClCompile Include="src\mg\mgccisect.cpp" />
+    <ClCompile Include="src\mg\MGCCisects.cpp" />
+    <ClCompile Include="src\mg\mgcl.cpp" />
+    <ClCompile Include="src\mg\MGCornerR.cpp" />
+    <ClCompile Include="src\mg\MGCParam_list.cpp" />
+    <ClCompile Include="src\mg\MGCrvOffset.cpp" />
+    <ClCompile Include="src\mg\mgcsisect.cpp" />
+    <ClCompile Include="src\mg\MGCSisects.cpp" />
+    <ClCompile Include="src\mg\mgcurve.cpp" />
+    <ClCompile Include="src\mg\mgcurve2.cpp" />
+    <ClCompile Include="src\mg\mgcurve3.cpp" />
+    <ClCompile Include="src\mg\mgdefault.cpp" />
+    <ClCompile Include="src\mg\MGDump.cpp" />
+    <ClCompile Include="src\mg\mgellipse.cpp" />
+    <ClCompile Include="src\mg\mgellipse2.cpp" />
+    <ClCompile Include="src\mg\MGEReal.cpp" />
+    <ClCompile Include="src\mg\MGGel.cpp" />
+    <ClCompile Include="src\mg\MGGeometry.cpp" />
+    <ClCompile Include="src\mg\MGIfstream.cpp" />
+    <ClCompile Include="src\mg\MGIfstream2.cpp" />
+    <ClCompile Include="src\mg\mginterval.cpp" />
+    <ClCompile Include="src\mg\mgKnot.cpp" />
+    <ClCompile Include="src\mg\mgKnotArray.cpp" />
+    <ClCompile Include="src\mg\mgKnotVector.cpp" />
+    <ClCompile Include="src\mg\mgLBRep.cpp" />
+    <ClCompile Include="src\mg\mgLBRep2.cpp" />
+    <ClCompile Include="src\mg\mgLBRep3.cpp" />
+    <ClCompile Include="src\mg\mgLBRep5.cpp" />
+    <ClCompile Include="src\mg\mgLBRep6.cpp" />
+    <ClCompile Include="src\mg\MGLBRepEndC.cpp" />
+    <ClCompile Include="src\mg\mgmatrix.cpp" />
+    <ClCompile Include="src\mg\mgNDDArray.cpp" />
+    <ClCompile Include="src\mg\MGObject.cpp" />
+    <ClCompile Include="src\mg\MGOfstream.cpp" />
+    <ClCompile Include="src\mg\MGOfstream2.cpp" />
+    <ClCompile Include="src\mg\mgOscuCircle.cpp" />
+    <ClCompile Include="src\mg\mgOscuCircleData.cpp" />
+    <ClCompile Include="src\mg\mgplane.cpp" />
+    <ClCompile Include="src\mg\mgplane2.cpp" />
+    <ClCompile Include="src\mg\MGPoint.cpp" />
+    <ClCompile Include="src\mg\MGPosition.cpp" />
+    <ClCompile Include="src\mg\MGPosition_list.cpp" />
+    <ClCompile Include="src\mg\mgPPRep.cpp" />
+    <ClCompile Include="src\mg\MGProject.cpp" />
+    <ClCompile Include="src\mg\MGRebuildKnot.cpp" />
+    <ClCompile Include="src\mg\MGRemoveKnot.cpp" />
+    <ClCompile Include="src\mg\MGRLBRep.cpp" />
+    <ClCompile Include="src\mg\MGRLBRep2.cpp" />
+    <ClCompile Include="src\mg\mgRLBRep3.cpp" />
+    <ClCompile Include="src\mg\MGRSBRep.cpp" />
+    <ClCompile Include="src\mg\MGRSBRep2.cpp" />
+    <ClCompile Include="src\mg\MGSBRep.cpp" />
+    <ClCompile Include="src\mg\MGSBRep2.cpp" />
+    <ClCompile Include="src\mg\MGSBRep3.cpp" />
+    <ClCompile Include="src\mg\MGSBRep4.cpp" />
+    <ClCompile Include="src\mg\MGSBRep5.cpp" />
+    <ClCompile Include="src\mg\MGSBRepEndC.cpp" />
+    <ClCompile Include="src\mg\MGSBRepTP.cpp" />
+    <ClCompile Include="src\mg\MGSBRepVecTP.cpp" />
+    <ClCompile Include="src\mg\MGSPointSeq.cpp" />
+    <ClCompile Include="src\mg\MGSrfBlend.cpp" />
+    <ClCompile Include="src\mg\MGSrfBlend2.cpp" />
+    <ClCompile Include="src\mg\MGSrfOffset.cpp" />
+    <ClCompile Include="src\mg\MGSrfRib.cpp" />
+    <ClCompile Include="src\mg\MGSSisect.cpp" />
+    <ClCompile Include="src\mg\MGSSisects.cpp" />
+    <ClCompile Include="src\mg\MGStl.cpp" />
+    <ClCompile Include="src\mg\mgstraight.cpp" />
+    <ClCompile Include="src\mg\mgstraight2.cpp" />
+    <ClCompile Include="src\mg\mgsurface.cpp" />
+    <ClCompile Include="src\mg\MGSurface2.cpp" />
+    <ClCompile Include="src\mg\MGSurface3.cpp" />
+    <ClCompile Include="src\mg\MGSurface4.cpp" />
+    <ClCompile Include="src\mg\MGSurfCurve.cpp" />
+    <ClCompile Include="src\mg\MGSweep.cpp" />
+    <ClCompile Include="src\mg\mgtolerance.cpp" />
+    <ClCompile Include="src\mg\mgtransf.cpp" />
+    <ClCompile Include="src\mg\MGTrimmedCurve.cpp" />
+    <ClCompile Include="src\mg\mgunit_vector.cpp" />
+    <ClCompile Include="src\mg\mgvector.cpp" />
+    <ClCompile Include="src\mg\PerimTP.cpp" />
+    <ClCompile Include="src\mg\PickObject.cpp" />
+    <ClCompile Include="src\mg\PickObjectCB.cpp" />
+    <ClCompile Include="src\mg\PickObjectFB.cpp" />
+    <ClCompile Include="src\mg\PickObjects.cpp" />
+    <ClCompile Include="src\mg\PickObjectSB.cpp" />
+    <ClCompile Include="src\mg\Sphere.cpp" />
+    <ClCompile Include="src\mg\TPmaker.cpp" />
+    <ClCompile Include="src\mg\TPOnFaceBoundary.cpp" />
+    <ClCompile Include="src\StdAfx.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeaderFile Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">StdAfx.h</PrecompiledHeaderFile>
+    </ClCompile>
+    <ClCompile Include="src\tl2\StlForTl2.cpp" />
+    <ClCompile Include="src\tl2\TL2Face.cpp" />
+    <ClCompile Include="src\tl2\TL2Fan.cpp" />
+    <ClCompile Include="src\tl2\TL2Fans.cpp" />
+    <ClCompile Include="src\tl2\TL2LPline.cpp" />
+    <ClCompile Include="src\tl2\TL2LPlines.cpp" />
+    <ClCompile Include="src\tl2\TL2LPlines2.cpp" />
+    <ClCompile Include="src\tl2\TL2LPlines3.cpp" />
+    <ClCompile Include="src\tl2\TL2LPlines4.cpp" />
+    <ClCompile Include="src\tl2\TL2parameter.cpp" />
+    <ClCompile Include="src\tl2\TL2Polyline.cpp" />
+    <ClCompile Include="src\tl2\TL2Split.cpp" />
+    <ClCompile Include="src\tl2\TL2Triangle.cpp" />
+    <ClCompile Include="src\tl2\TL2Triangles.cpp" />
+    <ClCompile Include="src\tl2\TLInputParam.cpp" />
+    <ClCompile Include="src\topo\BCell.cpp" />
+    <ClCompile Include="src\topo\BVertex.cpp" />
+    <ClCompile Include="src\topo\Cell.cpp" />
+    <ClCompile Include="src\topo\CFisect.cpp" />
+    <ClCompile Include="src\topo\CFisects.cpp" />
+    <ClCompile Include="src\topo\Complex.cpp" />
+    <ClCompile Include="src\topo\CPointsVec.cpp" />
+    <ClCompile Include="src\topo\Edge.cpp" />
+    <ClCompile Include="src\topo\Edge2.cpp" />
+    <ClCompile Include="src\topo\Edge3.cpp" />
+    <ClCompile Include="src\topo\Face.cpp" />
+    <ClCompile Include="src\topo\Face2.cpp" />
+    <ClCompile Include="src\topo\Face3.cpp" />
+    <ClCompile Include="src\topo\FaceOffset.cpp" />
+    <ClCompile Include="src\topo\FOuterCurve.cpp" />
+    <ClCompile Include="src\topo\HHisect.cpp" />
+    <ClCompile Include="src\topo\HHisects.cpp" />
+    <ClCompile Include="src\topo\LCisect.cpp" />
+    <ClCompile Include="src\topo\LCisect_vector.cpp" />
+    <ClCompile Include="src\topo\LEPoint.cpp" />
+    <ClCompile Include="src\topo\LLisect.cpp" />
+    <ClCompile Include="src\topo\LLisect_vector.cpp" />
+    <ClCompile Include="src\topo\Loop.cpp" />
+    <ClCompile Include="src\topo\Loop2.cpp" />
+    <ClCompile Include="src\topo\Loop3.cpp" />
+    <ClCompile Include="src\topo\Loop4.cpp" />
+    <ClCompile Include="src\topo\LPoint.cpp" />
+    <ClCompile Include="src\topo\LSPoint.cpp" />
+    <ClCompile Include="src\topo\LSPoint_vector.cpp" />
+    <ClCompile Include="src\topo\PCell.cpp" />
+    <ClCompile Include="src\topo\PVertex.cpp" />
+    <ClCompile Include="src\topo\Shell.cpp" />
+    <ClCompile Include="src\topo\Shell2.cpp" />
+    <ClCompile Include="src\topo\toposerialize.cpp" />
+    <ClCompile Include="src\topo\trimloop.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
