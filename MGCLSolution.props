@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <!-- comments -->
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros">
+    <MGCLProject>$(SolutionDir)MGCLV12</MGCLProject>
+    <MGCL_INC_DIR>$(MGCLProject)\include\</MGCL_INC_DIR>
+    <OpenGLDIR>$(SolutionDir)OpenGL4\</OpenGLDIR>    
+    <FREETYPE_INC_DIR>$(OpenGLDIR)freetype-2.5.0.1\include\</FREETYPE_INC_DIR>
+    <FTGL_INC_DIR>$(OpenGLDIR)ftgl-2.1.3-rc5\src\</FTGL_INC_DIR>
+    <GLEW_INC_DIR>$(OpenGLDIR)glew-1.10.0\include</GLEW_INC_DIR>
+    <GLM_INC_DIR>$(OpenGLDIR)glm-0.9.4.5\</GLM_INC_DIR>
+    <OUT_DIR>$(SolutionDir)OUTDIR</OUT_DIR>
+    <LIB_DIR>$(OUT_DIR)\lib\$(Configuration)\$(Platform)\</LIB_DIR>
+    <BIN_DIR>$(OUT_DIR)\bin\$(Configuration)\$(Platform)\</BIN_DIR>
+    <FUGEN_MGCL_DIR>$(SolutionDir)..\fugen19\MGCLtoRelease\</FUGEN_MGCL_DIR>
+</PropertyGroup>
+  <PropertyGroup />
+  <ItemDefinitionGroup />
+  <ItemGroup>
+    <BuildMacro Include="MGCLProject">
+      <Value>$(MGCLProject)</Value>
+    </BuildMacro>
+    <BuildMacro Include="OpenGLDIR">
+      <Value>$(OpenGLDIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="FREETYPE_INC_DIR">
+      <Value>$(FREETYPE_INC_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="FTGL_INC_DIR">
+      <Value>$(FTGL_INC_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GLEW_INC_DIR">
+      <Value>$(GLEW_INC_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="GLM_INC_DIR">
+      <Value>$(GLM_INC_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="MGCL_INC_DIR">
+      <Value>$(MGCL_INC_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="LIB_DIR">
+      <Value>$(LIB_DIR)</Value>
+    </BuildMacro>
+    <BuildMacro Include="BIN_DIR">
+      <Value>$(BIN_DIR)</Value>
+    </BuildMacro>
+  </ItemGroup>
+</Project>
