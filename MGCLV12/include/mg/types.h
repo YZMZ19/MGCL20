@@ -14,7 +14,8 @@
 ///Type id of subclasses of MGGel.
 
 ///The mm in 0xmm000000L of the following TID's are subclass id of MGGel.
-///Let 0x0010nnxxL is a type number, then 
+/// mm=00: MGAttribedGel, 02: MGAttrib, 03: MGPCell, 04: MGMGBCell
+///Let 0xmmyynnxxL is a type number, then 
 ///nn of is the manifold dimension, xx is the name id.
 ///
 ///When a new subclass is necessary to add, this mm will have a new number.
@@ -60,7 +61,7 @@ enum MGGEL_TID{
 
 /////////////////////////////////////////////
 
-    MGTOPOLOGY_TID =   0x00200000L,	///<all of MGTopology related,
+    MGTOPOLOGY_TID =    0x00200000L,	///<all of MGTopology related,
 	                    //related means includes MGPCell, MGBCell.
 
 //	Following nn is the manifold dimension, xx is the name id,

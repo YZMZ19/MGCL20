@@ -12,8 +12,6 @@
 #include "mgGL/Color.h"
 #include "mgGL/Image.h"
 
-using namespace Gdiplus;
-
 //Set only RGB of pixel2 without updating Alpha data.
 void MGPixel::setRGB(const MGPixel& pixel2){
 	unsigned char A=getAlpha();
@@ -36,7 +34,6 @@ MGPixel::MGPixel(const MGColor& color){
 	setBlue(unsigned char(rgba[2]*255.));
 	setAlpha(unsigned char(rgba[3]*255.));
 }
-
 
 //Garbage image data constructor.
 MGImage::MGImage(int wdth, int hght)
@@ -173,9 +170,9 @@ void MGImage::extract(
 	if(!pixelP)
 		return;
 
-	Rect rect(0,0,bmW,bmH);
-	BitmapData bmData;
-	bitmap.LockBits(&rect,ImageLockModeRead,PixelFormat32bppARGB,&bmData);
+	Gdiplus::Rect rect(0,0,bmW,bmH);
+	Gdiplus::BitmapData bmData;
+	bitmap.LockBits(&rect, Gdiplus::ImageLockModeRead,PixelFormat32bppARGB,&bmData);
 	int totalhm1=bmH-1;//total height -1.
 	UINT* gdiPixels=(UINT*)bmData.Scan0;;
 	for(int j=0; j<height; j++){

@@ -97,15 +97,21 @@ bool MGPVertex::is_less_than(const MGPVertex& cell2)const{
 }
 
 ///Comparison.
-bool MGPVertex::operator==(const MGGel& gel2)const{
-	const MGPVertex* cel2 = dynamic_cast<const MGPVertex*>(&gel2);
-	return cel2 ? cel2==this:false;
+bool MGPVertex::operator==(const MGPVertex& gel2)const{
+	return &gel2 == this;
 }
-bool MGPVertex::operator<(const MGGel& gel2)const{
-	const MGPVertex* pcel2 = dynamic_cast<const MGPVertex*>(&gel2);
-	if(pcel2)
-		return is_less_than(*pcel2);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGPVertex::operator<=>(const MGPVertex& gel2)const{
+	return this->is_less_than(gel2) ?
+		std::partial_ordering::less : std::partial_ordering::greater;
+}
+
+bool MGPVertex::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGPVertex&>(g2) : false;
+}
+std::partial_ordering MGPVertex::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGPVertex&>(g2) : c;
 }
 
 //Get binder.
@@ -125,7 +131,7 @@ bool MGPVertex::is_start_vertex()const{
 std::ostream & MGPVertex::toString(std::ostream& ostrm) const{
 	ostrm<<"<<PV="<<(const MGGel*)this;
 	MGPCell::toString(ostrm);
-	ostrm<<",m_t="<<m_t<<",m_edge="<<(const MGGel*)m_edge;
+	ostrm<<", t="<<m_t<<", edge="<<(const MGGel*)m_edge;
 	ostrm<<"=PV>>";
 	return ostrm;
 }

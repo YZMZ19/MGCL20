@@ -137,7 +137,7 @@ MGCSisects MGRSBRep::isectSl(
 			MGPosition uv((tu[i]+tu[ip1])*.5, (tv[j]+tv[jp1])*.5);
 			double t=sl.closest(eval(uv));
 			if(isect_guess_straight(sl,t,uv,t,uv)){
-				if(uvbox_is_null || uvbox>>uv) list.append(sl.eval(t),t,uv);
+				if(uvbox_is_null || uvbox.includes(uv)) list.append(sl.eval(t),t,uv);
 			}
 		}
 	}

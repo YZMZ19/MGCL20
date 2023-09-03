@@ -144,6 +144,7 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)\lib\$(Configuration)\$(PlatformName)</Comma
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <MinimalRebuild>false</MinimalRebuild>
       <ObjectFileName>$(IntDir)</ObjectFileName>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -227,6 +228,7 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\$(Configuration)\$(PlatformName)
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

@@ -784,7 +784,7 @@ bool MGSurface::test_and_get_approximate_plane(
 //  4:(u,v) is on the outer boundary.
 //  >=10: (u,v) is on a perimeter, (10+perimeter number) will be returned.
 int MGSurface::in_range_with_on(const MGPosition& uv)const{
-	if(param_range()<<uv)
+	if(!param_range().includes(uv))
 		return 0;
 
 	int perim;

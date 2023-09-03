@@ -73,15 +73,18 @@ MGTrimmedCurve(const MGCurve& crv, double t1, double t2);
 MGTrimmedCurve& operator=(const MGGel& gel2);
 MGTrimmedCurve& operator=(MGGel&& gel2);
 
-///Logical operator overload(論理演算子多重定義)
-/// ２つの曲線が等しいかどうか比較し判定する。
 ///Comparison of two curves.
 bool is_same_curve(const MGCurve& curve2)const;
-bool operator==(const MGTrimmedCurve& gel2)const;
 bool operator==(const MGCompositeCurve& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGTrimmedCurve& gel2)const;
-bool operator<(const MGGel& gel2)const;
+
+bool operator==(const MGTrimmedCurve& gel2)const;
+std::partial_ordering operator<=>(const MGTrimmedCurve& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Approximate this curve as a MGLBRep curve
 ///within the tolerance MGTolerance::line_zero().

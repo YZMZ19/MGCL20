@@ -53,9 +53,14 @@ MGBVertex(const MGPVertex& pv);
 ///Comparison of two objects.
 
 ///Comparison.
-virtual bool operator==(const MGGel& gel2)const override;
-virtual bool operator<(const MGGel& gel2)const override;
-bool operator<(const MGBVertex& gel2)const;
+bool operator==(const MGBVertex& gel2)const;
+std::partial_ordering operator<=>(const MGBVertex& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 /////////Member Function/////////
 
@@ -125,7 +130,7 @@ protected:
 MGBVertex(std::vector<const MGPCell*>& newPartners);
 
 ///Get the name of the class.
-std::string whoami()const override{ return "BVertex"; };
+std::string whoami()const override{ return "BV"; };
 
 ///Read Object's member data.
 void ReadMembers(MGIfstream& buf);

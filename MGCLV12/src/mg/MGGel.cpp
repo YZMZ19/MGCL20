@@ -46,18 +46,18 @@ MGGel* MGNullGel(long TID){
 	return reg->create_gel(TID);
 }
 
-bool MGGel::operator<(const MGGel& gel2)const{
-	return identify_type() < gel2.identify_type();
+std::strong_ordering MGGel::typeCompare(const MGGel& gel2)const{
+	long type1 = this->identify_type(), type2 = gel2.identify_type();
+	return type1 <=> type2;
 }
 
 //Determine if this is one of the input types or not.
 //Function's return value is true if this is one of the input types.
 bool MGGel::type_is(const MGAbstractGels& types)const{
-	MGAbstractGels::const_iterator i=types.begin(), ie=types.end();
-	for(; i!=ie; i++){
-		MGGEL_KIND agel=(*i).first;
+	for(const auto& e:types){
+		MGGEL_KIND agel=e.first;
 		long tid1=identify_type()&agel;
-		long tid2=(*i).second&agel;
+		long tid2=e.second&agel;
 		if(tid1==tid2)
 			return true;
 	}

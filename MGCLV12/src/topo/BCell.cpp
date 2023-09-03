@@ -88,15 +88,14 @@ void MGBCell::free_partner_member(const MGPCell* cellin) const{
 
 // Output virtual function.
 std::ostream& MGBCell::toString(std::ostream& ostrm) const{
-	std::string me = whoami()+" ";
 	size_t n = number_of_partner_members();
-	ostrm << ", "<<n<<" members(";
+	ostrm << ", "<<n<<" membr";
 	if(n){
 		const MGPCell* pcel = partner_member(0);
 		std::string pcname;
 		if(pcel)
 			pcname = pcel->whoami();
-		ostrm << pcname << ")";
+		ostrm << pcname;
 		MGBCell::const_iterator ps = m_partners->begin(), pe = m_partners->end();
 		if (ps != pe) {
 			const MGPCell* pcel0 = *ps;

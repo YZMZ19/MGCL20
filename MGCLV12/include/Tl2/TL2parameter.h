@@ -38,7 +38,7 @@ class MGDrawParam;
 #define STRICT_CONCAVITY 0.0603	/// = 1-cos(20 degree)(160 degree open out of 360).
 #define COS_LOOSE_ZERO_ANGLE_M1 -.0000061/// = cos(.2 degree)-1(180.2 degree open).
 #define COS_LOOSE_ZERO_ANGLE2_M1 -.003805/// = cos(5 degree)-1(185. degree open).
-#define COS_SHARPANGLE_M1 -1.76446	     /// = cos(140 degree)-1(320 degree open).
+#define COS_SHARPANGLE_M1 -1.866025	     /// = cos(150 degree)-1(320 degree open).
 
 #define LARGE_RATIO 3.
 #define SMALL_RATIO 2.
@@ -59,7 +59,7 @@ public:
 friend std::ostream& operator<< (std::ostream& out, const mgTL2parameter& para);
 
 ///Default Constructor.
-mgTL2parameter():m_face(0),m_surface(0),m_Bpolylines(0){;};
+mgTL2parameter()=default;
 
 ///Constructor that specifies each parameter.
 mgTL2parameter(
@@ -118,22 +118,22 @@ mgTL2parameter& operator=(const mgTL2parameter&);
 
 private:
 
-	const MGFace* m_face;	///<Original face to tessellate.
-	const MGSurface* m_surface;///<Original surface to tessellate.
+	const MGFace* m_face{ nullptr };	///<Original face to tessellate.
+	const MGSurface* m_surface{ nullptr };///<Original surface to tessellate.
 							///<If m_face!=0, m_surface=m_face->surface();
-	double m_puerror, m_pverror;///<Parameter error used for intersection computation.
-	double m_uverror;///is sqrt(m_puerror*m_puerror+m_pverror*m_pverror);
-	double m_tess_crvError;	///<Tessellation curve tolerance.
-	double m_tess_srfError;	///<Tessellation surface tolerance.
-	double m_max_edge_len;	///<Maximum edge length of the tessallated rectangles.
-	double m_max_edge_len_sqr;	///<Square of m_max_edge_len.
-	const std::vector<SHLL_COM_EDGES>* m_Bpolylines;
+	const std::vector<SHLL_COM_EDGES>* m_Bpolylines{ nullptr };
 		///< Input polygonized polylines for the face boundaries.
 		///< polylines[i][j] is a j-th edge's polyline for face.loop(i),
 		///< must be MGLBRep of order 2.
 		///< polylines[i][j]=0 indicates loop i's edge j can be face's bounday and
 		///< has any common edges.
 		///< **polylines[i][j] must be the same direction as the faces's parameter edge.
+	double m_puerror, m_pverror;///<Parameter error used for intersection computation.
+	double m_uverror;///is sqrt(m_puerror*m_puerror+m_pverror*m_pverror);
+	double m_tess_crvError;	///<Tessellation curve tolerance.
+	double m_tess_srfError;	///<Tessellation surface tolerance.
+	double m_max_edge_len;	///<Maximum edge length of the tessallated rectangles.
+	double m_max_edge_len_sqr;	///<Square of m_max_edge_len.
 
 void build_parameter(
 	const MGFSurface& srf,

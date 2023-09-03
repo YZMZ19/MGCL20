@@ -49,6 +49,16 @@ class MGOfstream;
 class MG_DLL_DECLR MGStraight: public MGCurve{
 friend class MGCylinder;
 
+////////////Member data. メンバデータ//////////
+/// Parameterization of the MGStraight is as below using parameter t:
+/// point(t) = m_root_point + t*m_direction.
+
+MGPosition	    m_root_point;///<Root point. 基点
+MGVector		m_direction;///<Direction vector. 直線の方向ベクトル
+MGEReal			m_sparam;	///<Start point's parameter
+MGEReal		    m_endparam;	///<End point's parameter value. 
+mutable MGKnotVector* m_knotV;///<When knot_vector() is invoked, the knot vector is set.
+
 public:
 
 ///Translation.
@@ -179,9 +189,13 @@ MGStraight& operator*=(const MGTransf& tr);
 
 ///comparison
 bool operator==(const MGStraight& sl2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGStraight& gel2)const;
-bool operator<(const MGGel& gel2)const;
+std::partial_ordering operator<=>(const MGStraight& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const;
 
 ///Approximate this curve as a MGLBRep curve.
 
@@ -706,16 +720,6 @@ void ReadMembers(MGIfstream& buf);
 void WriteMembers(MGOfstream& buf) const;
 
 private:
-
-////////////Member data. メンバデータ//////////
-/// Parameterization of the MGStraight is as below using parameter t:
-/// point(t) = m_root_point + t*m_direction.
-
-	MGPosition	    m_root_point;///<Root point. 基点
-	MGVector		m_direction;///<Direction vector. 直線の方向ベクトル
-	MGEReal			m_sparam;	///<Start point's parameter
-	MGEReal		    m_endparam;	///<End point's parameter value. 
-	mutable MGKnotVector* m_knotV;///<When knot_vector() is invoked, the knot vector is set.
 
 ///Compute the closest point parameter value pair of this MGStraight and straight2.
 ///MGPosition P of the function return contains this and straight2's parameter

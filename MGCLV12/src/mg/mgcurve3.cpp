@@ -633,7 +633,7 @@ double MGCurve::getMaxCurvatureLengthApprox(
 	double delta = (te-ts)/double(TEST_NUMBER);
 	for(int i=0; i<TEST_NUMBER; i++, ts+=delta){
 		double curva= curvature(ts);
-		if(use_radius)
+		if(use_radius && !MGMZero(curva))
 			curva = 1./curva;
 		if(length<curva)
 			length = curva;

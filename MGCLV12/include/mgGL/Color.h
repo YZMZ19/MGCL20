@@ -6,12 +6,12 @@
 #pragma once
 
 #include "mgGL/GLAttrib.h"
-#include "mgGL/Pixel.h"
 
 class MGOfstream;
 class MGIfstream;
 class MGColors;
 class mgVBO;
+class MGPixel;
 
 //
 //Define MGColor Class.
@@ -175,6 +175,11 @@ enum ColorID{
     YellowGreen          ,
 	endID
 };
+
+/// <summary>
+/// Get the ColorID instance, then exec the color.
+/// </summary>
+static void colorExec(ColorID id);
 
 MGColor():MGGLAttrib(static_cast<int>(mgGLMode::UNDEFINED)){;};
 

@@ -27,12 +27,6 @@ MG_DLL_DECLR friend MGEReal operator+ (double, const MGEReal&);
 MG_DLL_DECLR friend MGEReal operator- (double, const MGEReal&);
 MG_DLL_DECLR friend MGEReal operator* (double, const MGEReal&);
 MG_DLL_DECLR friend MGEReal operator/ (double, const MGEReal&);
-MG_DLL_DECLR friend bool operator== (double, const MGEReal&);
-MG_DLL_DECLR friend bool operator!= (double, const MGEReal&);
-MG_DLL_DECLR friend bool operator> (double, const MGEReal&);
-MG_DLL_DECLR friend bool operator< (double, const MGEReal&);
-MG_DLL_DECLR friend bool operator>= (double, const MGEReal&);
-MG_DLL_DECLR friend bool operator<= (double, const MGEReal&);
 
 ///String stream Function.
 MG_DLL_DECLR friend std::ostream& operator<< (std::ostream&, const MGEReal& );
@@ -79,22 +73,11 @@ MGEReal operator/ (const MGEReal&) const;
 MGEReal& operator/= (double);
 MGEReal& operator/= (const MGEReal&);
 
-bool operator== (double t) const;
-bool operator== (const MGEReal&) const;
-
-bool operator!= (double t) const{return !((*this)==t);};
-bool operator!= (const MGEReal& er2) const{return !((*this)==er2);};
-
-bool operator> (double t) const;
-bool operator> (const MGEReal&) const;
-
-bool operator< (double t) const;
-bool operator< (const MGEReal& er2) const{return er2>(*this);};
-
-bool operator>= (const MGEReal& er2)const;
-bool operator<= (const MGEReal& er2)const{return er2>=(*this);};
-bool operator>= (double t) const;
-bool operator<= (double t) const;
+///Comparison
+bool operator== (const MGEReal& r2) const;
+auto operator<=> (const MGEReal& r2) const->std::partial_ordering;
+bool operator== (const double t) const;
+auto operator<=> (const double t) const->std::partial_ordering;
 
 ////////////Member Function////////////
 

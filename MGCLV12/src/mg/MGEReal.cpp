@@ -209,65 +209,34 @@ bool MGEReal::operator==(const MGEReal& er2) const{
 		return true;
 	return m_value==er2.m_value;
 }
-bool operator==(double t,const MGEReal& er2){
-	return er2==t;
-}
-bool operator!=(double t,const MGEReal& er2){
-	return !(operator==(t,er2));
-}
 
-bool MGEReal::operator>(double t) const{
+auto MGEReal::operator<=>(double t) const->std::partial_ordering {
 	if(plus_infinite())
-		return true;
+		return std::partial_ordering::greater;
 	else if(minus_infinite())
-		return false;
-	return m_value>t;
+		return std::partial_ordering::less;
+	return m_value<=>t;
 }
-bool MGEReal::operator>(const MGEReal& er2)const{
-	int infinite2=er2.infinite_coef();
-	if(infinite2){
-		int infinite1=infinite_coef();
-		if(infinite1)
-			return(infinite1>infinite2);
-		if(infinite2<0)
-			return true;
-		return false;
-	}else
-		return (*this)>er2.m_value;
+auto MGEReal::operator<=> (const MGEReal& r2) const->std::partial_ordering {
+	int infinite1 = infinite_coef();
+	int infinite2=r2.infinite_coef();
+	auto c = infinite1 <=> infinite2;
+	if (c != 0 || infinite1)
+		return c;
+	return m_value <=> r2.m_value;
+}
+/*
+bool operator==(double t, const MGEReal& er2) {
+	return er2 == t;
+}
+bool operator!=(double t, const MGEReal& er2) {
+	return !(operator==(t, er2));
 }
 bool operator>(double t,const MGEReal& er2){
 	return er2<t;
 }
-
-bool MGEReal::operator<(double t) const{
-	if(plus_infinite())
-		return false;
-	else if(minus_infinite())
-		return true;
-	return m_value<t;
-}
 bool operator<(double t,const MGEReal& er2){
 	return er2>t;
-}
-
-bool MGEReal::operator>=(double t) const{
-	if(plus_infinite())
-		return true;
-	if(minus_infinite())
-    	return false;
-	return (m_value>=t);
-}
-
-bool MGEReal::operator>=(const MGEReal& er2) const{
-	if(plus_infinite())
-		return true;
-	if(er2.minus_infinite())
-		return true;
-	if(minus_infinite())
-    	return false;
-	if(er2.plus_infinite())
-		return false;
-	return (m_value>=er2.m_value);
 }
 bool operator>= (double t,const MGEReal& er2){
 	return (er2<=t);
@@ -275,14 +244,7 @@ bool operator>= (double t,const MGEReal& er2){
 bool operator<= (double t,const MGEReal& er2){
 	return er2>=t;
 }
-bool MGEReal::operator<= (double t) const{
-	if(plus_infinite())
-		return false;
-	if(minus_infinite())
-    	return true;
-	return (m_value<=t);
-}
-
+*/
 bool MGEReal::equal_base(double t, double base)const{
 	if(infinite())
 		return false;

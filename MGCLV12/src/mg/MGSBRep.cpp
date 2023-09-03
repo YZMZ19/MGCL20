@@ -1246,16 +1246,13 @@ bool MGSBRep::operator==(const MGRSBRep& gel2)const{
 
 // ó^ã»ñ Ç∆é©êgÇ™ìôÇµÇ¢Ç©ÇÃî‰ärîªíËÇçsÇ§ÅB
 bool MGSBRep::operator== (const MGSBRep& brep2) const{
-	if(m_uknot != brep2.m_uknot)
-		return 0;
-	if(m_vknot != brep2.m_vknot)
-		return 0;
-	if(m_surface_bcoef != brep2.m_surface_bcoef)
-		return 0;
-
-	return 1;
+	return 
+		m_uknot == brep2.m_uknot &&
+		m_vknot == brep2.m_vknot &&
+		m_surface_bcoef == brep2.m_surface_bcoef;
 }
-bool MGSBRep::operator<(const MGSBRep& gel2)const{
+
+std::partial_ordering MGSBRep::operator<=>(const MGSBRep& gel2)const{
 	int nu1=bdim_u(), nu2=gel2.bdim_u();
 	if(nu1==nu2){
 		int nv1=bdim_v(), nv2=gel2.bdim_v();
@@ -1267,30 +1264,22 @@ bool MGSBRep::operator<(const MGSBRep& gel2)const{
 					v1(i)=m_surface_bcoef.ref(0,0,i);
 					v2(i)=gel2.m_surface_bcoef.ref(0,0,i);
 				}
-				return v1.len()<v2.len();
+				return v1.len()<=>v2.len();
 			}else
-				return nsd1<nsd2;
+				return nsd1<=>nsd2;
 		}else
-			return nv1<nv2;
+			return nv1<=>nv2;
 	}else
-		return nu1<nu2;
+		return nu1<=>nu2;
 }
-bool MGSBRep::operator==(const MGGel& gel2)const{
-	const MGSBRep* gel2_is_this=dynamic_cast<const MGSBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	else{
-		const MGRSBRep* gel2_is_rsb=dynamic_cast<const MGRSBRep*>(&gel2);
-		if(gel2_is_rsb)
-			return operator==(*gel2_is_rsb);
-	}
-	return false;
+
+bool MGSBRep::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGSBRep&>(g2) : false;
 }
-bool MGSBRep::operator<(const MGGel& gel2)const{
-	const MGSBRep* gel2_is_this=dynamic_cast<const MGSBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGSBRep::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGSBRep&>(g2) : c;
 }
 
 //Compute data points and m_uknot and m_vknot from point sequence.

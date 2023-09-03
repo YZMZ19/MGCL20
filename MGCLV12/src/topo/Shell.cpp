@@ -109,15 +109,21 @@ MGShell MGShell::operator* (const MGTransf& tr) const{
 	return shell2;
 }
 
-bool MGShell::operator<(const MGShell& gel2)const{
-	return MGComplex::operator<(gel2);
+///comparison
+bool MGShell::operator==(const MGShell& s2)const{
+	return this == &s2;
+}
+std::partial_ordering MGShell::operator<=>(const MGShell& s2)const {
+	return this <=> &s2;
 }
 
-bool MGShell::operator<(const MGGel& gel2)const{
-	const MGShell* gel2_is_this=dynamic_cast<const MGShell*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+bool MGShell::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGShell&>(g2) : false;
+}
+std::partial_ordering MGShell::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGShell&>(g2) : c;
 }
 
 MGShell& MGShell::operator=(const MGGel& gel2){
@@ -309,7 +315,7 @@ bool MGShell::merge_at_common_edge(MGFace* face){
 
 //Debug Function
 std::ostream& MGShell::toString(std::ostream& ostrm) const{
-	ostrm<<"<<MGShell="<<(const MGGel*)this<<", ";
+	ostrm<<"<<MGShell="<<(const MGGel*)this;
 	MGComplex::toString(ostrm);
 	ostrm<<"=MGShell>>"<<std::endl;
 	return ostrm;

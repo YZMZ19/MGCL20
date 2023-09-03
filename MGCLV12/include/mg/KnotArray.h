@@ -36,9 +36,6 @@ typedef MYVEC::const_iterator         const_iterator;
 typedef MYVEC::size_type              size_type;
 typedef MYVEC::difference_type        difference_type;
 typedef MYVEC::value_type             value_type;
-typedef MYVEC::allocator_type         allocator_type;
-typedef allocator_type::pointer       pointer;
-typedef allocator_type::const_pointer const_pointer;
 typedef MYVEC::reverse_iterator       reverse_iterator;
 typedef MYVEC::const_reverse_iterator const_reverse_iterator;
 

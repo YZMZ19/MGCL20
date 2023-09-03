@@ -378,19 +378,17 @@ MG_DLL_DECLR bool get_real(
 	float& floatData	///<converted real data from istrm will be output.
 );
 
+
 #ifndef _CONSOLE
 
 ///Shut down the MGCL. Currently only invokes Gdiplus::GdiplusShutdown.
-void MG_DLL_DECLR shut_down();
+void MG_DLL_DECLR GdiplusShutdown();
 
 ///Start up the MGCL.
 
 ///This is necessary only when classes MGIgesxxxx, MGImage, or MGTexturexxxxx is
-///to use. Before use of GDIplus, GdiStartUp is necessary, this start_up will do it.
-///Currently start_up() only invokes Gdiplus::GdiplusStartup.
-void MG_DLL_DECLR start_up(
-	bool need_to_GdiStartUp = false	///<True if GdiplusStartUp is necessary.
-);
+///to use. Before use of GDIplus, GdiStartUp is necessary.
+void MG_DLL_DECLR GdiStartUp();
 
 ///@cond
 static ULONG_PTR m_gdiplusToken;///<a token to pass GdiplusShutdown.

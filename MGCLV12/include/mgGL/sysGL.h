@@ -96,7 +96,7 @@ void set_object_id(const MGGel* oi){m_gel=oi;};
 private:
 
 	int m_fucntion_id;///<fucntion code.
-	const MGGel* m_gel;		///<Object id. When more than 1 objects are concerned, 
+	const MGGel* m_gel;	///<Object id. When more than 1 objects are concerned, 
 						///<mgSysGL class will be inheritted and the subclass
 						///<will retain the objcets.
 };

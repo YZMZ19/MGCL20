@@ -169,7 +169,7 @@ void mgTL2LPlines::tessellate4()const {
 		t4Side22(numEdgeTwoPoint, eidMin, eidMax);
 		return;
 	}
-	if (concavity == SHARP) {
+	if (nlines<=4 && concavity == SHARP) {
 		tessellateSharp(convexVID);
 		return;
 	}

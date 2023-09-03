@@ -575,22 +575,20 @@ MGSurfCurve& MGSurfCurve::operator=(MGGel&& gel2){
 bool MGSurfCurve::operator==(const MGSurfCurve& crv)const{
 	return (m_surface==crv.m_surface) && (m_curve==crv.m_curve);
 }
-bool MGSurfCurve::operator<(const MGSurfCurve& gel2)const{
+std::partial_ordering MGSurfCurve::operator<=>(const MGSurfCurve& gel2)const{
 	if(m_surface==gel2.m_surface)
-		return m_curve<gel2.m_curve;
-    return (*m_surface)<*(gel2.m_surface);
+		return m_curve<=>gel2.m_curve;
+    return m_surface->ordering_test(*(gel2.m_surface));
 }
-bool MGSurfCurve::operator==(const MGGel& gel2)const{
+bool MGSurfCurve::equal_test(const MGGel& gel2)const{
 	const MGSurfCurve* gel2_is_this=dynamic_cast<const MGSurfCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+	assert(gel2_is_this);
+	return operator==(*gel2_is_this);
 }
-bool MGSurfCurve::operator<(const MGGel& gel2)const{
+std::partial_ordering MGSurfCurve::ordering_test(const MGGel& gel2)const{
 	const MGSurfCurve* gel2_is_this=dynamic_cast<const MGSurfCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+	assert(gel2_is_this);
+	return operator<=>(*gel2_is_this);
 }
 
 //Obtain parameter value if this curve is negated by "negate()".

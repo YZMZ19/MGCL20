@@ -47,10 +47,8 @@ MGGelPositions::MGGelPositions(const MGPickObjects& gelp)
 // Output virtual function.
 std::ostream& operator<<(std::ostream& ostrm, const MGGelPositions& gelps){
 	ostrm<<"MGGelPositions::number of gelps="<<gelps.size()<<std::endl;
-	MGGelPositions::const_iterator i=gelps.begin(), ie=gelps.end();	
-	for(int j=0; i!=ie; i++, j++){
-		ostrm<<"gelp-"<<j<<":"<<(*i)<<std::endl;
-	}
+	for(int j=0; auto& gelp:gelps)
+		ostrm<<"gelp-"<<j++<<":"<<gelp<<std::endl;
 	return ostrm;
 }
 

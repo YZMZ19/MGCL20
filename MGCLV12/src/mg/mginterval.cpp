@@ -79,18 +79,37 @@ void MGInterval::change_range(
 ///Test if this finite interval includes the value,
 ///taking the relative error of the interval into the account.
 bool MGInterval::includes(double t)const{
-	double low=m_low, high=m_high;
-	double error= relative_error();
-	if(finite()){
-		double len=high-low;
-		error*=len;
-		return (low-error<t && t<high+error);
+	if (finite()) {
+		if (m_low <= t && t <= m_high)
+			return true;
+		double error = relative_error();
+		return (m_low - error <= t && t <= m_high + error);
 	}
-	if(finite_above())
-		return t<high+error;
-	if(finite_below())
-		return low-error<t;
+
+	if (finite_above()) {
+		if (t <= m_high)
+			return true;
+		double error = relative_error();
+		return t <= m_high + error;
+	}
+	if (finite_below()) {
+		if (m_low <=t)
+			return true;
+		double error = relative_error();
+		return m_low - error <= t;
+	}
 	return true;
+}
+///Test if this finite interval includes the value,
+///taking the relative error of the interval into the account.
+bool MGInterval::includes(const MGEReal& t)const {
+	if (t.plus_infinite())
+		return infinite_above();
+	
+	else if (t.minus_infinite())
+		return infinite_below();
+	
+	return includes(t.m_value);
 }
 
 //Compute relative error of the interval.
@@ -98,10 +117,15 @@ double MGInterval::relative_error() const{
 	if (empty())
 		return 0.;
 
+	double errorMin = MGTolerance::rc_zero();
 	MGEReal span=m_high-m_low;
-	if(span.finite())
-		return span.value()*MGTolerance::rc_zero();
-	return MGTolerance::rc_zero();
+	double error = errorMin;
+	if (span.finite()) {
+		double error2 = span.value() * errorMin;
+		errorMin *= .5;//.5 ???
+		error= (error2 > errorMin)  ? error2 : errorMin;
+	}
+	return error;
 }
 
 ///Set the interval length to len so that the midpoint does not change.
@@ -397,7 +421,7 @@ bool MGInterval::operator&& (const MGInterval& i2)const{
 //  ‚ÌInterval‚Ì‰º’[‚æ‚è‘å‚«‚­A—^‚¦‚ç‚ê‚½Interval‚Ìã’[‚ªŽ©g‚Ì
 //  Interval‚Ìã’[‚æ‚è‚à¬‚³‚¢Žž True(1) ‚ð•Ô‹p‚·‚éB
 //  ‚Ü‚½A—¼•û‚ÌInterval‚ª empty ‚ÌŽž True(1) ‚ð•Ô‹p‚·‚éB
-bool MGInterval::operator>> (const MGInterval& i2) const{
+bool MGInterval::includes(const MGInterval& i2) const {
 	if(i2.empty())
 		return true;
 	if(empty())
@@ -414,60 +438,53 @@ bool MGInterval::operator== (const MGInterval& i2) const{
 		double low2=i2.low_point(), high2=i2.high_point();
 		double span=high1-low1;
 		double span2=high2-low2;
-		if(span<span2) span=span2;
+		if(span<span2)
+			span=span2;
 		if(span<=mzero)
 			return MGREqual(low1,low2);
-		return MGRZero2(low1-low2,span)&&MGRZero2(high1-high2,span);
-	}else return (m_low==i2.m_low && m_high==i2.m_high);
+		return
+			MGRZero2(low1-low2,span) && MGRZero2(high1-high2,span);
+	}else
+		return (m_low==i2.m_low && m_high==i2.m_high);
+}
+auto MGInterval::operator<=> (const MGInterval& i2) const->std::partial_ordering {
+	if (m_high < i2.m_low)
+		return std::partial_ordering::less;
+	if(i2.m_high<m_low)
+		return std::partial_ordering::greater;
+	if(operator==(i2))
+		return std::partial_ordering::equivalent;
+
+	return std::partial_ordering::unordered;
 }
 
-//  ‚Q‚Â‚ÌInterval‚ª“¯ˆê‚©‚Ç‚¤‚©‚ð”»’è‚·‚éB
-//  “¯ˆê‚Å‚È‚¢ Žž True(1) ‚ð•Ô‹p
-bool MGInterval::operator != (const MGInterval& i2) const{
-	return !(*this==i2);
+bool MGInterval::operator== (const MGEReal& i2) const {
+	return  includes(i2);
+}
+bool MGInterval::operator== (double t) const {
+	return  includes(t);
 }
 
-//  ŽZp“I”äŠr
-bool MGInterval::operator < (const MGInterval& i2) const{
-	return (m_low<i2.m_low && m_high<i2.m_high);
-}
-bool MGInterval::operator< (const MGEReal& value) const{
-	return (m_high<value);
-}
-bool MGInterval::operator> (const MGInterval& i2) const{
-	return (m_low>i2.m_low && m_high>i2.m_high);
-}
-bool MGInterval::operator> (const MGEReal& value) const{
-	return (m_low>value);
-}
-bool MGInterval::operator<= (const MGInterval& i2) const{
-	return *this==i2 || *this<i2;
-}
-bool MGInterval::operator<= (const MGEReal& value) const{
-	return m_high<=value;
-}
-bool MGInterval::operator>= (const MGInterval& i2) const{
-	return *this==i2 || *this>i2;
-}         
-bool MGInterval::operator>= (const MGEReal& value) const{
-	return m_low>=value;
-}
+std::partial_ordering  MGInterval::operator<=> (const MGEReal& i2) const{
+	if(includes(i2))
+		return std::partial_ordering::equivalent;
 
-bool operator>(const MGEReal& t, const MGInterval& i){return i<t;}
-bool operator<(const MGEReal& t, const MGInterval& i){return i>t;}
-bool operator>=(const MGEReal& t, const MGInterval& i){return i<=t;}
-bool operator<=(const MGEReal& t, const MGInterval& i){return i>=t;}
+	if(m_low>i2)
+		return std::partial_ordering::greater;
+	if (m_high < i2)
+		return std::partial_ordering::less;
+	return std::partial_ordering::unordered;//never take place.
+}
+auto MGInterval::operator<=> (double t) const->std::partial_ordering{
+	if (includes(t))
+		return std::partial_ordering::equivalent;
 
-bool MGInterval::operator< (double t) const{
-	if(m_high.plus_infinite()) return false;
-	return m_high.m_value<t;
+	if (m_low > t)
+		return std::partial_ordering::greater;
+	if (m_high < t)
+		return std::partial_ordering::less;
+	return std::partial_ordering::unordered;//never take place.
 }
-bool operator>(double t, const MGInterval& i){return i<t;}
-bool MGInterval::operator> (double t) const{
-	if(m_low.minus_infinite()) return false;
-	return m_low.m_value>t;
-}
-bool operator<(double t, const MGInterval& i){return i>t;}
 
 //Global Function
 

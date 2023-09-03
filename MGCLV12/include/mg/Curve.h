@@ -100,12 +100,6 @@ virtual MGCurve& operator*=(double scale)=0;
 virtual MGCurve& operator*=(const MGMatrix& mat)=0;
 virtual MGCurve& operator*=(const MGTransf& tr)=0;
 
-///Comparison.
-virtual bool operator==(const MGCompositeCurve& crv)const;
-virtual bool operator==(const MGTrimmedCurve& crv)const;
-virtual bool operator==(const MGGel& gel2)const=0;
-virtual bool operator<(const MGGel& gel2)const=0;
-
 //////////// Member Function ////////////
 
 ///Approximate this curve as a MGLBRep.
@@ -1011,7 +1005,6 @@ virtual MGSurface* sweep(
 ) const =0;
 
 ///Return tangent point from a point P, given guess starting paramter tg.
-
 ///Searching is done only from t0 to t1.
 virtual int tangent_guess(
 	double t0,///< parameter range of this, starting.

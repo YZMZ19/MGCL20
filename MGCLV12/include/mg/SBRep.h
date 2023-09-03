@@ -105,13 +105,16 @@ MGSBRep& operator*=(const MGMatrix& mat);
 MGSBRep& operator*=(const MGTransf& tr);
 
 ///Comparison of two objects.
-bool operator==(const MGSBRep& gel2)const;
-bool operator<(const MGSBRep& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGGel& gel2)const;
-bool operator!=(const MGGel& gel2)const{return !(gel2==(*this));};
-bool operator!=(const MGSBRep& gel2)const{return !(gel2==(*this));};
 bool operator==(const MGRSBRep& gel2)const;
+
+bool operator==(const MGSBRep& gel2)const;
+std::partial_ordering operator<=>(const MGSBRep& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Set(update) the knot vector, KV=MGKnotVector.
 ///This is move operation conforming.

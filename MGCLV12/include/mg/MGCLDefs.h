@@ -54,6 +54,7 @@ using tostream=std::basic_ostream<TCHAR>;
 using tistream=std::basic_istream<TCHAR>;
 using tifstream=std::basic_ifstream<TCHAR>;
 using tofstream=std::basic_ofstream<TCHAR>;
+
 using UniqueGel = std::unique_ptr<MGGel>;
 using UniqueObject = std::unique_ptr<MGObject>;
 using UniqueStl = std::unique_ptr<MGStl>;

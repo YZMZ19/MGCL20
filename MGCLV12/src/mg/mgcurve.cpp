@@ -48,15 +48,6 @@ MGCurve::MGCurve(const MGCurve& curve):MGGeometry(curve){;}
 // 仮想デストラクタ
 MGCurve::~MGCurve(){;}
 
-//Test if two curves are equal.
-// 与曲線と自身が等しいかの比較判定を行う。
-bool MGCurve::operator== (const MGCompositeCurve& crv) const{
-	return crv.is_same_curve(*this);
-}
-bool MGCurve::operator== (const MGTrimmedCurve& crv) const{
-	return crv.is_same_curve(*this);
-}
-
 ///Compute the nearest point from input point on this curve's (x,y) 2D part.
 double MGCurve::closest2D(const MGPosition& point)const{
 	double x=point[0], y=point[1];
@@ -1228,7 +1219,7 @@ void MGCurve::negate_transform(MGGeometry& boundary) const{
 	MGPoint* param=dynamic_cast<MGPoint*>(&boundary);
 	double t=param->position().ref(0);
 	t=negate_param(t);
-	boundary=MGPoint(MGPosition(1,&t));
+	*param=MGPoint(MGPosition(1,&t));
 }
 
 // 点がCurve上にあるか調べる。Curve上であれば，そのパラメータ値を，

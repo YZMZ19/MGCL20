@@ -49,7 +49,7 @@ void MGFace::getTrimCrv(
 		std::unique_ptr<MGCurve> atpCrv(ei.curve_limitted());
 
 		//エッジが与えられたボックスに含まれるときの処理
-		if(box >> boxEdge){
+		if(box.includes(boxEdge)) {
 			//When boxEdge is included in box.
 			vecCrv.emplace_back(atpCrv.release());
 			continue;
@@ -77,7 +77,7 @@ void MGFace::getTrimCrv(
 			double t0=*param_iter, t1=*next_param_iter;
 			double tmid=(t0+t1)*.5;//中間パラメータ
 			MGPosition UVPos = atpCrv->eval(tmid);//面上パラメータ
-			if(box >> UVPos)
+			if(box.includes(UVPos))
 				vecCrv.emplace_back(atpCrv->part(t0,t1));
 		}
 	}

@@ -179,7 +179,7 @@ virtual MGComplex* free_boundary(const MGComplex* bound)=0;
 virtual std::vector<const MGPCell*> getBoundaryPcells()const=0;
 
 ///Cell comparison.
-bool compare(const MGCell& cell2)const;
+bool isLessThan(const MGCell& cell2)const;
 
 ///Read Object's member data.
 virtual void ReadMembers(MGIfstream& buf);

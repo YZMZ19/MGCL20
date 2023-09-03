@@ -10,6 +10,7 @@
 #include "mgGL/Color.h"
 #include "mgGL/Appearance.h"
 #include "mgGL/VBO.h"
+#include "mgGL/Pixel.h"
 
 #if defined(_DEBUG)
 #define new DEBUG_NEW
@@ -411,4 +412,11 @@ void MGColor::ReadMembers(MGIfstream& buf){
 	MGGLAttrib::ReadMembers(buf);
 	if(undefined()) return;
 	for(int i=0; i<4; i++) buf>>m_color[i];
+}
+
+/// <summary>
+/// Get the ColorID instance, then exec the color.
+/// </summary>
+void MGColor::colorExec(ColorID id){
+    MGColor::get_instance(id).exec();
 }

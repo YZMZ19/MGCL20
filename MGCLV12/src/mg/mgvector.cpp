@@ -380,17 +380,28 @@ MGVector& MGVector::operator/= (double scalar){
 
 // 与えられたベクトルの成分の値を比較し、同じであれば TRUE を返却
 //Test if two vectors are equal.
-bool operator==(const MGVector& v1,const MGVector& v2){
+bool MGVector::operator==(const MGVector& v2)const{
+	const MGVector& v1=*this;
 	// ベクトルの差分を取得し、そのベクトルが０ベクトルの時等しい
 	double len1=v1.len(), len2=v2.len();
 	double dif=(v1 - v2 ).len();
 	if(len1>=len2){
-		if(len1<=MGTolerance::mach_zero()) return 1;
-		else return MGRZero2(dif,len1);
+		if(len1<=MGTolerance::mach_zero())
+			return true;
+		else
+			return MGRZero2(dif,len1);
 	}else{
-		if(len2<=MGTolerance::mach_zero()) return 1;
-		else return MGRZero2(dif,len2);
+		if(len2<=MGTolerance::mach_zero())
+			return true;
+		else
+			return MGRZero2(dif,len2);
 	}
+}
+std::partial_ordering MGVector::operator<=>(const MGVector& v2)const {
+	if (*this == v2)
+		return std::partial_ordering::equivalent;
+	double len1 = len(), len2 = v2.len();
+	return len1 <=> len2;
 }
 
 //Member Function
@@ -547,6 +558,7 @@ bool MGVector::is_collinear(
 
 // ベクトルの長さを返却する 
 double MGVector::len() const {
+	std::lock_guard<std::mutex> g(m);//For thread safety
 	if(m_length < 0.){
 		double a=0., b;
 		for(int i=0; i<m_sdim; i++){

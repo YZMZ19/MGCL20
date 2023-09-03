@@ -115,7 +115,7 @@ MGCSisects MGSBRep::isectSl(
 			MGPosition Puv=eval(uv);
 			double t=sl.closest(Puv);
 			if(isect_guess_straight(sl,t,uv,t,uv)){
-					if(uvbox_is_null || uvbox>>uv)
+					if(uvbox_is_null || uvbox.includes(uv))
 						list.append(sl.eval(t),t,uv);
 			}
 		}

@@ -30,8 +30,6 @@ class MG_DLL_DECLR MGPoint:public MGGeometry{
 public:
 
 //////////// Constructor ////////////
-
-///Void constructor(初期化なしでオブジェクトを作成する。)
 MGPoint()=default;
 ~MGPoint()=default;
 MGPoint(const MGPoint&)=default;
@@ -74,12 +72,14 @@ MGPoint& operator*=(const MGTransf& tr);
 ////////////Logical operator overload/////////
 
 ///comparison
-bool operator==(const MGPoint& point)const;
-bool operator<(const MGPoint& gel2)const;
-bool operator==(const MGGel& gel2)const{return gel2==(*this);};
-bool operator!=(const MGGel& gel2)const{return !(gel2==(*this));};
-bool operator!=(const MGPoint& gel2)const{return !(gel2==(*this));};
-bool operator<(const MGGel& gel2)const{return gel2>(*this);};
+bool operator==(const MGPoint& p2)const;
+std::partial_ordering operator<=>(const MGPoint& p2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ////////// Member Function ////////////
 

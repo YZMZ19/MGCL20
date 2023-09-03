@@ -32,6 +32,13 @@ class MGOfstream;
 /// MGBox expresses n-dimensional space range using MGInterval, which is
 /// one dimension range of double values. All of the MGObject's have box.
 class MG_DLL_DECLR MGBox{
+	///Member Data
+	MGInterval m_rData[3];	///<Coordinate Range work area when m_sdim<=3.
+	int m_sdim=0;			///<Space dimension of this box,
+	///<m_range's length may differ from m_sdim,
+	///<That is, m_sdim<=m_range's length.
+	MGInterval* m_range=nullptr;///<If m_sdim<=3, the area of m_rData will be used,
+	///<If m_sdim>3, newed area will be used.
 
 public:
 
@@ -47,12 +54,16 @@ MG_DLL_DECLR friend std::ostream& operator<< (std::ostream&, const MGBox&);
 
 
 ////////Special member functions/////////
-explicit MGBox(int dim=0):m_sdim(0), m_range(0){if(dim) get_area(dim);};
+explicit MGBox(int dim=0):m_sdim(0), m_range(nullptr){if(dim) get_area(dim);};
 ~MGBox(){if(m_sdim>3) delete[] m_range;};
 MGBox(const MGBox& rhs);//Copy constructor.
 MGBox& operator=(const MGBox& rhs);//Copy assignment.
 MGBox(MGBox&& rhs);//Move constructor.
 MGBox& operator=(MGBox&& rhs);//Move assignment.
+
+///Comparison
+bool operator== (const MGBox& box2) const;
+auto operator<=> (const MGBox& box2) const->std::partial_ordering;
 
 ///Construct 2D Box, given x and y intervals.
 ///ｘ，ｙの各インターバルを指定して2D Boxを生成する。
@@ -70,7 +81,7 @@ MGBox(const MGPosition& center, double* size);
 ///Construct Box, given center point and a size of each coordinates.
 ///中心点と幅を指定しBoxを生成する（すべての辺にたいして同一の値）。
 ///The size is applied to all the coordinates.
-MGBox(const MGPosition& center, double size=0.);
+explicit MGBox(const MGPosition& center, double size=0.);
 
 ///Construct Box, given two points.
 ///２点からBoxを生成する。
@@ -179,32 +190,17 @@ MGBox operator& ( const MGBox& ) const;
 ///自身のBoxとする。
 MGBox& operator &= ( const MGBox& );
 
-///Equal and not equal operations of two boxes.
-///自身と与えられたBoxが等しいかどうかを返却する。
-///一方のBoxの全ての辺がもう一方の相当する辺に重なる場合 
-///TRUE を返却する。
-bool operator== (const MGBox& box2) const;
-bool operator!= (const MGBox& box2) const{return !(*this==box2);}
-
 ///与えられたポジションが自身のBox内に含まれているか返却する。
 ///ポジションがBox内にある場合 TRUE を返却する。
 ///完全にポジションが自身のBox内にある場合、含まれるとみなす。
 ///Returns true if the box includes the position.
-bool operator >> (const MGPosition&) const;
+bool includes(const MGPosition& uv)const;
 
 ///Returns true if the box includes the second box.
 ///自身のBoxが与えられたBoxを囲んでいるか返却する。
 ///与えられたBoxが自身のBox内にある場合 TRUE を返却する。
 ///与えられたBoxがNULL の場合は、FALSE 。
-bool operator>> (const MGBox&) const;
-
-///Returns true if the box does not includes the position.
-///与えられたポジションが自身のBoxの範囲外にあるかどうか返却する。
-bool operator<< (const MGPosition& pt) const{return !((*this)>>pt);}
-
-///Returns true if the box does not include the second box.
-///与えられたBoxが自身のBoxを囲んでいるかどうか返却する。 
-bool operator<< (const MGBox& box2) const{return box2>>(*this);}
+bool includes (const MGBox&) const;
 
 ////////Member Function////////
 
@@ -268,9 +264,6 @@ MGPosition mid() const;
 ///原点が自身のBox内に含まれているか返却する。
 bool includes_origin()const;
 
-///Test if the point P is included in this box.
-bool includes(const MGPosition& P)const{return operator>>(P);};
-
 ///Test if this is null box.
 bool is_null()const{return m_sdim==0;}
 
@@ -313,13 +306,6 @@ MGINTERVAL_TYPE type(int i) const {
 std::vector<MGPosition> vertex() const;
 
 private:
-///Member Data
-	MGInterval m_rData[3];	///<Coordinate Range work area when m_sdim<=3.
-	int m_sdim;			///<Space dimension of this box,
-			///<m_range's length may differ from m_sdim,
-			///<That is, m_sdim<=m_range's length.
-	MGInterval* m_range;///<If m_sdim<=3, the area of m_rData will be used,
-						///<If m_sdim>3, newed area will be used.
 
 ///Test if the straight line sl is crossing this box or not.
 ///Function's return value is true if a part of sl is included in this box,

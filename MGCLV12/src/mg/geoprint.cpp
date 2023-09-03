@@ -61,7 +61,7 @@ using namespace std;
 //////////// MGObject ////////////
 // Output function.
 ostream& MGObject::toString(std::ostream& ostrm) const{
-	ostrm << ", "<<whoami()<<"'s box=" << m_box;
+	ostrm << ", "<<whoami()<< "." << m_box;
 	if(m_appearance)
 		ostrm<<","<<(*m_appearance);
 
@@ -100,12 +100,12 @@ ostream& MGCompositeCurve::toString(ostream& ostrm) const{
 	ostrm<<"MGCompositeCurve::"<<this;
 	MGCurve::toString(ostrm);
 
-	ostrm<<",number_of_curves="<<number_of_curves()<<endl;
+	ostrm<<", number_of_curves="<<number_of_curves();
 	deque<MGCurve*>::const_iterator
 		i=m_composite.begin(), ie=m_composite.end();
 	int j=0;
 	for(; i!=ie; i++,j++)
-		ostrm<<"Curve"<<j<<"::"<<(**i);
+		ostrm<<endl <<"Curve-"<<j<<"::"<<(**i);
 	return ostrm;
 }
 
@@ -117,17 +117,17 @@ ostream& MGEllipse::toString(ostream& ostrm) const{
 	MGCurve::toString(ostrm);
 
 	double t0=m_prange[0], t1=m_prange[1];
-	ostrm<<",circle="<<(int)m_circle
-		<<",r="<<m_r
-		<<",center="<<m_center<<endl
-		<<",normal="<<m_normal
-		<<",m="<<m_m
-		<<",n="<<m_n<<endl
-		<<",prange=("<<t0<<","<<t1<<")"
-		<<" ,start="<<eval(t0)
-		<<" ,end="<<eval(t1);
+	ostrm<<", circle="<<(int)m_circle
+		<<", r="<<m_r
+		<<", center="<<m_center<<endl
+		<<", normal="<<m_normal
+		<<", m="<<m_m
+		<<", n="<<m_n<<endl
+		<<", prange=("<<t0<<","<<t1<<")"
+		<<" , start="<<eval(t0)
+		<<" , end="<<eval(t1);
 	if(m_gprange)
-		ostrm<<endl<<",gprange=("<<m_gprange[0]<<","<<m_gprange[1]<<")";
+		ostrm<<endl<<", gprange=("<<m_gprange[0]<<","<<m_gprange[1]<<")";
 	return ostrm;
 }
 
@@ -136,9 +136,9 @@ ostream& MGLBRep::toString(ostream& ostrm) const{
 	ostrm<<"MGLBRep::"<<this;
 	MGCurve::toString(ostrm);
 
-	ostrm<<",Space Dimension="<<sdim()<<endl;
-	ostrm<<","<<knot_vector();
-	ostrm<<","<<line_bcoef();
+	ostrm<<", Space Dim="<<sdim()<<endl;
+	ostrm<<", "<<knot_vector();
+	ostrm<<", "<<line_bcoef();
 	return ostrm;
 }
 
@@ -147,9 +147,9 @@ ostream& MGRLBRep::toString(ostream& ostrm) const{
 	ostrm<<"MGRLBRep(non homogeneous form)::"<<this;
 	MGCurve::toString(ostrm);
 
-	ostrm<<",Space Dimension="<<sdim()<<endl;
-	ostrm<<","<<knot_vector();
-	ostrm<<","<<non_homogeneous_bcoef();
+	ostrm<<", Space Dimension="<<sdim()<<endl;
+	ostrm<<", "<<knot_vector();
+	ostrm<<", "<<non_homogeneous_bcoef();
 	return ostrm;
 }
 
@@ -160,9 +160,9 @@ ostream& MGPlane::toString(ostream& ostrm) const{
 	ostrm<<"MGPlane::"<<this;
 	MGSurface::toString(ostrm);
 
-	ostrm<<endl<<",root_point="<<m_root_point
-		<<",normal="<<m_normal<<",m_d="<<m_d
-		<<",uderiv="<<m_uderiv<<",m_vderiv="<<m_vderiv<<endl;
+	ostrm<<endl<<", root_point="<<m_root_point
+		<<", normal="<<m_normal<<", d="<<m_d
+		<<", uderiv="<<m_uderiv<<", vderiv="<<m_vderiv<<endl;
 	return ostrm;
 }
 
@@ -171,10 +171,10 @@ ostream& MGRSBRep::toString(ostream& ostrm) const{
 	ostrm<<"MGRSBRep(non homogeneous form)::"<<this;
 	MGSurface::toString(ostrm);
 
-	ostrm<<",Space Dimension="<<sdim()<<endl;
-	ostrm<<",uknot="<<knot_vector_u();
-	ostrm<<",vknot="<<knot_vector_v();
-	ostrm<<",surface_bcoef="<<non_homogeneous_bcoef();
+	ostrm<<", Space Dim="<<sdim()<<endl;
+	ostrm<<", uknot="<<knot_vector_u();
+	ostrm<<", vknot="<<knot_vector_v();
+	ostrm<<", surface_bcoef="<<non_homogeneous_bcoef();
 	return ostrm;
 }
 
@@ -183,9 +183,9 @@ ostream& MGSBRep::toString(ostream& ostrm) const{
 	ostrm<<"MGSBRep::"<<this;
 	MGSurface::toString(ostrm);
 
-	ostrm<<",uknot="<<m_uknot;
-	ostrm<<",vknot="<<m_vknot;
-	ostrm<<",surface_bcoef="<<m_surface_bcoef;
+	ostrm<<std::endl<<", uknot="<<m_uknot;
+	ostrm<<", vknot="<<m_vknot;
+	ostrm<<", surface_bcoef="<<m_surface_bcoef;
 	return ostrm;
 }
 
@@ -194,9 +194,9 @@ ostream& MGStraight::toString(ostream& ostrm) const{
 	ostrm<<"MGStraight::"<<this;
 	MGCurve::toString(ostrm);
 
-	ostrm<<endl<<",root_point="<<m_root_point
-		 <<",direction="<<m_direction
-		 <<",sparam="<<m_sparam<<",endparam="<<m_endparam;
+	ostrm<<endl<<", root_point="<<m_root_point
+		 <<", dir="<<m_direction
+		 <<", sparam="<<m_sparam<<", eparam="<<m_endparam;
 	if(m_sparam.finite())
 		ostrm<<", start="<<eval(m_sparam.value());
 	if(m_endparam.finite())
@@ -210,9 +210,9 @@ ostream& MGSurfCurve::toString(ostream& ostrm) const{
 	ostrm<<"MGSurfCurve::"<<this;
 	MGCurve::toString(ostrm);
 
-	ostrm<<",start="<<start_point()<<",end="<<end_point();
-	ostrm<<",surface="<<m_surface
-		<<",curve="<<m_curve << endl;
+	ostrm<<", start="<<start_point()<<", end="<<end_point();
+	ostrm<<", surface="<<m_surface
+		<<", curve="<<m_curve << endl;
 	return ostrm;
 }
 
@@ -221,12 +221,12 @@ ostream& MGTrimmedCurve::toString(ostream& ostrm) const{
 	ostrm<<"MGTrimmedCurve::"<<this;
 	MGCurve::toString(ostrm);
 
-	ostrm<<",curve="<<m_curve;
+	ostrm<<", curve="<<m_curve;
 	if(m_curve)
-		ostrm<<",sameRange="<<m_sameRange
-		<<",range="<<m_range
-		<<",start="<<start_point()<<",end="<<end_point()
-		<<",curve="<<endl<<(*m_curve);
+		ostrm<<", sameRange="<<m_sameRange
+		<<", range="<<m_range
+		<<", start="<<start_point()<<", end="<<end_point()
+		<<", curve="<<endl<<(*m_curve);
 	return ostrm;
 }
 
@@ -236,9 +236,9 @@ ostream& MGBSumSurf::toString(std::ostream& ostrm) const{
 	ostrm<<"MGBSumSurf::"<<this;
 	MGSurface::toString(ostrm);
 
-	ostrm<<",g1="<<m_g1;if(m_g1) ostrm<<","<<(*m_g1);
-	ostrm<<",g2="<<m_g1;if(m_g2) ostrm<<","<<(*m_g2);
-	ostrm<<",g12="<<m_g1;if(m_g12) ostrm<<","<<(*m_g12);
+	ostrm<<", g1="<<m_g1;if(m_g1) ostrm<<","<<(*m_g1);
+	ostrm<<", g2="<<m_g1;if(m_g2) ostrm<<","<<(*m_g2);
+	ostrm<<", g12="<<m_g1;if(m_g12) ostrm<<","<<(*m_g12);
 	return ostrm;
 }
 
@@ -282,7 +282,7 @@ ostream& operator<< (ostream& out, const MGBox& box){
 		out << ")";
 	}
 	else {
-		out << "NullBox";
+		out << "Box(Null)";
 	}
 
 	return out;
@@ -406,8 +406,8 @@ ostream& operator<<(ostream& out, const MGKnotArray& klist){
 //////////// MGKnotVector ////////////
 ostream & operator << (ostream & out, const MGKnotVector & t){
 	int order=t.order(); int bdim=t.bdim();
-	out<<"MGKnotVector::order="<< order<<",bdim=" <<bdim;
-	out<<",current=" << t.m_current <<endl;
+	out<<"MGKnotVector::order="<< order<<", bdim=" <<bdim;
+	out<<", current=" << t.m_current <<endl;
 	int n=order+bdim; int nm1=n-1; int mult=1;
 	if(n<=0) return out;
 	double tprev=t(0)-(t(nm1)-t(0));

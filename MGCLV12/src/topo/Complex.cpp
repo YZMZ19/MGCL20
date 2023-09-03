@@ -155,22 +155,6 @@ MGCell* MGComplex::set_parent(MGCell& new_parent)const{
 	return parentOld;
 }
 
-//Cell comparison.
-bool MGComplex::operator<(const MGComplex& cell2)const{
-	if(this==&cell2)
-		return false;
-
-	const MGCell* c1=star();
-	const MGCell* c2=cell2.star();
-	return number_of_pcells()<cell2.number_of_pcells();
-}
-bool MGComplex::operator<(const MGGel& gel2)const{
-	const MGComplex* comlx2=dynamic_cast<const MGComplex*>(&gel2);
-	if(comlx2)
-		return operator<(*comlx2);
-	return identify_type() < gel2.identify_type();
-}
-
 //Member Function
 
 //Insert a Cell(binder or parameter) before the position loc.
@@ -386,11 +370,9 @@ void MGComplex::negate_as_boundary(const MGCell* parent){
 
 // Output virtual function.
 std::ostream& MGComplex::toString(std::ostream& ostrm) const{
-	ostrm << "parent=";
 	if (m_parent_cell) {
-		ostrm << (const MGGel*)m_parent_cell;
-	}else {
-		ostrm << "Null";
+		std::string parentName = m_parent_cell->whoami();
+		ostrm << ", parnt"<<parentName<<"=" << (const MGGel*)m_parent_cell;
 	}
 	MGObject::toString(ostrm);
 

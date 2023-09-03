@@ -226,11 +226,8 @@ void MGTrimmedCurve::narrow_into_range(
 		double& s1=vecComSpan[i++];
 		double& t0=vecComSpan[i++];
 		double& t1=vecComSpan[i++];
-		if(s1<=m_range)
-			continue;
-		if(m_range<=s0)
-			continue;
-		if(m_range.includes(s0) && m_range.includes(s1)){//when span [s0, s1] is included in m_range
+		if(m_range.includes(s0) && m_range.includes(s1)){
+			//when span [s0, s1] is included in m_range
 			paramVec.push_back(s0);
 			paramVec.push_back(s1);
 			paramVec.push_back(t0);
@@ -687,37 +684,28 @@ bool MGTrimmedCurve::operator==(const MGTrimmedCurve& crv2) const{
 		return false;
 	}
 
-	return *(crv2.m_curve)==(*m_curve);
+	return crv2.m_curve->equal_test(*m_curve);
 }
 bool MGTrimmedCurve::operator==(const MGCompositeCurve& crv2) const{
 	return is_same_curve(crv2);
 }
-bool MGTrimmedCurve::operator<(const MGTrimmedCurve& gel2)const{
-	if(!m_curve)
-		return true;
-	if(!(gel2.m_curve))
-		return false;
-	if(*(gel2.m_curve)==*m_curve)
-		return m_range.length()<gel2.m_range.length();
-	return *m_curve<*(gel2.m_curve);
-}
-bool MGTrimmedCurve::operator==(const MGGel& gel2)const{
-	const MGTrimmedCurve* gel2_is_this=dynamic_cast<const MGTrimmedCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	else{
-		const MGCompositeCurve* gel2_is_compo=dynamic_cast<const MGCompositeCurve*>(&gel2);
-		if(gel2_is_compo)
-			return operator==(*gel2_is_compo);
 
-	}
-	return false;
+std::partial_ordering MGTrimmedCurve::operator<=>(const MGTrimmedCurve& gel2)const{
+	if(!m_curve || !(gel2.m_curve))
+		return std::partial_ordering::unordered;
+
+	if(gel2.m_curve->equal_test(*m_curve))
+		return m_range.length()<=>gel2.m_range.length();
+	return m_curve->ordering_test(*(gel2.m_curve));
 }
-bool MGTrimmedCurve::operator<(const MGGel& gel2)const{
-	const MGTrimmedCurve* gel2_is_this=dynamic_cast<const MGTrimmedCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+
+bool MGTrimmedCurve::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGTrimmedCurve&>(g2) : false;
+}
+std::partial_ordering MGTrimmedCurve::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGTrimmedCurve&>(g2) : c;
 }
 
 bool MGTrimmedCurve::is_same_curve(const MGCurve& crv2)const{
@@ -725,7 +713,7 @@ bool MGTrimmedCurve::is_same_curve(const MGCurve& crv2)const{
 		return false;
 	if(m_curve==0)
 		return false;
-	return (*m_curve)==(crv2);
+	return m_curve->equal_test(crv2);
 }
 
 //Test if this cure is planar or not.

@@ -142,7 +142,7 @@ int MGCell::sdim() const{
 }
 
 //Cell comparison.
-bool MGCell::compare(const MGCell& cell2)const{
+bool MGCell::isLessThan(const MGCell& cell2)const{
 	long thisID=identify_type(),  ID2=cell2.identify_type();
 	if (thisID != ID2)//If not the same type cells.
 		return thisID < ID2;
@@ -153,12 +153,13 @@ bool MGCell::compare(const MGCell& cell2)const{
 	const MGComplex* comp1=parent_complex();
 	if(!comp1)
 		return true;
+
 	const MGComplex* comp2=cell2.parent_complex();
 	if(!comp2)
 		return false;
 
-	if(comp1!=comp2)
-		return (*comp1)<(*comp2);
+	if(comp1 != comp2)
+		return comp1->ordering_test(*comp2)<0;
 
 	//Now this and cell2 have the same parent complex.
 	//Comparison is done by the appearance order of this or cell2 in the complex.
@@ -260,9 +261,10 @@ std::ostream& MGCell::toString(std::ostream& ostrm) const{
 	MGObject::toString(ostrm);
 	if(m_parent_complex){
 		std::string parentName = m_parent_complex->whoami();
-		ostrm<<", parent"<<parentName<<"="<<(const MGGel*)m_parent_complex<<std::endl;
+		ostrm<<", parnt"<<parentName<<"="<<(const MGGel*)m_parent_complex;
 	}
-	ostrm<<", perror="<<m_perror;
+	ostrm << ", paramErr=";
+	m_perror <= 0. ? (ostrm<<"Null") : (ostrm<<m_perror);
 	if(m_extent){
 		std::string myName = whoami();
 		ostrm<<","<<std::endl<<myName<<"Extent="<<*m_extent;

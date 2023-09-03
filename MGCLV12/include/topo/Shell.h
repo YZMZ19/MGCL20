@@ -107,8 +107,14 @@ MGShell operator* (const MGTransf& tr) const;
 MGShell operator/ (double s) const{ return (*this)*(1./s); };
 
 ///comparison
-bool operator<(const MGShell& gel2)const;
-bool operator<(const MGGel& gel2)const;
+bool operator==(const MGShell& s2)const;
+std::partial_ordering operator<=>(const MGShell& s2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///String output.
 std::ostream& toString(std::ostream& ostrm) const;

@@ -214,29 +214,21 @@ MGSphere& MGSphere::operator*= (const MGTransf& tr){
 
 //Comparison between Sphere and a surface.
 bool MGSphere::operator==(const MGSphere& sphr)const{
-	if(m_ellipsev!=sphr.m_ellipsev)
-		return false;
-	if(m_ellipseu!=sphr.m_ellipseu)
-		return false;
-
-	return true;
+	return (m_ellipsev == sphr.m_ellipsev && m_ellipseu == sphr.m_ellipseu);
 }
-bool MGSphere::operator<(const MGSphere& gel2)const{
+std::partial_ordering MGSphere::operator<=>(const MGSphere& gel2)const{
 	if(m_ellipseu==gel2.m_ellipseu)
-		return m_ellipsev<gel2.m_ellipsev;
-	return m_ellipseu<gel2.m_ellipseu;
+		return m_ellipsev<=>gel2.m_ellipsev;
+	return m_ellipseu<=>gel2.m_ellipseu;
 }
-bool MGSphere::operator==(const MGGel& gel2)const{
-	const MGSphere* gel2_is_this=dynamic_cast<const MGSphere*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+
+bool MGSphere::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGSphere&>(g2) : false;
 }
-bool MGSphere::operator<(const MGGel& gel2)const{
-	const MGSphere* gel2_is_this=dynamic_cast<const MGSphere*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGSphere::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGSphere&>(g2) : c;
 }
 
 ////////////Member function ÉÅÉìÉoä÷êî///////////

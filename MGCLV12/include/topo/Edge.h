@@ -142,11 +142,13 @@ MGEdge operator/ (double s) const{return (*this)*(1./s);};
 
 ///Comparison of two objects.
 bool operator==(const MGEdge& e2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGEdge& e2)const;
-bool operator<(const MGGel& gel2)const;
-bool operator!=(const MGGel& gel2)const;
-bool operator!=(const MGEdge& e2)const;
+std::partial_ordering operator<=>(const MGEdge& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Object transformation.
 MGEdge& operator+=(const MGVector& v)override;

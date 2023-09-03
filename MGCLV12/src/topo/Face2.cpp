@@ -631,7 +631,7 @@ int MGFace::trim(
 }
 
 //Trim the face giving a loop new_loop that does not have the parent face.
-//new_loop must be parrameter representaion of this face.
+//new_loop must be parameter representaion of this face.
 //
 //Function's return value is error code:
 //0= normal return

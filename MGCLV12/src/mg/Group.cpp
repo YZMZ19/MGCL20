@@ -40,12 +40,36 @@ MGGroup::MGGroup(const TCHAR* file, int& error){
 	load(infile);
 }
 
-bool MGGroup::operator<(const MGGroup& gel2)const{return size()<gel2.size();};
-bool MGGroup::operator<(const MGGel& gel2)const{
-	const MGGroup* gel2_is_this=dynamic_cast<const MGGroup*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type()<gel2.identify_type();
+///Comparison.
+bool MGGroup::operator==(const MGGroup& g2)const {
+	if (this->size() != g2.size())
+		return false;
+
+	for(const_iterator ej = g2.begin(); const auto& ei:(*this)){
+		if (ei != *ej)
+			return false;
+	}
+	return true;
+}
+std::partial_ordering MGGroup::operator<=>(const MGGroup& grp2)const {
+	const_iterator ei = begin(), ej = grp2.begin();
+	for(; ei != end() && ej != grp2.end(); ++ei, ++ej){
+		if (*ei != *ej)
+			return *ei <=> *ej;
+	}
+	if (ei == end()) {
+		return ej == grp2.end() ? std::partial_ordering::equivalent :
+			std::partial_ordering::less;
+	}
+	return std::partial_ordering::greater;
+}
+bool MGGroup::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGGroup&>(g2) : false;
+}
+std::partial_ordering MGGroup::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGGroup&>(g2) : c;
 }
 
 //////////Member Function//////////

@@ -298,7 +298,7 @@ MGBox mgTL2LPline::getUvBox()const{
 	MGBox uvbox;
 	int nP=number_of_points();
 	for(int i=0; i<nP; i++)
-		uvbox|=uv(i);
+		uvbox.expand(uv(i));
 	return uvbox;
 }
 

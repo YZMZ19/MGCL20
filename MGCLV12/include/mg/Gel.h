@@ -50,11 +50,16 @@ virtual ~MGGel()=default;
 virtual MGGel& operator=(const MGGel& gel2){return *this;};
 
 ///Comparison.
-virtual bool operator==(const MGGel& gel2)const{return false;};
-virtual bool operator<(const MGGel& gel2)const;
+//gel2 must be the same class as this.
+virtual bool equal_test(const MGGel& gel2)const {
+	return false;
+};
+//gel2 must be the same class as this.
+virtual std::partial_ordering ordering_test(const MGGel& gel2)const {
+	return std::partial_ordering::unordered;
+};
 
-virtual bool operator!=(const MGGel& gel2)const{ return !(operator==(gel2)); };
-virtual bool operator>(const MGGel& gel2)const{return gel2<(*this);};
+std::strong_ordering  typeCompare(const MGGel& gel2)const;
 
 /// Output virtual function.
 virtual std::ostream& toString(std::ostream&) const=0;

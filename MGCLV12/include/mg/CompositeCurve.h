@@ -90,11 +90,16 @@ MGCompositeCurve& operator*=(const MGTransf& tr);
 
 ///Comparison of two curves.
 bool is_same_curve(const MGCurve& curve2)const;
-bool operator==(const MGCompositeCurve& gel2)const;
-bool operator==(const MGGel& gel2)const;
 bool operator==(const MGTrimmedCurve& gel2)const;
-bool operator<(const MGCompositeCurve& gel2)const;
-bool operator<(const MGGel& gel2)const;
+
+bool operator==(const MGCompositeCurve& gel2)const;
+std::partial_ordering operator<=>(const MGCompositeCurve& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 //////////// Member Function ////////////
 

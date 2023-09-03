@@ -317,9 +317,13 @@ MGEllipse& operator*=(const MGTransf& tr);
 
 ///comparison
 bool operator==(const MGEllipse& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGEllipse& gel2)const;
-bool operator<(const MGGel& gel2)const;
+std::partial_ordering operator<=>(const MGEllipse& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ////////////Member function:ƒƒ“ƒoŠÖ”////////////
 

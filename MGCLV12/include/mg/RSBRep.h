@@ -193,12 +193,15 @@ MGRSBRep& operator*=(const MGTransf& tr);
 
 ///Comparison of two curves.
 bool operator==(const MGRSBRep& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGRSBRep& gel2)const;
-bool operator<(const MGGel& gel2)const;
-bool operator!=(const MGGel& gel2)const{return !(gel2==(*this));};
-bool operator!=(const MGRSBRep& gel2)const{return !(gel2==(*this));};
+
 bool operator==(const MGSBRep& sb)const;
+std::partial_ordering operator<=>(const MGRSBRep& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 //////////// Member Function ////////////
 

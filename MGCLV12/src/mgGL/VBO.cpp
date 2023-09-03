@@ -401,6 +401,10 @@ void mgVBO::setStaticAttribColor(const MGColor& color){
 		m_colorStatic=color;
 	}
 }
+void mgVBO::setStaticAttribColor(MGColor::ColorID id){
+	const MGColor& color=MGColor::get_instance(id);
+	setStaticAttribColor(color);
+}
 void mgVBO::setStaticAttribColor(const float color[4]){
 	MGColor clr(color[0],color[1],color[2],color[3]);
 	if(m_builder.get()){

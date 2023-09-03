@@ -262,29 +262,39 @@ MGLoop MGLoop::operator* (const MGTransf& tr) const{
 	loopNew *= tr;
 	return loopNew;
 }
+bool MGLoop::operator==(const MGLoop& lp2)const {
+	return this == &lp2;
+}
 
 //This operator is to sort loops in the order:
 //  1. Perimeter boundary.
 //  2. Outer boundary.
 //  3. Inner boundary.
 //  4. Inactive loop.
-bool MGLoop::operator<(const MGLoop& loop2)const{
+std::partial_ordering MGLoop::operator<=>(const MGLoop& loop2)const{
 	const MGFace* f1=face();
 	const MGFace* f2=loop2.face();
 	if(f1!=f2)
-		return MGComplex::operator<(loop2);
+		return std::partial_ordering::unordered;
 
 	int i1,i2,j1,j2;
 	bool is_peri1=both_end_on_perimeter(i1,i2);
 	bool is_peri2=loop2.both_end_on_perimeter(j1,j2);
-	if(is_peri1 && !is_peri2) return true;
-	else if(!is_peri1 && is_peri2) return false;
+	if(is_peri1 && !is_peri2)
+		return std::partial_ordering::less;
+	else if(!is_peri1 && is_peri2)
+		return std::partial_ordering::greater;
+
 	else if(is_peri1 && is_peri2){
 		//Now both are on perimeter. i1,i2,j1,j2 are valid.
-		if(i2<i1) return true;
-		if(j2<j1) return false;
-		if(i2<j1 || i2<j2 || i1<j1 || i1<j2) return true;
-		if(i2>j1 || i2>j2 || i1>j1 || i1>j2) return false;
+		if(i2<i1)
+			return std::partial_ordering::less;
+		if(j2<j1)
+			return std::partial_ordering::greater;
+		if(i2<j1 || i2<j2 || i1<j1 || i1<j2)
+			return std::partial_ordering::less;
+		if(i2>j1 || i2>j2 || i1>j1 || i1>j2)
+			return std::partial_ordering::greater;
 
 		//Now i1==i2==j1==j2.
 		MGPosition p1=start_point(), p2=loop2.start_point();
@@ -292,42 +302,49 @@ bool MGLoop::operator<(const MGLoop& loop2)const{
 
 		int is_v=i1%2; double t1,t2;
 		t1=p1(is_v), t2=q1(is_v); if(i1>=2){ t1*=-1.; t2*=-1.;}
-		if(t2<t1) return true;
+		if(t2<t1)
+			return std::partial_ordering::less;
 		t1=p2(is_v), t2=q2(is_v); if(i1>=2){ t1*=-1.; t2*=-1.;}
-		if(t2<t1) return false;
+		if(t2<t1)
+			return std::partial_ordering::greater;
 
 		const MGSurface* srf=surface();
-		if(srf) return srf->less_than(i1,p1,p2);
-		else return true;
+		if(srf)
+			return srf->less_than(i1,p1,p2) ?
+			std::partial_ordering::less : std::partial_ordering::greater;
+		else
+			return std::partial_ordering::less;
 	}else{
 		//Now both are not on perimeter.
 		bool cls1=closed(), cls2=loop2.closed();
 		if(!cls1 && !cls2)
-			return this<&loop2;
+			return this<&loop2 ?
+			std::partial_ordering::less : std::partial_ordering::greater;
 		else if(cls1 && !cls2)
-			return true;
+			return std::partial_ordering::less;
 		if(!cls1 && cls2)
-			return false;
+			return std::partial_ordering::greater;
 		else{
 		//Now both are closed.
-			if(is_outer_boundary()) return true;//Outer boundary.
-			else if(loop2.is_outer_boundary()) return false;
-					//this is inner and loop2 is outer.
-			return this<(&loop2);
+			if(is_outer_boundary())
+				return std::partial_ordering::less;
+			//Outer boundary.
+			else if(loop2.is_outer_boundary())
+				return std::partial_ordering::greater;
+			//this is inner and loop2 is outer.
+			return this<(&loop2) ?
+				std::partial_ordering::less : std::partial_ordering::greater;
 		}
 	}
 }
-bool MGLoop::operator<(const MGGel& gel2)const{
-	const MGLoop* gel2_is_this=dynamic_cast<const MGLoop*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+
+bool MGLoop::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGLoop&>(g2) : false;
 }
-bool MGLoop::operator<(const MGComplex& gel2)const{
-	const MGLoop* gel2_is_this=dynamic_cast<const MGLoop*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return false;
+std::partial_ordering MGLoop::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGLoop&>(g2) : c;
 }
 
 ///////Member Function///////
@@ -1232,15 +1249,15 @@ bool MGLoop::on_surface_perimeter(const MGFace& face)const{
 std::ostream& MGLoop::toString(std::ostream& ostrm) const{
 	ostrm<<"<<Loop="<<(const MGGel*)this;
 	if(is_outer_boundary())
-		ostrm<<":outer_boundary, ";
+		ostrm<<":outrBoundry";
 	else if(is_inner_boundary())
-		ostrm<<":inner_boundary, ";
+		ostrm<<":innrBoundry";
 	else if(is_perimeter_boundary()){
-		ostrm<<":perimeter_boundary, SE("<<m_perim_num_s<<","<<m_perim_num_e<<"),";
+		ostrm<<":perimtrBoundry, SE("<<m_perim_num_s<<","<<m_perim_num_e<<")";
 	} else if(is_network())
-		ostrm<<":network, ";
+		ostrm<<":network";
 	else if(!active())
-		ostrm<<":not active, ";
+		ostrm<<":not active";
 
 	//ostrm<<"Parameter Edges::";
 	MGComplex::toString(ostrm);
@@ -1511,9 +1528,9 @@ size_t inside_outer_loop(
 	if(n){//When there exist perimeter boundaries.
 		for(int i=0; i<n; i++){
 			const MGLoop& lp=*(loops[i]);
-			if(lp.box()<<uv)
-				continue;
-				//If outside the box of lp, test next loop.
+			if(!lp.box().includes(uv))
+				continue;//If outside the box of lp, test next loop.
+
 			int in=lp.inside_test(uv);
 			if(in==0)
 				return 0;
@@ -1528,7 +1545,7 @@ size_t inside_outer_loop(
 	//When outer boundary.
 	const MGLoop& olp=*(loops[0]);
 	const MGBox& olpBox=olp.box();
-	if(olpBox<<uv)
+	if(!olpBox.includes(uv))
 		return 0;
 
 	const MGInterval& olpu=olpBox[0];
@@ -1587,18 +1604,20 @@ size_t inside_outer_loop(
 	
 	MGBox lpbx;
 	for(i=0, itr=itrsave; i<ne; i++,isave++,itr++){
-		if(isave==ne){isave=0; itr=itrstart;}
-		const MGEdge& ei=*(edge_from_iterator(itr));
+		if(isave==ne){
+			isave=0; itr=itrstart;
+		}
 		if(pedge[isave]>=0){
 			if(lpbx.is_null())
 				continue;
-			else if(lpbx>>uv)
+			else if(lpbx.includes(uv))
 				return olp.inside_test(uv);
 			lpbx.set_null();
-		}else
-			lpbx|=ei.box();
+		} else {
+			lpbx |= edge_from_iterator(itr)->box();
+		}
 	}
-	if(lpbx>>uv)
+	if(lpbx.includes(uv))
 		return	olp.inside_test(uv);
 	return 2;
 }

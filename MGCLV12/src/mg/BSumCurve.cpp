@@ -202,30 +202,21 @@ MGBSumCurve MGBSumCurve::operator* (const MGTransf& tr) const{
 //Test if two curves are equal.
 // —^‹Èü‚ÆŽ©g‚ª“™‚µ‚¢‚©‚Ì”äŠr”»’è‚ðs‚¤B
 bool MGBSumCurve::operator== (const MGBSumCurve& crv2)const{
-	if(!m_g1 && !crv2.m_g1)
-		return true;
-	if((*m_g1)!=(*(crv2.m_g1)))
-		return false;
-	if((*m_g2)!=(*(crv2.m_g2)))
-		return false;
-	if((*m_g12)!=(*(crv2.m_g12)))
-		return false;
-	return true;
+	return m_g1 && crv2.m_g1 &&
+		m_g1->equal_test(*(crv2.m_g1)) && m_g12->equal_test(*(crv2.m_g12));
 }
-bool MGBSumCurve::operator<(const MGBSumCurve& gel2)const{
-	return *m_g1<*(gel2.m_g1);
+
+std::partial_ordering MGBSumCurve::operator<=>(const MGBSumCurve& gel2)const{
+	return m_g1->ordering_test(*gel2.m_g1);
 }
-bool MGBSumCurve::operator==(const MGGel& gel2)const{
-	const MGBSumCurve* gel2_is_this=dynamic_cast<const MGBSumCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+
+bool MGBSumCurve::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGBSumCurve&>(g2) : false;
 }
-bool MGBSumCurve::operator<(const MGGel& gel2)const{
-	const MGBSumCurve* gel2_is_this=dynamic_cast<const MGBSumCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type()<gel2.identify_type();
+std::partial_ordering MGBSumCurve::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGBSumCurve&>(g2) : c;
 }
 
 ////////// Member Function ///////////

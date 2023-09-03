@@ -163,9 +163,14 @@ MGLoop operator/ (double s) const{ return (*this)*(1./s); };
 ///  2. Outer boundary.
 ///  3. Inner boundary.
 ///  4. Inactive loop.
-bool operator<(const MGLoop& gel2)const;
-bool operator<(const MGComplex& gel2)const;
-bool operator<(const MGGel& gel2)const;
+std::partial_ordering operator<=>(const MGLoop& gel2)const;
+bool operator==(const MGLoop& lp2)const; //we do not define.
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Test if this is active boundary.
 bool active() const;

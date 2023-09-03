@@ -153,8 +153,14 @@ MGFace operator* (const MGTransf& tr) const;
 MGFace operator/ (double s) const{return (*this)*(1./s);};
 
 ///Comparison of two faces.
-bool operator<(const MGFace& gel2)const{return compare(gel2);};
-bool operator<(const MGGel& gel2)const;
+bool operator==(const MGFace& gel2)const;
+std::partial_ordering operator<=>(const MGFace& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Return space dimension
 int sdimFS() const override{	return MGCell::sdim();};

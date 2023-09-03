@@ -334,7 +334,7 @@ MGBox MGRLBRep::box_limitted(
 	) const
 {
 	MGInterval range(param_s(), param_e());
-	if(range<<l)
+	if(l.includes(range))
 		return box_unlimit();
 	MGInterval prange=l&range;
 	double t1=prange.low_point(), t2=prange.high_point();
@@ -825,18 +825,16 @@ bool MGRLBRep::operator==(const MGRLBRep& rlb2)const{
 	return m_line.line_bcoef().non_homogeneous()
 			==rlb2.m_line.line_bcoef().non_homogeneous() ;
 }
-bool MGRLBRep::operator<(const MGRLBRep& gel2)const{
-	return m_line<gel2.m_line;
+
+std::partial_ordering MGRLBRep::operator<=>(const MGRLBRep& gel2)const{
+	return m_line<=>gel2.m_line;
 }
-bool MGRLBRep::operator==(const MGGel& gel2)const{
-	const MGRLBRep* gel2_is_this=dynamic_cast<const MGRLBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+
+bool MGRLBRep::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGRLBRep&>(g2) : false;
 }
-bool MGRLBRep::operator<(const MGGel& gel2)const{
-	const MGRLBRep* gel2_is_this=dynamic_cast<const MGRLBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGRLBRep::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGRLBRep&>(g2) : c;
 }

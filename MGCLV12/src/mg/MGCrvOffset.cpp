@@ -71,7 +71,7 @@ std::vector<UniqueCurve> MGCurve::offset(
 	const MGVector& norm_vector		//法線ベクトル
 )const{
 	std::vector<UniqueCurve> ofs_crvl;
-	if(norm_vector == mgNULL_VEC){
+	if(norm_vector.is_null() || norm_vector == mgNULL_VEC){
 		offset_proc(ofs_value_lb, ofs_crvl);
 	}else{
 		offset_norm_proc(ofs_value_lb, norm_vector, ofs_crvl);

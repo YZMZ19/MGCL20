@@ -161,11 +161,14 @@ void mgVBO::drawCurvaGraph(
 	const MGCurve& curve,///<The target curve.
 	int density,///<Dinsity of the graph.
 	bool use_radius,///<Indicates if curvature is used(=false) or curvature radius(=true). 
-	double scaleRelative///<Scale of the graph. =1. is default length.
+	double scaleRelative,///<Scale of the graph. =1. is default length.
+	double lengthBase ///base length of curvature graph. If lengthBase<=0.,
+		///the length is obtained from input curve by curvatureLengthDisplay().
 ){
 	assert(density > 0);
 
-	double lengthBase = curve.curvatureLengthDisplay(use_radius);
+	if(lengthBase<=0.)
+		lengthBase = curve.curvatureLengthDisplay(use_radius);
 	if(!use_radius)
 		lengthBase *=-1.;
 	double len = lengthBase*scaleRelative;
@@ -178,7 +181,7 @@ void mgVBO::drawCurvaGraph(
 		double curva, torsion;
 		curve.Frenet_frame(tin, T, N, B, curva, torsion);
 		// N is from pos to the center of the osculating circle at pos.
-		if(use_radius)
+		if(use_radius && !MGMZero(curva))
 			curva = 1./curva;
 
 		v = pos+len*curva*N;
@@ -198,6 +201,23 @@ Begin(GL_LINES);
 	}
 	f(curve.param_e());
 End();
+}
+
+///Draw curvature variation graph so-called Hige.
+void mgVBO::drawCurvaGraph(
+	std::vector<const MGCurve*>& curves,///<The target curves.
+	int density,		///<Dinsity of the graph.
+	bool use_radius,	///<Indicates if curvature is used(=false) or curvature radius(=true). 
+	double scaleRelative,///<Scale of the graph.
+	double lengthBase	///base length of curvature graph. If lengthBase<=0.,
+	///the length is obtained from input curve by curvatureLengthDisplay().
+){
+	if (lengthBase <= 0.) {
+		for (auto curve : curves) 
+			lengthBase = std::max(lengthBase,curve->curvatureLengthDisplay(use_radius));
+	}
+	for (auto curve : curves) 
+		drawCurvaGraph(*curve, density, use_radius, scaleRelative, lengthBase);
 }
 
 ///Draw a point using openGL functions.
@@ -282,40 +302,6 @@ void mgVBO::drawPoints(
 		for(i=ibegin; i!=iend; i++)
 			Vertex(*i);
 	End();
-}
-
-///Draw a polyline using openGL functions.
-///The last argument must end with nullptr.
-void mgVBO::drawOpenPolyline(const MGPosition* P0, ...){
-	const MGPosition* Pi=P0;
-
-	va_list args;
-    va_start(args, P0);
-	Begin(GL_LINE_STRIP);
-	while(Pi){
-		const MGPosition& P=*Pi;
-		Vertex3d(P[0],P[1],P[2]);
-		Pi = va_arg(args, const MGPosition*);
-	}
-	End();
-    va_end(args);
-}
-
-///Draw a polyline using openGL functions.
-///The last argument must end with nullptr.
-void mgVBO::drawClosedPolyline(const MGPosition* P0, ...){
-	const MGPosition* Pi=P0;
-
-	va_list args;
-    va_start(args, P0);
-	Begin(GL_LINE_LOOP);
-	while(Pi){
-		const MGPosition& P=*Pi;
-		Vertex3d(P[0],P[1],P[2]);
-		Pi = va_arg(args, const MGPosition*);
-	}
-	End();
-    va_end(args);
 }
 
 ///Draw a polyline using openGL functions.

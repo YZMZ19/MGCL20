@@ -71,10 +71,6 @@ MGSurface& operator*=(double scale)=0;
 MGSurface& operator*=(const MGMatrix& mat)=0;
 MGSurface& operator*=(const MGTransf& tr)=0;
 
-///comparison
-virtual bool operator==(const MGGel& gel2)const=0;
-virtual bool operator<(const MGGel& gel2)const=0;
-
 ///Return space dimension
 int sdimFS() const override{	return sdim();};
 

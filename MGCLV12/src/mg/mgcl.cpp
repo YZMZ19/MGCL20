@@ -185,20 +185,13 @@ bool get_real(
 
 #ifndef _CONSOLE
 
-void start_up(bool need_to_GdiStartUp) {
-	if (need_to_GdiStartUp) {
-		//-> GDI+ startup
-		Gdiplus::GdiplusStartupInput gdiplusStartupInput;
-		Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, NULL);
-		m_gdiplus_initialized = true;
-		//<- GDI+ startup
-	}
-	else {
-		m_gdiplus_initialized = false;
-	}
+void GdiStartUp() {
+	Gdiplus::GdiplusStartupInput gdiplusStartupInput;
+	Gdiplus::GdiplusStartup(&m_gdiplusToken, &gdiplusStartupInput, NULL);
+	m_gdiplus_initialized = true;
 }
 
-void shut_down() {
+void GdiplusShutdown() {
 	if (m_gdiplus_initialized)
 		Gdiplus::GdiplusShutdown(m_gdiplusToken);
 }
@@ -206,4 +199,3 @@ void shut_down() {
 #endif //_CONSOLE
 
 }
-

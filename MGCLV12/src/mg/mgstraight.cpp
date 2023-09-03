@@ -756,9 +756,9 @@ double MGStraight::range(double d) const {
 	MGInterval limit = param_range();
 	if(straight_type()== MGSTRAIGHT_TYPE::MGSTRAIGHT_EMPTY)
 		d=0.0;
-	else if(limit>=d)
+	else if(limit>d)
 		d=m_sparam;
-	else if(limit<=d)
+	else if(limit<d)
 		d=m_endparam;
 	return d;
 }
@@ -1005,26 +1005,23 @@ MGStraight& MGStraight::operator*=(const MGTransf& t){
 //
 // 論理演算子の多重定義
 bool MGStraight::operator==(const MGStraight& sl2)const{
-	if(sdim()==0 && sl2.sdim()==0)
-		return 1;
+	if(sdim()==0 || sl2.sdim()==0)
+		return false;
 	 return (m_root_point == sl2.m_root_point 
 		&& m_direction == sl2.m_direction
 		&& m_sparam==sl2.m_sparam
 		&& m_endparam==sl2.m_endparam);
 }
 
-bool MGStraight::operator<(const MGStraight& gel2)const{
-	return m_root_point.len()<gel2.m_root_point.len();
+std::partial_ordering MGStraight::operator<=>(const MGStraight& gel2)const {
+	return m_root_point.len() <=> gel2.m_root_point.len();
 }
-bool MGStraight::operator==(const MGGel& gel2)const{
-	const MGStraight* gel2_is_this=dynamic_cast<const MGStraight*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+
+bool MGStraight::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGStraight&>(g2) : false;
 }
-bool MGStraight::operator<(const MGGel& gel2)const{
-	const MGStraight* gel2_is_this=dynamic_cast<const MGStraight*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGStraight::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGStraight&>(g2) : c;
 }
