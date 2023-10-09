@@ -1,27 +1,22 @@
 /********************************************************************/
-/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
+/* Copyright (c) 2023 System fugen G.K. and Yuzi Mizuno             */
 /* All rights reserved.                                             */
 /********************************************************************/
 #include "StdAfx.h"
+#include "mg/Tolerance.h"
 #include "mg/Box.h"
 #include "mg/BPointSeq.h"
-#include "mg/Knot.h"
 #include "mg/Curve.h"
 #include "mg/Ellipse.h"
 #include "mg/LBRep.h"
 #include "mg/RLBRep.h"
 #include "mg/Straight.h"
-#include "mg/Tolerance.h"
 
 #if defined(_DEBUG)
 #define new DEBUG_NEW
 #undef THIS_FILE
 static char THIS_FILE[] = __FILE__;
 #endif
-	
-///向きが同じB表現曲線リストを接続する(LBRep, RLBRep同士のみ)。join_crvlに接続した曲線リストが入る。
-///戻り値は、引数の曲線リストの向きが違うとき、同じB表現同士でなかったときfalseが返る。
-int join(std::vector<UniqueCurve>& crvl, std::vector<UniqueCurve>& join_crvl);
 
 // Implementation of curve offset.
 
@@ -29,17 +24,148 @@ int join(std::vector<UniqueCurve>& crvl, std::vector<UniqueCurve>& join_crvl);
 #define POW_HIGH 0.50   //最初にオフセットさせるポイント数を決める係数(精度重視)
 #define NUM_DIV 50      //1スパンの分割数がこれを越えたときPOW_LOWを使用するようにする
 
-//向きが同じ2本のB表現曲線を接続する(同じ種類のとき)
-MGLBRep* join2LBRep(const MGLBRep& crv1, const MGLBRep& crv2){
-	int which, cont;
-	double ratio;
-	cont = crv1.continuity(crv2, which, ratio);
-	if(cont < 0 || which == 0 || which == 3)
-		return NULL;
+///曲線をオフセットするのに十分分割したノットベクトルを返却する
+///オフセット量曲線も考慮に入れ、分割数の多い方にあわせている。
+MGKnotVector offset_make_knotvector(const MGCurve* lb1, const MGLBRep* lb2){
+	//元となるノットベクトルを生成する
+	const MGKnotVector& t1 = lb1->knot_vector();
+	MGKnotVector tNew(t1, 4);	//オーダー4のノットベクトルに作り替える
+	double error = lb1->param_error();
+	for (int i = t1.order() - 1; i < t1.bdim(); i++) {
+		double spara = t1(i), epara = t1(i + 1);	//スパンの始終終点
+		if (epara - spara < error)
+			continue;	//マルチノットのときの処理(RLBRepのみ)
 
-	auto lb=new MGLBRep(crv1);
-	lb->connect(cont, which, crv2);
-	return lb;
+		//1スパンの分割数を決定する
+		MGInterval interval(spara, epara);
+		int ndiv = lb1->offset_div_num(interval);//オフセット曲線の分割数
+		int tmp_ndiv = lb2 ?  lb2->offset_div_num(interval) : -1;//オフセット量曲線の分割数
+		if (tmp_ndiv > ndiv)
+			ndiv = tmp_ndiv;//分割数の多い方を用いる
+
+		int id=tNew.locate(spara)+1;
+		int ndivm1 = ndiv - 1;
+		tNew.reserveInsertArea(ndivm1, id);
+
+		double delta = (epara - spara) / ndiv;
+		double tpara = spara + delta;
+		for (int j = 0; j < ndivm1; j++, tpara += delta)
+			tNew(id + j) = tpara;
+	}
+	return tNew;
+}
+
+///曲線 crvを折れ(C0 continuous)で分割する
+size_t divide_multi_ofs(
+	const MGCurve& crv,
+	std::vector<UniqueCurve>& crv_list ///divided curves are output.
+) {
+	const MGKnotVector& t = crv.knot_vector();
+	int k = t.order();
+	int km1 = k - 1;
+	int	start_index = km1, index = 0, multi = 1, vbdim = t.bdim();
+	do {
+		if (km1 <= 1)
+			index = start_index + 1;
+		else
+			multi = t.locate_multi(start_index, km1, index);
+		crv_list.emplace_back(crv.part(t(start_index), t(index)));
+		start_index = index + multi - 1;
+	} while (index < vbdim);	//多重度が見つからなかったら終わり
+	return crv_list.size();
+}
+
+//オフセット量固定のC1連続曲線のオフセット
+//Curve offset funciont when offset value is constant.
+//original curve is supposed to be C1 continuous everywhere.
+std::unique_ptr<MGLBRep> C1CurveConstantOffset(
+	const MGCurve& original,
+	double  ofs_value,//固定オフセット量
+	bool pricipalNormal//true if offset direction is toward principal normal,
+						//false if to binormal.
+){
+	MGKnotVector t = offset_make_knotvector(&original, nullptr);//十分分割したノットベクトルを求める
+	MGNDDArray tau; tau.buildByKnotVector(t);
+
+	//制御点を生成する
+	MGVector T, N, B, Nold, Bold;
+	double curvature, torsion;
+	original.Frenet_frame(tau(0), T, Nold, Bold, curvature, torsion);
+		//save the 1st N, or B data.
+	MGVector& dirOld = pricipalNormal ? Nold : Bold;
+	MGVector& dir = pricipalNormal ? N : B;
+
+	int n = tau.length();
+	MGBPointSeq bp1(n, original.sdim());
+	for (int i = 0; i < n; i++) {
+		double taui = tau(i);
+		original.Frenet_frame(taui, T, N, B, curvature, torsion);
+		if (dir % dirOld < 0.)
+			dir.negate();
+		MGPosition pos = original.eval(taui) + dir * ofs_value;
+		bp1.store_at(i, pos);
+		dirOld = dir;
+	}
+	//ノットベクトルを求めてオフセット曲線を生成する(精度十分の曲線を生成する)
+	std::unique_ptr<MGLBRep> newLB(new MGLBRep);
+	if(newLB->buildByInterpolationDataPoints(tau, bp1))
+		return nullptr;//if error detected.
+	newLB->remove_knot();
+	return newLB;
+}
+
+//オフセット量可変のC1連続曲線のオフセット
+//Curve offset funciont when offset value is variable.
+//original curve is supposed to be C1 continuous everywhere.
+UniqueLBRep C1CurveVariableOffset(
+	const MGCurve& crv,
+	const MGLBRep& ofs_value_lb,	//Variable offset value input(LBRep of space dim =1)
+	bool pricipalNormal//true if offset direction is principal normal,
+					//false if binormal.
+){
+	MGKnotVector knotVector = offset_make_knotvector(&crv, &ofs_value_lb);	//十分分割したノットベクトルを求める
+	MGNDDArray tau;
+	tau.buildByKnotVector(knotVector);
+
+	MGVector T, N, B, Nold, Bold;
+	double curvature, torsion;
+	crv.Frenet_frame(tau(0), T, Nold, Bold, curvature, torsion);
+	MGVector& dirOld = pricipalNormal ? Nold : Bold;
+	MGVector& dir = pricipalNormal ? N : B;
+
+	//Generate data of interpolation at tau.
+	int n = tau.length();
+	MGBPointSeq bp1(n, crv.sdim());
+	for (int i = 0; i < n; i++) {
+		double taui = tau(i);
+		double delta = ofs_value_lb.eval_position(taui).ref(0);//offset value at tau i.
+		crv.Frenet_frame(taui, T, N, B, curvature, torsion);
+		if (dir % dirOld < 0.)
+			dir.negate();
+
+		MGPosition pos = crv.eval(taui) + dir * delta;
+		bp1.store_at(i, pos);
+		dirOld = dir;
+	}
+
+	//ノットベクトルを求めてオフセット曲線を生成する
+	UniqueLBRep offsetCrv(new MGLBRep);
+	offsetCrv->setKnotVector(std::move(knotVector));
+	if(offsetCrv->buildByInterpolationWithKTV(tau, bp1))	//精度十分の曲線を生成する
+		return nullptr;//When error detected in buildByInterpolationWithKTV().
+	offsetCrv->remove_knot();
+	return offsetCrv;
+}
+
+///Offset of costant deviation from this curve that is C1 cotinuous everywhere.
+///The offset value ofs_value must be less than radius of curvature.
+///The offset direction is Normal(obtained by Frenet_frame()) at each point.
+UniqueLBRep MGCurve::offsetC1(
+	double ofs_value, ///offset valuem may be negative.
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
+) const {
+	return C1CurveConstantOffset(*this, ofs_value, principalNormal);
 }
 
 //一定オフセット関数
@@ -48,16 +174,19 @@ MGLBRep* join2LBRep(const MGLBRep& crv1, const MGLBRep& crv2){
 //ただし、曲率中心へ曲率半径以上のオフセットは行わない。トレランスはline_zero()を使用している。
 //戻り値は、オフセット曲線リストが返却される。
 std::vector<UniqueCurve> MGCurve::offset(
-	double ofs_value,			//オフセット量
-	const MGVector& norm_vector	//法線ベクトル
+	double ofs_value,
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
 )const{
-	MGBPointSeq bp1(2, 1);					//ofs_value一定の直線を生成する
-	bp1.store_at(0, &ofs_value);
-	bp1.store_at(1, &ofs_value);
-	MGLBRep ofs_value_lb;
-	ofs_value_lb.buildByInterpolation(bp1, 2);	//オーダー２の直線を作る
-	ofs_value_lb.change_range(param_s(), param_e());
-	return offset(ofs_value_lb, norm_vector);	//可変オフセットを使用する
+	//曲線を折れ(C0 continuity)で分割する
+	std::vector<UniqueCurve> crv_list, offseted;
+	divide_multi_ofs(*this,crv_list);
+	for (auto& crv : crv_list) {
+		UniqueCurve crvOffset = C1CurveConstantOffset(*crv, ofs_value, principalNormal);
+		if(crvOffset)
+			offseted.push_back(std::move(crvOffset));
+	}	
+	return offseted;
 }
 
 //可変オフセット関数
@@ -68,225 +197,53 @@ std::vector<UniqueCurve> MGCurve::offset(
 //戻り値は、オフセット曲線リストが返却される。
 std::vector<UniqueCurve> MGCurve::offset(
 	const MGLBRep& ofs_value_lb,	//空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector		//法線ベクトル
-)const{
-	std::vector<UniqueCurve> ofs_crvl;
-	if(norm_vector.is_null() || norm_vector == mgNULL_VEC){
-		offset_proc(ofs_value_lb, ofs_crvl);
-	}else{
-		offset_norm_proc(ofs_value_lb, norm_vector, ofs_crvl);
-	}
-	return ofs_crvl;
-}
-
-//一定オフセット関数
-//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。
-//ただし、曲率中心へ曲率半径以上のオフセットは行わない。トレランスはline_zero()を使用している。
-//戻り値は、オフセット曲線が返却される。
-std::vector<UniqueCurve> MGStraight::offset(
-	double ofs_value,			//オフセット量
-	const MGVector& norm_vector	//法線ベクトル
-)const{
-	std::vector<UniqueCurve> ofs_crvl;
-	MGStraight *st1 = clone();
-	if(norm_vector == mgNULL_VEC){
-		*st1 += MGUnit_vector() * ofs_value;
-	}else{
-		MGUnit_vector tangent = st1->direction(param_s()), ofs_dir;
-		ofs_dir = norm_vector * tangent;
-		*st1 += ofs_dir * ofs_value;
-	}
-	ofs_crvl.emplace_back(st1);
-	return ofs_crvl;
-}
-
-//法線ベクトルが指定されているときの処理
-int MGCurve::offset_norm_proc(
-	const MGLBRep& ofs_value_lb,	//オフセット量
-	const MGVector& norm_vector,	//法線ベクトル
-	std::vector<UniqueCurve>& ofs_crvl	//オフセットカーブリスト
-)const{
-	//曲線を折れがあったら（multiple knot）で分割する
-	std::vector<UniqueCurve> crv_list, tmp_list;
-	int nDiv = divide_multi_ofs(ofs_value_lb, crv_list);
-
-	ofs_crvl.clear();
-	for(int i = 0;i < nDiv; i++){
-		MGLBRep tmp_brep;
-		if(!crv_list[i]->offset_norm_c2_proc(ofs_value_lb, norm_vector, tmp_brep))
-			return false;
-		tmp_list.emplace_back(tmp_brep.clone());
-	}
-	int num = join(tmp_list, ofs_crvl);
-	return num;
-}
-
-//法線ベクトルが指定されていないときの処理
-int MGCurve::offset_proc(
-	const MGLBRep& ofs_value_lb,		//オフセット量
-	std::vector<UniqueCurve>& ofs_crvl	//オフセットカーブリスト
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
 )const{
 	//曲線を折れ（multiple knot）で分割する
-	std::vector<UniqueCurve> crv_list, tmp_list;
-	int nDiv = divide_multi_ofs(ofs_value_lb, crv_list);
+	std::vector<UniqueCurve> crv_list;
+	divide_multi_ofs(*this, crv_list);
 
-	ofs_crvl.clear();
-	MGUnit_vector T, B, preN;	//preN : 前回のノーマルベクトル
-	int freverse = 0;			//向きを逆にしているというフラグ
-	double curvature, torsion;
-	Frenet_frame(param_s(), T, preN, B, curvature, torsion);	//カーブ始点のノーマルを最初に与える
-
-	for(int i = 0;i < nDiv; i++){
-		UniqueLBRep tmp_brep(new MGLBRep);
-		if(!crv_list[i]->offset_c2_proc(ofs_value_lb, *tmp_brep, preN, freverse))
-			return false;
-		tmp_list.push_back(std::move(tmp_brep));
-	}
-	int num = join(tmp_list, ofs_crvl);
-	return num;
-}
-
-//C2連続曲線の一定オフセット関数
-//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。
-//ただし、曲率中心へ曲率半径以上のオフセットは行わない。トレランスはline_zero()を使用している。
-//戻り値は、オフセット曲線が返却される。
-MGLBRep MGCurve::offset_c2(
-	double ofs_value,				//オフセット量
-	const MGVector& norm_vector		//法線ベクトル
-)const{
-	MGBPointSeq bp1(2, 1);					//ofs_value一定の直線を生成する
-	bp1.store_at(0, &ofs_value);
-	bp1.store_at(1, &ofs_value);
-	MGLBRep ofs_value_lb;
-	ofs_value_lb.buildByInterpolation(bp1, 2);//オーダー２の直線を作る
-	ofs_value_lb.change_range(param_s(), param_e());
-	return offset_c2(ofs_value_lb, norm_vector);	//可変オフセットを使用する
-}
-
-//C2連続曲線の可変オフセット関数
-//オフセット量は空間次元1の線B表現で与えられる。
-//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。
-//ただし、曲率中心へ曲率半径以上のオフセットは行わない。トレランスはline_zero()を使用している。
-//戻り値は、オフセット曲線が返却される。
-MGLBRep MGCurve::offset_c2(
-	const MGLBRep& ofs_value_lb,	//空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector		//法線ベクトル
-)const{
-	int rc = 0;
-	MGLBRep ofs_brep;
-	if(norm_vector == mgNULL_VEC){
-		int freverse = 0;			//向きを逆にしているというフラグ
-		MGUnit_vector T, B, preN;	//preN : 前回のノーマルベクトル
-		double curvature, torsion;
-		Frenet_frame(param_s(), T, preN, B, curvature, torsion);	//カーブ始点のノーマルを最初に与える
-		rc = offset_c2_proc(ofs_value_lb, ofs_brep, preN, freverse);
-	}else{
-		rc = offset_norm_c2_proc(ofs_value_lb, norm_vector, ofs_brep);
-	}
-	if(!rc)return MGLBRep();
-	ofs_brep.remove_knot();
-	return ofs_brep;
-}
-
-//法線ベクトルが指定されているC2連続曲線のオフセット
-int MGCurve::offset_norm_c2_proc(
-	const MGLBRep& ofs_value_lb,//オフセット量
-	const MGVector& norm_vector,//法線ベクトル
-	MGLBRep& ofs_brep			//オフセットカーブ
-)const{
-	MGKnotVector& t=ofs_brep.knot_vector();
-	t = offset_make_knotvector(ofs_value_lb);	//十分分割したノットベクトルを求める
-	MGNDDArray dataPoint;
-	dataPoint.buildByKnotVector(t);
-
-	//制御点を生成する
-	int len = dataPoint.length();
-	MGBPointSeq bp1(len, sdim());
-	for(int i = 0; i < len; i++){
-		MGUnit_vector T, N, B, ofs_dir;
-		double curvature, torsion, ofs_value = ofs_value_lb.eval_position(dataPoint(i)).ref(0);
-		Frenet_frame(dataPoint(i), T, N, B, curvature, torsion);
-		ofs_dir = norm_vector * T;
-		double cosine = N % ofs_dir;
-		int fneg = (cosine < 0);	//コサインの正負フラグ
-		if(!MGMZero(curvature))		//ゼロ割チェック
-			if((ofs_value * (-2. * fneg + 1)) > ((1. / curvature) / fabs(cosine)))return false;
-		MGPosition pos;
-		pos = eval(dataPoint(i));
-		pos += ofs_dir * ofs_value;
-		bp1.store_at(i, pos);
-	}
-	//ノットベクトルを求めてオフセット曲線を生成する
-	ofs_brep.buildByInterpolationWithKTV(dataPoint, bp1);//精度十分の曲線を生成する
-	return true;
-}
-
-//法線ベクトルが指定されていないC2連続曲線のオフセット
-int MGCurve::offset_c2_proc(
-	const MGLBRep& ofs_value_lb,	//オフセット量
-	MGLBRep& ofs_brep,			//オフセットカーブ
-	MGUnit_vector& preN,		//前回のノーマルベクトル
-	int& freverse			//向きを逆にしているというフラグ
-)const{
-	MGKnotVector knotVector = offset_make_knotvector(ofs_value_lb);	//十分分割したノットベクトルを求める
-	MGNDDArray dataPoint;
-	dataPoint.buildByKnotVector(knotVector);
-
-	//制御点を生成する
-	int len = dataPoint.length();
-	MGBPointSeq bp1(len, sdim());
-	for(int i = 0; i < len; i++){
-		MGUnit_vector T, N, B;
-		double curvature, torsion, ofs_value = ofs_value_lb.eval_position(dataPoint(i)).ref(0);
-		Frenet_frame(dataPoint(i), T, N, B, curvature, torsion);
-		if(MGMZero(curvature))
-			N = preN;		//曲率が小さいときノーマルは前のを使う
-
-		//ノーマルが全部同じ方向になるようにする(180度以上開かない)
-		if((preN % N) < 0)
-			freverse = !(freverse);
-		int fdir = -2 * freverse + 1;	//freverseがfalseのとき1, trueのとき-1
-		if(!MGMZero(curvature))	//ゼロ割チェック
-			if(ofs_value*fdir > (1./curvature))
-				return false;//曲率半径より大きいオフセットは認めない
-		preN = N;	//ノーマルを取っておく
-		MGPosition pos;
-		pos = eval(dataPoint(i));
-		pos += fdir * N * ofs_value;
-		bp1.store_at(i, pos);
+	std::vector<UniqueCurve> tmp_list;
+	for (auto& crv : crv_list) {
+		UniqueCurve crvOffset = C1CurveVariableOffset(*crv, ofs_value_lb, principalNormal);
+		if (crvOffset)
+			tmp_list.push_back(std::move(crvOffset));
 	}
 
-	//ノットベクトルを求めてオフセット曲線を生成する
-	ofs_brep.setKnotVector(std::move(knotVector));
-	ofs_brep.buildByInterpolationWithKTV(dataPoint, bp1);	//精度十分の曲線を生成する
-	return true;
+	return tmp_list;
 }
 
-//曲線を折れで分割する(オフセット量を示す曲線の折れついても分割する)
-int MGCurve::divide_multi_ofs(
-	const MGLBRep& ofs_value_lb,		//オフセット量を示す曲線
-	std::vector<UniqueCurve>& crv_list	//divided curves are set.
-)const{
-	crv_list.clear();
-	//オフセット量を示す曲線と元の曲線のパラメータレンジが違うとエラー
-	if(param_range() != ofs_value_lb.param_range())return 0;
-	int	start_index = ofs_value_lb.order() - 1, index = 0, count = 0, multi = 0, vbdim = ofs_value_lb.bdim();
-	MGKnotVector value_knot = ofs_value_lb.knot_vector();
-	do{
-		if(ofs_value_lb.order() == 2){	//オーダー2のときの処理
-			index = start_index + 1; multi = 1;
-		}else{
-			multi = value_knot.locate_multi(start_index, 2, index);
-		}
-		MGCurve *temp_crv = part(value_knot(start_index), value_knot(index));
-		count += temp_crv->divide_multi(crv_list);
-		delete temp_crv;
-		start_index = index + multi - 1;
-	}while(index != vbdim && value_knot(start_index) < param_e());	//多重度が見つからなかったら終わり
-	return count;
+/// Offset of constant deviation from this curve.
+/// The offset value must be less than radius of curvature.
+/// When this curve is not C1 continuous, this is divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// line_zero() is used to approximate curves of the offset.
+std::vector<UniqueCurve> MGRLBRep::offset(
+	double ofs_value,
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
+) const {
+	std::vector<UniqueCurve> curves;
+	curves.emplace_back(C1CurveConstantOffset(*this, ofs_value, principalNormal).release());
+	return curves;
+}
+
+/// Offset of variable deviation from this curve.
+/// When this curve is not C1 continuous, divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// The direction of offset is toward the principal normal,
+/// or to the direction to center of curvature.
+/// line_zero() is used approximate the offset curve.
+std::vector<UniqueCurve> MGRLBRep::offset(
+	const MGLBRep& ofs_value_lb,			///<空間次元１の線B表現で示したオフセット量
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
+) const {
+	std::vector<UniqueCurve> curves;
+	curves.emplace_back(C1CurveVariableOffset(*this, ofs_value_lb, principalNormal).release());
+	return curves;
+
 }
 
 //1スパンの分割数を求める
@@ -297,16 +254,17 @@ int MGCurve::offset_div_num(
 	int ord = order();
 	if(ord<=2)
 		ord = 4;		//Ellipse, Straightのとき
+
 	int ord2=ord*2;
 	double max_deriv = 0.0, tpara = interval.low_point();
-	double shortspan = (interval.high_point() - tpara)/ord2;
+	double delta = (interval.high_point() - tpara)/ord2;
 	double oneSpanLength = interval.length();
 	double oneSpanLength2=oneSpanLength*oneSpanLength;
 	for(int j = 0; j <=ord2; j++){
 		//パラメータ範囲(0,1)の2次微分値に直すためにパラメータ範囲の2乗をかける
 		double deriv = eval(tpara, 2).len() * oneSpanLength2;
 		if(deriv > max_deriv) max_deriv = deriv;
-		tpara += shortspan;
+		tpara += delta;
 	}
 
 	double onelzero=1./MGTolerance::line_zero();
@@ -320,82 +278,4 @@ int MGCurve::offset_div_num(
 	else if(ndiv > NUM_DIV*2)
 		ndiv=NUM_DIV*2;
 	return ndiv;
-}
-
-//向きが同じB表現曲線リストを接続する(LBRepのみ)。join_crvlに接続した曲線リストが入る。
-//戻り値は、引数の曲線リストの向きが違うとき、同じB表現同士でなかったときfalseが返る。
-int join(
-	std::vector<UniqueCurve>& crvl,
-	std::vector<UniqueCurve>& join_crvl
-){
-	int num = (int)crvl.size(), rc = 0;
-	MGCurve *pre_pcrv = 0, *cur_pcrv, *next_pcrv;
-	if(!num)
-		return false;
-
-	if(num == 1){	//曲線が１本のときの処理
-		cur_pcrv = crvl[0]->clone();
-		cur_pcrv->remove_knot();
-		join_crvl.emplace_back(cur_pcrv);
-		return 1;
-	}
-
-	cur_pcrv = crvl[0]->clone();
-	for(int i = 0; i < num - 1; i++){
-		next_pcrv = crvl[i+1].get();
-		if(!cur_pcrv || !next_pcrv)
-			return false;
-
-		MGLBRep* lb1=dynamic_cast<MGLBRep*>(cur_pcrv);
-		MGLBRep* lb2=dynamic_cast<MGLBRep*>(next_pcrv);
-		if(!lb1 || !lb2)
-			return false;
-
-		pre_pcrv = join2LBRep(*lb1,*lb2);
-		if(!pre_pcrv){
-			rc++;
-			cur_pcrv->remove_knot();
-			join_crvl.emplace_back(cur_pcrv);
-			delete pre_pcrv;
-			cur_pcrv = next_pcrv->clone();
-			continue;
-		}
-		delete cur_pcrv;
-		cur_pcrv = pre_pcrv;
-	}
-	cur_pcrv->remove_knot();
-	join_crvl.emplace_back(cur_pcrv);
-	rc++;
-	return rc;
-}
-
-//曲線をオフセットするのに十分分割したノットベクトルを返却する
-//オフセット量曲線も考慮に入れ、分割数の多い方にあわせている。
-MGKnotVector MGCurve::offset_make_knotvector(
-	const MGLBRep& ofs_value_lb
-)const{
-	//元となるノットベクトルを生成する
-	const MGKnotVector& tempKnotVector = knot_vector();
-	MGKnotVector knotVector(tempKnotVector, 4);	//オーダー4のノットベクトルに作り替える
-	for(int i=tempKnotVector.order()-1; i<tempKnotVector.bdim(); i++){
-		double	tpara = 0.0,					//テンポラリ
-				spara = tempKnotVector(i),		//スパンの始点
-				epara = tempKnotVector(i + 1);	//スパンの終点
-		if(epara - spara < param_error())
-			continue;	//マルチノットのときの処理(RLBRepのみ)
-
-		//1スパンの分割数を決定する
-		MGInterval interval(spara, epara);
-		int ndiv = offset_div_num(interval),					//オフセット曲線の分割数
-			tmp_ndiv = ofs_value_lb.offset_div_num(interval);	//オフセット量曲線の分割数
-		if(tmp_ndiv>ndiv)
-			ndiv=tmp_ndiv;						//分割数の多い方を用いる
-		double shortspan = (epara - spara) / ndiv;
-		tpara = spara;
-		for(int j=0; j<ndiv; j++){
-			knotVector.add_data(tpara);
-			tpara += shortspan;
-		}
-	}
-	return knotVector;
 }

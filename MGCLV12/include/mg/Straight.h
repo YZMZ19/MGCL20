@@ -461,15 +461,15 @@ double negate_param(double t)const;
 
 ///一定オフセット関数
 
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、空間次元のエレメント番号が最も大きいエレメントが1の単位ベクトルを正とする。
-///トレランスはline_zero()を使用する。戻り値は、オフセット曲線リストが返却される。
-///costant offset curve. if the norm_vector is given, the positive offset direction decide
-///to left hand side from ahead, or the MGUnit_vector() direction.
-///line_zero() is used. return value is number of offset curve.
+/// Offset of constant deviation from this curve.
+/// The offset value must be less than radius of curvature.
+/// When this curve is not C1 continuous, this is divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// line_zero() is used to approximate curves of the offset.
 std::vector<UniqueCurve> offset(
-	double ofs_value,						///<オフセット量
-	const MGVector& norm_vector = mgNULL_VEC///<法線ベクトル
+	double ofs_value,	///<オフセット量
+	bool principalNormal = true /// true: Offset direction is to principal normal
+								/// false: to binormal
 )const override;
 
 ///Test if input point is on the line or not.

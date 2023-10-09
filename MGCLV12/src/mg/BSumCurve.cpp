@@ -474,7 +474,7 @@ MGCurve& MGBSumCurve::unlimit_start(){
 
 // Output function.
 std::ostream& MGBSumCurve::toString(std::ostream& ostrm) const{
-	ostrm<<"MGBSumCurve::"<<this;
+	ostrm<<"MGBSumCurve::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 	ostrm<<",m_g1="<<m_g1;if(m_g1) ostrm<<","<<(*m_g1);
 	ostrm<<",m_g2="<<m_g2;if(m_g2) ostrm<<","<<(*m_g2);

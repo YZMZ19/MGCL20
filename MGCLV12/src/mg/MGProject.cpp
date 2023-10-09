@@ -30,6 +30,66 @@ static char THIS_FILE[] = __FILE__;
 
 using namespace std;
 
+//向きが同じ2本のB表現曲線を接続する(同じ種類のとき)
+MGLBRep* join2LBRep(const MGLBRep& crv1, const MGLBRep& crv2) {
+	int which, cont;
+	double ratio;
+	cont = crv1.continuity(crv2, which, ratio);
+	if (cont < 0 || which == 0 || which == 3)
+		return NULL;
+
+	auto lb = new MGLBRep(crv1);
+	lb->connect(cont, which, crv2);
+	return lb;
+}
+
+//向きが同じB表現曲線リストを接続する(LBRepのみ)。join_crvlに接続した曲線リストが入る。
+//戻り値は、引数の曲線リストの向きが違うとき、同じB表現同士でなかったときfalseが返る。
+int join(
+	std::vector<UniqueCurve>& crvl,
+	std::vector<UniqueCurve>& join_crvl
+) {
+	int num = (int)crvl.size(), rc = 0;
+	MGCurve* pre_pcrv = 0, * cur_pcrv, * next_pcrv;
+	if (!num)
+		return false;
+
+	if (num == 1) {	//曲線が１本のときの処理
+		cur_pcrv = crvl[0]->clone();
+		cur_pcrv->remove_knot();
+		join_crvl.emplace_back(cur_pcrv);
+		return 1;
+	}
+
+	cur_pcrv = crvl[0]->clone();
+	for (int i = 0; i < num - 1; i++) {
+		next_pcrv = crvl[i + 1].get();
+		if (!cur_pcrv || !next_pcrv)
+			return false;
+
+		MGLBRep* lb1 = dynamic_cast<MGLBRep*>(cur_pcrv);
+		MGLBRep* lb2 = dynamic_cast<MGLBRep*>(next_pcrv);
+		if (!lb1 || !lb2)
+			return false;
+
+		pre_pcrv = join2LBRep(*lb1, *lb2);
+		if (!pre_pcrv) {
+			rc++;
+			cur_pcrv->remove_knot();
+			join_crvl.emplace_back(cur_pcrv);
+			delete pre_pcrv;
+			cur_pcrv = next_pcrv->clone();
+			continue;
+		}
+		delete cur_pcrv;
+		cur_pcrv = pre_pcrv;
+	}
+	cur_pcrv->remove_knot();
+	join_crvl.emplace_back(cur_pcrv);
+	rc++;
+	return rc;
+}
+
 // Implementation of MGFSurface projection.
 
 //曲線を面に面直またはベクトル投影して曲線リストを求める。

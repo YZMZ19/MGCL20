@@ -197,7 +197,7 @@ std::partial_ordering MGCylinder::ordering_test(const MGGel& g2)const {
 // Output virtual function.
 //Output to ostream メンバデータを標準出力に出力する。
 std::ostream& MGCylinder::toString(std::ostream &outpt) const{
-	outpt<<"MGCylinder::"<<this<<",m_ortho="<<m_ortho<<std::endl<<" ,m_ellipes="<<m_ellipse
+	outpt<<"MGCylinder::"<< (const MGGel*)this<<",m_ortho="<<m_ortho<<std::endl<<" ,m_ellipes="<<m_ellipse
 		<<std::endl<<" ,m_axis="<<m_axis;
 	return outpt;
 }

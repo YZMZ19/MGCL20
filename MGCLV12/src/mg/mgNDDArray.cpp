@@ -68,7 +68,10 @@ MGNDDArray& MGNDDArray::operator=(MGNDDArray&& nd){
 	return *this;
 }
 
-//Constructor MGNDDArray of size n and lenght=n.
+/// Constructor MGNDDArray of size n and lenght=n.
+/// When data is given, data is an array of length n, and
+/// data construct the element data of this MGNDDArray.
+/// data[i] must be <= data[i+1].
 MGNDDArray::MGNDDArray(
 	int n,		//size of this.
 	const double* data	//data array of length n if data!=NULL.
@@ -223,8 +226,7 @@ void MGNDDArray::set_length(int len){
 //multiplicity allowed for NDDArray.
 //Return value is number of data actually added.
 int MGNDDArray::add_data(double value, int mult_max){
-	MGKnot knot(value,1);
-	return add_data(knot,mult_max);
+	return add_data(MGKnot(value, 1),mult_max);
 }
 
 //Add data with multiplicity into data points.
@@ -247,7 +249,8 @@ int MGNDDArray::add_data(
 	if(mult<0) mult=0;
 	int oldlength = m_length;
 	int newlength=m_length+mult;
-	reshape(newlength);
+	reserve(newlength);//guarantee capacity()>=newlength
+	set_length(newlength);
 	int rval=mult;
 	if(mult){
 		int endid=newlength-1; int j= oldlength-1;
@@ -495,6 +498,51 @@ void MGNDDArray::set_null(){
 }
 
 #define INITIAL_LENGTH 20
+#define INCREMENTAL 1.5
+/// Reserve capacity.
+/// When newCapacity>=1 is input, adequate new capacity() is made to guarantee capacity() >= newCapacity.
+/// When newCapacity<=0 is input, the most adequate new capacity() is made .
+/// The length() and the data stored are unchanged.
+void MGNDDArray::reserve(int newCapacity) {
+	if (1<=newCapacity && newCapacity <= m_capacity)
+		return;
+
+	int new_capa =
+		m_capacity >= INITIAL_LENGTH ? m_capacity * INCREMENTAL : INITIAL_LENGTH;
+	while(new_capa<=newCapacity)
+		new_capa *= INCREMENTAL;
+	int lenSave = length();
+	reshape(new_capa);
+	set_length(lenSave);
+}
+
+/// Reserve length n area before the index id.
+/// On return, length() will be increased by n.
+/// Area from [id] to [id+n-1] will contain garbage.
+/// The old data from [id] to [lenOld-1] will be transfered to [id+n] ...
+void MGNDDArray::reserveInsertArea(int n, int id) {
+	assert(id <= m_length );
+	int lenNew = m_length + n;
+	double* dataNew;
+	if (m_capacity >= lenNew) {
+		dataNew = m_element;
+	}else{
+		dataNew = new double[lenNew];
+		for (int i = 0; i<id; ++i)
+			dataNew[i] = m_element[i];
+	}
+	int lenOldm1 = m_length - 1;
+	int lenNewm1 = lenNew - 1;
+	for (int i = lenOldm1, j = 0; id <= i; --i, ++j)
+		dataNew[lenNewm1 - j] = m_element[lenOldm1 - j];
+	if (dataNew != m_element) {
+		delete[] m_element;
+		m_element = dataNew;
+		m_capacity = lenNew;
+	}
+	m_length = lenNew;
+}
+
 ///store data at the position i of this array.
 ///tau(i) must be => tau(i-1).
 ///When i>=capacity(), reshape will take place.
@@ -505,17 +553,11 @@ void MGNDDArray::store_with_capacityCheck(
 	double data///the data to store.
 ){
 	assert(i>=0);
-	if(i>=m_capacity){
-		int new_capacity;
-		if(m_capacity>=INITIAL_LENGTH)
-			new_capacity=int(m_capacity*1.3);
-		else
-			new_capacity=INITIAL_LENGTH;
-		if(i>=new_capacity)
-			new_capacity=i+1;
-		reshape(new_capacity);
-	}		
+	if(i>=m_capacity)
+		reserve();
 	m_element[i]=data;
+	if (m_length <= i)
+		set_length(i + 1);
 }
 
 //From Knot vector, obtain data point seq abscissa.

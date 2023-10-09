@@ -82,7 +82,7 @@ std::ostream& MGSurface::toString(std::ostream& ostrm) const{
 
 //////////// MGPoint ////////////
 ostream& MGPoint::toString(ostream& ostrm)const{
-	ostrm<<"MGPoint::"<<this;
+	ostrm<<"MGPoint::"<< (const MGGel*)this;
 	MGGeometry::toString(ostrm);
 
 	int dim=sdim();
@@ -97,7 +97,7 @@ ostream& MGPoint::toString(ostream& ostrm)const{
 
 //////////// MGCompositeCurve ////////////
 ostream& MGCompositeCurve::toString(ostream& ostrm) const{
-	ostrm<<"MGCompositeCurve::"<<this;
+	ostrm<<"MGCompositeCurve::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
 	ostrm<<", number_of_curves="<<number_of_curves();
@@ -113,7 +113,7 @@ ostream& MGCompositeCurve::toString(ostream& ostrm) const{
 ostream& MGEllipse::toString(ostream& ostrm) const{
 //	ostrm.setf(ios::scientific,ios::floatfield);
 //	ostrm.precision(10);
-	ostrm<<"MGEllipse::"<<this;
+	ostrm<<"MGEllipse::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
 	double t0=m_prange[0], t1=m_prange[1];
@@ -133,7 +133,7 @@ ostream& MGEllipse::toString(ostream& ostrm) const{
 
 //////////// MGLBRep ////////////
 ostream& MGLBRep::toString(ostream& ostrm) const{
-	ostrm<<"MGLBRep::"<<this;
+	ostrm<<"MGLBRep::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
 	ostrm<<", Space Dim="<<sdim()<<endl;
@@ -144,7 +144,7 @@ ostream& MGLBRep::toString(ostream& ostrm) const{
 
 //////////// MGRLBRep ////////////
 ostream& MGRLBRep::toString(ostream& ostrm) const{
-	ostrm<<"MGRLBRep(non homogeneous form)::"<<this;
+	ostrm<<"MGRLBRep(non homogeneous form)::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
 	ostrm<<", Space Dimension="<<sdim()<<endl;
@@ -157,7 +157,7 @@ ostream& MGRLBRep::toString(ostream& ostrm) const{
 ostream& MGPlane::toString(ostream& ostrm) const{
 //	o.setf(ios::scientific,ios::floatfield);
 //	o.precision(10);
-	ostrm<<"MGPlane::"<<this;
+	ostrm<<"MGPlane::"<< (const MGGel*)this;
 	MGSurface::toString(ostrm);
 
 	ostrm<<endl<<", root_point="<<m_root_point
@@ -168,7 +168,7 @@ ostream& MGPlane::toString(ostream& ostrm) const{
 
 //////////// MGRSBRep ////////////
 ostream& MGRSBRep::toString(ostream& ostrm) const{
-	ostrm<<"MGRSBRep(non homogeneous form)::"<<this;
+	ostrm<<"MGRSBRep(non homogeneous form)::"<< (const MGGel*)this;
 	MGSurface::toString(ostrm);
 
 	ostrm<<", Space Dim="<<sdim()<<endl;
@@ -180,7 +180,7 @@ ostream& MGRSBRep::toString(ostream& ostrm) const{
 
 //////////// MGSBRep ////////////
 ostream& MGSBRep::toString(ostream& ostrm) const{
-	ostrm<<"MGSBRep::"<<this;
+	ostrm<<"MGSBRep::"<< (const MGGel*)this;
 	MGSurface::toString(ostrm);
 
 	ostrm<<std::endl<<", uknot="<<m_uknot;
@@ -191,7 +191,7 @@ ostream& MGSBRep::toString(ostream& ostrm) const{
 
 //////////// MGStraight ////////////
 ostream& MGStraight::toString(ostream& ostrm) const{
-	ostrm<<"MGStraight::"<<this;
+	ostrm<<"MGStraight::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
 	ostrm<<endl<<", root_point="<<m_root_point
@@ -207,7 +207,7 @@ ostream& MGStraight::toString(ostream& ostrm) const{
 
 //////////// MGSurfCurve ////////////
 ostream& MGSurfCurve::toString(ostream& ostrm) const{
-	ostrm<<"MGSurfCurve::"<<this;
+	ostrm<<"MGSurfCurve::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
 	ostrm<<", start="<<start_point()<<", end="<<end_point();
@@ -218,7 +218,7 @@ ostream& MGSurfCurve::toString(ostream& ostrm) const{
 
 //////////// MGTrimmedCurve ////////////
 ostream& MGTrimmedCurve::toString(ostream& ostrm) const{
-	ostrm<<"MGTrimmedCurve::"<<this;
+	ostrm<<"MGTrimmedCurve::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
 	ostrm<<", curve="<<m_curve;
@@ -233,7 +233,7 @@ ostream& MGTrimmedCurve::toString(ostream& ostrm) const{
 //Debug Function
 // Output virtual function.
 ostream& MGBSumSurf::toString(std::ostream& ostrm) const{
-	ostrm<<"MGBSumSurf::"<<this;
+	ostrm<<"MGBSumSurf::"<< (const MGGel*)this;
 	MGSurface::toString(ostrm);
 
 	ostrm<<", g1="<<m_g1;if(m_g1) ostrm<<","<<(*m_g1);
@@ -243,7 +243,7 @@ ostream& MGBSumSurf::toString(std::ostream& ostrm) const{
 }
 
 ostream& MGStl::toString(std::ostream& ostrm) const{
-	ostrm<<"MGStl::"<<this;
+	ostrm<<"MGStl::"<< (const MGGel*)this;
 	MGObject::toString(ostrm);
 
 	// ボックス枠の座標を出力

@@ -1276,12 +1276,12 @@ MG_DLL_DECLR void rebuildAsSurfacePerimeters(
 int trimPerimeters(std::unique_ptr<MGCurve> perims[4]);
 
 ///Rebuild perimeters periIn to input to MGSBRep::buildByBlendXXX().
-
 ///rebuildCurveTrimDirectionUpdate() does:
 ///(1) Trim periIn at their corner points.
 ///(2) adjust for the opposite perimeters to have the same directions.
 ///(3) rebuild periIn for the opposite perimeters to have the same knot configuration.
 ///    At this rebuild, the corner points are updated to be the same.
+/// Function's return value is 0 if rebuild is done successfully, !=0 failed.
 MG_DLL_DECLR int rebuildCurveTrimDirectionUpdate(
 	const MGCurve*	periIn[4],//‹«ŠEüƒŠƒXƒg(vmin,umax,vmax,umin‚Ì‡)
 	std::unique_ptr<MGLBRep> perimeters[4]

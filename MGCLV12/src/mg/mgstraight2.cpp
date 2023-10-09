@@ -724,3 +724,24 @@ MGPosition_list MGStraight::relation_parallel(const MGStraight& l2)const{
 	}
 	return list;
 }
+
+//一定オフセット関数
+//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
+//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。
+//戻り値は、オフセット曲線が返却される。
+std::vector<UniqueCurve> MGStraight::offset(
+	double ofs_value,			//オフセット量
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
+)const {
+	MGVector T, N, B;
+	double crvtr, torsn;
+	Frenet_frame(param_s(), T, N, B, crvtr, torsn);
+	MGVector& dir = principalNormal ? N : B;
+
+	std::unique_ptr<MGCurve> offsetSl(new MGStraight(*this));
+	*offsetSl += dir * ofs_value;
+	std::vector<UniqueCurve> voffset;
+	voffset.emplace_back(offsetSl.release());
+	return voffset;
+}

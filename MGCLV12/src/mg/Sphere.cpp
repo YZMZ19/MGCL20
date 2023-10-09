@@ -667,7 +667,7 @@ bool MGSphere::on(
 // Output virtual function.
 //Output to ostream メンバデータを標準出力に出力する。
 std::ostream& MGSphere::toString(std::ostream &outpt) const{
-	outpt<<"MGSphere::"<<this<<",";
+	outpt<<"MGSphere::"<< (const MGGel*)this<<",";
 	MGSurface::toString(outpt);
 	outpt<<" ,m_ellipseu="<<m_ellipseu<<std::endl;
 	outpt<<" ,m_ellipsev="<<m_ellipsev;
