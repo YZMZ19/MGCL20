@@ -135,7 +135,7 @@ void MGSurface::offset_calc_knot_vec(
 	MGNDDArray& data_point_u,			//求まったuデータポイント
 	MGNDDArray& data_point_v) const		//求まったvデータポイント
 {
-	int num_div = offset_div_num();		//2次微分値に応じて分割数を求める
+	int num_div = divideNum();		//2次微分値に応じて分割数を求める
 	int ord_u = order_u(), ord_v = order_v();
 	int knotNumU = (bdim_u() - ord_u + 1) * num_div, knotNumV = (bdim_v() - ord_v + 1) * num_div;
 	if(ord_u < 4)ord_u = 4; if(ord_v < 4)ord_v = 4;
@@ -195,9 +195,8 @@ int MGSurface::offset_check_curva_one(
 	return true;
 }
 
-//オフセットするサンプルポイントの1パッチごとの分割数を求める
-//全てのパッチ中の分割数で最大の値を返す
-int MGSurface::offset_div_num() const{
+///get the a divide number for offset, intersection, or others.
+int MGSurface::divideNum() const{
 	int max_div = 0;
 	int bdu=bdim_u(), bdv=bdim_v();
 	for(int i = order_u() - 1; i < bdu; i++){
@@ -211,9 +210,8 @@ int MGSurface::offset_div_num() const{
 	return max_div;
 }
 
-//オフセットするサンプルポイントの1パッチごとの分割数を求める
-//全てのパッチ中の分割数で最大の値を返す
-int MGPlane::offset_div_num() const
+///get the a divide number for offset, intersection, or others.
+int MGPlane::divideNum() const
 {
 	return 1;
 }

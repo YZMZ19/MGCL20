@@ -96,7 +96,7 @@ MGSBRepTP::MGSBRepTP(const MGSurface& brep)
 			if(epara - spara < crv->param_error())continue;	//マルチノットのときの処理(RLBRepのみ)
 			//1スパンの分割数を決定する
 			MGInterval interval(spara, epara);
-			int ndiv = crv->calc_div_num(interval);			//オフセット曲線の分割数
+			int ndiv = crv->divideNum(interval);			//オフセット曲線の分割数
 			double shortspan = (epara - spara) / ndiv;
 			tpara = spara;
 			for (int j = 0; j < ndiv; j++){knotVector.add_data(tpara); tpara += shortspan;}

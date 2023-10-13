@@ -1266,9 +1266,8 @@ int offset_check_curva_one(
 	double ofs_value	///<オフセット量
 )const;
 
-///オフセットするサンプルポイントの1パッチごとの分割数を求める
-///全てのパッチ中の分割数で最大の値を返す
-virtual int offset_div_num() const;
+///get the a divide number for offset, intersection, or others.
+virtual int divideNum() const;
 
 ///オフセットするサンプルポイントの1パッチごとの分割数を求める
 ///分割数n = sqrt(1 / tol) * sqrt((M1 + 2 *M2 + M3) / 8)は以上の式で求まる

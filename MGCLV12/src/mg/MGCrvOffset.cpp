@@ -20,9 +20,6 @@ static char THIS_FILE[] = __FILE__;
 
 // Implementation of curve offset.
 
-#define POW_LOW 0.34	//最初にオフセットさせるポイント数を決める係数(速度重視)
-#define POW_HIGH 0.50   //最初にオフセットさせるポイント数を決める係数(精度重視)
-#define NUM_DIV 50      //1スパンの分割数がこれを越えたときPOW_LOWを使用するようにする
 
 ///曲線をオフセットするのに十分分割したノットベクトルを返却する
 ///オフセット量曲線も考慮に入れ、分割数の多い方にあわせている。
@@ -38,8 +35,8 @@ MGKnotVector offset_make_knotvector(const MGCurve* lb1, const MGLBRep* lb2){
 
 		//1スパンの分割数を決定する
 		MGInterval interval(spara, epara);
-		int ndiv = lb1->offset_div_num(interval);//オフセット曲線の分割数
-		int tmp_ndiv = lb2 ?  lb2->offset_div_num(interval) : -1;//オフセット量曲線の分割数
+		int ndiv = lb1->divideNum(interval);//オフセット曲線の分割数
+		int tmp_ndiv = lb2 ?  lb2->divideNum(interval) : -1;//オフセット量曲線の分割数
 		if (tmp_ndiv > ndiv)
 			ndiv = tmp_ndiv;//分割数の多い方を用いる
 
@@ -244,38 +241,4 @@ std::vector<UniqueCurve> MGRLBRep::offset(
 	curves.emplace_back(C1CurveVariableOffset(*this, ofs_value_lb, principalNormal).release());
 	return curves;
 
-}
-
-//1スパンの分割数を求める
-int MGCurve::offset_div_num(
-	const MGInterval& interval	//分割数を求めるパラメータ範囲
-)const{
-	//２＊order()で分割して最大2次微分値を求める
-	int ord = order();
-	if(ord<=2)
-		ord = 4;		//Ellipse, Straightのとき
-
-	int ord2=ord*2;
-	double max_deriv = 0.0, tpara = interval.low_point();
-	double delta = (interval.high_point() - tpara)/ord2;
-	double oneSpanLength = interval.length();
-	double oneSpanLength2=oneSpanLength*oneSpanLength;
-	for(int j = 0; j <=ord2; j++){
-		//パラメータ範囲(0,1)の2次微分値に直すためにパラメータ範囲の2乗をかける
-		double deriv = eval(tpara, 2).len() * oneSpanLength2;
-		if(deriv > max_deriv) max_deriv = deriv;
-		tpara += delta;
-	}
-
-	double onelzero=1./MGTolerance::line_zero();
-	//分割数は (1 / tol)^POW * sqrt(max_deriv / 8)で最小値は order()である
-	double sqrt_max_deriv8=sqrt(max_deriv / 8.);
-	int ndiv = int(pow(onelzero, POW_HIGH) * sqrt_max_deriv8);
-	if(ndiv > NUM_DIV)
-		ndiv = int(pow(onelzero, POW_LOW) * sqrt_max_deriv8);
-	if(ndiv < ord2)
-		ndiv = ord2;
-	else if(ndiv > NUM_DIV*2)
-		ndiv=NUM_DIV*2;
-	return ndiv;
 }

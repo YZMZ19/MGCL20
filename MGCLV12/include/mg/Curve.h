@@ -140,15 +140,6 @@ virtual MGBox box_limitted(
 	const MGInterval& ///< Parameter Range of the curve.
 ) const = 0;
 
-///@cond
-///Calculate dividing Knots number for the initial approximation
-///of the curve, used for precise approximation.
-///分割数を求めるパラメータ範囲
-virtual int calc_div_num(
-	const MGInterval& interval)
-const{return this->offset_div_num(interval);};
-///@endcond
-
 ///Obtain ceter coordinate of the geometry.
 virtual MGPosition center() const;
 
@@ -332,7 +323,7 @@ virtual int divide_multi(
 )const;
 
 ///get the a divide number for offset, intersection, or others.
-virtual int divide_number() const{return offset_div_num(param_range());};
+virtual int divide_number() const{return divideNum(param_range());};
 
 ///Draw this curve into vbo, approximating with polyline.
 virtual void drawSE(
@@ -675,9 +666,8 @@ virtual std::vector<UniqueCurve> offset(
 ) const;
 
 ///@cond
-///get the number of division for offset.
-///オフセットで使用する、あるパラメータ範囲の分割数を求める
-virtual int offset_div_num(
+///get the a divide number for offset, intersection, or others.
+virtual int divideNum(
 	const MGInterval& interval	///<分割数を求めるパラメータ範囲
 )const;
 ///@endcond

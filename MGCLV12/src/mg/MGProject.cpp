@@ -526,18 +526,18 @@ void prjGetDataPoints(
 ){
 	double t0=tuv0[0], t1=tuv1[0];
 	MGInterval cspan(t0, t1);
-	int n1=curve.offset_div_num(cspan);
+	int n1=curve.divideNum(cspan);
 
 	const MGSurface* srf=surf.get_surface_pointer();
 
 	MGCurve* pcrv1=srf->parameter_curve(1,(tuv0[1]+tuv1[1])*.5);
 	MGInterval cspan2(tuv0[1], tuv1[1]);
-	int n2=pcrv1->offset_div_num(cspan2);
+	int n2=pcrv1->divideNum(cspan2);
 	delete pcrv1;
 
 	MGCurve* pcrv2=srf->parameter_curve(0,(tuv0[2]+tuv1[2])*.5);
 	MGInterval cspan3(tuv0[2], tuv1[2]);
-	int n3=pcrv2->offset_div_num(cspan3);
+	int n3=pcrv2->divideNum(cspan3);
 	delete pcrv2;
 
 	int n=n1;

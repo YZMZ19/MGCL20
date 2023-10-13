@@ -784,9 +784,8 @@ MGCSisects isect_withC1LB(const MGLBRep& lb)const;
 ///isect with SurfCurve whose m_curve is not a MGTrimmedCurve of MGCompositeCurve.
 MGCSisects isect_with_noCompoSC(const MGSurfCurve& curve2)const;
 
-///オフセットするサンプルポイントの1パッチごとの分割数を求める
-///全てのパッチ中の分割数で最大の値を返す
-int offset_div_num() const;
+///get the a divide number for offset, intersection, or others.
+int divideNum() const;
 
 ///Obtain 1D surface rep. of this surf which can be used for
 ///isect(const MGPlane& pl). This surf1D is used in isect for

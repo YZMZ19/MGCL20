@@ -469,9 +469,8 @@ int isect_order() const{return 4;}
 ///Compute the intersection line of this and the plane pl.
 MGSSisects intersectPl(const MGPlane& pl) const override;
 
-///オフセットするサンプルポイントの1パッチごとの分割数を求める
-///全てのパッチ中の分割数で最大の値を返す
-int offset_div_num() const{return 1;};
+///get the a divide number for offset, intersection, or others.
+int divideNum() const{return 1;};
 
 ///Obtain 1D surface rep. of this surf which can be used for
 ///isect(const MGPlane& plane). This surf1D is used in isect for
