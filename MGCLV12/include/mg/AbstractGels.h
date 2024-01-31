@@ -5,6 +5,7 @@
 #ifndef _MGAbstractGells_HH_
 #define _MGAbstractGells_HH_
 
+#include <initializer_list>
 #include <vector>
 #include <iosfwd>
 #include "mg/MGCL.h"
@@ -23,9 +24,8 @@
 ///MGAbstractGels is a class which constains MGAbstractGel elements as a vector,
 ///provides OR conditions on the specification of gels.
 class MG_DLL_DECLR MGAbstractGels{
-//We cannot use inheritance of std::vector<MYELM> to make DLL.
+//We cannot use inheritance of std::vector<MGAbstractGel> to make DLL.
 
-	using MYELM = MGAbstractGel;
 	using MYVEC= std::vector<MGAbstractGel> ;
 public:
 
@@ -40,9 +40,9 @@ public:
 	typedef MYVEC::reverse_iterator       reverse_iterator;
 	typedef MYVEC::const_reverse_iterator const_reverse_iterator;
 
-	MYVEC m_vec;
+	std::vector<MGAbstractGel> m_vec;
 
-///  MYVEC's member function definitions.
+///  std::vector<MGAbstractGel>'s member function definitions.
 iterator begin() { return m_vec.begin(); };
 const_iterator begin()const { return m_vec.begin(); };
 iterator end() { return m_vec.end(); };
@@ -53,16 +53,18 @@ const_reverse_iterator rbegin() const noexcept { return m_vec.rbegin(); };
 const_reverse_iterator rend() const noexcept { return m_vec.rend(); };
 void clear() { m_vec.clear(); };
 bool empty() const { return m_vec.empty(); };
+
 template <class... Args>
 void emplace_back(Args&&... args) { m_vec.emplace_back(std::forward<Args>(args)...); };
+
 iterator erase(iterator x) { return m_vec.erase(x); };
 iterator erase(iterator first, iterator last) { return m_vec.erase(first, last); };
-const MYELM& front() const { return m_vec.front(); };
-MYELM& front() { return m_vec.front(); };
-const MYELM& back() const { return m_vec.back(); };
-MYELM& back() { return m_vec.back(); };
-iterator insert(const_iterator it, const MYELM& x) { return m_vec.insert(it, x); };
-iterator insert(iterator it, MYELM&& x) { return m_vec.insert(it, std::move(x)); };
+const MGAbstractGel& front() const { return m_vec.front(); };
+MGAbstractGel& front() { return m_vec.front(); };
+const MGAbstractGel& back() const { return m_vec.back(); };
+MGAbstractGel& back() { return m_vec.back(); };
+iterator insert(const_iterator it, const MGAbstractGel& x) { return m_vec.insert(it, x); };
+iterator insert(iterator it, MGAbstractGel&& x) { return m_vec.insert(it, std::move(x)); };
 
 template <class InputIterator>
 iterator insert(const_iterator position,
@@ -71,17 +73,23 @@ iterator insert(const_iterator position,
 };
 
 void pop_back() { m_vec.pop_back(); };
-void push_back(const MYELM& x) { m_vec.push_back(x); };
-void push_back(MYELM&& x) { m_vec.push_back(std::move(x)); };
+void push_back(const MGAbstractGel& x) { m_vec.push_back(x); };
+void push_back(MGAbstractGel&& x) { m_vec.push_back(std::move(x)); };
 size_t size() const { return m_vec.size(); };
-MYELM& operator[](size_t i) { return m_vec.operator[](i); };
-const MYELM& operator[](size_t i)const { return m_vec.operator[](i); };
+MGAbstractGel& operator[](size_t i) { return m_vec.operator[](i); };
+const MGAbstractGel& operator[](size_t i)const { return m_vec.operator[](i); };
 
 ///String output function.
 MG_DLL_DECLR friend std::ostream& operator<< (std::ostream&, const MGAbstractGels&);
 
 ///Construct MGAbstractGels of a MGAbstractGel. This is a conversion contructor.
 MGAbstractGels(const MGAbstractGel& agell);
+
+/// <summary>
+/// To cope with initializer {}, e.g. MGAbstractGels avec{mgAll_Straight, mgAll_SPhere}
+/// </summary>
+MGAbstractGels(std::initializer_list<MGAbstractGel> init)
+	: m_vec(init.begin(), init.end()) {};
 
 ///push elements in agells at the end of this.
 void push_back(const MGAbstractGels& agells){
