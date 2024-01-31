@@ -487,7 +487,6 @@ int MGFace::isect_outcurves(
 			int pid=i->perimeter_id();
 			if(perim[pid]==0) perim[pid].reset(srf1->perimeter_curve(pid));
 			double t0,t1; i->range(t0,t1);
-			//if(t0>t1){ double save=t0; t0=t1; t1=save;}
 			MGTrimmedCurve crvi(*(perim[pid]), t0,t1);
 			double error=MGTolerance::wc_zero();
 			mgTolSetWCZero wczeroSet(error*.1);//Set&save the error.

@@ -19,7 +19,6 @@ class MGOpenGLView;
  */
 
 ///mgSysGL is a class to provide a facility to draw temporal pictures.
-
 ///MGOpenGLView holds a list of mgSysGL and draws the pictures by invoking
 ///display list drawer.
 ///As long as the codes are unique, function codes can be
