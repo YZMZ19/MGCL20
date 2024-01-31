@@ -286,6 +286,40 @@ std::vector<UniqueCurve> MGFSurface::skeleton(int density) const{
 	return crv_list;
 }
 
+///Obtain u and v knot point parameter curves.
+std::vector<UniqueCurve> MGFSurface::knot_parameter_curves() const
+{
+	const MGKnotVector& tu = knot_vector_u();
+	const MGKnotVector& tv = knot_vector_v();
+
+	size_t maxNum= tu.bdim() - tu.order() + 2 + tv.bdim() - tv.order() + 2;
+	int idCrv = 0;//index of curves
+	std::vector<UniqueCurve> curves(maxNum);
+
+	const MGKnotVector* tp = &tu;
+	for (int j = 1; j <= 2; j++) {//Loop for u(j=1) and v(j=2) parameter.
+		const MGKnotVector& t = *tp;
+		int k = t.order(), n = t.bdim();
+		bool is_u = j % 2;
+		for (int i = k - 1; i <= n; i++) {
+			double tau = t[i];
+			if (k <= i && tau == t[i - 1])
+				continue;
+			for (auto& crvi : parameter_curves(is_u, tau))
+				if (crvi) {
+					if (idCrv < maxNum)
+						curves[idCrv++] = std::move(crvi);
+					else
+						curves.push_back(std::move(crvi));
+				}
+		}
+		tp = &tv;
+	}
+	while (curves.size() && !curves.back())
+		curves.pop_back();
+	return curves;
+}
+
 //Obtain all the parameter curves at knots of u and v knot vector.
 std::vector<UniqueCurve> MGFSurface::skeleton_at_knots()const{
 	const MGSurface* srf=get_surface_pointer();

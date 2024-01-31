@@ -268,6 +268,16 @@ void MGStl::display_arrows(mgSysGL& sgl)const{
 	}
 }
 
+/// <summary>
+/// Display break points, i.e., parameter lines of u and v breakpoints.
+/// </summary>
+void MGFSurface::display_break_pointsFS(mgSysGL& sgl) const
+{
+	for (auto& curve : knot_parameter_curves())
+		if(curve)
+			curve->drawWire(sgl);
+}
+
 //Draw 3D curve in world coordinates.
 //The object is converted to curve(s) and is drawn.
 void MGFSurface::drawWireFS(
@@ -445,10 +455,13 @@ void MGCurve::display_break_points(mgSysGL& sgl)const{
 	int k=t.order(), n=t.bdim();
 	for(int i=k-1; i<=n; i++){
 		double tau=t[i];
-		if(i>=k && tau==t[i-1]) continue;
-		if(tau<ts || tau>te) continue;
-		MGVector P=eval(tau);
-		sgl.drawPoint(P[0],P[1],P[2]);
+		if(k<=i && tau==t[i-1])
+			continue;
+		if (tau < ts)
+			continue;
+		if (te < tau)
+			break;
+		sgl.drawPoint(eval(tau));
 	}
 }
 void MGLBRep::display_control_polygon(mgSysGL& sgl)const{
