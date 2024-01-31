@@ -102,6 +102,7 @@ int MGFace::offset(double distance, std::vector<UniqueFace>& vecOfsFace)const{
 		const std::vector<UniqueLoop>& bounds = boundaries();
 		//Face‚ð¶¬‚·‚é
 		MGFace* f=new MGFace(vecOfsSrf.front().release(), bounds);
+		f->copy_appearance(*this);
 		vecOfsFace.emplace_back(f);
 		return 0;
 	}
@@ -137,11 +138,12 @@ int MGFace::offset(double distance, std::vector<UniqueFace>& vecOfsFace)const{
 			if(in_range(srfi->center_param()))
 				vecOfsFace.emplace_back(new MGFace(srfi.release()));
 		}else{
-			MGFace *pOfsFace = new MGFace(srfi.release());
+			MGFace *f = new MGFace(srfi.release());
 			j=uvcurves.begin();
 			for(l=0;l<n; j++, l++)
-				pOfsFace->trim(**j);
-			vecOfsFace.emplace_back(pOfsFace);
+				f->trim(**j);
+			f->copy_appearance(*this);
+			vecOfsFace.emplace_back(f);
 		}
 	}
 	return 0;
