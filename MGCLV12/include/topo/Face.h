@@ -281,6 +281,13 @@ void compute_box(MGBox& bx) const;
 
 ///////display member function.
 
+/// <summary>
+/// Display break points, i.e., parameter lines of u and v breakpoints.
+/// </summary>
+void display_break_points(mgSysGL& sgl)const override {
+	display_break_pointsFS(sgl);
+};
+
 ///Display direction arrows on the surface.
 void display_arrows(mgSysGL& sgl)const;
 
