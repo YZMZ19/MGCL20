@@ -495,7 +495,7 @@ void MGSBRep::buildFromSidesCoonsWithTP(
 			tp2.TP(i).change_range(0., 1.);
 	}
 
-//Method 1. Get uled surfaces according to the specification of TP[i].
+//Method 1. Get ruled surfaces according to the specification of TP[i].
 	bool tpSpecified[4] = { tp2.specified(0), tp2.specified(1),
 						tp2.specified(2),tp2.specified(3) };
 	const MGLBRep* peris[4];
@@ -512,6 +512,7 @@ void MGSBRep::buildFromSidesCoonsWithTP(
 	//Save the old knot vector.
 	MGKnotVector& tu2 = m_uknot = tu;
 	MGKnotVector& tv2 = m_vknot = tv;
+
 	//Construct a coons' patch.
 	MGCoons coons(perimeters,derivatives);
 

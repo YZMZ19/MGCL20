@@ -9,6 +9,7 @@
  *  @{
  */
 #include <stddef.h>
+//#include <mutex>
 #include <vector>
 #include "mg/MGCL.h"
 
@@ -17,13 +18,15 @@
 
 //Forward Declaration
 class MGUnit_vector;
-//class MGPosition;
 class MGIfstream;
 class MGOfstream;
 class MGIgesOfstream;
 
 ///Vector of a general n space dimension.
 class MG_DLL_DECLR MGVector {
+private:
+	//mutable std::mutex m;
+
 protected:
 	/// Protected data member
 	int m_sdim;
@@ -55,22 +58,10 @@ MG_DLL_DECLR friend MGVector operator* (double, const MGVector&);
 ///Scalar division.
 MG_DLL_DECLR friend MGVector operator/(const MGVector& vec1,double scale);
 
-///Test if this vector is less than v2.
+///comparison
+bool operator==(const MGVector& v2)const;
 ///Comparison depends on two vectors' length.
-inline friend
-bool operator<(const MGVector& v1,const MGVector& v2){return v1.len()<v2.len();};
-inline friend
-bool operator<=(const MGVector& v1,const MGVector& v2){return v1.len()<=v2.len();};
-inline friend
-bool operator>(const MGVector& v1,const MGVector& v2){return v1.len()>v2.len();};
-inline friend
-bool operator>=(const MGVector& v1,const MGVector& v2){return v1.len()>=v2.len();};
-
-///Test if two vectors are equal.
-MG_DLL_DECLR friend bool operator==(const MGVector& v1,const MGVector& v2);
-
-///Test if two vectors are equal.
-inline friend bool operator!=(const MGVector& v1,const MGVector& v2){return !(v1==v2);}
+std::partial_ordering operator<=>(const MGVector& v2)const;
 
 ///String stream function
 MG_DLL_DECLR friend std::ostream& operator<< (std::ostream&, const MGVector&);
@@ -303,7 +294,6 @@ bool parallel(const MGVector& ) const;
 double parallelism(const MGVector& v2) const;
 
 /// 自身のベクトルをベクトル(v2)に射影したベクトルを求める。
-
 /// v2 が 零ベクトルのとき(*this)が返る。
 MGVector project(const MGVector& v2) const;
 

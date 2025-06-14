@@ -7,6 +7,24 @@
 #include "mgGL/MGStringWriter.h"
 
 
+template<typename T>
+VBObyAnchorPt* DrawString(
+	FTFont* font,
+	mgGLSL::CoordinateType type,
+	const T* str,//target string to draw
+	const MGPosition& pos,//Start position to draw in type coordinates
+	const MGColor* color)
+{
+	VBObyAnchorPt* pVBO = new VBObyAnchorPt(type);
+	pVBO->setStaticAttribAnchorPoint(pos);
+	if (color)
+		pVBO->setStaticAttribColor(*color);
+
+	font->Render(*pVBO, str);
+	pVBO->setDirty(false);
+	return pVBO;
+}
+
 MGStringWriter::MGStringWriter(void)
 {
 	// TODO フォントファイルは同梱すること。
@@ -55,7 +73,8 @@ VBObyAnchorPt* MGStringWriter::Draw(
 	const MGPosition& pos,
 	const MGColor* color)
 {
-	return getInstance()->DrawString(mgGLSL::AnchorPoint, str, pos, color);
+	return DrawString(getInstance()->getFont(),
+		mgGLSL::AnchorPoint, str, pos, color);
 }
 
 VBObyAnchorPt*  MGStringWriter::Draw(
@@ -63,7 +82,8 @@ VBObyAnchorPt*  MGStringWriter::Draw(
 	const MGPosition& pos,
 	const MGColor* color)
 {
-	return getInstance()->DrawString(mgGLSL::AnchorPoint,str,pos,color);
+	return DrawString(getInstance()->getFont(),
+		mgGLSL::AnchorPoint,str,pos,color);
 }
 
 VBObyAnchorPt* MGStringWriter::DrawByScreen(
@@ -71,7 +91,8 @@ VBObyAnchorPt* MGStringWriter::DrawByScreen(
 	const MGPosition& pos,
 	const MGColor* color)
 {
-	return getInstance()->DrawString(mgGLSL::AnchorPointScreen, str, pos, color);
+	return DrawString(getInstance()->getFont(),
+		mgGLSL::AnchorPointScreen, str, pos, color);
 }
 
 VBObyAnchorPt* MGStringWriter::DrawByScreen(
@@ -79,5 +100,6 @@ VBObyAnchorPt* MGStringWriter::DrawByScreen(
 	const MGPosition& pos,
 	const MGColor* color)
 {
-	return getInstance()->DrawString(mgGLSL::AnchorPointScreen, str, pos, color);
+	return DrawString(getInstance()->getFont(),
+		mgGLSL::AnchorPointScreen, str, pos, color);
 }

@@ -130,6 +130,8 @@ void erase_except_front();
 void push_back(const MGPickObject& pobj);
 void push_back(const MGPickObjects& pobjs);
 void push_back(MGPickObjects&& pobjs);
+void emplace_back(const MGGelPosition& gelp);
+void emplace_back(MGGroup* group, MGObject* obj = nullptr);
 
 ///Remove pobj if found in this.
 void remove(const MGPickObject& pobj);

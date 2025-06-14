@@ -439,10 +439,8 @@ void MGOpenGLView::extractSelected(
 	int numPixels = width * height;
 	unsigned* pixels = new unsigned[numPixels];
 	glReadPixels(x, y, width, height, GL_RGBA, GL_UNSIGNED_BYTE, pixels);
-	//if((glErr=glGetError()) != GL_NO_ERROR){
-	//	CString msg(gluErrorString(glErr));
-	//	COUT<<"MGOpenGLView::extractSelected::glReadPixels::"<<(TCAST)msg<<std::endl;
-	//}
+	//if((glErr=glGetError()) != GL_NO_ERROR)
+	//	mgGLSL::printOpenGLError(glErr);
 	for (int i = 0; i < numPixels; i++) {
 		mgGLSLProgram::SELECT_NAME nub;
 		nub.uiName = pixels[i];

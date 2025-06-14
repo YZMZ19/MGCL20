@@ -105,13 +105,16 @@ MGSBRep& operator*=(const MGMatrix& mat);
 MGSBRep& operator*=(const MGTransf& tr);
 
 ///Comparison of two objects.
-bool operator==(const MGSBRep& gel2)const;
-bool operator<(const MGSBRep& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGGel& gel2)const;
-bool operator!=(const MGGel& gel2)const{return !(gel2==(*this));};
-bool operator!=(const MGSBRep& gel2)const{return !(gel2==(*this));};
 bool operator==(const MGRSBRep& gel2)const;
+
+bool operator==(const MGSBRep& gel2)const;
+std::partial_ordering operator<=>(const MGSBRep& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Set(update) the knot vector, KV=MGKnotVector.
 ///This is move operation conforming.
@@ -1273,12 +1276,12 @@ MG_DLL_DECLR void rebuildAsSurfacePerimeters(
 int trimPerimeters(std::unique_ptr<MGCurve> perims[4]);
 
 ///Rebuild perimeters periIn to input to MGSBRep::buildByBlendXXX().
-
 ///rebuildCurveTrimDirectionUpdate() does:
 ///(1) Trim periIn at their corner points.
 ///(2) adjust for the opposite perimeters to have the same directions.
 ///(3) rebuild periIn for the opposite perimeters to have the same knot configuration.
 ///    At this rebuild, the corner points are updated to be the same.
+/// Function's return value is 0 if rebuild is done successfully, !=0 failed.
 MG_DLL_DECLR int rebuildCurveTrimDirectionUpdate(
 	const MGCurve*	periIn[4],//ã´äEê¸ÉäÉXÉg(vmin,umax,vmax,uminÇÃèá)
 	std::unique_ptr<MGLBRep> perimeters[4]

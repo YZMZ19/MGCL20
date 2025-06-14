@@ -49,7 +49,7 @@ void MGFace::getTrimCrv(
 		std::unique_ptr<MGCurve> atpCrv(ei.curve_limitted());
 
 		//エッジが与えられたボックスに含まれるときの処理
-		if(box >> boxEdge){
+		if(box.includes(boxEdge)) {
 			//When boxEdge is included in box.
 			vecCrv.emplace_back(atpCrv.release());
 			continue;
@@ -77,7 +77,7 @@ void MGFace::getTrimCrv(
 			double t0=*param_iter, t1=*next_param_iter;
 			double tmid=(t0+t1)*.5;//中間パラメータ
 			MGPosition UVPos = atpCrv->eval(tmid);//面上パラメータ
-			if(box >> UVPos)
+			if(box.includes(UVPos))
 				vecCrv.emplace_back(atpCrv->part(t0,t1));
 		}
 	}
@@ -102,6 +102,7 @@ int MGFace::offset(double distance, std::vector<UniqueFace>& vecOfsFace)const{
 		const std::vector<UniqueLoop>& bounds = boundaries();
 		//Faceを生成する
 		MGFace* f=new MGFace(vecOfsSrf.front().release(), bounds);
+		f->copy_appearance(*this);
 		vecOfsFace.emplace_back(f);
 		return 0;
 	}
@@ -137,11 +138,12 @@ int MGFace::offset(double distance, std::vector<UniqueFace>& vecOfsFace)const{
 			if(in_range(srfi->center_param()))
 				vecOfsFace.emplace_back(new MGFace(srfi.release()));
 		}else{
-			MGFace *pOfsFace = new MGFace(srfi.release());
+			MGFace *f = new MGFace(srfi.release());
 			j=uvcurves.begin();
 			for(l=0;l<n; j++, l++)
-				pOfsFace->trim(**j);
-			vecOfsFace.emplace_back(pOfsFace);
+				f->trim(**j);
+			f->copy_appearance(*this);
+			vecOfsFace.emplace_back(f);
 		}
 	}
 	return 0;

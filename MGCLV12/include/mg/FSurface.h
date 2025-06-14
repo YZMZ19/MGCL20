@@ -102,6 +102,11 @@ virtual MGPosition closest_on_boundary(
 	const MGStraight& sl///<The target line.
 )const=0;
 
+/// <summary>
+/// Display break points, i.e., parameter lines of u and v breakpoints.
+/// </summary>
+void display_break_pointsFS(mgSysGL& sgl)const;
+
 ///Display direction arrows on the surface.
 void display_arrowsFS(
 	mgSysGL& sgl
@@ -432,6 +437,10 @@ virtual std::vector<UniqueCurve> parameter_curves(
 	int is_u,	///<True(!=0) if x is u-value.(i.e. obtain u=const line)
 	double x	///<parameter value. u or v-value accordint to is_u.
 )const=0;
+
+///Obtain u and v knot point parameter curves.
+std::vector<UniqueCurve> knot_parameter_curves(
+)const;
 
 ///Obtain parameter space error.
 double param_error() const;

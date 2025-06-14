@@ -805,23 +805,15 @@ bool MGRSBRep::operator==(const MGRSBRep& rsb2)const{
 	return m_surface.surface_bcoef().non_homogeneous()
 			==rsb2.m_surface.surface_bcoef().non_homogeneous() ;
 }
-bool MGRSBRep::operator<(const MGRSBRep& gel2)const{
-	return m_surface<gel2.m_surface;
+std::partial_ordering MGRSBRep::operator<=>(const MGRSBRep& gel2)const{
+	return m_surface<=>gel2.m_surface;
 }
-bool MGRSBRep::operator==(const MGGel& gel2)const{
-	const MGRSBRep* gel2_is_this=dynamic_cast<const MGRSBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	else{
-		const MGSBRep* gel2_is_sb=dynamic_cast<const MGSBRep*>(&gel2);
-		if(gel2_is_sb)
-			return operator==(*gel2_is_sb);
-	}
-	return false;
+
+bool MGRSBRep::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGRSBRep&>(g2) : false;
 }
-bool MGRSBRep::operator<(const MGGel& gel2)const{
-	const MGRSBRep* gel2_is_this=dynamic_cast<const MGRSBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGRSBRep::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGRSBRep&>(g2) : c;
 }

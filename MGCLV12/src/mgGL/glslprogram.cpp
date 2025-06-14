@@ -314,9 +314,12 @@ bool mgGLSLProgram::fileExists( const std::string& fileName)const{
     return 0 == ret;
 }
 
+std::string mgGLSL::errorString(int errorCode){
+	const char* cstr = (char*)gluErrorString(errorCode);
+	return std::string(cstr);
+}
 void mgGLSL::printOpenGLError(int errorCode){
-	CString msg(gluErrorString(errorCode));
-	COUT<<"glError:"<<(TCAST)msg<<std::endl;
+	std::cout<<"glError:"<< errorString (errorCode)<<std::endl;
 }
 int mgGLSL::checkForOpenGLError(const char* file, int line) {
     //
@@ -327,34 +330,33 @@ int mgGLSL::checkForOpenGLError(const char* file, int line) {
 	glErr = glGetError();
     while (glErr != GL_NO_ERROR){
         glErr = glGetError();
-		CString msg(gluErrorString(glErr));
-		COUT<<"glError in file:"<<file<<" "<<line<<" "<<(TCAST)msg<<std::endl;
+		std::cout<<"glError in file:"<<file<<" "<<line<<" "<< errorString (glErr)<<std::endl;
         retCode = 1;
     }
     return retCode;
 }
 
 void mgGLSL::dumpGLInfo(bool dumpExtensions) {
-    CString renderer(glGetString( GL_RENDERER ));
-    CString vendor(glGetString( GL_VENDOR ));
-    CString version(glGetString( GL_VERSION ));
-    CString glslVersion(glGetString( GL_SHADING_LANGUAGE_VERSION ));
+    std::string renderer((char*)glGetString( GL_RENDERER ));
+	std::string vendor((char*)glGetString( GL_VENDOR ));
+	std::string version((char*)glGetString( GL_VERSION ));
+	std::string glslVersion((char*)glGetString( GL_SHADING_LANGUAGE_VERSION ));
 
     GLint major, minor;
     glGetIntegerv(GL_MAJOR_VERSION, &major);
     glGetIntegerv(GL_MINOR_VERSION, &minor);
 
-	COUT<<"GL Vendor    :"<<(TCAST)vendor<<std::endl;
-	COUT<<"GL Renderer  :"<<(TCAST)renderer<<std::endl;
-	COUT<<"GL Version   :"<<(TCAST)version<<","<<major<<"."<<minor<<std::endl;
-	COUT<<"GLSL Version :"<<(TCAST)glslVersion<<std::endl;
+	std::cout <<"GL Vendor    :"<<vendor<<std::endl;
+	std::cout <<"GL Renderer  :"<<renderer<<std::endl;
+	std::cout <<"GL Version   :"<<version<<","<<major<<"."<<minor<<std::endl;
+	std::cout <<"GLSL Version :"<<glslVersion<<std::endl;
 
     if( dumpExtensions ) {
         GLint nExtensions;
         glGetIntegerv(GL_NUM_EXTENSIONS, &nExtensions);
         for( int i = 0; i < nExtensions; i++ ) {
-			CString msg(glGetStringi(GL_EXTENSIONS, i));
-			COUT<<(TCAST)msg<<std::endl;
+			std::string msg((char*)glGetStringi(GL_EXTENSIONS, i));
+			std::cout <<msg<<std::endl;
         }
     }
 }

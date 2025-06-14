@@ -50,9 +50,6 @@ public:
 	typedef MYLIST::size_type              size_type;
 	typedef MYLIST::difference_type        difference_type;
 	typedef MYLIST::value_type             value_type;
-	typedef MYLIST::allocator_type         allocator_type;
-	typedef allocator_type::pointer       pointer;
-	typedef allocator_type::const_pointer const_pointer;
 	typedef MYLIST::reverse_iterator       reverse_iterator;
 	typedef MYLIST::const_reverse_iterator const_reverse_iterator;
 
@@ -106,9 +103,11 @@ MGGroup& operator=(MGGroup&& rhs)=default;
 ///When error!=0, MGGroup contains no MGGel's.
 MGGroup(const TCHAR* file, int& error);
 
-///comparison
-virtual bool operator<(const MGGroup& gel2)const;
-virtual bool operator<(const MGGel& gel2)const;
+///Comparison.
+bool equal_test(const MGGel& gel2)const override;//gel2 must be MGGroup.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;//gel2 must be MGGroup.
+bool operator==(const MGGroup& g2)const;
+std::partial_ordering operator<=>(const MGGroup& gel2)const;
 
 ////////////Member Function////////////
 

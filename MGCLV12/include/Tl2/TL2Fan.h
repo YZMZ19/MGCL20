@@ -39,12 +39,12 @@ class mgTL2Fan{
 	typedef std::deque<int> mgTL2deqIndex;
 
 private:
-	bool m_used;	///<flag to indicate if this vertex is used or not.
 	mgTL2deqIndex	m_indices;///<includes vertices from the second points to the last.
 	std::vector<int> m_used_edges;
 					///<Include j's array if the edge(i,j) is a used edge in mgTL2Fans.
 					///<j is always greater than i, and the order of j's is undefined.
 					///<Here i is this fan's index.				
+	bool m_used = false;	///<flag to indicate if this vertex is used or not.
 
 public:
 	typedef mgTL2deqIndex::iterator IndexItr;
@@ -57,10 +57,10 @@ friend std::ostream& operator<< (std::ostream& out, const mgTL2Fan& fan);
 
 ///////////////Constructor///////////////
 
-	mgTL2Fan():m_used(false){;};
+	mgTL2Fan()=default;
 	mgTL2Fan(int v1):m_indices(1,v1){;};
-	mgTL2Fan(int v1, int v2):m_used(false),m_indices(2){m_indices[0]=v1;m_indices[1]=v2;};
-	mgTL2Fan(mgTL2deqIndex& index):m_used(false),m_indices(index){;};
+	mgTL2Fan(int v1, int v2):m_indices(2){m_indices[0]=v1;m_indices[1]=v2;};
+	mgTL2Fan(mgTL2deqIndex& index):m_indices(index){;};
 
 //////////// Operator overload ///////////////
 	int operator[](int i)const{return m_indices[i];};

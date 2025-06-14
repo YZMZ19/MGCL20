@@ -21,6 +21,10 @@ class MGOfstream;
 ///  数直線上の区間を表す。２つの MGEReal で表現される。
 class MG_DLL_DECLR MGInterval{
 
+	///  Two points on real line. 数直線上の２点 
+	MGEReal m_low;	///<smaller one.
+	MGEReal m_high;	///<larger one.
+
 public:
 
 ///+operator.
@@ -30,14 +34,6 @@ MG_DLL_DECLR friend MGInterval operator+ (double, const MGInterval& );
 ///The mid_point of the interval does not change. The width of the interval
 ///is widened(narrowed) by the multiplication of the value a.
 MG_DLL_DECLR friend MGInterval operator* (double a, const MGInterval& );
-
-///Comparison operator.
-MG_DLL_DECLR friend bool operator>(const MGEReal&, const MGInterval&);
-MG_DLL_DECLR friend bool operator<(const MGEReal&, const MGInterval&);
-MG_DLL_DECLR friend bool operator>=(const MGEReal&, const MGInterval&);
-MG_DLL_DECLR friend bool operator<=(const MGEReal&, const MGInterval&);
-MG_DLL_DECLR friend bool operator>(double, const MGInterval& i);
-MG_DLL_DECLR friend bool operator<(double, const MGInterval& i);
 
 ///String stream function
 MG_DLL_DECLR friend std::ostream& operator<< (std::ostream&, const MGInterval&);
@@ -176,47 +172,26 @@ MGInterval& operator&= (const MGInterval&);
 bool operator&& (const MGInterval&)const;
 
 ///Test if this includes intrval2. 
-///  自身のインターバルが empty の場合 false(0) を返却し、与えられたインターバル
-///  が empty の場合 true(1) を返却する。与えられたインターバルの下端が自身
-///  のインターバルの下端より大きく、与えられたインターバルの上端が自身の
-///  インターバルの上端よりも小さい時 true(1) を返却する。
-///  また、両方のインターバルが empty の時 true(1) を返却する。
-bool operator>> (const MGInterval& intrval2) const;
+/// 自身のインターバルが empty の場合 false(0) を返却し、与えられたインターバル
+/// が empty の場合 true(1) を返却する。与えられたインターバルの下端が自身
+/// のインターバルの下端より大きく、与えられたインターバルの上端が自身の
+/// インターバルの上端よりも小さい時 true(1) を返却する。
+/// また、両方のインターバルが empty の時 true(1) を返却する。
+bool includes(const MGInterval& intrval2) const;
 
-///Test if this is included in intrval2.
-///  自身のインターバルが empty の場合 true(1) を返却し、与えられたインターバル
-///  が empty の場合 false(0) を返却する。与えられたインターバルの下端が自身
-///  のインターバルの下端より小さく、与えられたインターバルの上端が自身の
-///  インターバルの上端よりも大きい時 true(1) を返却する。
-///  また、両方のインターバルが empty の時 false(0) を返却する。
-bool operator<<(const MGInterval& intrval2)const{return intrval2 >> (*this);};
+///Comparison
+bool operator== (const MGInterval& i2) const;
+std::partial_ordering operator<=> (const MGInterval& i2) const;
 
-///Test if two intervals are equal(tolerance included)
-///  ２つのインターバルが同一かどうかを判定する。
-///  同一である時 true(1) を返却
-bool operator== (const MGInterval&) const;
-
-///Test if two intervals are not equal(tolerance included)
-///  ２つのインターバルが同一かどうかを判定する。
-///  同一でない 時 true(1) を返却
-bool operator!= (const MGInterval&) const;
-
-///Arithmatic comparison operation:算術的比較
-bool operator< (const MGInterval&) const;
-bool operator> (const MGInterval&) const;
-bool operator<= (const MGInterval&) const;
-bool operator>= (const MGInterval&) const;
-
-bool operator< (const MGEReal& ) const;
-bool operator> (const MGEReal&) const;
-bool operator<= (const MGEReal&) const;
-bool operator>= (const MGEReal&) const;
-
-///Return true if m_high<t;
-bool operator< (double t) const;
-
-///Return true if m_low>t;
-bool operator> (double t) const;
+/// <summary>
+/// equivalent of MGInterval i & MGEReal means i.includes(e).
+/// </summary>
+/// <param name="i2"></param>
+/// <returns></returns>
+bool operator== (const MGEReal& i2) const;
+bool operator== (double t) const;
+auto operator<=> (const MGEReal& i2) const->std::partial_ordering;
+auto operator<=> (double t) const->std::partial_ordering;
 
 ///Chnage the interval range to [t0, t1] if t0<t1,
 ///                          to [t1, t0] if t1<t0.
@@ -256,6 +231,7 @@ double high_point() const { return m_high.value(); };
 ///Test if this finite interval includes the value,
 ///taking the relative error of the interval into the account.
 bool includes(double t)const;
+bool includes(const MGEReal& t)const;
 
 ///Test if infinite.
 ///  インターバルが無限かどうか判定する。
@@ -344,11 +320,6 @@ int restore(MGIfstream& );
 
 private:
 
-//////////// Member data.////////////
-
-	///  Two points on real line. 数直線上の２点 
-	MGEReal m_high;	///<larger one.
-	MGEReal m_low;	///<smaller one.
 
 };
 

@@ -67,10 +67,6 @@ virtual MGComplex& operator*=(double scale);
 virtual MGComplex& operator*=(const MGMatrix& mat);
 virtual MGComplex& operator*=(const MGTransf& tr);
 
-///comparison
-virtual bool operator<(const MGComplex& gel2)const;
-virtual bool operator<(const MGGel& gel2)const;
-
 /////////Member Function/////////
 
 ///Obtain binders of all the pcells of the boundary.

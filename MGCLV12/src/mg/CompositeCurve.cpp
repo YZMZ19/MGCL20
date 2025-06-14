@@ -228,36 +228,27 @@ bool MGCompositeCurve::operator==(const MGCompositeCurve& crv)const{
 
 	const_iterator i=begin(), ie=end(), j=crv.begin();
 	for(; i!=ie; i++, j++)
-		if((**i)!=(**j))
+		if(!(**i).equal_test(**j))
 			return false;
 	return true;
 }
-bool MGCompositeCurve::operator<(const MGCompositeCurve& gel2)const{
+std::partial_ordering MGCompositeCurve::operator<=>(const MGCompositeCurve& gel2)const{
 	int n1=number_of_curves(), n2=gel2.number_of_curves();
 	if(n1==n2){
 		if(n1==0)
-			return false;
-		return curve(0)<gel2.curve(0);
+			return std::partial_ordering::unordered;
+		return curve(0).ordering_test(gel2.curve(0));
 	}else
-		return n1<n2;
+		return n1<=>n2;
 }
-bool MGCompositeCurve::operator==(const MGGel& gel2)const{
-	const MGCompositeCurve* gel2_is_this=dynamic_cast<const MGCompositeCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	else{
-		const MGTrimmedCurve* gel2_is_compo=dynamic_cast<const MGTrimmedCurve*>(&gel2);
-		if(gel2_is_compo)
-			return operator==(*gel2_is_compo);
 
-	}
-	return false;
+bool MGCompositeCurve::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGCompositeCurve&>(g2) : false;
 }
-bool MGCompositeCurve::operator<(const MGGel& gel2)const{
-	const MGCompositeCurve* gel2_is_this=dynamic_cast<const MGCompositeCurve*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGCompositeCurve::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGCompositeCurve&>(g2) : c;
 }
 
 ////////// Member Function ///////////
@@ -269,7 +260,7 @@ bool MGCompositeCurve::is_same_curve(const MGCurve& curve2)const{
 
 	if(number_of_curves()!=1)
 		return false;
-	return m_composite[0]->operator==(curve2);
+	return m_composite[0]->equal_test(curve2);
 }
 
 //Returns B-Rep Dimension.

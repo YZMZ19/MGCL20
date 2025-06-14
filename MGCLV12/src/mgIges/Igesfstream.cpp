@@ -1,5 +1,5 @@
 /********************************************************************/
-/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
+/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno             */
 /* All rights reserved.                                             */
 /********************************************************************/
 
@@ -15,7 +15,6 @@
 void MGIgesFstream::initialize(const TCHAR* filename){
 	m_StartSection=std::string();
 	m_GSection=MGIgesGSec(filename);
-	m_nlineGSec=0;
 	m_DirectoryEntries.clear();
 	MGIgesDirectoryEntry* de=new MGIgesDirectoryEntry;
 	m_DirectoryEntries.emplace_back(de);//Set the dummy record.

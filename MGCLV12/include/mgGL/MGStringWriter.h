@@ -24,7 +24,6 @@ class MGColor;
 class MG_DLL_DECLR MGStringWriter{
 public:
 
-
 	///const chat* and pos as world coordinate version.
 	static VBObyAnchorPt* Draw(
 		const char *str,	///<String to display
@@ -67,26 +66,10 @@ public:
 
 private:
 	static MGStringWriter* getInstance();
+	FTFont* getFont() { return m_pFont; };
 
 	MGStringWriter(void);
 	virtual ~MGStringWriter(void);
-
-	template<typename T>
-	VBObyAnchorPt* DrawString(
-		mgGLSL::CoordinateType type,
-		const T* str,//target string to draw
-		const MGPosition& pos,//Start position to draw in type coordinates
-		const MGColor* color)
-	{
-		VBObyAnchorPt* pVBO = new VBObyAnchorPt(type);
-		pVBO->setStaticAttribAnchorPoint(pos);
-		if(color)
-			pVBO->setStaticAttribColor(*color);
-
-		m_pFont->Render(*pVBO, str);
-		pVBO->setDirty(false);
-		return pVBO;
-	}
 
 	FTFont* m_pFont;
 };

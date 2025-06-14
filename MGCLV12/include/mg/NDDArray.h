@@ -21,7 +21,6 @@ class MGIfstream;
 class MGOfstream;
 
 ///Defines non-decreasing double data array.
-
 ///Used for data point abscissa, or knot vector, etc.
 ///MGNDDArray has size and effective data length.
 class MG_DLL_DECLR MGNDDArray{
@@ -44,7 +43,10 @@ MGNDDArray(MGNDDArray&& rhs);//Move constructor.
 MGNDDArray& operator=(MGNDDArray&& rhs);//Move assignment.
 
 
-///Constructor MGNDDArray of size n and lenght=n.
+/// Constructor MGNDDArray of size n and lenght=n.
+/// When data is given, data is an array of length n, and
+/// data construct the element data of this MGNDDArray.
+/// data[i] must be <= data[i+1].
 explicit MGNDDArray(
 	int n,		///<size of this.
 	const double* data=0///<data array of length n if data!=NULL.
@@ -61,8 +63,7 @@ explicit MGNDDArray(const MGBPointSeq&);
 /// seq abscissa.
 MGNDDArray(MGENDCOND begin, MGENDCOND end, const MGBPointSeq&);
 
-///Construct data point seq abscissa from knot vector with End conditions, .
-
+///Construct data point seq abscissa from knot vector with End conditions.
 ///This data point can be input of MGLBRep::buildByInterpolationECWithKTV,
 /// or MGSBRep::buildByInterpolationECWithKTV.
 ///That is, generate data points tau(utaui or vtaui) from knot vector t(tu or tv),
@@ -71,14 +72,12 @@ MGNDDArray(MGENDCOND begin, MGENDCOND end, const MGBPointSeq&);
 MGNDDArray(MGENDCOND begin, MGENDCOND end, const MGKnotVector& t);
 
 ///From data point, obtain data point of a updated number(nnew).
-
 ///If original data point has multiplicities and nnew>=length(),
 ///original data point parameters and the multiplicities are preserved.
 ///Same as change_number().
 MGNDDArray(const MGNDDArray&, int nnew);
 
 ///From data point, obtain data point of updated value range.
-
 ///Update so that (*this)(0)=ts, and (*this)(lenght()-1)=te.
 ///Must be ts<te.
 MGNDDArray(const MGNDDArray&, double ts, double te);
@@ -91,7 +90,6 @@ MGNDDArray(
 );
 
 ///Construct by mixing two arrays.
-
 ///Mixing is so done as that no too close points are included.
 ///Although data point multiplicities of array1 are preserved,
 ///multiplicities of array2 are not.
@@ -159,7 +157,6 @@ const double* data(int i=0) const{ return &m_element[i]; };
 double* data(int i=0) { return &m_element[i]; };
 
 ///Delete one data at index.
-
 ///Return value is new total number of data in the array, generally
 ///is original_length()-1.
 int del_data(int index);
@@ -176,19 +173,17 @@ void set_length(int length);
 ///Set this as a null NDDArray.
 virtual void set_null();
 
-///Store data at the position i of this array.
-
-///tau(i) must be => tau(i-1).
-///When i>=capacity(), reshape will take place.
-///The data validity after i is not checked.
-///The length is set same as the capacity. User must set the length by set_length().
+/// Store data at the position i of this array.
+/// tau(i) must be => tau(i-1).
+/// When i>=capacity(), reshape will take place.
+/// The data validity after i is not checked.
+/// The length is set same as the capacity. User must set the length by set_length().
 void store_with_capacityCheck(
 	int i,	///<the postion to store at.
 	double data///<the data to store.
 );
 
-///Finds index where tau is located in MGNDDArray as an index of knot.
-
+/// Finds index where tau is located in MGNDDArray as an index of knot.
 /// 1) index=-1: tau < (*this)(0).
 /// 2) 0<= index <n-1: (*this)(0) <= tau< (*this)(n-1) and
 ///                (*this)(index) <= tau < (*this)(index+1).
@@ -196,16 +191,15 @@ void store_with_capacityCheck(
 ///Here n=lenght().
 virtual int locate(double tau) const;
 
-///Locate where data of multiplicity of multi is after start.
-
-///index is the starting point index of this found first after start.
-///index>=start if index>=0.
-///Function's return value locate_multi is actual multiplicity at the
-///index, i.e. locate_multi>=multi.
-///If position of the multiplicity is not found to the end,
-///index=(lenght()-1) (index of the last element) and locate_multi=0
-///will be returned.
-///multi must be >=1.
+/// Locate where data of multiplicity of multi is after start.
+/// index is the starting point index of this found first after start.
+/// index>=start if index>=0.
+/// Function's return value locate_multi is actual multiplicity at the
+/// index, i.e. locate_multi>=multi.
+/// If position of the multiplicity is not found to the end,
+/// index=(lenght()-1) (index of the last element) and locate_multi=0
+/// will be returned.
+/// multi must be >=1.
 virtual int locate_multi(int start, int multi, int& index) const;
 
 ///Update so that (*this)(0)=ts, and (*this)(lenght()-1)=te.
@@ -213,7 +207,6 @@ virtual int locate_multi(int start, int multi, int& index) const;
 virtual void change_range(double ts, double te);
 
 ///Update array length.
-
 ///Updated array is so generated that the original proportions of
 ///neighbors hold as much as possible. 
 ///If original data point has multiplicities and nnew>=length(),
@@ -247,13 +240,24 @@ void remove_too_near(
 			///<a data point will be removed(along with the ordinates).
 );
 
-///Change the size. 
+/// Reserve capacity.
+/// When newCapacity>=1 is input, adequate new capacity() is made to guarantee capacity() >= newCapacity.
+/// When newCapacity<=0 is input, the most adequate new capacity() is made .
+/// The length() and the data stored are unchanged.
+void reserve(int newCapacity = 0);
 
-///start is to indicate from which location of new area to start storing.
-///Although size can be less than original length, some of end data will be
-///lost in this case. When 'start'>0, first 'start' data will be garbage.
-///Original data will be held as long as the storage permits.
-///reshape does update the effective length to size.
+/// Reserve length n area after the index id.
+/// On return, length() will be increased by n.
+/// Area from tau[id] to [id+n-1] will contain garbage.
+/// The old data fromta[id+1] to [id+lenOld-1] will be transfered to [id+n] ...
+void reserveInsertArea(int n, int id);
+
+/// Change the size.
+/// start is to indicate from which location of new area to start storing.
+/// Although size can be less than original length, some of end data will be
+/// lost in this case. When 'start'>0, first 'start' data will be garbage.
+/// Original data will be held as long as the storage permits.
+/// reshape does update the effective length to size.
 void reshape(int size, int start=0);
 
 ///Resize the array. Result will contain garbages.
@@ -278,11 +282,11 @@ virtual int restore(MGIfstream& );
 	
 //////////// Member data /////////
 protected:
-	mutable int m_current;///<current interval of the array is held.
+	mutable int m_current;///< current interval of the array is held.
 
 private:
-	int m_capacity;	///<Size of m_element.
-	int m_length;	///<Length of effective data in m_element.
+	int m_capacity;	///< Size of m_element.
+	int m_length;	///< Length of effective data in m_element.
 	double* m_element;
 
 };

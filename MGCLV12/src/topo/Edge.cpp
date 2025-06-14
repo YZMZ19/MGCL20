@@ -177,31 +177,24 @@ MGEdge& MGEdge::operator=(const MGGel& gel2){
 bool MGEdge::operator==(const MGEdge& e2)const{
 	return this==&e2;
 }
-bool MGEdge::operator==(const MGGel& gel2)const{
-	const MGEdge* gel2_is_this=dynamic_cast<const MGEdge*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
-}
-bool MGEdge::operator<(const MGEdge& e2)const{
-	if(loop()== e2.loop())
-		return MGCell::operator<(e2);
 
-	MGTrimmedCurve crv1=trimmed_curve();
-	MGTrimmedCurve crv2=trimmed_curve();
-	return crv1<crv2;
+std::partial_ordering MGEdge::operator<=>(const MGEdge& e2)const{
+	const MGLoop* l1 = loop();
+	if (l1 && l1 == e2.loop())
+		return l1->edge_num(this) <=> l1->edge_num(&e2);
+
+	MGTrimmedCurve crv1 = trimmed_curve();
+	MGTrimmedCurve crv2 = trimmed_curve();
+	return crv1<=>crv2;
 }
-bool MGEdge::operator<(const MGGel& gel2)const{
-	const MGEdge* gel2_is_this=dynamic_cast<const MGEdge*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type()<gel2.identify_type();
+
+bool MGEdge::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGEdge&>(g2) : false;
 }
-bool MGEdge::operator!=(const MGGel& gel2)const{
-	return !((*this)==gel2);
-}
-bool MGEdge::operator!=(const MGEdge& e2)const{
-	return !((*this)== e2);
+std::partial_ordering MGEdge::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGEdge&>(g2) : c;
 }
 
 // Edge に平行移動を行ないオブジェクトを生成する。
@@ -542,13 +535,10 @@ void MGEdge::free_neighbours(){
 ///is_less_than() defines the order of partners to store in MGBCell.
 /// *****Currently definite MGEdged order not defined for MGBCell.******
 bool MGEdge::is_less_than(const MGEdge& pe2)const {
-	return operator<(pe2);
+	return (*this) < (pe2);
 }
 bool MGEdge::is_less_than(const MGPCell& pcel2)const{
-	const MGEdge* e2 = dynamic_cast<const MGEdge*>(&pcel2);
-	if(e2)
-		return operator<(*e2);
-	return identify_type()<pcel2.identify_type();
+	return this->ordering_test(pcel2)<0;
 }
 
 ///test if parameter t is the one of the end point of the loop.
@@ -656,20 +646,25 @@ int MGEdge::surface_perimeter(const MGSurface& sf) const{
 ostream& MGEdge::toString(ostream& ostrm) const{
 	std::string me = whoami();
 	ostrm<<"<<"<<me<<"="<< (const MGGel*)this;
-	ostrm<<", equal_to_binder="<<m_equal_to_binder;
-	is_bcell()?MGBCell::toString(ostrm):MGPCell::toString(ostrm);
+	if (is_pcell()) {
+		std::string eq = "unkown";
+		if (m_equal_to_binder)
+			eq = m_equal_to_binder == 1 ? "sameDir" : "oppositeDir";
+		ostrm << std::boolalpha << ", eqToBinder=" << eq;
+	}
+	is_bcell() ? MGBCell::toString(ostrm) : MGPCell::toString(ostrm);
 	ostrm << std::endl;
 	MGCell::toString(ostrm);
 
 	const UniquePVertex& pvS = m_vertex[0];
 	const UniquePVertex& pvE = m_vertex[1];
 	if (!pvS || !pvE) {
-		ostrm << endl << ",vertex[";
+		ostrm << endl << ", vertex[";
 		if (pvS)
 			ostrm << (const MGGel*)pvS.get();
 		else
 			ostrm << "Null";
-		ostrm << ",";
+		ostrm << ", ";
 		if (pvS)
 			ostrm << (const MGGel*)pvE.get();
 		else
@@ -677,9 +672,9 @@ ostream& MGEdge::toString(ostream& ostrm) const{
 		ostrm<<"],";
 	}
 	if(pvS)
-		ostrm<<endl<<",Vertex0="<<*pvS;
+		ostrm<<endl<<", Vrtx0="<<*pvS;
 	if(pvE)
-		ostrm<<endl<<",Vertex1="<<*(pvE);
+		ostrm<<endl<<", Vrtx1="<<*(pvE);
 	if(pvS || pvE){
 		MGBVertex* bvS = pvS ? pvS->binder_vertex():0 ;
 		MGBVertex* bvE = pvE ? pvE->binder_vertex():0 ;

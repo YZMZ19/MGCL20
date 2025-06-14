@@ -27,7 +27,8 @@ static char THIS_FILE[] = __FILE__;
 
 //Comparison operator.
 bool MGLSPoint::operator< (const MGLSPoint& ls2)const{
-	if(m_pedge!=ls2.m_pedge) return (*m_pedge)<(*ls2.m_pedge);
+	if(m_pedge != ls2.m_pedge)
+		return (*m_pedge) < (*ls2.m_pedge);
 	return m_t<ls2.m_t;
 }
 

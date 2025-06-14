@@ -1081,21 +1081,18 @@ bool MGEllipse::operator==(const MGEllipse& e)const{
 		return 0;
 	return 1;
 }
-bool MGEllipse::operator<(const MGEllipse& gel2)const{
-	return m_r<gel2.m_r;
+std::partial_ordering MGEllipse::operator<=>(const MGEllipse& gel2)const{
+	return m_r<=>gel2.m_r;
 }
-bool MGEllipse::operator==(const MGGel& gel2)const{
-	const MGEllipse* gel2_is_this=dynamic_cast<const MGEllipse*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+bool MGEllipse::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGEllipse&>(g2) : false;
 }
-bool MGEllipse::operator<(const MGGel& gel2)const{
-	const MGEllipse* gel2_is_this=dynamic_cast<const MGEllipse*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type()<gel2.identify_type();
+std::partial_ordering MGEllipse::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGEllipse&>(g2) : c;
 }
+
 
 //Normalize parameter range intrvl(in radian)of the ellipse,
 //and set the parameter range in m_prange.

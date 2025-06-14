@@ -6,9 +6,7 @@
 ///
 ///////////////////////////////////////////////////////////////////////////////////////
 
-#ifndef _MGPickObject_HH_
-#define _MGPickObject_HH_
-
+#pragma once
 #include <vector>
 #include "mg/MGCL.h"
 #include "mg/Position.h"
@@ -84,4 +82,3 @@ private:
 };
 
 /** @} */ // end of MGObjectRelated group
-#endif

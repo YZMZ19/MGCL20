@@ -81,9 +81,13 @@ MGSurfCurve& operator=(MGGel&& gel2);
 
 ///Comparison of two curves.
 bool operator==(const MGSurfCurve& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGSurfCurve& gel2)const;
-bool operator<(const MGGel& gel2)const;
+std::partial_ordering operator<=>(const MGSurfCurve& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Approximate this curve as a MGLBRep curve.
 

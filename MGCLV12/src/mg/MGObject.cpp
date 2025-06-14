@@ -25,7 +25,6 @@
 #include "mg/Tolerance.h"
 #include "mg/GelFactory.h"
 #include "mgGL/Appearance.h"
-#include "mgGL/PlaneImage.h"
 
 #include "topo/Complex.h"
 #include "topo/PVertex.h"
@@ -172,5 +171,6 @@ AUTO_GEL_REGISTER(MGShell, MGSHELL_TID);
 AUTO_GEL_REGISTER(MGStl, MGSTL_TID);
 
 #ifndef _CONSOLE
+#include "mgGL/PlaneImage.h"
 AUTO_GEL_REGISTER(MGPlaneImage, MGPLANEIMAGE_TID);
 #endif

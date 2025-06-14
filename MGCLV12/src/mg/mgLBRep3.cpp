@@ -1038,21 +1038,15 @@ MGLBRep& MGLBRep::operator*= (const MGTransf& tr){
 	return *this;
 }
 
-// 論理演算子の多重定義
-// 自身とCurveが等しいかどうか比較し判定する。
-// 与曲線と自身が等しいかの比較判定を行う。
-bool MGLBRep::operator==(const MGLBRep& gel2)const{
-	if(m_knot_vector != gel2.m_knot_vector)
-		return false;
-	if(m_line_bcoef != gel2.m_line_bcoef)
-		return false;
-	return true;
-}
 bool MGLBRep::operator==(const MGRLBRep& gel2)const{
-	return gel2==(*this);
+	return gel2.MGRLBRep::operator==(*this);
+}
+bool MGLBRep::operator==(const MGLBRep& gel2)const {
+	return m_knot_vector == gel2.m_knot_vector &&
+		m_line_bcoef == gel2.m_line_bcoef;
 }
 
-bool MGLBRep::operator<(const MGLBRep& gel2)const{
+std::partial_ordering MGLBRep::operator<=>(const MGLBRep& gel2)const{
 	int n1=bdim(), n2=gel2.bdim();
 	if(n1==n2){
 		int sd1=sdim(), sd2=gel2.sdim();
@@ -1060,21 +1054,17 @@ bool MGLBRep::operator<(const MGLBRep& gel2)const{
 			MGPosition v1(sd1), v2(sd1);
 			m_line_bcoef.point(0,0,sd1,v1);
 			gel2.m_line_bcoef.point(0,0,sd1,v2);
-			return v1.len()<v2.len();
+			return v1.len()<=>v2.len();
 		}else
-			return sd1<sd2;
+			return sd1<=>sd2;
 	}else
-		return n1<n2;
+		return n1<=>n2;
 }
-bool MGLBRep::operator==(const MGGel& gel2)const{
-	const MGLBRep* gel2_is_this=dynamic_cast<const MGLBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+bool MGLBRep::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGLBRep&>(g2) : false;
 }
-bool MGLBRep::operator<(const MGGel& gel2)const{
-	const MGLBRep* gel2_is_this=dynamic_cast<const MGLBRep*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGLBRep::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGLBRep&>(g2) : c;
 }

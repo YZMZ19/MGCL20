@@ -72,7 +72,7 @@ protected:
 
 	std::string m_StartSection;///<Start section string data.
 	MGIgesGSec m_GSection;///<Global section data.
-	int m_nlineGSec;	///<Number of the lines of Global section.
+	int m_nlineGSec=0;	///<Number of the lines of Global section.
 	UniqueDEVec m_DirectoryEntries;///<Directry entry data vector.
 				///<One pair of directory entry lines are stored in m_DirectryEntry[i].
 				///<m_DirectoryEntries[0] is a dummy entry and has no meaning.

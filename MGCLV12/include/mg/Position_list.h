@@ -39,9 +39,6 @@ public:
 	typedef MYLIST::size_type              size_type;
 	typedef MYLIST::difference_type        difference_type;
 	typedef MYLIST::value_type             value_type;
-	typedef MYLIST::allocator_type         allocator_type;
-	typedef allocator_type::pointer       pointer;
-	typedef allocator_type::const_pointer const_pointer;
 	typedef MYLIST::reverse_iterator       reverse_iterator;
 	typedef MYLIST::const_reverse_iterator const_reverse_iterator;
 

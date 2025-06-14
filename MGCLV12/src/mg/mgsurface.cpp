@@ -784,7 +784,7 @@ bool MGSurface::test_and_get_approximate_plane(
 //  4:(u,v) is on the outer boundary.
 //  >=10: (u,v) is on a perimeter, (10+perimeter number) will be returned.
 int MGSurface::in_range_with_on(const MGPosition& uv)const{
-	if(param_range()<<uv)
+	if(!param_range().includes(uv))
 		return 0;
 
 	int perim;
@@ -1808,6 +1808,39 @@ std::unique_ptr<MGRSBRep> MGCL::create_revolved_surface(
 		srf->buildRevolutionSurface(*wiper, axis, angle);
 	}
 	return srf;
+}
+
+/// <summary>
+/// Generates a ribbon surface(MGSBRep) whose width is len.
+/// </summary>
+/// <param name="thisSide">Specify an edge of the ribbon surf.</param>
+/// <param name="len">Specify the width of the ribbon.</param>
+/// <returns>Generated ribbon surface.</returns>
+/// We define a ribbon surface:
+/// The curve thisSide ia an edge of the surface, and the edge is extended straight
+/// along binormal direction at each point by the length len.
+std::unique_ptr<MGSBRep> MGCL::buildRibbonSurf(
+	const MGCurve& thisSide,//An edge curve of ribbon surface.
+	double len
+) {
+	if (fabs(len) <= MGTolerance::wc_zero())//we do not make ribbon of zero width.
+		return nullptr;
+
+	std::vector<UniqueCurve> crvs = thisSide.offset(len, false);//Offset to binormal direction.
+	if (crvs.size() == 0)
+		return nullptr;
+
+	const MGCurve& otherSide = *crvs[0];//the opposite edge of thisSide.
+	MGStraight startPeri(thisSide.start_point(), otherSide.start_point());
+	MGStraight endPeri(thisSide.end_point(), otherSide.end_point());
+	const MGCurve* tmp[4] = { &startPeri, &thisSide, &endPeri, &otherSide };
+
+	// thisSide, startPeri, otherSide, endPeri Ç™àÕÇﬁã»ñ Çê∂ê¨Ç∑ÇÈ
+	std::unique_ptr<MGLBRep> perim2[4];
+	construct_perimeters(tmp, perim2);
+	std::unique_ptr<MGSBRep> ribbonS(new MGSBRep);
+	ribbonS->buildGeneralizedRuledSurface(perim2, false);
+	return ribbonS;
 }
 
 //Evaluate which direction is longer, u or v, from the 9 sample points

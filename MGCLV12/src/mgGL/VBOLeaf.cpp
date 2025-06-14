@@ -57,8 +57,7 @@ m_ColorSpecified(false),m_NormalSpecified(false),m_TextureSpecified(false)
 	glErr=glGetError();
 	glGenBuffers(1,&m_bufferID);
 	if((glErr=glGetError()) != GL_NO_ERROR){
-		CString msg(gluErrorString(glErr));
-		COUT<<"mgVBOLeaf::constructor::glGenBuffers::"<<(TCAST)msg<<std::endl;
+		mgGLSL::printOpenGLError(glErr);
 	}
 
 	float* area=new float[m_count*4];//Maximum arear is reserved.

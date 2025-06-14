@@ -335,8 +335,8 @@ void MGEdge::compute_continuity(
 	MGInterval sspan, tspan;
 	get_comparison_span(*crv1,*crv2,sspan,tspan);
 
-	int nspoint=crv1->offset_div_num(sspan);
-	int ntpoint=crv2->offset_div_num(tspan);
+	int nspoint=crv1->divideNum(sspan);
+	int ntpoint=crv2->divideNum(tspan);
 	if(nspoint>ntpoint){
 		compute_continuity2(sspan,nspoint,edge2,distance,tangent,normal);
 	}else{

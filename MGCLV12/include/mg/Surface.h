@@ -71,10 +71,6 @@ MGSurface& operator*=(double scale)=0;
 MGSurface& operator*=(const MGMatrix& mat)=0;
 MGSurface& operator*=(const MGTransf& tr)=0;
 
-///comparison
-virtual bool operator==(const MGGel& gel2)const=0;
-virtual bool operator<(const MGGel& gel2)const=0;
-
 ///Return space dimension
 int sdimFS() const override{	return sdim();};
 
@@ -249,6 +245,13 @@ virtual void drawWire(
 
 ///User must delete this copied object by "delete".
 MGSurface* copy_surface() const;
+
+/// <summary>
+/// Display break points, i.e., parameter lines of u and v breakpoints.
+/// </summary>
+void display_break_points(mgSysGL& sgl)const override {
+	display_break_pointsFS(sgl);
+};
 
 ///display function.
 virtual void display_arrows(mgSysGL& sgl)const;
@@ -683,6 +686,13 @@ virtual MGKnotVector& knot_vector_u()=0;
 virtual const MGKnotVector& knot_vector_v() const=0;
 virtual MGKnotVector& knot_vector_v()=0;
 
+///Returns u or v knot vector.
+const MGKnotVector& knot_vector(bool is_u)const {
+	return is_u ? knot_vector_u():knot_vector_v(); 
+};
+MGKnotVector& knot_vector(bool is_u){
+	return is_u ? knot_vector_u() : knot_vector_v();
+};
 
 ///Compare two parameter values. If uv1 is less than uv2, return true.
 
@@ -804,10 +814,13 @@ virtual bool on_perimeter(
 )const;
 
 ///Returns the order of u.
-virtual	int order_u() const{return 1;}	
+virtual	int order_u() const { return 1; };
 
 ///Returns the order of v.
-virtual	int order_v() const{return 1;}	
+virtual	int order_v() const { return 1; };
+
+///Return the order of u or v.
+int order(bool is_u) const { return is_u ? order_u() : order_v(); };
 
 /// Output virtual function.
 virtual std::ostream& toString(std::ostream& ostrm) const;
@@ -1270,9 +1283,8 @@ int offset_check_curva_one(
 	double ofs_value	///<オフセット量
 )const;
 
-///オフセットするサンプルポイントの1パッチごとの分割数を求める
-///全てのパッチ中の分割数で最大の値を返す
-virtual int offset_div_num() const;
+///get the a divide number for offset, intersection, or others.
+virtual int divideNum() const;
 
 ///オフセットするサンプルポイントの1パッチごとの分割数を求める
 ///分割数n = sqrt(1 / tol) * sqrt((M1 + 2 *M2 + M3) / 8)は以上の式で求まる
@@ -1334,8 +1346,7 @@ MG_DLL_DECLR void isect_start_adjustSE(
 
 namespace MGCL{
 
-///リブ曲線列から面を作成する
-
+///リブ曲線列から面を作成する.
 ///リブ曲線の全てのノットが同じスプラインの時MGSBRepかMGRSBRepが返却される
 ///それ以外の場合は、曲線をLBRepで再構成して面を作成するのでMGSBRepが返却される
 ///作成する面のノットベクトルはリブ曲線の向きをu,リブ列方向をvとする
@@ -1360,7 +1371,6 @@ MG_DLL_DECLR std::unique_ptr<MGSurface> create_ruled_surface(
 
 
 ///Creates a surface of revolution.
-
 ///Parameterization of the surface is:
 ///	u=const parameter line generates given curve(when u=0.).
 ///  v=const parameter line generates a circle whose center is axis.
@@ -1370,9 +1380,22 @@ MG_DLL_DECLR std::unique_ptr<MGRSBRep> create_revolved_surface(
 	double angle = mgDBLPAI   ///< revolution angle
 );
 
+/// <summary>
+/// Generates a ribbon surface(MGSBRep) whose width is len.
+/// </summary>
+/// <param name="thisSide">Specify an edge of the ribbon surf.</param>
+/// <param name="len">Specify the width of the ribbon.</param>
+/// <returns>Generated ribbon surface.</returns>
+/// We define a ribbon surface:
+/// The curve thisSide ia an edge of the surface, and the edge is extended straight
+/// along binormal direction at each point by the length len.
+MG_DLL_DECLR std::unique_ptr<MGSBRep> buildRibbonSurf(
+	const MGCurve& thisSide,//An edge curve of ribbon surface.
+	double len
+);
+
 
 ///Test if pline has the same direction to world_curve.
-
 ///Assuming that pline=MGSurfCurve(MGSurface srf, parameter_curve of the srf) and
 ///world_curve are the same curve.
 ///Function's return value is:

@@ -841,23 +841,20 @@ MGPlane& MGPlane::operator*= (const MGTransf& t) {
 // 論理演算子の多重定義
 // 自身の平面と与えられた平面が等しいかどうか比較し判定する。
 bool MGPlane::operator==(const MGPlane& srf2) const{
-	if(m_normal.sdim()==0 && srf2.m_normal.sdim()==0)
-		return true;
+	if(m_normal.sdim()==0 || srf2.m_normal.sdim()==0)
+		return false;
 	return (m_normal==srf2.m_normal && MGAZero(m_d-srf2.m_d)) ;
 }
 
-bool MGPlane::operator<(const MGPlane& gel2)const{
-	return m_d<gel2.m_d;
+std::partial_ordering MGPlane::operator<=>(const MGPlane& gel2)const{
+	return m_d<=>gel2.m_d;
 }
-bool MGPlane::operator==(const MGGel& gel2)const{
-	const MGPlane* gel2_is_this=dynamic_cast<const MGPlane*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+
+bool MGPlane::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGPlane&>(g2) : false;
 }
-bool MGPlane::operator<(const MGGel& gel2)const{
-	const MGPlane* gel2_is_this=dynamic_cast<const MGPlane*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGPlane::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGPlane&>(g2) : c;
 }

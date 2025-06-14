@@ -33,13 +33,30 @@ class mgVBO;
 ///という以上の順序で格納されている.
 class MG_DLL_DECLR MGStl : public MGObject{
 
+	/// STLファイルの図形を構成する各三角形の、座標の重複がない頂点座標の配列.
+	/// ファイルから読み込んだ順で、座標の重複を取り除き、座標値が格納されている.
+	std::vector<MGPosition> m_vecPos;
+
+	/// STLファイルの図形を構成する各三角形の法線ベクトルの配列.
+	/// ファイルから読み込まれた順で三角形の法線ベクトルが格納されている.
+	///m_vecNormlTriang.size()*3=m_indices.size().
+	///m_vecNormlTriang[i] is the normal of the triangle  m_indices[i], [i+1], [i+2] for
+	///i=0, ..., m_indices.size()/3.
+	std::vector<MGUnit_vector> m_vecNormlTriang;
+
+	/// STLファイルの図形を構成する各三角形の各頂点に対応する
+	/// 座標の配列のインデックスを格納する配列.
+	/// ファイルから読み込んだ順番で各三角形の頂点の並びが格納されている.
+	/// 各要素には該当する頂点座標の配列の添え字が格納されている.
+	/// 例：i番目の三角形の各頂点の座標の配列の添え字は
+	/// m_indices[i*3]、[i*3+1]、[i*3+2]という以上の順序で取得できる.
+	std::vector<int> m_indices;
+
 /// mapには1つのキーに対して複数の値は収められないため
 /// 三角形を構成する頂点のIDを収めた構造体を利用する
 class vertId{
 public:
-	int id1;
-	int id2;
-	int id3;
+	int id1, id2, id3;
 };
 
 /// 関数オブジェクトを格納する構造体
@@ -137,8 +154,15 @@ MGStl& operator*=(const MGMatrix& mat);
 /// 与えられた変換によるトランスフォームを行う.
 MGStl& operator*=(const MGTransf& tr);
 
-/// 2つのMGStlオブジェクトが等しいか判定する.
-bool operator==(const MGStl& stl);
+
+///Comparison.
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const;
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const;
+
+bool operator==(const MGStl& stl2) const;
+std::partial_ordering operator<=>(const MGStl& gel2)const;
 
 std::ostream& toString(std::ostream& ostrm)const;
 
@@ -327,25 +351,6 @@ void AddTL2Data(
 	const mgTL2Triangles& tris,///<mgTL2Triangles whose data depend on tris.get_kind();
 	triangleMap& VertexMap
 );
-
-/// STLファイルの図形を構成する各三角形の、座標の重複がない頂点座標の配列.
-/// ファイルから読み込んだ順で、座標の重複を取り除き、座標値が格納されている.
-std::vector<MGPosition> m_vecPos;
-
-/// STLファイルの図形を構成する各三角形の法線ベクトルの配列.
-/// ファイルから読み込まれた順で三角形の法線ベクトルが格納されている.
-///m_vecNormlTriang.size()*3=m_indices.size().
-///m_vecNormlTriang[i] is the normal of the triangle  m_indices[i], [i+1], [i+2] for
-///i=0, ..., m_indices.size()/3.
-std::vector<MGUnit_vector> m_vecNormlTriang;
-
-/// STLファイルの図形を構成する各三角形の各頂点に対応する
-/// 座標の配列のインデックスを格納する配列.
-/// ファイルから読み込んだ順番で各三角形の頂点の並びが格納されている.
-/// 各要素には該当する頂点座標の配列の添え字が格納されている.
-/// 例：i番目の三角形の各頂点の座標の配列の添え字は
-/// m_indices[i*3]、[i*3+1]、[i*3+2]という以上の順序で取得できる.
-std::vector<int> m_indices;
 
 };
 

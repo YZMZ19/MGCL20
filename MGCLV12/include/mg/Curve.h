@@ -100,12 +100,6 @@ virtual MGCurve& operator*=(double scale)=0;
 virtual MGCurve& operator*=(const MGMatrix& mat)=0;
 virtual MGCurve& operator*=(const MGTransf& tr)=0;
 
-///Comparison.
-virtual bool operator==(const MGCompositeCurve& crv)const;
-virtual bool operator==(const MGTrimmedCurve& crv)const;
-virtual bool operator==(const MGGel& gel2)const=0;
-virtual bool operator<(const MGGel& gel2)const=0;
-
 //////////// Member Function ////////////
 
 ///Approximate this curve as a MGLBRep.
@@ -145,15 +139,6 @@ virtual int bdim() const=0;
 virtual MGBox box_limitted(
 	const MGInterval& ///< Parameter Range of the curve.
 ) const = 0;
-
-///@cond
-///Calculate dividing Knots number for the initial approximation
-///of the curve, used for precise approximation.
-///分割数を求めるパラメータ範囲
-virtual int calc_div_num(
-	const MGInterval& interval)
-const{return this->offset_div_num(interval);};
-///@endcond
 
 ///Obtain ceter coordinate of the geometry.
 virtual MGPosition center() const;
@@ -329,7 +314,6 @@ virtual void display_curvatures(
 )const;
 
 ///Divide this curve at the designated knot multiplicity point.
-
 ///Function's return value is the number of the curves after divided.
 virtual int divide_multi(
 	std::vector<UniqueCurve>& crv_list,	//divided curves are appended.
@@ -339,7 +323,7 @@ virtual int divide_multi(
 )const;
 
 ///get the a divide number for offset, intersection, or others.
-virtual int divide_number() const{return offset_div_num(param_range());};
+virtual int divide_number() const{return divideNum(param_range());};
 
 ///Draw this curve into vbo, approximating with polyline.
 virtual void drawSE(
@@ -358,8 +342,7 @@ virtual void drawWire(
 ///Return end point(終点を返却する)
 virtual MGPosition end_point() const;
 
-/// Evaluate n'th derivative data.
-
+///@brief Evaluate n'th derivative data.
 ///n=0 means positional data evaluation.
 virtual MGVector eval(
 	double,				///< Parameter value.
@@ -369,7 +352,6 @@ virtual MGVector eval(
 ) const = 0;
 
 ///Compute position, 1st and 2nd derivatives.
-
 /// パラメータ値を与えて位置、一次微分値、二次微分値をもとめる。
 virtual void eval_all(
 	double,			///<Input parameter value(パラメータ値)
@@ -381,8 +363,7 @@ virtual void eval_all(
 ///Compute 1st derivative.
 virtual MGVector eval_deriv(double) const;
 
-///Evaluate deviations of two curves(this and curve2) at npoint discrete points.
-
+///@brief Evaluate deviations of two curves(this and curve2) at npoint discrete points.
 ///(1)Search the common curve spans which have the distance within tolerance.
 ///(2)Compute the nearest points from npoint discrete points of this to curve2.
 ///Let sti=sts[i], then
@@ -531,6 +512,7 @@ MGCCisects isect(const MGCompositeCurve& curve2)const;
 
 private:
 MGCSisects isectSurf(const MGSurface&)const;
+
 public:
 virtual MGCSisects isect(const MGSurface&f)const;
 virtual MGCSisects isect(const MGPlane& f)const;
@@ -643,74 +625,54 @@ virtual double negate_param(double t)const= 0;
 ///That is, boundary coordinates are parameter world of this geometry.
 void negate_transform(MGGeometry& boundary)const;
 
-///Offset of costant deviation from this curve.
+/// Offset curve of constant deviation.  This must be C1 cotinuous everywhere.
+/// Although the offset value ofs_value must be less than radius of curvature,
+/// this is unchecked.
+/// The offset direction is Normal(obtained by Frenet_frame()) at each point.
+UniqueLBRep offsetC1(
+	double ofs_value, ///offset value, may be negative.
+	bool principalNormal = true /// true: Offset direction is to principal normal
+								/// false: to binormal
+) const;
 
-///一定オフセット関数
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線リストが返却される。
-///If the norm_vector is given, the positive offset direction decide
-///to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
+/// Offset of constant deviation from this curve.
+/// Although the offset value ofs_value must be less than radius of curvature,
+/// this is unchecked.
+/// The direction of offset is toward the principal normal,
+/// or to the direction to center of curvature(if offset value is positive).
+/// When this curve is not C1 continuous, this is divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// line_zero() is used to approximate curves of the offset.
 virtual std::vector<UniqueCurve> offset(
-	double ofs_value,							///<オフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
+	double ofs_value, ///offset value, may be negative.
+	bool principalNormal=true /// true: Offset direction is to principal normal
+							  /// false: to binormal
 ) const;
 
-///Offset of variable deviation from this curve.
-
-///可変オフセット関数
-///オフセット量は空間次元1の線B表現で与えられる。
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線リストが返却される。
-///If the norm_vector is given, the positive offset direction decide
-///to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
+/// Offset of variable deviation from this curve.
+/// Although the offset value ofs_value must be less than radius of curvature,
+/// this is unchecked.
+/// The direction of offset is toward the principal normal,
+/// or to the direction to center of curvature(if offset value is positive).
+/// When this curve is not C1 continuous, divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// line_zero() is used approximate the offset curve.
 virtual std::vector<UniqueCurve> offset(
-	const MGLBRep& ofs_value_lb,				///<空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
-) const;
-
-///Costant offset curve of C2 continuous curve.
-
-///C2連続曲線の一定オフセット関数
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線が返却される。
-///costant offset curve of C2 continuous curve. if the norm_vector is given, the positive offset direction
-///decide to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
-virtual MGLBRep offset_c2(
-	double ofs_value,							///<オフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
-) const;
-
-///Valuable offset curve of C2 continuous curve.
-
-///C2連続曲線の可変オフセット関数
-///オフセット量は空間次元1の線B表現で与えられる。
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線が返却される。
-///valuable offset curve of C2 continuous curve. if the norm_vector is given, the positive offset direction
-///decide to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
-virtual MGLBRep offset_c2(
-	const MGLBRep& ofs_value_lb,				///<空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
+	const MGLBRep& ofs_value_lb,	///offset value, may be negative.
+			///ofs_value_lb's parameter space must be the same as this.
+			///ofs_value_lb's space dimension is supposed to be one.
+	bool principalNormal = true /// true: Offset direction is to principal normal
+								/// false: to binormal
 ) const;
 
 ///@cond
-///get the number of division for offset.
-///オフセットで使用する、あるパラメータ範囲の分割数を求める
-virtual int offset_div_num(
+///get the a divide number for offset, intersection, or others.
+virtual int divideNum(
 	const MGInterval& interval	///<分割数を求めるパラメータ範囲
 )const;
 ///@endcond
 
 ///Test if given point is on the curve or not.
-
 ///If given point is on the curve, return parameter
 ///value of the curve. Even if not, return nearest point's parameter t.
 /// 指定点が自身上にあるかを調べる。曲線上にあれば，そのパラメーター値を，
@@ -723,7 +685,6 @@ virtual bool on(
 ) const;
 
 ///Test if given point is on this geometry or not.
-
 ///If the point is on this geometry, return parameter
 ///value of the geometry. Even if not, return nearest point's parameter.
 /// 指定点が自身上にあるかを調べる。曲線上にあれば，そのパラメーター値を，
@@ -1011,7 +972,6 @@ virtual MGSurface* sweep(
 ) const =0;
 
 ///Return tangent point from a point P, given guess starting paramter tg.
-
 ///Searching is done only from t0 to t1.
 virtual int tangent_guess(
 	double t0,///< parameter range of this, starting.
@@ -1187,44 +1147,6 @@ void common_boundary(
 	const MGCommonON& offparam,
 	double& param1, double& param2
 )const;
-
-///法線ベクトルが指定されているときの処理
-int offset_norm_proc(
-	const MGLBRep& ofs_value_lb,		///<オフセット量
-	const MGVector& norm_vector,		///<法線ベクトル
-	std::vector<UniqueCurve>& ofs_crvl	///<オフセットカーブリスト
-)const;
-
-///法線ベクトルが指定されていないときの処理
-int offset_proc(
-	const MGLBRep& ofs_value_lb,	///<オフセット量
-	std::vector<UniqueCurve>& ofs_crvl	///<オフセットカーブリスト
-)const;
-
-///法線ベクトルが指定されているC2連続曲線のオフセット
-int offset_norm_c2_proc(
-	const MGLBRep& ofs_value_lb,	///<オフセット量
-	const MGVector& norm_vector,	///<法線ベクトル
-	MGLBRep& ofs_brep		///<オフセットカーブ
-)const;
-
-///法線ベクトルが指定されていないC2連続曲線のオフセット
-int offset_c2_proc(
-	const MGLBRep& ofs_value_lb,	///<オフセット量
-	MGLBRep& ofs_brep,				///<オフセットカーブ
-	MGUnit_vector& preN,			///<前回のノーマルベクトル
-	int& freverse			///<向きを逆にしているというフラグ
-)const;
-
-///曲線を折れで分割する(オフセット量を示す曲線の折れついても分割する)
-int divide_multi_ofs(
-	const MGLBRep& ofs_value_lb,		///<オフセット量を示す曲線
-	std::vector<UniqueCurve>& brep_list		///<分割した曲線リスト
-)const;
-
-///曲線をオフセットするのに十分分割したノットベクトルを返却する
-///オフセット量曲線も考慮に入れ、分割数の多い方にあわせている。
-MGKnotVector offset_make_knotvector(const MGLBRep& ofs_value_lb)const;
 
 friend class MGFace;
 friend class MGFSurface;

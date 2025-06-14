@@ -29,7 +29,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
@@ -44,7 +44,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
@@ -52,7 +52,7 @@
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
     <UseOfMfc>Dynamic</UseOfMfc>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
@@ -144,6 +144,7 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)\lib\$(Configuration)\$(PlatformName)</Comma
       <PrecompiledHeaderFile>StdAfx.h</PrecompiledHeaderFile>
       <MinimalRebuild>false</MinimalRebuild>
       <ObjectFileName>$(IntDir)</ObjectFileName>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,7 +152,7 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)\lib\$(Configuration)\$(PlatformName)</Comma
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
       <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;gdiplus.lib;mfcs140ud.lib;freetype.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;gdiplus.lib;freetype.lib</AdditionalDependencies>
       <ImportLibrary>$(LIB_DIR)$(TargetName).lib</ImportLibrary>
     </Link>
     <Midl>
@@ -170,7 +171,7 @@ copy  $(MGCLProject)\include\mg $(FUGEN_MGCL_DIR)MGCLinclude\mg
 copy  $(MGCLProject)\include\mgGL $(FUGEN_MGCL_DIR)MGCLinclude\mgGL
 copy  $(MGCLProject)\include\tl2 $(FUGEN_MGCL_DIR)MGCLinclude\tl2
 copy  $(MGCLProject)\include\topo $(FUGEN_MGCL_DIR)MGCLinclude\topo
-
+copy  $(MGCLProject)\include\mgiges $(FUGEN_MGCL_DIR)MGCLinclude\mgiges
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -227,6 +228,7 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\$(Configuration)\$(PlatformName)
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ObjectFileName>$(IntDir)</ObjectFileName>
       <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <LanguageStandard>stdcpp20</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

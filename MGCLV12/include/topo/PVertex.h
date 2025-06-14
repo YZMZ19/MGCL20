@@ -70,9 +70,15 @@ MGPVertex* clone()const override{ return new MGPVertex(*this); };
 ///Return Object's type ID (TID)
 long identify_type()const override;
 
-///Comparison of two MGPCell.
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGGel& gel2)const;
+///Comparison.
+bool operator==(const MGPVertex& gel2)const;
+std::partial_ordering operator<=>(const MGPVertex& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Comparison of two MGPVertex as MGPCells.
 ///is_less_than() defines the order of partners to store in MGBCell.
@@ -113,7 +119,7 @@ MGEdge* starEdge(){return m_edge;};
 double t() const{return m_t;};
 
 ///Get the name of the class.
-std::string whoami()const override{return "PVertex";};
+std::string whoami()const override{return "PV";};
 
 protected:
 

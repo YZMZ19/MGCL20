@@ -176,36 +176,28 @@ MGCylinder& MGCylinder::operator*= (const MGTransf& tr){
 
 //Comparison between Cylinder and a surface.
 bool MGCylinder::operator==(const MGCylinder& srf2)const{
-	if(m_ellipse!=srf2.m_ellipse)
-		return false;
-	if(m_axis!=srf2.m_axis)
-		return false;
-
-	return true;
+	return (m_ellipse == srf2.m_ellipse && m_axis == srf2.m_axis);
 }
-bool MGCylinder::operator<(const MGCylinder& gel2)const{
+std::partial_ordering MGCylinder::operator<=>(const MGCylinder& gel2)const{
 	if(m_ellipse==gel2.m_ellipse)
-		return m_axis<gel2.m_axis;
-	return m_ellipse<gel2.m_ellipse;
+		return m_axis<=>gel2.m_axis;
+	return m_ellipse<=>gel2.m_ellipse;
 }
-bool MGCylinder::operator==(const MGGel& gel2)const{
-	const MGCylinder* gel2_is_this=dynamic_cast<const MGCylinder*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+
+bool MGCylinder::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGCylinder&>(g2) : false;
 }
-bool MGCylinder::operator<(const MGGel& gel2)const{
-	const MGCylinder* gel2_is_this=dynamic_cast<const MGCylinder*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGCylinder::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGCylinder&>(g2) : c;
 }
 
 /////////Debug function デバッグ関数///////////
 // Output virtual function.
 //Output to ostream メンバデータを標準出力に出力する。
 std::ostream& MGCylinder::toString(std::ostream &outpt) const{
-	outpt<<"MGCylinder::"<<this<<",m_ortho="<<m_ortho<<std::endl<<" ,m_ellipes="<<m_ellipse
+	outpt<<"MGCylinder::"<< (const MGGel*)this<<",m_ortho="<<m_ortho<<std::endl<<" ,m_ellipes="<<m_ellipse
 		<<std::endl<<" ,m_axis="<<m_axis;
 	return outpt;
 }

@@ -153,8 +153,14 @@ MGFace operator* (const MGTransf& tr) const;
 MGFace operator/ (double s) const{return (*this)*(1./s);};
 
 ///Comparison of two faces.
-bool operator<(const MGFace& gel2)const{return compare(gel2);};
-bool operator<(const MGGel& gel2)const;
+bool operator==(const MGFace& gel2)const;
+std::partial_ordering operator<=>(const MGFace& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Return space dimension
 int sdimFS() const override{	return MGCell::sdim();};
@@ -274,6 +280,13 @@ MGPosition closest_on_boundary(const MGStraight& sl) const;
 void compute_box(MGBox& bx) const;
 
 ///////display member function.
+
+/// <summary>
+/// Display break points, i.e., parameter lines of u and v breakpoints.
+/// </summary>
+void display_break_points(mgSysGL& sgl)const override {
+	display_break_pointsFS(sgl);
+};
 
 ///Display direction arrows on the surface.
 void display_arrows(mgSysGL& sgl)const;

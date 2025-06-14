@@ -90,11 +90,16 @@ MGCompositeCurve& operator*=(const MGTransf& tr);
 
 ///Comparison of two curves.
 bool is_same_curve(const MGCurve& curve2)const;
-bool operator==(const MGCompositeCurve& gel2)const;
-bool operator==(const MGGel& gel2)const;
 bool operator==(const MGTrimmedCurve& gel2)const;
-bool operator<(const MGCompositeCurve& gel2)const;
-bool operator<(const MGGel& gel2)const;
+
+bool operator==(const MGCompositeCurve& gel2)const;
+std::partial_ordering operator<=>(const MGCompositeCurve& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 //////////// Member Function ////////////
 
@@ -359,58 +364,28 @@ double negate_param(double t)const;
 ///Get the number of included curves in this CompositeCurve.
 int number_of_curves()const{return int(m_composite.size());};
 
-//****Offset of CompositeCurve is CompositeCurve of the offsets of each
-//member curves********
-
-///一定オフセット関数
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線リストが返却される。
-///costant offset curve. if the norm_vector is given, the positive offset direction decide
-///to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
+/// Offset of constant deviation from this curve.
+/// The offset value must be less than radius of curvature.
+/// When this curve is not C1 continuous, this is divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// line_zero() is used to approximate curves of the offset.
 std::vector<UniqueCurve> offset(
-	double ofs_value,							///<オフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
-) const;
+	double ofs_value,///<オフセット量
+	bool principalNormal = true /// true: Offset direction is to principal normal
+								/// false: to binormal
+) const override;
 
-///可変オフセット関数
-///オフセット量は空間次元1の線B表現で与えられる。
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線リストが返却される。
-///valuable offset curve. if the norm_vector is given, the positive offset direction decide
-///to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
+/// Offset of variable deviation from this curve.
+/// When this curve is not C1 continuous, divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// The direction of offset is toward the principal normals,
+/// or to the direction to center of curvature.
+/// line_zero() is used approximate the offset curve.
 std::vector<UniqueCurve> offset(
-	const MGLBRep& ofs_value_lb,					///<空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
-)const;
-
-///C2連続曲線の一定オフセット関数
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線が返却される。
-///costant offset curve of C2 continuous curve. if the norm_vector is given, the positive offset direction
-///decide to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
-MGLBRep offset_c2(
-	double ofs_value,								///<オフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
-) const;
-
-///C2連続曲線の可変オフセット関数
-///オフセット量は空間次元1の線B表現で与えられる。
-///オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-///法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-///は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線が返却される。
-///valuable offset curveof C2 continuous curve. if the norm_vector is given, the positive offset direction
-///decide to left hand side from ahead, or the direction to center of curvature at start parameter.
-///the offset value is less than radius of curvature. line_zero() is used.
-MGLBRep offset_c2(
-	const MGLBRep& ofs_value_lb,					///<空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector = mgNULL_VEC	///<法線ベクトル
-) const;
+	const MGLBRep& ofs_value_lb,///<空間次元１の線B表現で示したオフセット量
+	bool principalNormal = true /// true: Offset direction is to principal normal
+								/// false: to binormal
+)const override;
 
 ///Test if given point is on the curve or not. If yes, return parameter
 ///value of the curve. Even if not, return nearest point's parameter.

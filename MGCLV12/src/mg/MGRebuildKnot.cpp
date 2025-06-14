@@ -183,7 +183,7 @@ std::vector<UniqueLBRep> rebuildAsSameKnotVector(
 		mixedKnotVector.mix_knot_vector(MGKnotVector(tau_temp.buildByKnotVector(ti),orderi));
 	}
 
-	//ノットベクトルを十分に増やす。offset_div_num()を使用する。
+	//ノットベクトルを十分に増やす。divideNum()を使用する。
 	MGKnotVector tempKnotVector = mixedKnotVector;
 	int bd=tempKnotVector.bdim();
 	for(i=ordr-1; i<bd; i++){
@@ -194,7 +194,7 @@ std::vector<UniqueLBRep> rebuildAsSameKnotVector(
 			continue;	//マルチノットのときの処理
 
 		for(; j < nCrv; j++){	//各スパンの最大分割数を求める
-			int ndiv = rtnBrepList[j]->offset_div_num(MGInterval(spara, epara));
+			int ndiv = rtnBrepList[j]->divideNum(MGInterval(spara, epara));
 			if(ndiv>maxNumDiv)
 				maxNumDiv = ndiv;
 		}

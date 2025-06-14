@@ -962,9 +962,6 @@
     <ClInclude Include="include\mg\DNameControl.h">
       <Filter>ヘッダー ファイル\Geo</Filter>
     </ClInclude>
-    <ClInclude Include="include\mg\drawParam.h">
-      <Filter>ソース ファイル\Geo</Filter>
-    </ClInclude>
     <ClInclude Include="include\topo\Cell.h">
       <Filter>ヘッダー ファイル\topo</Filter>
     </ClInclude>
@@ -1060,6 +1057,9 @@
     </ClInclude>
     <ClInclude Include="..\OpenGL4\ftgl-2.1.3-rc5\src\FTGL\FTPolyGlyph.h">
       <Filter>ヘッダー ファイル\ftgl</Filter>
+    </ClInclude>
+    <ClInclude Include="include\mg\drawParam.h">
+      <Filter>ヘッダー ファイル\Geo</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

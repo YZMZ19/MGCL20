@@ -61,7 +61,7 @@ bool MGGelPosition::operator<(const MGGelPosition& gelp2)const{
 			return m_Ghierarchy[i]<gelp2.m_Ghierarchy[i];
 	}
 	if(m_object && gelp2.m_object)
-		return *m_object <*(gelp2.m_object);
+		return m_object->ordering_test(*gelp2.m_object)<0;
 	else
 		return m_object <gelp2.m_object;
 }

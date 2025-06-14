@@ -70,6 +70,13 @@ typedef enum {
 	ZebraHorizon = 1,
 }ZebraType;
 
+/// <summary>
+/// convert error code to std::string.
+/// </summary>
+/// <param name="errorCode"></param>
+/// <returns>Error string</returns>
+MG_DLL_DECLR std::string errorString(int errorCode);
+
 ///change error code to string and print it.
 MG_DLL_DECLR void printOpenGLError(int errorCode);
 

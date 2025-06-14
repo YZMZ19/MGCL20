@@ -52,9 +52,8 @@ bool MGSSisect::operator< (const MGSSisect& ssi2)const{
 }
 
 bool MGSSisect::operator== (const MGSSisect& ssi2)const{
-	if((*m_param1)!= *(ssi2.m_param1)) return false;
-	if((*m_param2)!= *(ssi2.m_param2)) return false;
-	return true;
+	return m_param1->equal_test(*ssi2.m_param1) &&
+		m_param2->equal_test(*ssi2.m_param2);
 }
 
 bool MGSSisect::operator< (const MGisect& is)const{

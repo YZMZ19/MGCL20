@@ -322,26 +322,33 @@ MGBox& MGBox::operator&= ( const MGBox & box2 ) {
 //自身と与えられたBoxが等しいかどうかを返却する。
 //一方のBoxの全ての辺がもう一方の相当する辺に重なる場合 True を返却する。
 bool MGBox::operator== (const MGBox& box2) const {
-	int dim1=sdim(); int dim2=box2.sdim();
-	int dim=dim1<dim2 ? dim1:dim2;
-	bool judge = true;
-	for(int i=0; i<dim; i++)
-		if(m_range[i] != box2.m_range[i]) {judge=false; break;}
-	if(judge){
-		if(dim1>dim2){
-			for(int i=dim2; i<dim1; i++)
-				if(!m_range[i].empty()) {judge=false; break;}
-		}
-		else if(dim1<dim2){
-			for(int i=dim1; i<dim2; i++)
-				if(!box2.m_range[i].empty()) {judge=false; break;};
-		}
+	auto isEqual = (*this <=> box2);
+	return isEqual == 0;
+}
+auto MGBox::operator<=> (const MGBox& box2) const->std::partial_ordering {
+	int dim1 = sdim(); int dim2 = box2.sdim();
+	int dim = dim1 < dim2 ? dim1 : dim2;
+	bool isEqual = true;
+	for (int i = 0; i < dim; i++) {
+		auto c = m_range[i] <=> box2.m_range[i];
+		if (c != 0)
+			return c;
 	}
-	return judge;
+	if (dim1 > dim2) {
+		for (int i = dim2; i < dim1; i++)
+			if (!m_range[i].empty())
+				return std::partial_ordering::greater;
+	} else if (dim1 < dim2) {
+		for (int i = dim1; i < dim2; i++)
+			if (!box2.m_range[i].empty())
+				return std::partial_ordering::less;
+	}
+
+	return std::partial_ordering::equivalent;
 }
 
 //与えられたポジションが自身のBox内に含まれているか返却する。
-bool MGBox::operator >> ( const MGPosition & pt) const {
+bool MGBox::includes( const MGPosition & pt) const {
 	int i, dim1=sdim(); if(!dim1) return false;
 	int dim2=pt.sdim();
 	// ポジションのdataがBoxの全ての辺の範囲内にある場合
@@ -357,14 +364,14 @@ bool MGBox::operator >> ( const MGPosition & pt) const {
 
 //自身のBoxが与えられたBoxを囲んでいるか返却する。
 //与えられたBoxが自身のBox内にある場合 True を返却する。
-bool MGBox::operator >> ( const MGBox & box2 ) const {
+bool MGBox::includes( const MGBox & box2 ) const {
 	int i, dim1=sdim(); if(!dim1) return false;
 	int dim2=box2.sdim(); if(!dim2) return true;
 	int dim= dim1<dim2 ? dim1:dim2;
 	// 与えられたBoxの全辺が自身のBoxの各辺の
 	// Intervalに含まれる時、True
 	for(i=0; i<dim; i++){
-		if( !(m_range[i]>>box2.m_range[i]) ) return false;
+		if( !(m_range[i].includes(box2.m_range[i])) ) return false;
 	}
 	//Check extra dimension of box2.
 	for(i=dim1; i<dim2; i++){
@@ -580,7 +587,6 @@ bool MGBox::finite() const{
 ///Result area will contain garbages.
 ///get_area uses the old m_sdim as input and set the input dim
 ///as the new one. m_sdim must be valid.
-void get_area(int dim);
 void MGBox::get_area(int dim){
 	if(dim<=3){
 		if(m_sdim>3) delete[] m_range;

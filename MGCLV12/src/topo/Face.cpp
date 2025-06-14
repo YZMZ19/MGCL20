@@ -202,16 +202,30 @@ MGFace& MGFace::operator=(const MGGel& gel2){
 		operator=(*gel2_is_this);
 	return *this;
 }
-bool MGFace::operator<(const MGGel& gel2)const{
-	const MGFace* f2=dynamic_cast<const MGFace*>(&gel2);
-	if(f2)
-		return operator<(*f2);
-	return identify_type() < gel2.identify_type();
+
+bool MGFace::operator==(const MGFace& f2)const {
+	return this == &f2;
+}
+
+std::partial_ordering MGFace::operator<=>(const MGFace& f2)const{
+	if (isLessThan(f2))
+		return std::partial_ordering::less;
+	else
+		return std::partial_ordering::greater;
+}
+
+bool MGFace::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGFace&>(g2) : false;
+}
+std::partial_ordering MGFace::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGFace&>(g2) : c;
 }
 
 std::ostream& MGFace::toString(std::ostream& ostrm) const{
 	ostrm<<"<<Face="<<(const MGGel*)this;
-	ostrm<<", box_param="<<m_box_param;
+	ostrm<<", param"<<m_box_param;
 	ostrm<<std::endl<<", boundaries(Loops) = "<<m_boundaries.size();
 	const_iterator bs = m_boundaries.begin(), be = m_boundaries.end();
 	int n = 0;
@@ -594,13 +608,18 @@ std::vector<const MGLoop*> MGFace::get_inner_boundary_loops(
 bool MGFace::hasLoop(const MGBox& uvbox) const{
 	int n=number_of_loops();
 	if(n==0) return false;
-	double u0=uvbox[0].low_point(), u1=uvbox[0].high_point();
-	double v0=uvbox[1].low_point(), v1=uvbox[1].high_point();
+
+	const MGInterval& urangeIn = uvbox[0];
+	const MGInterval& vrangeIn = uvbox[1];
 	for(int i=0; i<n; i++){
 		const MGBox& bx=loop(i)->box();
-		const MGInterval& urange=bx[0];
-		const MGInterval& vrange=bx[1];
-		if(urange>=u0 && urange<=u1 && vrange>=v0 && vrange<=v1) return true;
+		const MGInterval& urangei=bx[0];
+		if (urangei<urangeIn || urangei>urangeIn)
+			continue;
+		const MGInterval& vrangei=bx[1];
+		if (vrangei<vrangeIn || vrangei>vrangeIn)
+			continue;
+		return true;
 	}
 	return false;
 }
@@ -710,7 +729,7 @@ bool MGFace::in_range(double u, double v)const{
 	return in_range(MGPosition(u,v));
 }
 bool MGFace::in_range(const MGPosition& uv)const{
-	if(box_param()<<uv) return false;
+	if(!box_param().includes(uv)) return false;
 	else if(!number_of_boundaries())
 		return true;
 	else{
@@ -738,7 +757,7 @@ bool MGFace::in_range(const MGPosition& uv)const{
 int MGFace::in_range_with_on(
 	const MGPosition& uv
 )const{
-	if(box_param()<<uv)
+	if(!box_param().includes(uv))
 		return 0;
 
 	int loop_id;
@@ -831,10 +850,10 @@ int  MGFace::number_of_perimeter_boundaries()const{
 //Returned is true if the point P is on the face.
 //false if P was not on the face.
 bool MGFace::on(const MGPosition& P,
-		MGPosition& uv	//Parameter value of the face is returrned.
-						//Even if P is not on the face, nearest point
-						//parameter value will be returned.
-		) const{
+	MGPosition& uv	//Parameter value of the face is returrned.
+					//Even if P is not on the face, nearest point
+					//parameter value will be returned.
+) const{
 	uv=closest(P);
 	return P==eval(uv);
 }

@@ -230,7 +230,9 @@ std::vector<UniqueCurve> MGFace::outer_boundary_param()const{
 			int id=i->perimeter_id();
 			double t0,t1; i->range(t0,t1);
 			MGPosition uv0=srf.perimeter_uv(id,t0), uv1=srf.perimeter_uv(id,t1);
-			MGStraight* sl=new MGStraight(uv1,uv0,t1, t0);
+			MGStraight* sl = t0<t1 ?
+				new MGStraight(uv1,uv0,t1, t0):
+				new MGStraight(uv0, uv1, t0, t1);
 			crvs.emplace_back(sl);
 		}
 	}
@@ -255,7 +257,8 @@ std::vector<MGFOuterCurve> MGFace::outer_curve() const{
 		//If no outer boundaries, output surface perimeters.
 		int n=srf->perimeter_num();
 		std::vector<MGFOuterCurve> perim(n);
-		for(i=0; i<n; i++) perim[i]=MGFOuterCurve(i,ts_corner[i],te_corner[i]);
+		for(i=0; i<n; i++)
+			perim[i]=MGFOuterCurve(i,ts_corner[i],te_corner[i]);
 		return perim;
 	}
 
@@ -631,7 +634,7 @@ int MGFace::trim(
 }
 
 //Trim the face giving a loop new_loop that does not have the parent face.
-//new_loop must be parrameter representaion of this face.
+//new_loop must be parameter representaion of this face.
 //
 //Function's return value is error code:
 //0= normal return

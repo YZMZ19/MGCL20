@@ -41,6 +41,24 @@ class MGFace;
 /// Point(u,v) = m_root_point + u * m_uderiv + v * m_vderiv
 class MG_DLL_DECLR MGPlane :public MGSurface{
 
+	MGUnit_vector	m_normal;	///<Normal of the plane 平面の法線ベクトル.
+	double		m_d;
+	///<Distance from the origin(0,0,0) 平面の陰関数表現
+	///< (m_d=ax+by+cz+....where m_normal=(a,b,c,....))
+	///< すなわちm_dは原点と平面の距離.
+	mutable std::unique_ptr<MGKnotVector> m_uknotV;
+	mutable std::unique_ptr<MGKnotVector> m_vknotV;
+	///<When knot_vector_u,v() is invoked, the knot vector will be set,
+	///<These two variables must be initialize to 0(null).
+	
+protected:
+	MGPosition	m_root_point;	///<A point on the plane,
+	///<平面のパラメータ表現の基点.
+	MGVector	m_uderiv;	///<U direction vector,
+	///<平面のパラメータ表現のｕ方向.
+	MGVector	m_vderiv;	///<V direction vector,
+	///< 平面のパラメータ表現のｖ方向.
+
 public:
 
 ///Vector translation.
@@ -145,11 +163,13 @@ MGPlane& operator*=(const MGTransf& tr);
 
 ///Comparison of two curves.
 bool operator==(const MGPlane& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGPlane& gel2)const;
-bool operator<(const MGGel& gel2)const;
-bool operator!=(const MGGel& gel2)const{return !(gel2==(*this));};
-bool operator!=(const MGPlane& gel2)const{return !(gel2==(*this));};
+std::partial_ordering operator<=>(const MGPlane& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 ///Output to IGES stream file(=PD190).
 int out_to_IGES(
@@ -688,25 +708,7 @@ void ReadMembers(MGIfstream& buf);
 ///メンバデータを書き込む関数
 void WriteMembers(MGOfstream& buf) const;
 
-protected:
-	MGPosition	m_root_point;	///<A point on the plane,
-								///<平面のパラメータ表現の基点.
-	MGVector	m_uderiv;	///<U direction vector,
-							///<平面のパラメータ表現のｕ方向.
-	MGVector	m_vderiv;	///<V direction vector,
-							///< 平面のパラメータ表現のｖ方向.
-
 private:
-
-	MGUnit_vector	m_normal;	///<Normal of the plane 平面の法線ベクトル.
-	double		m_d;
-					///<Distance from the origin(0,0,0) 平面の陰関数表現
-					///< (m_d=ax+by+cz+....where m_normal=(a,b,c,....))
-					///< すなわちm_dは原点と平面の距離.
-	mutable std::unique_ptr<MGKnotVector> m_uknotV;
-	mutable std::unique_ptr<MGKnotVector> m_vknotV;
-			///<When knot_vector_u,v() is invoked, the knot vector will be set,
-			///<These two variables must be initialize to 0(null).
 
 ///get the display arrow length vector.
 void get_uv_display_vector(
@@ -782,9 +784,8 @@ MGCSisects isect_withC1LB(const MGLBRep& lb)const;
 ///isect with SurfCurve whose m_curve is not a MGTrimmedCurve of MGCompositeCurve.
 MGCSisects isect_with_noCompoSC(const MGSurfCurve& curve2)const;
 
-///オフセットするサンプルポイントの1パッチごとの分割数を求める
-///全てのパッチ中の分割数で最大の値を返す
-int offset_div_num() const;
+///get the a divide number for offset, intersection, or others.
+int divideNum() const;
 
 ///Obtain 1D surface rep. of this surf which can be used for
 ///isect(const MGPlane& pl). This surf1D is used in isect for

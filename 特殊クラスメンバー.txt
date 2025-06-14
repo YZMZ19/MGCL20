@@ -1,0 +1,8 @@
+
+////////Special member functions/////////
+MGLBRep();
+virtual ~MGLBRep()=default;
+MGLBRep(const MGLBRep&)=default;
+MGLBRep(MGLBRep&&)=default;
+MGLBRep& operator=(const MGLBRep&)=default;
+MGLBRep& operator=(MGLBRep&&)=default;

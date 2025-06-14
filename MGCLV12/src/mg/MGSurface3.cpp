@@ -1240,7 +1240,7 @@ int MGFSurface::isect_startPt(
 		if(uvuv_list.in(uv_passed,uvuv_id,4)){
 			uvuv_now=MGPosition(4,*uvuv_id);
 			obtained=3;
-		}else if(n>3 && uv_passed>>uvuv_start){
+		}else if(n>3 && uv_passed.includes(uvuv_start)){
 			uvuv_now=uvuv_start;
 			obtained=4;
 		}

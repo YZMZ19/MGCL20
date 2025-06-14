@@ -135,6 +135,13 @@ void MGPickObjects::push_back(const MGPickObjects& pobjs){
 void MGPickObjects::push_back(MGPickObjects&& pobjs) {
 	std::move(pobjs.begin(), pobjs.end(), std::back_inserter(m_PickObjects));
 }
+void MGPickObjects::emplace_back(const MGGelPosition& gelp){
+	m_PickObjects.emplace_back(new MGPickObject(gelp));
+}
+void MGPickObjects::emplace_back(MGGroup* group, MGObject* obj){
+	m_PickObjects.emplace_back(new MGPickObject(group,obj));
+
+}
 
 void MGPickObjects::remove(const MGPickObject& pobj){
 	iterator i=find(pobj);

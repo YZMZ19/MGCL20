@@ -315,6 +315,7 @@ void TexCoord2dv(const double v[2]);
 void setStaticAttribColor(const MGColor& color);//color‚É‚Íundefined‚Ì‚à‚Ì‚à‹–‚³‚ê‚é
 void setStaticAttribColor(const float color[4]);
 void setStaticAttribColor(float r, float g, float b);
+void setStaticAttribColor(MGColor::ColorID id);
 void setStaticAttribLineWidth(GLfloat size);///size<=0. ‚Íundefined‚ðŽ¦‚·
 void setStaticAttribPointSize(GLfloat size);///size<=0. ‚Íundefined‚ðŽ¦‚·
 
@@ -411,7 +412,19 @@ void drawCurvaGraph(
 	const MGCurve& curve,///<The target curve.
 	int density,///<Dinsity of the graph.
 	bool use_radius=false,///<Indicates if curvature is used(=false) or curvature radius(=true). 
-	double scaleRelative =1.///<Scale of the graph.
+	double scaleRelative =1.,///<Scale of the graph.
+	double lengthBase=-1.///base length of curvature graph. If lengthBase<=0.,
+				///the length is obtained from input curve by curvatureLengthDisplay().
+);
+
+///Draw curvature variation graph so-called Hige.
+void drawCurvaGraph(
+	std::vector<const MGCurve*>& curves,///<The target curves.
+	int density,///<Dinsity of the graph.
+	bool use_radius = false,///<Indicates if curvature is used(=false) or curvature radius(=true). 
+	double scaleRelative = 1.,///<Scale of the graph.
+	double lengthBase = -1.///base length of curvature graph. If lengthBase<=0.,
+	///the length is obtained from input curve by curvatureLengthDisplay().
 );
 
 ///Draw a point using openGL functions.
@@ -457,14 +470,32 @@ void drawPoints(
 );
 
 ///Draw a polyline using openGL functions.
-
-///The last argument must end with nullptr.
-void drawOpenPolyline(const MGPosition* P0, ...);
+///type‚ÍŽŸ‚Ì‚à‚Ì‚ð‰Â‚Æ‚·‚é(GL_xxxx‚Ìxxxx‚ðŽ¦‚·j
+///POINTS,LINES,LINE_STRIP,LINE_LOOP,TRIANGLE_FAN,TRIANGLE_STRIP,QUAD_STRIP
+template<class... Args>
+void drawTypedPolyline(GLenum type, const Args*... Ps) {
+	Begin(type);
+	for (const MGPosition* points[]{ Ps... }; auto & point : points) {
+		const MGPosition& P = *point;
+		Vertex3d(P[0], P[1], P[2]);
+	}
+	End();
+};
 
 ///Draw a polyline using openGL functions.
 
-///The last argument must end with nullptr.
-void drawClosedPolyline(const MGPosition* P0, ...);
+/// <summary>
+/// Draw open or closed polyline of any number of points:
+/// e.g. drawOpenPolyline(p0, p1, p2, ...);
+/// </summary>
+template<class... Args>
+void drawOpenPolyline(const Args*... Ps) {
+	drawTypedPolyline(GL_LINE_STRIP, Ps...);
+};
+template<class... Args>
+void drawClosedPolyline(const Args*... Ps) {
+	drawTypedPolyline(GL_LINE_LOOP, Ps...);
+};
 
 ///Draw a polyline using openGL functions.
 
@@ -610,6 +641,7 @@ private:
 class mgVBOLeaf;
 #include "mg/Position.h"
 #include "mgGL/glslprogram.h"
+
 class MG_DLL_DECLR mgVBOElement {
 public:
 	static const MGDrawParam& getDrawParam() {
@@ -629,7 +661,7 @@ public:
 	}
 	void setStaticAttribColor(const MGColor& color) { ; };
 	void setStaticAttribColor(const float color[4]) { ; };
-	void LineWidth(GLfloat size) { ; };
+	void LineWidth(float size) { ; };
 	void Begin(GLenum type, MGCL::DRAW_TARGET target = MGCL::WIRE) {
 		std::cout << "mgVBO::Begin" << std::endl;
 	}

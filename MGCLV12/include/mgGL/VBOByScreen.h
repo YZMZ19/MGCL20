@@ -73,9 +73,9 @@ void Vertex3dv(const double v[3]);
 
 protected:
 
-	float m_centerX, m_centerY;///< Viewport data of the screen.
-	float m_widthHalf, m_heightHalf;///<half of width and height.
 	float m_z;///<Normalized device coordinates z value to control depth test.
+	float m_centerX=0.f, m_centerY = 0.f;///< Viewport data of the screen.
+	float m_widthHalf=0.f, m_heightHalf=0.f;///<half of width and height.
 
 };
 

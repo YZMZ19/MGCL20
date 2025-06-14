@@ -143,29 +143,25 @@ MGStl& MGStl::operator*=(const MGTransf& tr){
 	m_box *= tr;
 	return *this;
 }
+bool MGStl::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGStl&>(g2) : false;
+}
+std::partial_ordering MGStl::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGStl&>(g2) : c;
+}
 
-// 二つのMGStlオブジェクトが等しいか比較する
-bool MGStl::operator==(const MGStl& stl){
-	// ボックス枠の比較
-	if(this->m_box != stl.m_box)
-		return false;
+bool MGStl::operator==(const MGStl& stl2) const {
+	return m_vecPos == stl2.m_vecPos &&
+		m_vecNormlTriang == stl2.m_vecNormlTriang &&
+		m_indices == stl2.m_indices;
+}
 
-	// 座標の比較
-	if(m_vecPos != stl.m_vecPos){
-			return false;
-	}
-
-	// 面の法線ベクトルの比較
-	if(m_vecNormlTriang != stl.m_vecNormlTriang){
-		return false;
-	}
-
-	if(m_indices != stl.m_indices){
-		return false;
-	}
-
-	// 一致している場合はtrueを返却する
-	return true;
+std::partial_ordering MGStl::operator<=>(const MGStl& stl2)const {
+	const MGBox& b1 = box();
+	const MGBox& b2 = stl2.box();
+	return b1<=>b2;
 }
 
 //Construct new object by copying to newed area.

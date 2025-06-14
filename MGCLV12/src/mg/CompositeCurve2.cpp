@@ -110,66 +110,42 @@ int MGCompositeCurve::common(
 	return (int)(vecComSpan.size()/4);
 }
 
-//一定オフセット関数
-//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-//は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線リストが返却される。
-//costant offset curve. if the norm_vector is given, the positive offset direction decide
-//to left hand side from ahead, or the direction to center of curvature at start parameter.
-//the offset value is less than radius of curvature. line_zero() is used.
+/// Offset of constant deviation from this curve.
+/// The offset value must be less than radius of curvature.
+/// When this curve is not C1 continuous, this is divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// line_zero() is used to approximate curves of the offset.
 std::vector<UniqueCurve> MGCompositeCurve::offset(
-	double ofs_value,			//オフセット量
-	const MGVector& norm_vector	//法線ベクトル
+	double ofs_value, //オフセット量
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
+
 )const{
-	std::vector<UniqueCurve> retval(1);
-	retval[0].reset(static_cast<MGCurve*>(0));
-	return retval;
+	std::vector<UniqueCurve> offsetCrvs;
+	for (auto crvi : m_composite) {
+		for(auto& crvj: crvi->offset(ofs_value, principalNormal))
+			offsetCrvs.emplace_back(crvj.release());
+	}
+	return offsetCrvs;
 }
 
-//可変オフセット関数
-//オフセット量は空間次元1の線B表現で与えられる。
-//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-//は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線リストが返却される。
-//valuable offset curve. if the norm_vector is given, the positive offset direction decide
-//to left hand side from ahead, or the direction to center of curvature at start parameter.
-//the offset value is less than radius of curvature. line_zero() is used.
+/// Offset of variable deviation from this curve.
+/// When this curve is not C1 continuous, divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// The direction of offset is toward the principal normal,
+/// or to the direction to center of curvature.
+/// line_zero() is used approximate the offset curve.
 std::vector<UniqueCurve> MGCompositeCurve::offset(
-	const MGLBRep& ofs_value_lb,					//空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector	//法線ベクトル
+	const MGLBRep& ofs_value_lb,	//空間次元１の線B表現で示したオフセット量
+	bool principalNormal/// true: Offset direction is to principal normal
+						/// false: to binormal
 )const{
-	std::vector<UniqueCurve> retval(1);
-	retval[0].reset(static_cast<MGCurve*>(0));
-	return retval;
-}
-
-//C2連続曲線の一定オフセット関数
-//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-//は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線が返却される。
-//costant offset curve of C2 continuous curve. if the norm_vector is given, the positive offset direction
-//decide to left hand side from ahead, or the direction to center of curvature at start parameter.
-//the offset value is less than radius of curvature. line_zero() is used.
-MGLBRep MGCompositeCurve::offset_c2(
-	double ofs_value,			//オフセット量
-	const MGVector& norm_vector	//法線ベクトル
-)const{
-	return MGLBRep();
-}
-
-//C2連続曲線の可変オフセット関数
-//オフセット量は空間次元1の線B表現で与えられる。
-//オフセット方向は、法線方向から見て入力曲線の進行方向左側を正とする。
-//法線ベクトルがヌルの場合、始点において曲率中心方向を正とする。ただし、曲率中心へ曲率半径以上のオフセット
-//は行わない。トレランスはline_zero()を使用している。戻り値は、オフセット曲線が返却される。
-//valuable offset curveof C2 continuous curve. if the norm_vector is given, the positive offset direction
-//decide to left hand side from ahead, or the direction to center of curvature at start parameter.
-//the offset value is less than radius of curvature. line_zero() is used.
-MGLBRep MGCompositeCurve::offset_c2(
-	const MGLBRep& ofs_value_lb,					//空間次元１の線B表現で示したオフセット量
-	const MGVector& norm_vector	//法線ベクトル
-)const{
-	return MGLBRep();
+	std::vector<UniqueCurve> offsetCrvs;
+	for (auto crvi : m_composite) {
+		for (auto& crvij : crvi->offset(ofs_value_lb, principalNormal))
+			offsetCrvs.emplace_back(crvij.release());
+	}
+	return offsetCrvs;
 }
 
 //Return sweep surface from crv

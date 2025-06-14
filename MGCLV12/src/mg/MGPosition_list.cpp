@@ -247,7 +247,7 @@ bool MGPosition_list::in(const MGBox& box, iterator& id,int n){
 	do{
 		i--;
 		MGPosition Pi(n,*i);
-		if(boxt>>Pi){
+		if(boxt.includes(Pi)){
 			MGVector diff=Pi-midP;
 			double len2=diff%diff;
 			if(min_len<0. || min_len>len2){
@@ -278,7 +278,7 @@ bool MGPosition_list::in(const MGBox& box, const_iterator& id,int n)const{
 	do{
 		i--;
 		MGPosition Pi(n,*i);
-		if(boxt>>Pi){
+		if(boxt.includes(Pi)){
 			MGVector diff=Pi-midP;
 			double len2=diff%diff;
 			if(min_len<0. || min_len>len2){

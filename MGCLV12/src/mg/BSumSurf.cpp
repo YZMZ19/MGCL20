@@ -177,26 +177,21 @@ MGBSumSurf& MGBSumSurf::operator*= (const MGTransf& tr){
 //Equal operator overload. ˜_—‰‰ŽZŽq‘½d’è‹`
 //Comparison of two surfaces. Ž©g‚Æ—^‹È–Ê‚ª“™‚µ‚¢‚©”äŠr‚·‚éB
 bool MGBSumSurf::operator==(const MGBSumSurf& srf2)const{
-	if(!m_g1 && !srf2.m_g1) return true;
-	if((*m_g1)!=(*(srf2.m_g1))) return false;
-	if((*m_g2)!=(*(srf2.m_g2))) return false;
-	if((*m_g12)!=(*(srf2.m_g12))) return false;
-	return true;
+	return m_g1 && srf2.m_g1 && m_g1->equal_test(*srf2.m_g1) &&
+		m_g2->equal_test(*srf2.m_g2) && m_g12->equal_test(*srf2.m_g12);
 }
-bool MGBSumSurf::operator<(const MGBSumSurf& gel2)const{
-	return (*m_g1)<*(gel2.m_g1);
+
+std::partial_ordering MGBSumSurf::operator<=>(const MGBSumSurf& gel2)const {
+	return m_g1->ordering_test(*gel2.m_g1);
 }
-bool MGBSumSurf::operator==(const MGGel& gel2)const{
-	const MGBSumSurf* gel2_is_this=dynamic_cast<const MGBSumSurf*>(&gel2);
-	if(gel2_is_this)
-		return operator==(*gel2_is_this);
-	return false;
+
+bool MGBSumSurf::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGBSumSurf&>(g2) : false;
 }
-bool MGBSumSurf::operator<(const MGGel& gel2)const{
-	const MGBSumSurf* gel2_is_this=dynamic_cast<const MGBSumSurf*>(&gel2);
-	if(gel2_is_this)
-		return operator<(*gel2_is_this);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGBSumSurf::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGBSumSurf&>(g2) : c;
 }
 
 ////////// Member Function //////////

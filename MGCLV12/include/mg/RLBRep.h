@@ -130,11 +130,15 @@ MGRLBRep& operator*=(const MGMatrix& mat);
 MGRLBRep& operator*=(const MGTransf& tr);
 
 ///comparison
-bool operator==(const MGRLBRep& gel2)const;
-bool operator==(const MGGel& gel2)const;
-bool operator<(const MGRLBRep& gel2)const;
-bool operator<(const MGGel& gel2)const;
 bool operator==(const MGLBRep& gel2)const;
+bool operator==(const MGRLBRep& gel2)const;
+std::partial_ordering operator<=>(const MGRLBRep& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
 
 //////////// Member Function ////////////
 
@@ -733,6 +737,29 @@ int out_to_IGES(
 ///String output.
 std::ostream& toString(std::ostream&) const;
 
+/// Offset of constant deviation from this curve.
+/// The offset value must be less than radius of curvature.
+/// When this curve is not C1 continuous, this is divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// line_zero() is used to approximate curves of the offset.
+std::vector<UniqueCurve> offset(
+	double ofs_value,
+	bool principalNormal = true /// true: Offset direction is to principal normal
+								/// false: to binormal
+) const override;
+
+/// Offset of variable deviation from this curve.
+/// When this curve is not C1 continuous, divided into C1 curves,
+/// and more than one offset curves are obtained.
+/// The direction of offset is toward the principal normal,
+/// or to the direction to center of curvature.
+/// line_zero() is used approximate the offset curve.
+std::vector<UniqueCurve> offset(
+	const MGLBRep& ofs_value_lb,			///<空間次元１の線B表現で示したオフセット量
+	bool principalNormal = true /// true: Offset direction is to principal normal
+								/// false: to binormal
+) const override;
+
 protected:
 
 ///Compute intersection point of 1D sub NURBS of original B-rep.
@@ -814,6 +841,7 @@ void split_conic(int i);
 ///MGCurve* join(const MGCurve& crv1) const;
 
 };
+
 ///@cond
 ///Function to compute control point P1 and weight w1 of rational form of
 ///an ellipse segment. Pi and Ti are points and tangents of start and end

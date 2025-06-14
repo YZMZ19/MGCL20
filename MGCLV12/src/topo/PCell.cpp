@@ -218,7 +218,7 @@ void MGPCell::shareBinderIfHadPartner(MGBCell* bcell){
 
 // Output virtual function.
 std::ostream& MGPCell::toString(std::ostream& ostrm) const{
-	ostrm << ",";
+	ostrm << ", ";
 	if(m_binder){
 		const MGBCell* bcell = m_binder.get();
 		ostrm<<bcell->whoami();

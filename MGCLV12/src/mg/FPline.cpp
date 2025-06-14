@@ -48,7 +48,7 @@ bool MGFPline::operator< (const MGFPline& fpl2)const{
 
 bool MGFPline::operator== (const MGFPline& fpl2)const{
 	if(m_face!=fpl2.m_face) return false;
-	return ((*m_uvline)== *(fpl2.m_uvline));
+	return m_uvline->equal_test(*fpl2.m_uvline);
 }
 
 //

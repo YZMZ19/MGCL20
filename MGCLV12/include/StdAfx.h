@@ -3,12 +3,7 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 // StdAfx.h : Include File to define standard indespencible include files
-#if !defined(AFX_STDAFX_H__3869FDFD_2FCB_4F23_A280_3EB784B557F3__INCLUDED_)
-#define AFX_STDAFX_H__3869FDFD_2FCB_4F23_A280_3EB784B557F3__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
 
 #include "targetver.h"
 
@@ -49,6 +44,26 @@
 #include <afxcmn.h> // MFC の Windows コモン コントロール サポート
 #endif // _AFX_NO_AFXCMN_SUPPORT
 
+#ifdef _CONSOLE
+
+using GLenum = unsigned int;
+using GLuint = unsigned int;
+using GLint = int;
+using GLsizei = int;
+
+#define GL_FILL 0x1B02
+#define GL_LINES 0x0001
+#define GL_LINE_STRIP 0x0003
+#define GL_FRONT 0x0404
+#define GL_BACK 0x0405
+#define GL_FRONT_AND_BACK 0x0408
+#define GLsizei 0x0404
+#define GL_REPEAT 0x2901
+#define GL_LINEAR 0x2601
+#define GL_TEXTURE_2D 0x0DE1
+
+#else
+
 #include <gdiplus.h>
 #include <Gdiplusimaging.h>
 
@@ -56,8 +71,4 @@
 #include <gl/glew.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-
-//{{AFX_INSERT_LOCATION}}
-// Microsoft Visual C++ は前行の直前に追加の宣言を挿入します。
-
-#endif // !defined(AFX_STDAFX_H__3869FDFD_2FCB_4F23_A280_3EB784B557F3__INCLUDED_)
+#endif //_CONSOLE

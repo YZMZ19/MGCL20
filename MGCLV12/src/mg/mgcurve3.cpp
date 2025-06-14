@@ -633,7 +633,7 @@ double MGCurve::getMaxCurvatureLengthApprox(
 	double delta = (te-ts)/double(TEST_NUMBER);
 	for(int i=0; i<TEST_NUMBER; i++, ts+=delta){
 		double curva= curvature(ts);
-		if(use_radius)
+		if(use_radius && !MGMZero(curva))
 			curva = 1./curva;
 		if(length<curva)
 			length = curva;
@@ -649,4 +649,42 @@ double MGCurve::curvatureLengthDisplay(bool use_radius) const{
 		scale = objlen/(graphLen*GRAPH_LENGTH_DONOM);
 	}
 	return scale;
+}
+
+
+#define POW_LOW 0.34	//ポイント数を決める係数(速度重視)
+#define POW_HIGH 0.50   //ポイント数を決める係数(精度重視)
+#define NUM_DIV 50      //1スパンの分割数がこれを越えたときPOW_LOWを使用するようにする
+
+//1スパンの分割数を求める
+int MGCurve::divideNum(
+	const MGInterval& interval	//分割数を求めるパラメータ範囲
+)const {
+	//２＊order()で分割して最大2次微分値を求める
+	int ord = order();
+	if (ord <= 2)
+		ord = 4;		//Ellipse, Straightのとき
+
+	int ord2 = ord * 2;
+	double max_deriv = 0.0, tpara = interval.low_point();
+	double len = interval.length();
+	double len2 = len * len;
+	double delta = len / ord2;
+	for (int j = 0; j <= ord2; j++, tpara += delta) {
+		//パラメータ範囲(0,1)の2次微分値に直すためにパラメータ範囲の2乗をかける
+		double deriv = eval(tpara, 2).len() * len2;
+		if (deriv > max_deriv) max_deriv = deriv;
+	}
+
+	double onelzero = 1. / MGTolerance::line_zero();
+	//分割数は (1 / tol)^POW * sqrt(max_deriv / 8)で最小値は order()である
+	double sqrt_max_deriv8 = sqrt(max_deriv / 8.);
+	int ndiv = int(pow(onelzero, POW_HIGH) * sqrt_max_deriv8);
+	if (ndiv > NUM_DIV)
+		ndiv = int(pow(onelzero, POW_LOW) * sqrt_max_deriv8);
+	if (ndiv < ord2)
+		ndiv = ord2;
+	else if (ndiv > NUM_DIV * 2)
+		ndiv = NUM_DIV * 2;
+	return ndiv;
 }

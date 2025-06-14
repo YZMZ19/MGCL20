@@ -36,15 +36,6 @@ MGPoint::MGPoint(
 	, int start2)	//start position coordinate of the original.
 :m_point(sdim,P.m_point,start1,start2){;}
 
-//Operator overload(演算子多重定義)
-//Logical operator overload(論理演算子多重定義)
-bool MGPoint::operator<(const MGPoint& gel2)const{
-	return m_point.len()<gel2.m_point.len();
-}
-bool MGPoint::operator==(const MGPoint& geo)const{
-	return m_point==(geo.m_point);
-}
-
 //Member Function
 
 //Return minimum box that includes whole of the geometry.
@@ -180,4 +171,20 @@ MGPoint& MGPoint::operator*=(const MGTransf& tr){
 MGPosition::MGPosition(const MGPoint& point)
 :MGVector(point.position()) {
 	;
+}
+
+///comparison
+bool MGPoint::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c==0 ? *this == dynamic_cast<const MGPoint&>(g2):false;
+}
+std::partial_ordering MGPoint::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c==0 ? *this <=> dynamic_cast<const MGPoint&>(g2) : c;
+}
+bool MGPoint::operator==(const MGPoint& p2)const {
+	return m_point == p2.m_point;
+}
+std::partial_ordering MGPoint::operator<=>(const MGPoint& p2)const {
+	return m_point <=> p2.m_point;
 }

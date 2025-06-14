@@ -43,27 +43,25 @@ MGBVertex& MGBVertex::operator=(const MGBVertex& bv){
 }
 
 ///Comparison.
-bool MGBVertex::operator==(const MGGel& gel2)const{
-	const MGBVertex* bv2 = dynamic_cast<const MGBVertex*>(&gel2);
-	return bv2 ? bv2==this:false;
+bool MGBVertex::operator==(const MGBVertex& gel2)const{
+	return &gel2==this;
 }
-bool MGBVertex::operator<(const MGGel& gel2)const{
-	const MGBVertex* bv2 = dynamic_cast<const MGBVertex*>(&gel2);
-	if(bv2)
-		return (*this) < (*bv2);
-	return identify_type() < gel2.identify_type();
+std::partial_ordering MGBVertex::operator<=>(const MGBVertex& bv2)const{
+	const MGPoint* pnt1 = point();
+	const MGPoint* pnt2 = bv2.point();
+	if (!pnt1 || !pnt2)
+		return std::partial_ordering::unordered;
+
+	return (*pnt1) <=> (*pnt2);
 }
 
-bool MGBVertex::operator<(const MGBVertex& bv)const{
-	const MGPoint* pnt1=point();
-	if(!pnt1)
-		return true;
-
-	const MGPoint* pnt2= bv.point();
-	if(!pnt2)
-		return false;
-
-	return (*pnt1)<(*pnt2);
+bool MGBVertex::equal_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this == dynamic_cast<const MGBVertex&>(g2) : false;
+}
+std::partial_ordering MGBVertex::ordering_test(const MGGel& g2)const {
+	auto c = typeCompare(g2);
+	return c == 0 ? *this <=> dynamic_cast<const MGBVertex&>(g2) : c;
 }
 
 ///////Member Function///////
@@ -144,7 +142,7 @@ std::ostream& MGBVertex::toString(std::ostream& ostrm) const{
 	ostrm<<"<<BV="<<(const MGGel*)this;
 	MGBCell::toString(ostrm);
 	if(m_point)
-		ostrm<<"m_point="<<*m_point;
+		ostrm<<"point="<<*m_point;
 
 	ostrm<<"=BV>>";
 	return ostrm;

@@ -48,15 +48,6 @@ MGCurve::MGCurve(const MGCurve& curve):MGGeometry(curve){;}
 // 仮想デストラクタ
 MGCurve::~MGCurve(){;}
 
-//Test if two curves are equal.
-// 与曲線と自身が等しいかの比較判定を行う。
-bool MGCurve::operator== (const MGCompositeCurve& crv) const{
-	return crv.is_same_curve(*this);
-}
-bool MGCurve::operator== (const MGTrimmedCurve& crv) const{
-	return crv.is_same_curve(*this);
-}
-
 ///Compute the nearest point from input point on this curve's (x,y) 2D part.
 double MGCurve::closest2D(const MGPosition& point)const{
 	double x=point[0], y=point[1];
@@ -707,10 +698,10 @@ MGVector MGCurve::evaluate(
 
 //Compute Frenet_frame, curvature and torsion in 3D space.
 void MGCurve::Frenet_frame(
-	double t,			//Input parameter value(パラメータ値)
-	MGVector& T,	//Tangent
-	MGVector& N,	//Principal Normal
-	MGVector& B,	//Binormal
+	double t,		//Input parameter value(パラメータ値)
+	MGVector& T,	///<Tangent(Unit vector)
+	MGVector& N,	///<Principal Normal(Unit vector)
+	MGVector& B,	///<Binormal(Unit vector)
 	double& curvature,	//Curvature is always >=0.
 	double& torsion
 )const{
@@ -719,22 +710,56 @@ void MGCurve::Frenet_frame(
 	Frenet_frame2(t,v2,T2,N2,B2);
 	double mzero=MGTolerance::mach_zero();
 	double verocity=T2.len();
-	if(verocity<=mzero){
-		curvature=torsion=0.;
-		T=MGVector(1.,0.,0.); N=MGVector(0.,1.,0.); B=MGVector(0.,0.,1.);  
-	}else{
-		T=T2.normalize();
-		double B2_len=B2.len();
-		if(B2_len<=mzero){
-			curvature=torsion=0.;
-			T.orthonormalize(v2,N,B);
-		}else{
-			B=B2.normalize(); N=N2.normalize();
-			curvature=B2_len/(verocity*verocity*verocity);
-			MGVector v3=eval(t,3);
-			torsion=MGDeterminant(T2,v2,v3)/(B2_len*B2_len);
+	if (verocity < mzero) {
+		curvature = torsion = 0.;
+		T = MGVector(1., 0., 0.); N = MGVector(0., 1., 0.); B = MGVector(0., 0., 1.);
+		return;
+	}
+
+	T=T2.normalize();
+	double B2_len=B2.len();
+	curvature = B2_len / (verocity * verocity * verocity);
+
+	MGVector v3 = eval(t, 3);
+	if (B2_len >= mzero) {
+		B = B2.normalize(); N = N2.normalize();
+		torsion = MGDeterminant(T2, v2, v3) / (B2_len * B2_len);
+		return;
+	}
+
+	torsion = 0.;
+
+#define TRYNUM 5
+	//try to get N at neighborhood of t.
+	double delta = param_span() * 2. * MGTolerance::rc_zero();
+	if ((t + delta*TRYNUM) > param_e())
+		delta *= -1.;
+
+	MGVector v21, T3, N3, B3;
+	for (int i = 1; i <= TRYNUM; i++) {
+		double tneibor = t + delta * double(i);
+		Frenet_frame2(tneibor, v21, T3, N3, B3);
+		double B3_len = B3.len();
+		if (B3_len >= mzero) {
+			N = N3.normalize();
+			B = (T * N).normalize();
+			return;
 		}
 	}
+
+	//Define B(binormal) from the x,y, or z axis that is most normal to T.
+	int Bid;
+	double Tx = T[0]; Tx = Tx >= 0. ? Tx : -Tx;
+	double Ty = T[1]; Ty = Ty >= 0. ? Ty : -Ty;
+	double Tz = T[2]; Tz = Tz >= 0. ? Tz : -Tz;
+	if (Tz <= Tx) {
+		Bid = Tz <= Ty ? 2 : 1;
+	}else{
+		Bid = Tx < Ty ? 0 : 1;
+	}
+	MGVector B4(0., 0., 0.); B4(Bid) = 1.;
+	N = (B4 * T).normalize();
+	B = (T * N).normalize();
 }
 
 //Compute Frenet_frame, curvature and torsion in 3D space.
@@ -1228,7 +1253,7 @@ void MGCurve::negate_transform(MGGeometry& boundary) const{
 	MGPoint* param=dynamic_cast<MGPoint*>(&boundary);
 	double t=param->position().ref(0);
 	t=negate_param(t);
-	boundary=MGPoint(MGPosition(1,&t));
+	*param=MGPoint(MGPosition(1,&t));
 }
 
 // 点がCurve上にあるか調べる。Curve上であれば，そのパラメータ値を，
