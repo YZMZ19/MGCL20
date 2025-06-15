@@ -9,7 +9,11 @@
  *  @{
  */
 #include <stddef.h>
+<<<<<<< HEAD
 //#include <mutex>
+=======
+#include <mutex>
+>>>>>>> 43f8b42bf874d0b96a44d789ec156c4bbb7cabd9
 #include <vector>
 #include "mg/MGCL.h"
 
@@ -25,7 +29,11 @@ class MGIgesOfstream;
 ///Vector of a general n space dimension.
 class MG_DLL_DECLR MGVector {
 private:
+<<<<<<< HEAD
 	//mutable std::mutex m;
+=======
+	mutable std::mutex m;
+>>>>>>> 43f8b42bf874d0b96a44d789ec156c4bbb7cabd9
 
 protected:
 	/// Protected data member
