@@ -558,11 +558,7 @@ bool MGVector::is_collinear(
 
 // ƒxƒNƒgƒ‹‚Ì’·‚³‚ð•Ô‹p‚·‚é 
 double MGVector::len() const {
-<<<<<<< HEAD
 	//std::lock_guard<std::mutex> g(m);//For thread safety
-=======
-	std::lock_guard<std::mutex> g(m);//For thread safety
->>>>>>> 43f8b42bf874d0b96a44d789ec156c4bbb7cabd9
 	if(m_length < 0.){
 		double a=0., b;
 		for(int i=0; i<m_sdim; i++){

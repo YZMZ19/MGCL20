@@ -508,15 +508,9 @@ void MGNDDArray::reserve(int newCapacity) {
 		return;
 
 	int new_capa =
-<<<<<<< HEAD
 		m_capacity >= INITIAL_LENGTH ? int(m_capacity*INCREMENTAL) : INITIAL_LENGTH;
 	while(new_capa<=newCapacity)
 		new_capa = int(new_capa*INCREMENTAL);
-=======
-		m_capacity >= INITIAL_LENGTH ? m_capacity * INCREMENTAL : INITIAL_LENGTH;
-	while(new_capa<=newCapacity)
-		new_capa *= INCREMENTAL;
->>>>>>> 43f8b42bf874d0b96a44d789ec156c4bbb7cabd9
 	int lenSave = length();
 	reshape(new_capa);
 	set_length(lenSave);
