@@ -11,8 +11,8 @@
     <GLEW_INC_DIR>$(OpenGLDIR)glew-1.10.0\include</GLEW_INC_DIR>
     <GLM_INC_DIR>$(OpenGLDIR)glm-0.9.4.5\</GLM_INC_DIR>
     <OUT_DIR>$(SolutionDir)OUTDIR</OUT_DIR>
-    <LIB_DIR>$(OUT_DIR)\lib\$(Configuration)\$(Platform)\</LIB_DIR>
-    <BIN_DIR>$(OUT_DIR)\bin\$(Configuration)\$(Platform)\</BIN_DIR>
+    <LIB_DIR>$(OUT_DIR)\lib\</LIB_DIR>
+    <BIN_DIR>$(OUT_DIR)\bin\</BIN_DIR>
     <FUGEN_MGCL_DIR>$(SolutionDir)..\fugen19\MGCLtoRelease\</FUGEN_MGCL_DIR>
 </PropertyGroup>
   <PropertyGroup />

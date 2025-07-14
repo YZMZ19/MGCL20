@@ -1,22 +1,35 @@
+MGCLを利用した開発にはincludeファイル(.hファイル）、リンクのための.libファイル、
+および実行ファイル(DLLとOpenGL Shaderプログラム)が必要とされる。
 
-１）MGCL_DIR
-下記のフォルダー構成を前提として、
-MGCL_DIRマクロのみを定義すれば残りのマクロはすべて定義されるfolder構造となっている：
-提供されるsolution.propsではfugenのソリューションディレクトリ
-（fugen3.slnが配置されるところ）は以下にMGCLtoReleaseフォルダーがあり、
-このフォルダーがMGCL_DIRとして定義されている。
+１）includeファイル
+includeフォルダー配下に次のサブフォルダーがある：
+ GL(glew）, glm, mg(MGCL geometry and other basic classes), 
+topo(MGCL topology classes), mgGL(MGCL Graphic classes), Tl2(MGCL tesellation classes), 
+mgiges(MGCL iges classes)
 
-MGCLV11toRelease :最上位のMGCL Solutionのfolder.
- |
- +- bin-debug-win32(MGCLDLLとOpenGL関連のDLL)
- |
- +- lib-debug-win32(MGCLとOpenGL関連のDLL用のlib群)
- |
- +- MGCLinclude(MGCLのincludeファイル群)
- |
- +- OpenGLinclude(OpenGL：Freetype, Ftgl, Glew) のincludeファイル群
+2) libファイル
+DLLとして提供される、glewとMGCLのリンク用ファイル
+glew32.lib　とMGCLVxx.lib(xxはMGCLのバージョン番号)
 
-２）MGCL_INC_DIR　MGCLのincludeファイルディレクトリー
-３）OPENGL_INC_DIR　OpenGLのincludeファイルディレクトリー
-４）MGCL_LIB_DIR　MGCLのdll用libファイルの作成先
-５）MGCL_BIN_DIR　MGCLのdllファイルの作成先
+3) dllファイルとOpenGL Shaderプログラム
+　1) MGCLVxx.dll, 2) glew32.dll, 3) mgclShade.frag, 4) mgclShader.vert
+
+MGCL20のプロジェクトではビルド後のイベントとして、MGCLの開発で変更されている可能性のあるファイルを
+fugenソリューションのMGCLtoReleaseへコピーするためのバッチコマンドを走らせている：
+
+（１）作成されたdllとその利用のためのlibファイルのコピー
+ $(FUGEN_MGCL_DIR)bin\　と　$(FUGEN_MGCL_DIR)lib\　へ
+（２）MGCLをdllで利用するためのincludeファイル
+mg, mgGL, tl2, topo, mgigesの各フォルダーを$(FUGEN_MGCL_DIR)includeへ
+
+ここで、FUGEN_MGCL_DIRは MGCLSolution.propsで定義されているマクロで、
+下記のフォルダー構成を前提としている：
+
+MGCLtoRelease :fugenプロジェクトで利用するMGCLのfolder.
+ |
+ +- bin(MGCLDLLとOpenGL関連のDLL)
+ |
+ +- lib(MGCLとOpenGL関連のDLL用のlib群)
+ |
+ +- include(MGCLとOpenGLのincludeファイル群)
+
