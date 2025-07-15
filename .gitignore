@@ -6,5 +6,5 @@
 /.vs
 /MGCL.sdf
 /README.md
-/OUTDIR/obj/MGCLV12/Debug/x64
 /OUTDIR
+!/OUTDIR/lib
