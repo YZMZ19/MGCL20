@@ -1,0 +1,284 @@
+/********************************************************************/
+/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
+/* All rights reserved.                                             */
+/********************************************************************/
+#ifndef _MGBSumCurve_HH_
+#define _MGBSumCurve_HH_
+
+#include "mg/MGCL.h"
+#include "mg/Curve.h"
+
+class MGStraight;
+class MGRLBRep;
+class MGEllipse;
+class MGLBRep;
+class MGSurfCurve;
+class MGBSumCurve;
+
+/** @file */
+/** @addtogroup GEO
+ *  @{
+ */
+
+///Define MGBSumCurve Class(Boolean sum curve of three curves).
+
+///MGBSumCurve is a curve to support the class MGBSumSurf, is boolean sum of
+///three curves, m_g1, m_g2, and m_g12 whose parameter ranges are exactly the same.
+///MGBSumCurve(t) is defined as m_g1(t)+m_g2(t)-m_g12(t).
+class MG_DLL_DECLR MGBSumCurve:public MGCurve{
+
+///Vector translation.
+MG_DLL_DECLR friend MGBSumCurve operator+ (const MGVector& v, const MGBSumCurve& lb);
+
+///Scaling transformation.
+MG_DLL_DECLR friend MGBSumCurve operator* (double scale, const MGBSumCurve&);
+
+public:
+
+////////Special member functions/////////
+MGBSumCurve();
+~MGBSumCurve();
+MGBSumCurve(const MGBSumCurve&);///<Copy constructor.
+MGBSumCurve& operator= (const MGBSumCurve&);///<Copy assignment.
+MGBSumCurve(MGBSumCurve&&);		///<Move constructor.
+MGBSumCurve& operator= (MGBSumCurve&&);///<Move assignment.
+
+///constructor of three curves.
+///The ownership of g1, g2, and g12 will be transfered to this MGBSumCurve.
+MGBSumCurve(MGCurve* g1, MGCurve* g2, MGCurve* g12);
+
+///constructor of three curves.
+MGBSumCurve(const MGCurve& g1, const MGCurve& g2, const MGCurve& g12);
+
+//////////// Operator overload(演算子多重定義) ////////////
+
+///Assignment.
+///When the leaf object of this and geo2 are not equal, this assignment
+///does nothing.
+MGBSumCurve& operator=(const MGGel& gel2);
+MGBSumCurve& operator=(MGGel&& gel2);
+
+///Object transformation.
+MGBSumCurve& operator+=(const MGVector& v);
+MGBSumCurve& operator-=(const MGVector& v);
+MGBSumCurve& operator*=(double scale);
+MGBSumCurve& operator*=(const MGMatrix& mat);
+MGBSumCurve& operator*=(const MGTransf& tr);
+
+///Transformation object construction
+MGBSumCurve operator+ (const MGVector& v) const;
+MGBSumCurve operator- (const MGVector& v) const;
+MGBSumCurve operator* (double scale) const;
+MGBSumCurve operator* (const MGMatrix& mat) const;
+MGBSumCurve operator* (const MGTransf& tr) const;
+
+///Comparison of two curves.
+bool operator==(const MGBSumCurve& gel2)const;
+std::partial_ordering operator<=>(const MGBSumCurve& gel2)const;
+
+//gel2 must be the same class as this.
+bool equal_test(const MGGel& gel2)const override;
+
+//gel2 must be the same class as this.
+std::partial_ordering ordering_test(const MGGel& gel2)const override;
+
+//////////// Member Function /////////////
+
+///Returns B-Rep Dimension.
+int bdim() const;
+
+///Return minimum box that includes the curve of parameter interval.
+/// 入力のパラメータ範囲の曲線部分を囲むボックスを返す。
+MGBox box_limitted(
+	const MGInterval& rang///< Parameter Range of the curve.
+)const;
+
+///Changing this object's space dimension.
+void change_dimension(
+	int sdim,	///< new space dimension
+	int start1=0,///< Destination order of new object.
+	int start2=0 ///< Source order of this object.
+);
+
+///Change parameter range, be able to change the direction by providing
+///t1 greater than t2.
+void change_range(
+	double t1,	///<Parameter value for the start of original. 
+	double t2	///<Parameter value for the end of original. 
+);
+
+///Return minimum box that includes whole of the curve.
+///曲線部分を囲むボックスを返す。
+void compute_box(MGBox& bx) const;
+
+///Exchange ordering of the coordinates.
+///Exchange coordinates (i) and (j).
+void coordinate_exchange(int i, int j);
+
+///Construct new curve object by copying to newed area.
+///User must delete this copied object by "delete".
+MGBSumCurve* clone() const;
+
+///copy as a newed curve. The new curve will be MGLBRep or MGRLBRep.
+///When original curve was a MGRLBRep, the new curve will be an MGRLBRep.
+///Otherwise,  the new curve will be an MGLBRep.
+///Returned object must be deleted.
+MGCurve* copy_as_nurbs() const override;
+
+///Construct new curve object by changing
+///the original object's space dimension.
+///User must delete this copied object by "delete".
+MGBSumCurve* copy_change_dimension(
+	int sdim,	///< new space dimension
+	int start1=0,///< Destination order of new line.
+	int start2=0 ///< Source order of this line.
+)const;
+
+/// Evaluate n'th derivative data. n=0 means positional data evaluation.
+MGVector eval(
+	double t,	///< Parameter value.
+	int nderiv=0,///< Order of Derivative.
+	int left=0	///<Left continuous(left=true)
+				///<or right continuous(left=false).
+)const;
+
+///Extrapolate this curve by an (approximate) chord length.
+///The extrapolation is C2 continuous.
+void extend(
+	double length,	///<approximate chord length to extend. 
+	bool start=false///<Flag of which point to extend, start or end point of the line.
+					///<If start is true extend on the start point.
+);
+
+/// Return This object's typeID
+long identify_type()const{return MGBSUMCRV_TID;};
+
+///Intersection with a curve.
+MGCCisects isect(const MGCurve& curve2)const;
+MGCCisects isect(const MGStraight& curve2)const;
+MGCCisects isect(const MGLBRep& curve2)const;
+MGCCisects isect(const MGSurfCurve& curve2)const;
+
+///Intersection with a Surface
+MGCSisects isect(const MGSurface& surf) const;
+MGCSisects isect(const MGPlane& surf) const;
+
+///Access to i-th element of knot
+double knot(int i) const;
+		
+///Returns the knot vector of the curve.
+const MGKnotVector& knot_vector() const;
+
+///Update this by limiting the parameter range of the curve.
+/// 自身に指定したパラメータ範囲のｌｉｍｉｔをつける。
+void limit(const MGInterval& rng);
+
+///Negate the curve direction(曲線の方向を反転する)
+void negate();
+
+///Obtain parameter value if this curve is negated by "negate()".
+double negate_param(double t)const;
+
+///Returns the order.
+int order() const;
+
+/// Return ending parameter value.
+double param_e() const{return m_g1->param_e();};
+
+///Normalize parameter value t to the nearest knot if their distance is
+///within tolerance.
+double param_normalize(double t) const;
+
+/// Return starting parameter value.
+double param_s() const{return m_g1->param_s();};
+
+///Compute part of this curve from parameter t1 to t2.
+///Returned is the pointer to the newed object, and should be deleted
+///by calling program, or memory leaked.
+MGBSumCurve* part(
+	double t1,///<Start parameter.
+	double t2,///<End parameter.
+	int multiple=0	///<Indicates if start and end knot multiplicities
+					///<are necessary. =0:unnecessary, !=0:necessary.
+)const;
+
+///Compute all the perpendicular points of this curve and the second one.
+///That is, if f(s) and g(t) are the points of the two curves f and g,
+///then obtains points where the following conditions are satisfied:
+///  fs*(f-g)=0.    gt*(g-f)=0.
+///Here fs and gt are 1st derivatives at s and t of f and g.
+///MGPosition P in the MGPosition_list contains this and crv's parameter
+///as:     P(0)=this curve's parameter, P(1)=crv2's parameter value.
+MGPosition_list perps(const MGCurve& crv2)const;
+MGPosition_list perps(const MGStraight& crv2)const;
+
+///Return space dimension
+int sdim() const{return m_g1->sdim();};
+
+///Return sweep surface from crv
+///Returned is a newed MGSurface, must be deleted.
+///The sweep surface is defined as:
+///This curve(say c(t)) is the rail and the straight line segments from
+///C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+MGSurface* sweep(
+	const MGUnit_vector& uvec,	///<Sweep Direction.
+	double start_dist,			///<distance to start edge.
+	double end_dist				///<distance to end edge.
+)const;
+
+///Return curve type
+MGCURVE_TYPE type() const{return MGCURVE_TYPE::MGCURVE_BSUM;};
+
+///Unlimit parameter range of the curve.
+MGCurve& unlimit();
+
+///Unlimit parameter range of the curve to the end point direction
+MGCurve& unlimit_end();
+
+///Unlimit parameter range of the curve to the start point direction
+MGCurve& unlimit_start();
+
+///Output to IGES stream file.
+///BSumCurve is approximated as MGLBRep and output as PD126.
+int out_to_IGES(
+	MGIgesOfstream& igesfile,
+	int SubordinateEntitySwitch=0
+)const;
+
+/// Output  function.
+std::ostream& toString(std::ostream& ostrm) const;
+
+protected:
+
+///メンバデータを読み出す関数
+void ReadMembers(MGIfstream& buf);
+
+///メンバデータを書き込む関数
+void WriteMembers(MGOfstream& buf)const;
+
+///Provide divide number of curve span for function intersect.
+int intersect_dnum()const;
+
+///Get the name of the class.
+std::string whoami()const{return "BSumCurve";};
+
+protected:
+
+///Obtain so transformed 1D curve expression of this curve that
+///f(t)={sum(xi(t)*g[i]) for i=0(x), 1(y), 2(z)}-g[3], where f(t) is the output
+///of oneD and xi(t) is i-th coordinate expression of this curve.
+///This is used to compute intersections with a plane g[4].
+std::unique_ptr<MGCurve> oneD(
+	const double g[4]			///<Plane expression(a,b,c,d) where ax+by+cz=d.
+)const;
+
+private:
+
+	MGCurve* m_g1;
+	MGCurve* m_g2;
+	MGCurve* m_g12;
+
+};
+
+/** @} */ // end of GEO group
+#endif

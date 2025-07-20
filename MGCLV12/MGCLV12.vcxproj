@@ -84,7 +84,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(BIN_DIR)</OutDir>
-    <IntDir>$(OUT_DIR)\obj\$(TargetName)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)OUTDIR\obj\$(TargetName)\</IntDir>
     <IgnoreImportLibrary>false</IgnoreImportLibrary>
     <TargetName>$(ProjectName)Debug</TargetName>
   </PropertyGroup>
@@ -95,7 +95,7 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IntDir>$(OUT_DIR)\obj\$(TargetName)\$(Configuration)\</IntDir>
+    <IntDir>$(SolutionDir)OUTDIR\obj\$(TargetName)\</IntDir>
     <OutDir>$(BIN_DIR)</OutDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -152,7 +152,7 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)\lib\$(Configuration)\$(PlatformName)</Comma
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ModuleDefinitionFile>
       </ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;gdiplus.lib;freetype.lib</AdditionalDependencies>
       <ImportLibrary>$(LIB_DIR)$(TargetName).lib</ImportLibrary>
       <OutputFile>$(OutDir)$(TargetName)$(TargetExt)</OutputFile>
@@ -167,13 +167,11 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)\lib\$(Configuration)\$(PlatformName)</Comma
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy /B $(BIN_DIR) $(FUGEN_MGCL_DIR)bin\
-copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\
-copy  $(MGCLProject)\include\mg $(FUGEN_MGCL_DIR)include\mg
-copy  $(MGCLProject)\include\mgGL $(FUGEN_MGCL_DIR)include\mgGL
-copy  $(MGCLProject)\include\tl2 $(FUGEN_MGCL_DIR)include\tl2
-copy  $(MGCLProject)\include\topo $(FUGEN_MGCL_DIR)include\topo
-copy  $(MGCLProject)\include\mgiges $(FUGEN_MGCL_DIR)include\mgiges
+      <Command>copy  $(MGCLProject)\include\mg $(OUT_DIR)include\mg
+copy  $(MGCLProject)\include\mgGL $(OUT_DIR)include\mgGL
+copy  $(MGCLProject)\include\tl2 $(OUT_DIR)include\tl2
+copy  $(MGCLProject)\include\topo $(OUT_DIR)include\topo
+copy  $(MGCLProject)\include\mgiges $(OUT_DIR)include\mgiges
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -238,7 +236,7 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\$(Configuration)\$(PlatformName)
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>.\MGCLV12.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;gdiplus.lib;freetype.lib</AdditionalDependencies>
       <ImportLibrary>$(LIB_DIR)\$(TargetName).lib</ImportLibrary>
     </Link>
@@ -252,13 +250,11 @@ copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\$(Configuration)\$(PlatformName)
       <AdditionalIncludeDirectories>$(IntDir);%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ResourceCompile>
     <PostBuildEvent>
-      <Command>copy /B $(BIN_DIR) $(FUGEN_MGCL_DIR)bin\
-copy /B $(LIB_DIR) $(FUGEN_MGCL_DIR)lib\
-copy  $(MGCLProject)\include\mg $(FUGEN_MGCL_DIR)include\mg
-copy  $(MGCLProject)\include\mgGL $(FUGEN_MGCL_DIR)include\mgGL
-copy  $(MGCLProject)\include\tl2 $(FUGEN_MGCL_DIR)include\tl2
-copy  $(MGCLProject)\include\topo $(FUGEN_MGCL_DIR)include\topo
-copy  $(MGCLProject)\include\mgiges $(FUGEN_MGCL_DIR)include\mgiges
+      <Command>copy  $(MGCLProject)\include\mg $(OUT_DIR)include\mg
+copy  $(MGCLProject)\include\mgGL $(OUT_DIR)include\mgGL
+copy  $(MGCLProject)\include\tl2 $(OUT_DIR)include\tl2
+copy  $(MGCLProject)\include\topo $(OUT_DIR)include\topo
+copy  $(MGCLProject)\include\mgiges $(OUT_DIR)include\mgiges
 </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
