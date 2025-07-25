@@ -120,7 +120,7 @@ copy  $(MGCLProject)\include\mgiges $(OUT_DIR)include\mgiges
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <ModuleDefinitionFile>.\MGCLV12.def</ModuleDefinitionFile>
-      <AdditionalLibraryDirectories>$(LIB_DIR)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(LIB_DIR);$(SolutionDir)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;gdiplus.lib;freetype.lib</AdditionalDependencies>
       <ImportLibrary>$(LIB_DIR)\$(TargetName).lib</ImportLibrary>
     </Link>
