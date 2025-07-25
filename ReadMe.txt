@@ -3,9 +3,13 @@ MGCL20ソリューション
 本ソリューションは、結果としてMGCLtoReleaseフォルダー配下の include, lib, dllの
 各フォルダー配下のファイルを更新する。ビルドではlib, binフォルダーのファイルを直接更新し、
 ビルド後のイベントとして、MGCLの開発で変更されている可能性のあるファイル (includeファイルすべて)を
-MGCLV12/includeからMGCLtoReleaseへコピーする：
+MGCLV12/includeからMGCLtoRelease/includeへコピーする(しかし、GL(glew用includeファイル)
+およびglm両includeファイルはコピーしない)。
 
-MGCLのDLLはMGCLtoReaseフォルダー全体をコピーして利用する。
+MGCLのDLLはMGCLtoReaseフォルダー全体をコピーして利用する。MGCLtoRelease配下にはコンパイルに必要な
+includeファイル、リンクに必要なlibファイル、および実行時に必要な実行ファイル
+（MGCLとglewのdll, OpenGL Shaderプログラム)も含まれているため、これだけで必要十分である。
+
 MGCLtoReleasは下記の構成となる：
 
 MGCLtoRelease
