@@ -309,8 +309,15 @@ void MGCurve::arrow(double t, MGPosition data[4])const{
 
 	MGVector v1,v2;
 	eval_all(t,data[0],v1,v2);
-	v1*=param_span()*arrow_length;
-	MGCL::one_arrow(data[0],v1,v1*v2*v1,data[1],data[2],data[3]);
+	double ps = param_span();
+	v1*=ps*arrow_length;
+	MGVector N;
+	if(sdim()==2) {
+		N=MGVector(-v1.ref(1), v1.ref(0));
+	}
+	else
+		N = v1 * v2 * v1;
+	MGCL::one_arrow(data[0],v1,N,data[1],data[2],data[3]);
 }
 
 //Generate arrow data from (root, vecx, vecy).
@@ -327,7 +334,7 @@ void MGCL::one_arrow(
 
 	head=root+vecx;
 	MGVector head_rootx=vecx*head_length,
-				head_rooty=vecy*(.5*head_length*vecx.len());
+			 head_rooty=vecy*(.5*head_length*vecx.len());
 	headtail1=head-head_rootx+head_rooty;
 	headtail2=head-head_rootx-head_rooty;
 }
