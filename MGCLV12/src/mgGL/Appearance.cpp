@@ -306,7 +306,9 @@ void MGAppearance::set_color(float red, float green, float blue, float alpha) {
 	MGColor* colr = new MGColor(red, green, blue, alpha);
 	set_attrib(colr);
 }
-
+void MGAppearance::set_color(MGColor::ColorID id){
+	set_color(MGColor::get_instance(id));
+}
 void MGAppearance::setLineWidth(float width) {
 	MGLineWidth* lw = new MGLineWidth(width);
 	set_attrib(lw);

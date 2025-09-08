@@ -139,6 +139,7 @@ public:
 	void set_color(const MGColor& color);
 	void set_color(const float color[4]);
 	void set_color(float red, float green, float blue, float alpha = 1.);
+	void set_color(MGColor::ColorID);
 
 	///Set display/no display.
 	void set_display() { m_no_display = false; };
