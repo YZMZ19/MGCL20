@@ -293,6 +293,11 @@ virtual void drawWire_in_star(
 	int line_density = 1	///<line density to draw a surface in wire mode.
 )const;
 
+///Draw edge number as the name.
+void drawEdgeName(
+	mgVBO& vbo///<Target graphic object.
+)const;
+
 ///Return i-th edge pointer.
 MGEdge* edge(int i);
 const MGEdge* edge(int i) const;

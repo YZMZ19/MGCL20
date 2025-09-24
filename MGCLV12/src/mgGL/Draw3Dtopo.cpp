@@ -41,6 +41,18 @@ void MGComplex::drawWire(
 	}
 }
 
+///Draw edge number as the name.
+void MGLoop::drawEdgeName(mgVBO& vbo) const{
+	mgLightModeSwitcher switcher(vbo, mgGLSL::NoShading);
+	int i=0, n=number_of_edges();
+	for (int i = 0; i < number_of_edges(); i++) {
+		const MGEdge& ei = *(edge(i));
+		const std::string edgeName = "E" + std::to_string(i);
+		MGTrimmedCurve eiC = edge(i)->trimmed_curve();
+		vbo.drawString(edgeName, eiC.center());//Edge name.
+	}
+}
+
 //Draw curve in the star face world coordinates.
 ///This is a boundary loop(MGPCell) of a face, and the curves are extracted
 ///from the binder edges of this and drawn.

@@ -518,7 +518,7 @@ void drawStraight(const MGPosition& end, const MGPosition& start);
 //Draw an object in its parameter space(MGDraw_in_parameter_space).
 
 //This is valid only for Surface, Face, Loop, Edge.
-void drawObjInParameterSpace(const MGObject& obj);
+void drawObjInParameterSpace(const MGObject& obj, bool showName=false);
 
 ///Draw the rectangle of a box.
 void drawRectangle(

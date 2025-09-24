@@ -363,7 +363,7 @@ void mgVBO::drawStraight(const MGPosition& end, const MGPosition& start){
 
 //Draw an object in its parameter space(MGDraw_in_parameter_space).
 //This is valid only for Surface, Face, Loop, Edge.
-void mgVBO::drawObjInParameterSpace(const MGObject& obj){
+void mgVBO::drawObjInParameterSpace(const MGObject& obj, bool showName){
 	const MGSurface* sf=dynamic_cast<const MGSurface*>(&obj);
 	if(sf){
 		const MGPlane* pl=dynamic_cast<const MGPlane*>(sf);
@@ -372,9 +372,9 @@ void mgVBO::drawObjInParameterSpace(const MGObject& obj){
 		double u0=uv[0].low_point(), u1=uv[0].high_point();
 		double v0=uv[1].low_point(), v1=uv[1].high_point();
 		Begin(GL_LINE_STRIP);
-		Vertex3d(u0, v0, 0.); Vertex3d(u1, v0, 0.);
-		Vertex3d(u1, v1, 0.); Vertex3d(u0, v1, 0.);
-		Vertex3d(u0, v0, 0.);
+			Vertex3d(u0, v0, 0.); Vertex3d(u1, v0, 0.);
+			Vertex3d(u1, v1, 0.); Vertex3d(u0, v1, 0.);
+			Vertex3d(u0, v0, 0.);
 		End();
 		drawPoint(u0, v0, 0.);
 		drawPoint(u1, v0, 0.);
@@ -387,22 +387,28 @@ void mgVBO::drawObjInParameterSpace(const MGObject& obj){
 		if(f->hasOuterBoundaryLoop()){
 			const MGLoop& ol=*(f->loop(int(0)));
 			ol.drawWire(*this);
+			if (showName)
+				ol.drawEdgeName(*this);
 		}else{
 			std::vector<UniqueCurve> crvs=f->outer_boundary_param();
 			size_t n=crvs.size();
 			for(size_t i=0; i<n; i++)
 				crvs[i]->drawWire(*this);
 		}
-		int i,if0;
+		int if0;
 		int nib=f->number_of_inner_boundaries(if0);
-		for(i=0; i<nib; i++,if0++)
-			(f->loop(if0))->drawWire(*this);
+		for (int i = 0; i < nib; i++, if0++) {
+			const MGLoop& lpi = *f->loop(if0);
+			lpi.drawWire(*this);
+			if (showName)
+				lpi.drawEdgeName(*this);
+		}
 
 		int nlp=f->number_of_boundaries();
 		for(; if0<nlp; if0++)
 			(f->loop(if0))->drawWire(*this);
 
-		for(i=0; i<nlp; i++){
+		for(int i=0; i<nlp; i++){
 			const MGLoop& lp=*(f->loop(i));
 			lp.drawVertex(*this);
 		}
@@ -411,6 +417,8 @@ void mgVBO::drawObjInParameterSpace(const MGObject& obj){
 	const MGLoop* lp=dynamic_cast<const MGLoop*>(&obj);
 	if(lp){
 		lp->drawWire(*this);
+		if (showName)
+			lp->drawEdgeName(*this);
 		lp->drawVertex(*this);
 		return;
 	}
