@@ -79,8 +79,7 @@ virtual void arrow(const MGPosition& uv, MGPosition data[10])const=0;
 ///Get the box of the object.
 const MGBox& get_box() const;
 
-///Return box of the parameter space of the FSurface.
-///After trimmed one.
+///Return box of the parameter space of the FSurface after trimmed.
 virtual const MGBox box_param2()const=0;
 
 ///Get the clone of this MGFSurface.

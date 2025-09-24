@@ -58,7 +58,8 @@ void MGRLBRep::approximate_as_LBRep(
 )const{
 	int k=order();
 	int norder=ordr ? ordr:4;
-	approximate_as_LBRep2(lb,norder,k-1,bdim(),neglectMulti);	//Use original.
+	approximate_as_LBRep2(lb,norder,k-1,bdim(),neglectMulti,
+		parameter_normalization);//Use original.
 	if(parameter_normalization==1)
 		lb.change_range(0.,1.);
 }

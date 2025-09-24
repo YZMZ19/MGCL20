@@ -715,7 +715,7 @@ MGLBRep::MGLBRep(
 
 ///Approximate this curve as a MGLBRep curve
 ///within the tolerance MGTolerance::line_zero().
-///When parameter_normalization=0, reparameterization will not done, and
+///When parameter_normalization=0, reparameterization will not be done, and
 ///the evaluation at the same parameter has the same values before and after
 ///of approximate_as_LBRep.
 void MGLBRep::approximate_as_LBRep(
@@ -756,7 +756,7 @@ void MGLBRep::approximate_as_LBRep(
 			start=index+multi_found;
 			double tfound=toriginal(index);
 			double a=lb2.eval(tfound,1,1).len();//Get left continuous deriv at multi_found.
-			double b=lb2.eval(tfound,1).len();//Get left continuous deriv at multi_found.
+			double b=lb2.eval(tfound,1).len();  //Get left continuous deriv at multi_found.
 			if(a<=mZero || b<=mZero)
 				continue;
 
@@ -774,13 +774,10 @@ void MGLBRep::approximate_as_LBRep(
 		}
 	}
 
-	lb2.approximate_as_LBRep2(lb,ordr,km1,nold,neglectMulti);
-	if(parameter_normalization){	
-		ts=lb.param_s(), te=lb.param_e();
-		te= parameter_normalization==1 ? 1. : (te-ts)*lb.get_average_tangent_length();
-		modified=true;
-		ts=0.;
+	lb2.approximate_as_LBRep2(lb,ordr,km1,nold,neglectMulti, parameter_normalization);
+	if (parameter_normalization == 1) {
+		ts = 0., te = 1.;
 	}
-	if(modified)
+	if(parameter_normalization == 1 || (parameter_normalization==0 && modified))
 		lb.change_range(ts,te);			
 }

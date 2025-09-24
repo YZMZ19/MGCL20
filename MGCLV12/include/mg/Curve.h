@@ -1050,9 +1050,14 @@ void approximate_as_LBRep2(
 	int order,		///<new order
 	int is,///<approximation parameter range, from knot_vector()[is].
 	int ie,///<approximation parameter range, to knot_vector()[ie].
-	bool neglectMulti=false///<Indicates if multiple knots be kept.
+	bool neglectMulti,///<Indicates if multiple knots be kept.
 		///< true: multiplicity is removed.
 		///< false: multiplicity is kept.
+	int parameter_normalization=0
+		//Indicates how the parameter normalization be done:
+		// =0 : no parameter normalization
+		// !=0 : normalize to make the average length of the 1st derivative
+		//       is as equal to 1. as possible.
 )const;
 
 ///Get data points for approximate_as_LBRep2.

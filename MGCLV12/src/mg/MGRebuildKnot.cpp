@@ -352,10 +352,11 @@ void MGCurve::approximate_as_LBRep(
 	MGKnotVector& tnew=lb.knot_vector();
 	int norder=ordr ? ordr:4;
 
-	do{	//Approximation by dividing to parts of continuity>=C0.
+	do{	//Approximation by dividing to parts of continuity >= C0.
 		multi_found=t.locate_multi(start,km1,index);//Locate C0 continuity point.
 		if(start==k){//For the 1st span.
-			approximate_as_LBRep2(lb,norder,start-1,index,neglectMutli);//1st approximation.
+			approximate_as_LBRep2(lb,norder,start-1,index,neglectMutli,
+				parameter_normalization);//1st approximation.
 			if(ts>lb.param_s() || te<lb.param_e())
 				lb.limit(pspan);
 
@@ -368,7 +369,8 @@ void MGCurve::approximate_as_LBRep(
 			}
 		}else{//For the span from the 2nd.
 			MGLBRep lbt;
-			approximate_as_LBRep2(lbt,norder,start-1,index,neglectMutli);//from the 2nd approximation.
+			approximate_as_LBRep2(lbt,norder,start-1,index,neglectMutli,
+				parameter_normalization);//from the 2nd approximation.
 			if(te<lbt.param_e())
 				lbt.limit(pspan);
 			int which=2;
@@ -451,12 +453,17 @@ void MGCurve::data_points_for_approximate_as_LBRep2(
 //Approximate this curve as a MGLBRep curve from knot_vector[is] to [ie].
 //This is an internal program of MGLBRep constructor.
 void MGCurve::approximate_as_LBRep2(
-	MGLBRep& lb,		//Approximated LBRep will be set.
+	MGLBRep& lb,	//Approximated LBRep will be set.
 	int ordr,		//new order
 	int is, int ie,//approximation parameter range, from knot_vector()[is] to [ie].
-	bool neglectMulti///<Indicates if multiple knots be kept.
+	bool neglectMulti,///<Indicates if multiple knots be kept.
 		///< true: multiplicity is removed.
 		///< false: multiplicity is kept.
+	int parameter_normalization
+		//Indicates how the parameter normalization be done:
+		// =0 : no parameter normalization
+		// !=0 : normalize to make the average length of the 1st derivative
+		//       is as equal to 1. as possible.
 )const{
 	//¸“x\•ª‚Ì‹Èü‚ğ¶¬‚·‚é
 	MGNDDArray tau;
@@ -467,7 +474,10 @@ void MGCurve::approximate_as_LBRep2(
 	eval_line(tau,bp1);
 
 	//§Œä“_‚ğ¶¬‚·‚é
-	lb.buildByInterpolationWithKTV(tau, bp1);
+	if(parameter_normalization)
+		lb.buildByInterpolation(bp1, ordr);
+	else
+		lb.buildByInterpolationWithKTV(tau, bp1);
 	lb.remove_knot();
 	lb.copy_appearance(*this);
 }
