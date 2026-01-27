@@ -258,7 +258,7 @@ void drawAttrib(
 	bool no_color=false	///if true, color attribute will be neglected.
 )const;
 
-///Get the number of objects included in thie group.
+///Get the number of objects included in this group.
 int num_of_objects() const;
 
 ///IGES output function.

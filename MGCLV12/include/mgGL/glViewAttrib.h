@@ -41,7 +41,7 @@ MGglViewAttrib(const MGBox& box, const MGColor* gridColors=0);
 const MGPosition& center()const{return m_center;};
 MGPosition& center(){return m_center;};
 
-///Compute the viewing environment the parameter box.
+///Compute the viewing environment from a center and the diameter.
 ///compute_viewing_environment() uses (eye_position,view_up_vector) as input.
 ///They must be set before compute_viewing_environment.
 ///eye_position is used only to get the direction from the origin.
@@ -50,7 +50,7 @@ void compute_viewing_environment(
 	double diameter
 );
 
-///Compute the viewing environment the parameter box.
+///Compute the viewing environment from the parameter box.
 ///compute_viewing_environment() uses (eye_position,view_up_vector) as input.
 ///They must be set before compute_viewing_environment.
 void compute_viewing_environment(

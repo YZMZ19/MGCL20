@@ -425,8 +425,8 @@ void build_networks(
 		//Search non processed curve.
 		const MGCurve* curve=0;
 		while(curve==0 && npcurves){
-			npcurves--;
-			curve=pcurves2[npcurves];pcurves2.pop_back();
+			curve=pcurves2[--npcurves];
+			pcurves2.pop_back();
 		}
 		if(!curve)
 			break;//If non processed curves not found.
@@ -435,6 +435,7 @@ void build_networks(
 		int j, nnet=(int)networks.size();
 		for(j=nnet-1; j>=0; j--){
 			MGLoop& netj=*networks[j];
+
 			if(netj.merge_network(*curve,err)){
 				break;
 			}
