@@ -32,25 +32,25 @@ MGVector::MGVector ( double x, double y)
 	m_element[0]=x; m_element[1]=y;
 }
 
-// ‚˜C‚™C‚š‚ğw’è‚µ‚Ä3DƒxƒNƒgƒ‹‚ğ¶¬‚·‚é
+// ï½˜ï¼Œï½™ï¼Œï½šã‚’æŒ‡å®šã—ã¦3Dãƒ™ã‚¯ãƒˆãƒ«ã‚’ç”Ÿæˆã™ã‚‹
 MGVector::MGVector(double x, double y, double z)
 : MGVector(3) {
 	m_element[0]=x; m_element[1]=y;	m_element[2]=z;
 }
 
-// ‚˜C‚™C‚š, w‚ğw’è‚µ‚Ä4DƒxƒNƒgƒ‹‚ğ¶¬‚·‚é
+// ï½˜ï¼Œï½™ï¼Œï½š, wã‚’æŒ‡å®šã—ã¦4Dãƒ™ã‚¯ãƒˆãƒ«ã‚’ç”Ÿæˆã™ã‚‹
 MGVector::MGVector(double x, double y, double z, double w)
 : MGVector(4){
 	m_element[0]=x; m_element[1]=y;	m_element[2]=z; m_element[3]=w;
 }
 
-// ‰Šú’l@v ‚Å‚·‚×‚Ä‚ÌƒGƒŒƒƒ“ƒg‚ğ‰Šú‰»‚µ‚ÄƒxƒNƒgƒ‹‚ğ¶¬‚·‚éB
+// åˆæœŸå€¤ã€€v ã§ã™ã¹ã¦ã®ã‚¨ãƒ¬ãƒ¡ãƒ³ãƒˆã‚’åˆæœŸåŒ–ã—ã¦ãƒ™ã‚¯ãƒˆãƒ«ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 MGVector::MGVector(int dim, double v)
 : MGVector(dim) {
 	for(int i=0; i<dim; i++) m_element[i]=v;
 }
 
-// double ‚Ì”z—ñ‚Åcoordinate value‚ğw’è‚µƒxƒNƒgƒ‹‚ğ¶¬‚·‚éB
+// double ã®é…åˆ—ã§coordinate valueã‚’æŒ‡å®šã—ãƒ™ã‚¯ãƒˆãƒ«ã‚’ç”Ÿæˆã™ã‚‹ã€‚
 MGVector::MGVector(int dim, const double* v)
 : MGVector(dim) {
 	for(int i=0; i<dim; i++) m_element[i]=v[i];
@@ -188,7 +188,7 @@ MGVector& MGVector::operator=(const double* data){
 	return *this;
 }
 
-// ‚Ó‚½‚Â‚ÌƒxƒNƒgƒ‹‚Ì‰ÁZ
+// ãµãŸã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã®åŠ ç®—
 //Addition of two vectors.
 MGVector operator+(const MGVector& vec1,const MGVector& vec2){
 	int dim=vec1.m_sdim;
@@ -207,7 +207,7 @@ MGVector operator+(const MGVector& vec1,const MGVector& vec2){
 	return temp;//RVO
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚É—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚ğ‰ÁZ‚µ‚Ä©g‚ÌƒxƒNƒgƒ‹‚Æ‚·‚é
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã«ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ã‚’åŠ ç®—ã—ã¦è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã™ã‚‹
 MGVector& MGVector::operator+= (const MGVector &vec2) {
 	int dim1=sdim(); int dim2=vec2.sdim();
 	int i;
@@ -222,7 +222,7 @@ MGVector& MGVector::operator+= (const MGVector &vec2) {
 	return *this;
 }
 
-// ’P€ƒ}ƒCƒiƒXB©g‚ÌƒxƒNƒgƒ‹‚ğ”½“]‚µAƒIƒuƒWƒFƒNƒg‚ğ¶¬
+// å˜é …ãƒã‚¤ãƒŠã‚¹ã€‚è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’åè»¢ã—ã€ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 MGVector MGVector::operator- () const{
 	MGVector temp(m_sdim);
 	for(int i=0; i<m_sdim; i++) temp.m_element[i] = -m_element[i];
@@ -230,7 +230,7 @@ MGVector MGVector::operator- () const{
 	return temp;
 }
 
-// ƒxƒNƒgƒ‹‚ÌŒ¸Z
+// ãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—
 //Subtraction of two vectors.
 MGVector operator-(const MGVector& vec1,const MGVector& vec2){
 	int dim=vec1.m_sdim;
@@ -249,7 +249,7 @@ MGVector operator-(const MGVector& vec1,const MGVector& vec2){
 	return temp;//RVO
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚Æ—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚ÌŒ¸Z‚ğs‚¢©g‚ÌƒxƒNƒgƒ‹‚Æ‚·‚é
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ã®æ¸›ç®—ã‚’è¡Œã„è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã™ã‚‹
 MGVector& MGVector::operator-= (const MGVector &vec2) {
 	int dim1=sdim(); int dim2=vec2.sdim();
 	int i;
@@ -264,7 +264,7 @@ MGVector& MGVector::operator-= (const MGVector &vec2) {
 	return *this;
 }
 
-// ƒXƒJƒ‰[‚ÌæZ‚ğs‚¢ƒIƒuƒWƒFƒNƒg‚ğ¶¬
+// ã‚¹ã‚«ãƒ©ãƒ¼ã®ä¹—ç®—ã‚’è¡Œã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 //Scalar multiplication.
 MGVector operator*(const MGVector& vec1,double scale){
 	int sd=vec1.m_sdim;
@@ -275,21 +275,21 @@ MGVector operator*(const MGVector& vec1,double scale){
 	return new_vec;//RVO
 }
 
-// ƒXƒJƒ‰[‚ÌæZ‚ğs‚¢©g‚ÌƒxƒNƒgƒ‹‚Æ‚·‚é
+// ã‚¹ã‚«ãƒ©ãƒ¼ã®ä¹—ç®—ã‚’è¡Œã„è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã™ã‚‹
 MGVector& MGVector::operator*= (double scale){
 	for(int i=0; i<m_sdim; i++) m_element[i] *= scale;
 	if(m_length>=0.) m_length*=fabs(scale);
 	return *this;
 }
 
-//ƒxƒNƒ^‚ÌŠOÏ
+//ãƒ™ã‚¯ã‚¿ã®å¤–ç©
 //vector product of two vectors.
 MGVector operator*(const MGVector& vec1,const MGVector& vec2){
 	MGVector v(vec1); 
 	return v*=vec2;
 }
 
-// ƒxƒNƒgƒ‹‚ÌŠOÏ‚ğs‚¢©g‚ÌƒxƒNƒgƒ‹‚Æ‚·‚é
+// ãƒ™ã‚¯ãƒˆãƒ«ã®å¤–ç©ã‚’è¡Œã„è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã™ã‚‹
 MGVector& MGVector::operator*= (const MGVector &vec2){
 	double d0,d1,d2;
 	int dim=sdim(), dim2=vec2.sdim();
@@ -346,9 +346,9 @@ MGVector& MGVector::operator*= (const MGVector &vec2){
 	}
 }
 
-// ƒgƒ‰ƒ“ƒXƒtƒH[ƒ€‚ğs‚¢ƒIƒuƒWƒFƒNƒg‚ğ¶¬
+// ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ ã‚’è¡Œã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 
-// ƒxƒNƒgƒ‹‚Ì“àÏ
+// ãƒ™ã‚¯ãƒˆãƒ«ã®å†…ç©
 //Inner product of two vectors.
 double operator%(const MGVector& vec1,const MGVector& vec2){
 	int dim=vec1.sdim(); int dim2=vec2.sdim();
@@ -359,7 +359,7 @@ double operator%(const MGVector& vec1,const MGVector& vec2){
 	return product;
 }
 
-// ƒXƒJƒ‰[œZ‚ğs‚¢ƒIƒuƒWƒFƒNƒg‚ğ¶¬
+// ã‚¹ã‚«ãƒ©ãƒ¼é™¤ç®—ã‚’è¡Œã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 //Scalar division.
 MGVector operator/(const MGVector& vec1,double scale){
 	int sd=vec1.m_sdim;
@@ -371,20 +371,19 @@ MGVector operator/(const MGVector& vec1,double scale){
 	return new_vec;//RVO
 }
 
-// ƒXƒJƒ‰[‚ÌœZ‚ğs‚¢©g‚ÌƒxƒNƒgƒ‹‚Æ‚·‚é
+// ã‚¹ã‚«ãƒ©ãƒ¼ã®é™¤ç®—ã‚’è¡Œã„è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ã™ã‚‹
 MGVector& MGVector::operator/= (double scalar){
 	for(int i=0; i<m_sdim; i++) m_element[i] /= scalar;
 	if(m_length>0.) m_length/=fabs(scalar);
 	return *this;
 }
 
-// —^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚Ì¬•ª‚Ì’l‚ğ”äŠr‚µA“¯‚¶‚Å‚ ‚ê‚Î TRUE ‚ğ•Ô‹p
 //Test if two vectors are equal.
 bool MGVector::operator==(const MGVector& v2)const{
-	const MGVector& v1=*this;
-	// ƒxƒNƒgƒ‹‚Ì·•ª‚ğæ“¾‚µA‚»‚ÌƒxƒNƒgƒ‹‚ª‚OƒxƒNƒgƒ‹‚Ì“™‚µ‚¢
-	double len1=v1.len(), len2=v2.len();
-	double dif=(v1 - v2 ).len();
+	return (*this - v2).is_zero_vector();
+	/*const MGVector& v1=*this;
+	double dif = (v1 - v2).len();
+	double len1 = v1.len(), len2 = v2.len();
 	if(len1>=len2){
 		if(len1<=MGTolerance::mach_zero())
 			return true;
@@ -395,7 +394,7 @@ bool MGVector::operator==(const MGVector& v2)const{
 			return true;
 		else
 			return MGRZero2(dif,len2);
-	}
+	}*/
 }
 std::partial_ordering MGVector::operator<=>(const MGVector& v2)const {
 	if (*this == v2)
@@ -407,7 +406,7 @@ std::partial_ordering MGVector::operator<=>(const MGVector& v2)const {
 //Member Function
 //
 
-// ©g‚ÌƒxƒNƒgƒ‹‚Æ—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚Ì‚È‚·Šp“x‚ğ Radian ‚Å•Ô‹p
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ã®ãªã™è§’åº¦ã‚’ Radian ã§è¿”å´
 //Compute angle in radian of two vectors.
 // 0<= angle <pai.
 double MGVector::angle(const MGVector& vec2) const{
@@ -437,8 +436,8 @@ double MGVector::angle2pai(const MGVector& v2, const MGVector& N)const{
 	return MGAngle(ca,sa);
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚Æ—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚Ì‚È‚·Šp“x‚ğ cosƒ¦ ‚Å•Ô‹p‚·‚é
-// ©g‚©—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚ª—ëƒxƒNƒgƒ‹‚Ì‚ÍAcosƒ¦‚Í 1.0 ‚Æ‚·‚é
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ã®ãªã™è§’åº¦ã‚’ cosÎ˜ ã§è¿”å´ã™ã‚‹
+// è‡ªèº«ã‹ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ãŒé›¶ãƒ™ã‚¯ãƒˆãƒ«ã®æ™‚ã¯ã€cosÎ˜ã¯ 1.0 ã¨ã™ã‚‹
 double MGVector::cangle ( const MGVector & vec2 ) const {
 	double cos_theta;
 	double ll=len()*vec2.len();
@@ -556,7 +555,7 @@ bool MGVector::is_collinear(
 	return (v2 - *this).parallel(v3-*this);
 }
 
-// ƒxƒNƒgƒ‹‚Ì’·‚³‚ğ•Ô‹p‚·‚é 
+// ãƒ™ã‚¯ãƒˆãƒ«ã®é•·ã•ã‚’è¿”å´ã™ã‚‹ 
 double MGVector::len() const {
 	//std::lock_guard<std::mutex> g(m);//For thread safety
 	if(m_length < 0.){
@@ -570,15 +569,15 @@ double MGVector::len() const {
 	return m_length;
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚ğ’PˆÊƒxƒNƒgƒ‹‰»‚µƒIƒuƒWƒFƒNƒg‚ğ¶¬‚·‚é
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’å˜ä½ãƒ™ã‚¯ãƒˆãƒ«åŒ–ã—ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆã™ã‚‹
 MGUnit_vector MGVector::normalize() const{
 	return MGUnit_vector(*this);
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚Æ—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚ª‚’¼‚©‚Ç‚¤‚©•Ô‹p‚·‚é
-// ‚’¼‚ÌATrue(1) ‚ğ•Ô‹p
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ãŒå‚ç›´ã‹ã©ã†ã‹è¿”å´ã™ã‚‹
+// å‚ç›´ã®æ™‚ã€True(1) ã‚’è¿”å´
 bool MGVector::orthogonal(const MGVector &vec2) const{
-	// *this ‚Æ vec2 ‚Ìcosƒ¦‚ğæ“¾‚µAƒÎ/2 ‚Ì ‚’¼ iTrue(1)j
+	// *this ã¨ vec2 ã®cosÎ˜ã‚’å–å¾—ã—ã€Ï€/2 ã®æ™‚ å‚ç›´ ï¼ˆTrue(1)ï¼‰
 	return MGRight_angle(cangle(vec2));
 }
 
@@ -602,10 +601,10 @@ MGVector MGVector::orthogonize(const MGVector& vec2)const{
 	return MGUnit_vector(v212)*len();
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚Æ—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚ª•½s‚©‚Ç‚¤‚©•Ô‹p‚·‚é
-// •½s‚ÌATrue(1) ‚ğ•Ô‹p 
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ãŒå¹³è¡Œã‹ã©ã†ã‹è¿”å´ã™ã‚‹
+// å¹³è¡Œã®æ™‚ã€True(1) ã‚’è¿”å´ 
 bool MGVector::parallel(const MGVector &vec2) const{
-	// *this ‚Æ vec2 ‚Ìsinƒ¦‚ğæ“¾‚µA—ë‚Ì •½s
+	// *this ã¨ vec2 ã®sinÎ˜ã‚’å–å¾—ã—ã€é›¶ã®æ™‚ å¹³è¡Œ
 	return MGZero_angle(sangle(vec2));
 }
 
@@ -623,8 +622,8 @@ double MGVector::parallelism(const MGVector& v2) const {
 	return ang;
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚ğƒxƒNƒgƒ‹(v2)‚ÉË‰e‚µ‚½ƒxƒNƒgƒ‹‚ğ‹‚ß‚éB
-// v2 ‚ª —ëƒxƒNƒgƒ‹‚Ì‚Æ‚«(*this)‚ª•Ô‚éB
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã‚’ãƒ™ã‚¯ãƒˆãƒ«(v2)ã«å°„å½±ã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ã‚‹ã€‚
+// v2 ãŒ é›¶ãƒ™ã‚¯ãƒˆãƒ«ã®ã¨ã(*this)ãŒè¿”ã‚‹ã€‚
 //Project this onto the vector v2.
 MGVector MGVector::project(const MGVector& v2) const{
 	double v2ip = v2 % v2;
@@ -652,10 +651,10 @@ void MGVector::resize(int new_sdim){
 	m_sdim=new_sdim; m_length=-1.;
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚Æ—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚Ì‚È‚·Šp“x‚Ì sinƒ¦ ‚Ìâ‘Î’l‚ğ•Ô‹p‚·‚é
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ã¨ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ã®ãªã™è§’åº¦ã® sinÎ˜ ã®çµ¶å¯¾å€¤ã‚’è¿”å´ã™ã‚‹
 double MGVector::sangle(const MGVector &vec2) const{
 	double sin_theta;
-	// ©g‚©—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚ª—ëƒxƒNƒgƒ‹‚Ìê‡ sinƒ¦‚ğ0.0 ‚É‚·‚é
+	// è‡ªèº«ã‹ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ãŒé›¶ãƒ™ã‚¯ãƒˆãƒ«ã®å ´åˆ sinÎ˜ã‚’0.0 ã«ã™ã‚‹
 	double len12=len()*vec2.len();
     if(MGMZero(len12))
 		sin_theta = 0.0;
@@ -702,13 +701,13 @@ void MGVector::set_unit(){
 		(*this)=MGUnit_vector();
 	}else{
 		double length=len();
-		// ©g‚ÌƒxƒNƒgƒ‹‚ª—ëƒxƒNƒgƒ‹‚Ì‚ÍƒfƒtƒHƒ‹ƒgƒxƒNƒgƒ‹‚ğ¶¬
+		// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ãŒé›¶ãƒ™ã‚¯ãƒˆãƒ«ã®æ™‚ã¯ãƒ‡ãƒ•ã‚©ãƒ«ãƒˆãƒ™ã‚¯ãƒˆãƒ«ã‚’ç”Ÿæˆ
 		int i, dimm1=m_sdim-1;
 		if(MGMZero(length)){
 			for(i=0; i<dimm1; i++) m_element[i]=0.;
 			m_element[dimm1]=1.;
 		}else if(!MGREqual(length, 1.)){
-	   // —ëƒxƒNƒgƒ‹ˆÈŠO‚Í—^‚¦‚ç‚ê‚½ƒxƒNƒgƒ‹‚Ì¬•ª‚ğ’·‚³‚ÅŠ„‚é
+	   // é›¶ãƒ™ã‚¯ãƒˆãƒ«ä»¥å¤–ã¯ä¸ãˆã‚‰ã‚ŒãŸãƒ™ã‚¯ãƒˆãƒ«ã®æˆåˆ†ã‚’é•·ã•ã§å‰²ã‚‹
 			for(i=0; i<m_sdim; i++) m_element[i]=m_element[i]/length;
 		}
 		m_length=1.;
@@ -749,17 +748,20 @@ void MGVector::swap(int i, int j){
 	m_element[i]=m_element[j]; m_element[j]=x;
 }
 
-// ƒxƒNƒgƒ‹‚ª’PˆÊƒxƒNƒgƒ‹‚©‚Ç‚¤‚©•Ô‹p‚·‚éB’PˆÊƒxƒNƒgƒ‹‚ÌATrue(1) ‚ğ•Ô‹p
+// ãƒ™ã‚¯ãƒˆãƒ«ãŒå˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã‹ã©ã†ã‹è¿”å´ã™ã‚‹ã€‚å˜ä½ãƒ™ã‚¯ãƒˆãƒ«ã®æ™‚ã€True(1) ã‚’è¿”å´
 bool MGVector::is_unit_vector() const {
 	double length=len();
-	// ’·‚³‚ª Tolerance ‚ğl—¶‚µ‚½ 1.0 ‚Ì true;
+	// é•·ã•ãŒ Tolerance ã‚’è€ƒæ…®ã—ãŸ 1.0 ã®æ™‚ true;
 	return MGREqual(length, 1.);
 }
 
-// ©g‚ÌƒxƒNƒgƒ‹‚ª—ëƒxƒNƒgƒ‹‚©‚Ç‚¤‚©•Ô‹p‚·‚é
-bool MGVector::is_zero_vector() const{ return MGAZero(len()); }
+// è‡ªèº«ã®ãƒ™ã‚¯ãƒˆãƒ«ãŒé›¶ãƒ™ã‚¯ãƒˆãƒ«ã‹ã©ã†ã‹è¿”å´ã™ã‚‹
+bool MGVector::is_zero_vector() const{
+	return *this % *this <= MGTolerance::wc_zero_sqr();
+	//return MGAZero(len());
+}
 
-// ‚R‚Â‚ÌƒxƒNƒgƒ‹‚©‚ç‹‚ß‚ç‚ê‚és—ñ‚Ìs—ñ®‚Ì’l‚ğ•Ô‹p‚·‚é
+// ï¼“ã¤ã®ãƒ™ã‚¯ãƒˆãƒ«ã‹ã‚‰æ±‚ã‚ã‚‰ã‚Œã‚‹è¡Œåˆ—ã®è¡Œåˆ—å¼ã®å€¤ã‚’è¿”å´ã™ã‚‹
 double MGDeterminant(const MGVector& v1, const MGVector& v2,
                      const MGVector& v3 ) 
 {
@@ -768,15 +770,15 @@ double MGDeterminant(const MGVector& v1, const MGVector& v2,
 		+  v2.ref(0)*v3.ref(1)*v1.ref(2) - v2.ref(0)*v1.ref(1)*v3.ref(2);
 }
 
-// ƒxƒNƒgƒ‹‚ÌƒXƒJƒ‰[‚ÌæZ‚ğs‚¢ƒIƒuƒWƒFƒNƒg‚ğ¶¬
+// ãƒ™ã‚¯ãƒˆãƒ«ã®ã‚¹ã‚«ãƒ©ãƒ¼ã®ä¹—ç®—ã‚’è¡Œã„ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã‚’ç”Ÿæˆ
 MGVector operator *(double scal, const MGVector& vec) {
 	return vec*scal;
 }
 
 namespace MGCL {
 
-// V1‚ğƒxƒNƒgƒ‹(v2)‚ÉË‰e‚µ‚½ƒxƒNƒgƒ‹‚ğ‹‚ß‚éB
-// v2 ‚ª —ëƒxƒNƒgƒ‹‚Ì‚Æ‚«V1‚ª•Ô‚éB
+// V1ã‚’ãƒ™ã‚¯ãƒˆãƒ«(v2)ã«å°„å½±ã—ãŸãƒ™ã‚¯ãƒˆãƒ«ã‚’æ±‚ã‚ã‚‹ã€‚
+// v2 ãŒ é›¶ãƒ™ã‚¯ãƒˆãƒ«ã®ã¨ãV1ãŒè¿”ã‚‹ã€‚
 MGVector project(const MGVector& V1, const MGVector& V2){
 	return V1.project(V2);
 }
