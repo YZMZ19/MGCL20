@@ -157,7 +157,7 @@ void MGOpenGLView::getModelViewProjectionMatrices(
 
 //Update the center and the scale of the view.
 ///The pespectiveness and the cplane are unchanged.
-void MGOpenGLView::updateCenterScalle(
+void MGOpenGLView::updateCenterScale(
 	const MGPosition& center,
 	double diameter///<diameter of the view. This is set to m_diameter.
 		///<diameter of the sphere that sorround the model.

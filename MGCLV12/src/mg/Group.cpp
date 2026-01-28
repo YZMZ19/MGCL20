@@ -395,7 +395,7 @@ std::ostream& MGGroup::toString(std::ostream& ostrm) const{
 	ostrm<<"MGGroup="<<(const MGGel*)this<<", number of gels = "<<size()<<std::endl;
 	const_iterator i=begin(), ie=end();	
 	for(int j=0; i!=ie; i++, j++){
-		ostrm<<"gel"<<j<<":"<<(**i)<<std::endl;
+		ostrm << std::endl <<"gel"<<j<<":"<<(**i)<<std::endl;
 	}
 	return ostrm;
 }

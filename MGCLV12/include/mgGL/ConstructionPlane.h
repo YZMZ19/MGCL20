@@ -147,6 +147,8 @@ void setGridDataByBox(
 	double spanIn=-1.///< span length of the grid. If span<=0., default value from the box is used.
 );
 
+void updateGridDataByBox(const MGBox& box);
+
 ///Compute grid data and the plane from the plane and the grid span data.
 void set_grid_data(
 	const MGPlane& plane,///<construction plane.
@@ -206,6 +208,7 @@ void set_enable(){m_disabled=false;};
 
 ///Set span length of u and v direction as span(the same).
 void set_span(double span);
+void set_span(const double span[2]);
 
 ///Set u-direction span length.
 void set_uspan(double span);
@@ -215,6 +218,7 @@ void set_vspan(double span);
 
 ///Set mesh number of u and v(the same).
 void set_num(int line_num);
+void set_num(const int line_num[2]);
 
 ///Set mesh number of u-direction.
 void set_unum(int unum);

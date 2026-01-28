@@ -226,20 +226,17 @@ std::partial_ordering MGFace::ordering_test(const MGGel& g2)const {
 std::ostream& MGFace::toString(std::ostream& ostrm) const{
 	ostrm<<"<<Face="<<(const MGGel*)this;
 	ostrm<<", param"<<m_box_param;
-	ostrm<<std::endl<<", boundaries(Loops) = "<<m_boundaries.size();
-	const_iterator bs = m_boundaries.begin(), be = m_boundaries.end();
-	int n = 0;
-	if (bs == be) {
-		ostrm<<std::endl;
-	}
-	else{
-		ostrm<<"::" <<std::endl;
-		ostrm<<(**bs).whoami()<<n++<<"=";
-		ostrm<<(**bs);
-		for(bs++; bs!=be; bs++){
-			ostrm<<std::endl;
-			ostrm<<n++<<"="<<(**bs);
+	size_t nbound = number_of_boundaries();
+	ostrm << std::endl << ", boundaries(Loops) = " << nbound;
+	if(nbound){
+		int n = 0;
+		for(auto& loopi: boundaries()){
+			ostrm << std::endl;
+			ostrm << loopi->whoami() << n++ << "=" << *loopi;
 		}
+	}
+	else {
+		ostrm << std::endl;
 	}
 	MGCell::toString(ostrm);
 	ostrm<<"=Face>>"<<endl;

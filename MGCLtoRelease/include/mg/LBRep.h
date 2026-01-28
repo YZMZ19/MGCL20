@@ -389,7 +389,7 @@ int rebuildByNewKnotVector(
 ///Approximate this curve as a MGLBRep.
 
 /// Approximation is done within the tolerance MGTolerance::line_zero().
-///When parameter_normalization=0, reparameterization will not done, and
+///When parameter_normalization=0, reparameterization will not be done, and
 ///the evaluation at the same parameter has the same values before and after
 ///of approximate_as_LBRep.
 void approximate_as_LBRep(

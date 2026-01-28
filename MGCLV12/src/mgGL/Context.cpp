@@ -29,22 +29,7 @@ MGContext::MGContext(const MGBox& bx)
 :m_line_density(1),m_smooth(float(.01)),
 m_pick_aperture(float(5.)),m_appearance(0),
 m_view(bx){
-
-	// グリッド定義の作成
-	double span;
-	int lnum;
-	MGPosition mid;
-
-	int sdid;//maximum area coordinate pair will be output.
-				//0:(x,y), 1:(y,z), 2:(z,x)
-	MGcplane_parameter(bx*INITIAL_SCALE,span,lnum,sdid,mid);
-	// Contextにセット
-	m_gridNum[0]=m_gridNum[1]=lnum;
-	m_gridSpan[0]=m_gridSpan[1]=span;
-
-	//m_view.cplane().get_colors(
-	//	m_gridColor[0],m_gridColor[1],m_gridColor[2]);
-	//setDefaultTolerance();
+	set_gridNumSpan(bx);
 }
 
 MGContext::MGContext(
@@ -84,13 +69,7 @@ m_view(view)
 		m_gridColor[i]=gridColor[i];
 	}
 
-	for(int i =0; i<2; ++i){
-		m_gridNum[i]=gridNum[i];
-	}
-
-	for(int i =0; i<2; ++i){
-		m_gridSpan[i]=gridSpan[i];
-	}
+	set_gridNumSpan(gridNum, gridSpan);
 
 	for(int i=0; i<6; i++){
 		m_tolerance[i]=m_tolerance[i];
@@ -111,15 +90,7 @@ m_view(context.m_view){
 	for(int i=0; i<4; i++){
 		m_gridColor[i]=context.m_gridColor[i];
 	}
-
-	for(int i =0; i<2; ++i){
-		m_gridNum[i]=context.m_gridNum[i];
-	}
-
-	for(int i =0; i<2; ++i){
-		m_gridSpan[i]=context.m_gridSpan[i];
-	}
-
+	set_gridNumSpan(context.m_gridNum, context.m_gridSpan);
 	for(int i=0; i<6; i++){
 		m_tolerance[i]=context.m_tolerance[i];
 	}
@@ -205,6 +176,25 @@ void MGContext::set_gridSpan(const double gridSpan[2]){
 	for(int j=0; j<2; ++j){
 		m_gridSpan[j]=gridSpan[j];
 	}
+}
+void MGContext::set_gridNumSpan(const int gridNum[2], const double gridSpan[2]) {
+	for (int j = 0; j < 2; ++j) {
+		m_gridNum[j] = gridNum[j];
+		m_gridSpan[j] = gridSpan[j];
+	}
+}
+void MGContext::set_gridNumSpan(int gridNum, double gridSpan) {
+	m_gridNum[0] = m_gridNum[1] = gridNum;
+	m_gridSpan[0] = m_gridSpan[1] = gridSpan;
+}
+void MGContext::set_gridNumSpan(const MGBox& bx) {
+
+	// グリッド定義の作成
+	double span;
+	int lnum, sdid;
+	MGPosition mid;
+	MGcplane_parameter(bx * INITIAL_SCALE, span, lnum, sdid, mid);
+	set_gridNumSpan(lnum, span);
 }
 
 //Set the view data of the view view_num

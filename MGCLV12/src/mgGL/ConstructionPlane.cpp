@@ -144,6 +144,27 @@ void MGConstructionPlane::setGridDataByBox(
 	mgVBO::setDirty(true);
 }
 
+///Update grid(including the plane) data from box.
+///The colors of the axes are set according to the box data.
+void MGConstructionPlane::updateGridDataByBox(
+	const MGBox& box
+){
+	double span;
+	int lnum;
+	MGPosition mid;
+
+	int sdid;//maximum area coordinate pair will be output.
+	//0:(x,y), 1:(y,z), 2:(z,x)
+	MGcplane_parameter(box * INITIAL_SCALE, span, lnum, sdid, mid);
+	set_span(span);
+	set_num(lnum);
+	MGVector uderi(0., 0., 0.), vderi(0., 0., 0.);
+	int sdidp1 = (sdid + 1) % 3;
+	uderi(sdid) = 1.; vderi(sdidp1) = 1.;
+	m_plane = MGPlane(uderi, vderi, mid);
+	mgVBO::setDirty(true);
+}
+
 //Bind the input point uv(this construction plane's parameter value)
 //to the nearest grid point of this construction plane.
 void MGConstructionPlane::bind_to_grid(
@@ -345,6 +366,11 @@ void MGConstructionPlane::set_span(double span){
 	m_uspan=m_vspan=m_nspan=span;
 	setDirty(true);
 }
+void MGConstructionPlane::set_span(const double span[2]) {
+	m_uspan = span[0];
+	m_vspan = span[1];
+	setDirty(true);
+}
 void MGConstructionPlane::set_uspan(double span){
 	m_uspan=span;
 	setDirty(true);
@@ -353,8 +379,13 @@ void MGConstructionPlane::set_vspan(double span){
 	m_vspan=span;
 	setDirty(true);
 }
-void MGConstructionPlane::set_num(int line_num){
-	m_vnum=m_unum=line_num;
+void MGConstructionPlane::set_num(int line_num) {
+	m_vnum = m_unum = line_num;
+	setDirty(true);
+}
+void MGConstructionPlane::set_num(const int line_num[2]) {
+	m_unum = line_num[0];
+	m_vnum = line_num[1];
 	setDirty(true);
 }
 void MGConstructionPlane::set_unum(int unum){

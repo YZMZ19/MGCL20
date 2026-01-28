@@ -139,6 +139,9 @@ const double* gridSpan()const{return m_gridSpan;};
 void set_gridColors(const MGColor gridColor[4]);
 void set_gridNum(const int gridNum[2]);
 void set_gridSpan(const double gridSpan[2]);
+void set_gridNumSpan(const int gridNum[2], const double gridSpan[2]);
+void set_gridNumSpan(int gridNum, double gridSpan);
+void set_gridNumSpan(const MGBox&);
 
 // Grid color operations.
 /// Grid color.

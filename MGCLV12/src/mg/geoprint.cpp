@@ -61,9 +61,9 @@ using namespace std;
 //////////// MGObject ////////////
 // Output function.
 ostream& MGObject::toString(std::ostream& ostrm) const{
-	ostrm << ", "<<whoami()<< "." << m_box;
+	ostrm << ", "<<whoami()<< "." << m_box ;
 	if(m_appearance)
-		ostrm<<","<<(*m_appearance);
+		ostrm << std::endl <<","<<(*m_appearance);
 
 	return ostrm;
 }
@@ -160,7 +160,7 @@ ostream& MGPlane::toString(ostream& ostrm) const{
 	ostrm<<"MGPlane::"<< (const MGGel*)this;
 	MGSurface::toString(ostrm);
 
-	ostrm<<endl<<", root_point="<<m_root_point
+	ostrm<</*endl <<*/ ", root_point=" << m_root_point
 		<<", normal="<<m_normal<<", d="<<m_d
 		<<", uderiv="<<m_uderiv<<", vderiv="<<m_vderiv<<endl;
 	return ostrm;
@@ -183,7 +183,7 @@ ostream& MGSBRep::toString(ostream& ostrm) const{
 	ostrm<<"MGSBRep::"<< (const MGGel*)this;
 	MGSurface::toString(ostrm);
 
-	ostrm<<std::endl<<", uknot="<<m_uknot;
+	ostrm<</*std::endl <<*/ ", uknot=" << m_uknot;
 	ostrm<<", vknot="<<m_vknot;
 	ostrm<<", surface_bcoef="<<m_surface_bcoef;
 	return ostrm;
@@ -194,7 +194,7 @@ ostream& MGStraight::toString(ostream& ostrm) const{
 	ostrm<<"MGStraight::"<< (const MGGel*)this;
 	MGCurve::toString(ostrm);
 
-	ostrm<<endl<<", root_point="<<m_root_point
+	ostrm /*<< endl*/ << ", root_point=" << m_root_point
 		 <<", dir="<<m_direction
 		 <<", sparam="<<m_sparam<<", eparam="<<m_endparam;
 	if(m_sparam.finite())

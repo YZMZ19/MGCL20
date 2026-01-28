@@ -727,6 +727,18 @@ extern MG_DLL_DECLR void build_networks(
 	std::vector<UniqueLoop>& networks	///<Built networks
 );
 
+// Build loops of a face, given the face's parameter space curves which constitue
+// one outer loop and some inner loops.
+// Curves must be connected to form closed loops that is outer or inner.
+// Function's return value is:
+// false: no outer loop was extracted.
+// true: one outer loop was extracted.
+extern MG_DLL_DECLR void build_loops(
+	double error,//parameter error allowed to judge point equality.
+	const MGGroup& curves,//parameter curves of a face.
+	std::deque<std::unique_ptr<MGLoop>>& loops//the loops generated will be output.
+);
+
 ///Get the clone of ts.loop()(==te.loop()), and trim th loop from ts to te.
 ///Function's return value is the trimmed loop.
 extern MG_DLL_DECLR std::unique_ptr<MGLoop> trim_out_subloop(const MGLEPoint& ts, const MGLEPoint& te);

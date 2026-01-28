@@ -629,10 +629,8 @@ std::vector<UniqueCurve> MGLoop::curves()const{
 	MGComplex::const_iterator i=pcell_begin(),ie=pcell_end();
 	int n=number_of_pcells(), j=0;
 	std::vector<UniqueCurve> crvs(n);
-	for(; i!=ie; i++,j++){
-		const MGEdge* edg=edge_from_iterator(i);
-		crvs[j].reset(new MGTrimmedCurve(edg->trimmed_curve()));
-	}
+	for(; i!=ie; i++,j++)
+		crvs[j].reset(edge_from_iterator(i)->trimmed_curve().clone());
 	return crvs;
 }
 

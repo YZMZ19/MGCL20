@@ -293,6 +293,11 @@ virtual void drawWire_in_star(
 	int line_density = 1	///<line density to draw a surface in wire mode.
 )const;
 
+///Draw edge number as the name.
+void drawEdgeName(
+	mgVBO& vbo///<Target graphic object.
+)const;
+
 ///Return i-th edge pointer.
 MGEdge* edge(int i);
 const MGEdge* edge(int i) const;
@@ -720,6 +725,18 @@ extern MG_DLL_DECLR void build_networks(
 	const MGFSurface& surf,		///<The objective surface
 	const std::vector<UniqueCurve>& pcurves,///<(u,v) 2D parameter curves of surf.
 	std::vector<UniqueLoop>& networks	///<Built networks
+);
+
+// Build loops of a face, given the face's parameter space curves which constitue
+// one outer loop and some inner loops.
+// Curves must be connected to form closed loops that is outer or inner.
+// Function's return value is:
+// false: no outer loop was extracted.
+// true: one outer loop was extracted.
+extern MG_DLL_DECLR void build_loops(
+	double error,//parameter error allowed to judge point equality.
+	const MGGroup& curves,//parameter curves of a face.
+	std::deque<std::unique_ptr<MGLoop>>& loops//the loops generated will be output.
 );
 
 ///Get the clone of ts.loop()(==te.loop()), and trim th loop from ts to te.

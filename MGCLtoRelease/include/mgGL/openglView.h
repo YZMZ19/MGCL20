@@ -226,7 +226,7 @@ void update_viewing_environment(
 
 //Update the center and the scale of the view.
 ///The pespectiveness and the cplane are unchanged.
-void updateCenterScalle(
+void updateCenterScale(
 	const MGPosition& center,
 	double diameter=-1.///<diameter of the view. This is set to m_diameter.
 		///<diameter of the sphere that sorround the model.

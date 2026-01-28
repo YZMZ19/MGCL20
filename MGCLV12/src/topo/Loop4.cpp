@@ -220,6 +220,117 @@ int build_boundary_loop(
 	return 1;
 }
 
+struct loopData {
+	UniqueCurve curve;
+	MGPosition Ps, Pe;///start and end point of curve.
+};
+
+//Find a curve in ldata that connects to loop's start or end point.
+//Function's return value is:
+// true if a curve is found and appended or prepended to loop.
+// false if no curve connected is found.
+bool findConnectCurve(std::vector<loopData>& ldata, UniqueLoop& loop) {
+	for (auto& ld : ldata) {
+		if (!ld.curve)
+			continue;
+
+		const MGPosition loopS = loop->start_point();
+		const MGPosition loopE = loop->end_point();
+		if (ld.Ps == loopE) {
+			MGEdge* edge = new MGEdge(ld.curve.release());
+			loop->append(edge);
+			return true;
+		}
+		if (ld.Pe == loopE) {
+			MGEdge* edge = new MGEdge(ld.curve.release());
+			edge->negate();
+			loop->append(edge);
+			return true;
+		}
+		if (ld.Ps == loopS) {
+			MGEdge* edge = new MGEdge(ld.curve.release());
+			edge->negate();
+			loop->prepend(edge);
+			return true;
+		}
+		if (ld.Pe == loopS) {
+			MGEdge* edge = new MGEdge(ld.curve.release());
+			loop->prepend(edge);
+			return true;
+		}
+	}
+	return false;
+}
+
+//Add a closed loop to loops deque.
+//If the loop is an outer boundary, it is added to the front of loops.
+void addClosedLoop(
+	UniqueLoop&& loop,///the closed loop to be added.
+	std::deque<std::unique_ptr<MGLoop>>& loops
+) {
+	loop->make_close();
+	if (loop->is_outer_boundary()) {
+		if (loops.size()==0 || !loops[0]->is_outer_boundary()) 
+			loops.push_front(std::move(loop));
+		//2nd outer loop is not allowed, and will be neglected.
+	} else {
+		loops.emplace_back(std::move(loop));
+	}
+}
+
+// Build loops of a face, given the face's parameter space curves which constitue
+// one outer loop and some inner loops.
+// Curves must be connected to form closed loops that is outer or inner.
+void build_loops(
+	double error,//parameter space error allowed to judge point equality.
+	const MGGroup& curves,//parameter curves of a face.
+	std::deque<std::unique_ptr<MGLoop>>& loops//the loops generated will be output.
+) {
+	loops.clear();
+	if (curves.empty())
+		return ;
+
+	//Build ldata that cotains  all the curves and their start and end point.
+	std::vector<loopData> ldata(curves.size());
+	int i = 0;
+	for(auto& gel:curves){
+		loopData& ldatai = ldata[i++];
+		if (auto curve = dynamic_cast<MGCurve*>(gel.get())) {
+			auto crv = curve->clone();
+			crv->remove_appearance();//we do not need appearance here.
+			ldatai.Ps = crv->start_point();
+			ldatai.Pe = crv->end_point();
+			ldatai.curve.reset(crv);
+		}
+	}
+
+	mgTolSetWCZero wczeroSet(error);//Set&save the error.
+	for(auto& ld:ldata){
+		if(!ld.curve)
+			continue;
+
+		//Construct a initial loop with one edge.
+		MGCurve* curve = ld.curve.release();
+		UniqueLoop loop=std::make_unique<MGLoop>(new MGEdge(curve));//1st edge.
+		if(curve->is_closed()){			
+			addClosedLoop(std::move(loop), loops);
+			continue;		
+		}
+
+		//Track next curve to build a closed loop.
+		while (true) {
+			if (findConnectCurve(ldata, loop)) {
+				if (loop->start_point() != loop->end_point()) 
+					continue;
+
+				//if closed loop is obtained.
+				addClosedLoop(std::move(loop), loops);
+			}
+			break;//to construct a new loop. non-closed loop is discarded.
+		}
+	}
+}
+
 //Trim the face giving networks loops. Trimming is done by removing the smallest
 //closed area out of networks that includes the parameter position uv(u,v).
 void MGFace::trim(
