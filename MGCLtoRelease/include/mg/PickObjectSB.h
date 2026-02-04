@@ -5,9 +5,7 @@
 /// MGPickObjectSB.h : MGPickObjectSB クラスの宣言およびインターフェイスの定義をします。
 ///
 ///////////////////////////////////////////////////////////////////////////////////////
-
-#ifndef _MGPickObjectSB_HH_
-#define _MGPickObjectSB_HH_
+#pragma once
 
 #include "mg/PickObject.h"
 #include "mgGL/VBO.h"
@@ -80,5 +78,3 @@ private:
 };
 
 /** @} */ // end of MGObjectRelated group
-
-#endif

@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGShell_HH_
-#define _MGShell_HH_
-
+#pragma once
 #include <vector>
 #include "mg/MGCL.h"
 #include "mg/Default.h"
@@ -321,4 +319,3 @@ void MG_DLL_DECLR set_up_shell_shade(
 );
 
 /** @} */ // end of TOPO group
-#endif

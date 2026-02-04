@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSBRepTP_HH_
-#define _MGSBRepTP_HH_
+#pragma once
 
 #include <assert.h>
 #include <memory>
@@ -54,8 +53,8 @@ MGSBRepTP();///Default Constructor, so set that no TPs' are specified.
 ~MGSBRepTP();
 MGSBRepTP(const MGSBRepTP&);///Copy constructor.
 MGSBRepTP& operator= (const MGSBRepTP&);///Copy assignment.
-MGSBRepTP(MGSBRepTP&&);		///Move constructor.
-MGSBRepTP& operator= (MGSBRepTP&&);///Move assignment.
+MGSBRepTP(MGSBRepTP&&)noexcept;		///Move constructor.
+MGSBRepTP& operator= (MGSBRepTP&&)noexcept;///Move assignment.
 
 ///Default Constructor, will be set as no TPs' are specified.
 
@@ -134,5 +133,3 @@ MGLBRep** TP(){return m_TP;};
 };
 
 /** @} */ // end of GEORelated group
-
-#endif

@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGTrimLoop_HH_
-#define _MGTrimLoop_HH_
-
+#pragma once
 #include <iosfwd>
 #include "topo/LEPoint.h"
 
@@ -71,4 +69,3 @@ private:
 };
 
 /** @} */ // end of TOPORelated group
-#endif

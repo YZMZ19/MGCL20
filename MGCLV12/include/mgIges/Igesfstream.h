@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __IGESFSTREAM_H__)
-#define __IGESFSTREAM_H__
+#pragma once
 
 #include "mg/MGCL.h"
 #include "mgIges/Iges.h"
@@ -79,4 +78,3 @@ protected:
 };
 
 /** @} */ // end of FileInputOutput group
-#endif // __IGESFSTREAM_H__

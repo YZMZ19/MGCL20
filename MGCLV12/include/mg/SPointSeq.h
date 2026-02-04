@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSPointSeq_HH_
-#define _MGSPointSeq_HH_
+#pragma once
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -50,8 +49,8 @@ MG_DLL_DECLR friend std::ostream& operator<< (std::ostream& out, const MGSPointS
 ~MGSPointSeq(){if(m_spoint) delete[] m_spoint;};
 MGSPointSeq(const MGSPointSeq&);///Copy constructor.
 MGSPointSeq& operator= (const MGSPointSeq&);///Copy assignment.
-MGSPointSeq(MGSPointSeq&&);		///Move constructor.
-MGSPointSeq& operator= (MGSPointSeq&&);///Move assignment.
+MGSPointSeq(MGSPointSeq&&)noexcept;		///Move constructor.
+MGSPointSeq& operator= (MGSPointSeq&&)noexcept;///Move assignment.
 
 ///Of m_lenght=size(for u and v dierction),
 ///Dimensioning of MGSointSeq is MGSPointSeq(i,j,k).
@@ -322,4 +321,3 @@ friend class MGRSBRep;
 };
 
 /** @} */ // end of BASE group
-#endif

@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGInterval_HH_
-#define _MGInterval_HH_
+#pragma once
+
 #include "mg/EReal.h"
 /** @file */
 /** @addtogroup BASE
@@ -324,4 +324,3 @@ private:
 };
 
 /** @} */ // end of BASE group
-#endif

@@ -61,6 +61,7 @@ using GLsizei = int;
 #define GL_REPEAT 0x2901
 #define GL_LINEAR 0x2601
 #define GL_TEXTURE_2D 0x0DE1
+#define GL_LINE_LOOP 0x0002
 
 #else
 

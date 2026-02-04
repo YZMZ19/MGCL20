@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD124_H__)
-#define __MGIGESPD124_H__
+#pragma once
 
 #include "mg/Transf.h"
 #include "mgiges/IgesPD.h"
@@ -51,5 +50,3 @@ private:
 	///  | R31 R32 R33 | | Z |   | T3 |   | Zout |
 
 };
-
-#endif // __MGIGESPD124_H__

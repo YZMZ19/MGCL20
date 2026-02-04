@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD196_H__)
-#define __MGIGESPD196_H__
+#pragma once
 
 #include "mg/Position.h"
 #include "mg/Unit_vector.h"
@@ -64,5 +63,3 @@ public:
 	int m_refdirDE;///<reference DE direction of the sphere if m_refdirDE>0,
 				///<=0 if no reference direction.
 };
-
-#endif // __MGIGESPD196_H__

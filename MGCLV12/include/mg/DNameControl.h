@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGDNAMECONTROL_HH_
-#define _MGDNAMECONTROL_HH_
-
+#pragma once
 
 #include <map>
 #include "MGCL.h"
@@ -73,4 +71,3 @@ void insertVBO2DlistMap(unsigned dlistName,mgVBO* vbo);
 MG_DLL_DECLR MGDNameControl& getDNameControlInstance();
 
 /// @endcond
-#endif // _MGDNAMECONTROL_HH_

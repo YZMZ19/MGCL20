@@ -33,8 +33,8 @@ MGBSumSurf():MGSurface(),m_g1(nullptr), m_g2(nullptr), m_g12(nullptr){;};
 ~MGBSumSurf();
 MGBSumSurf(const MGBSumSurf&);///<Copy constructor.
 MGBSumSurf& operator= (const MGBSumSurf&);///<Copy assignment.
-MGBSumSurf(MGBSumSurf&&);		///<Move constructor.
-MGBSumSurf& operator= (MGBSumSurf&&);///<Move assignment.
+MGBSumSurf(MGBSumSurf&&)noexcept;		///<Move constructor.
+MGBSumSurf& operator= (MGBSumSurf&&)noexcept;///<Move assignment.
 
 ///Default constructor.
 

@@ -3,8 +3,7 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 
-#ifndef _MGGeometry_HH_
-#define _MGGeometry_HH_
+#pragma once
 
 #include "mg/Object.h"
 #include "mg/Box.h"
@@ -131,4 +130,3 @@ virtual std::string whoami()const{return "Geometry";};
 };
 
 /** @} */ // end of GEO group
-#endif

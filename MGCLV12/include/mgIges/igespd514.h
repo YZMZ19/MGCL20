@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD514_H__)
-#define __MGIGESPD514_H__
+#pragma once
 
 #include <vector>
 #include "mg/Position.h"
@@ -50,5 +49,3 @@ public:
 		///<whether m_face[i]'s direction agrees with the direction of
 		///<the underlying surface(=true) or not.
 };
-
-#endif // __MGIGESPD514_H__

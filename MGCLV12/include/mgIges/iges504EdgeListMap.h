@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGES504EdgeListMap_H__)
-#define __MGIGES504EdgeListMap_H__
+#pragma once
 
 #include <map>
 #include <vector>
@@ -51,5 +50,3 @@ private:
 	///then MGEdge* edge=m_EdgesVector[i][k], where i=m_EdgeDEtoVecID[pd504].
 	std::vector< std::vector<MGEdge*> > m_EdgesVector;
 };
-
-#endif // __MGIGES504EdgeListMap_H__

@@ -26,7 +26,7 @@ static char THIS_FILE[] = __FILE__;
 //Move Constructor
 //all of the ownership of m_TP of tp2 will be
 //transfered to this object.
-MGSBRepVecTP::MGSBRepVecTP(MGSBRepVecTP&& vectp2){
+MGSBRepVecTP::MGSBRepVecTP(MGSBRepVecTP&& vectp2)noexcept{
 	for(int i=0; i<4; i++){
 		m_TP[i]=std::move(vectp2.m_TP[i]);
 		m_prange[i]=std::move(vectp2.m_prange[i]);
@@ -76,7 +76,7 @@ MGSBRepVecTP::MGSBRepVecTP(MGSBRepTP && tp2){
 //Move Assignment.
 //all of the ownership of m_TP of tp2 will be
 //transfered to this object.
-MGSBRepVecTP& MGSBRepVecTP::operator=(MGSBRepVecTP&& vectp2){
+MGSBRepVecTP& MGSBRepVecTP::operator=(MGSBRepVecTP&& vectp2)noexcept {
 	for(int i=0; i<4; i++){
 		m_TP[i].clear();
 		m_TP[i]=std::move(vectp2.m_TP[i]);

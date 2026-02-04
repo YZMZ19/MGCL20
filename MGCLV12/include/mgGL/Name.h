@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGNAME_HH_
-#define _MGNAME_HH_
+#pragma once
 
 #include <iosfwd>
 #include <string>
@@ -93,4 +92,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif // _MGNAME_HH_

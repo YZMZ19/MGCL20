@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGTrimmedCurve_HH_
-#define _MGTrimmedCurve_HH_
-
+#pragma once
 #include <vector>
 #include "mg/Default.h"
 #include "mg/Interval.h"
@@ -518,4 +516,3 @@ friend class MGLBRep;
 };
 
 /** @} */ // end of GEO group
-#endif

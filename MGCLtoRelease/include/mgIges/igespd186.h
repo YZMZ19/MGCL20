@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD186_H__)
-#define __MGIGESPD186_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -63,5 +62,3 @@ public:
 	std::vector<bool> m_orientations;
 			///<m_orientations[i] is the orientaion of the i-th void shell m_void_shells[i].
 };
-
-#endif // __MGIGESPD186_H__

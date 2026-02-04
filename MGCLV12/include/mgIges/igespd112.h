@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD112_H__)
-#define __MGIGESPD112_H__
+#pragma once
 
 #include <vector>
 #include "mg/NDDArray.h"
@@ -60,5 +59,3 @@ public:
 				///<Coefficients sequence of the spline. m_coefs.size()=number_of_segments+1;
 			
 };
-
-#endif // __MGIGESPD112_H__

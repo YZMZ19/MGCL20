@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGRenderAttr_HH_
-#define _MGRenderAttr_HH_
+#pragma once
 
 #include "mgGL/Color.h"
 
@@ -192,4 +191,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif

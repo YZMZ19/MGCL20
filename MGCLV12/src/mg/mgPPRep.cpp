@@ -36,7 +36,7 @@ MGPPRep::MGPPRep(const MGPPRep& rhs)
 }
 
 //Move constructor.
-MGPPRep::MGPPRep(MGPPRep&& rhs)
+MGPPRep::MGPPRep(MGPPRep&& rhs)noexcept
 :m_break_point(std::move(rhs.m_break_point)), m_nbreak(rhs.m_nbreak)
 ,m_order(rhs.m_order), m_sdim(rhs.m_sdim), m_coef(rhs.m_coef){
 	rhs.m_order=rhs.m_nbreak=rhs.m_sdim=0;
@@ -268,7 +268,7 @@ MGPPRep& MGPPRep::operator=(const MGPPRep& rhs){
 }
 
 //Move Assignment
-MGPPRep& MGPPRep::operator=(MGPPRep&& rhs){
+MGPPRep& MGPPRep::operator=(MGPPRep&& rhs)noexcept {
 	m_nbreak=rhs.m_nbreak;
 	m_order=rhs.m_order;
 	m_sdim=rhs.m_sdim;

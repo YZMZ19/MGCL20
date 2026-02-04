@@ -31,7 +31,7 @@ MGBox::MGBox(const MGBox& box2):m_sdim(0), m_range(0){
 }
 
 //Move constructor.
-MGBox::MGBox(MGBox&& box2):m_sdim(box2.m_sdim), m_range(m_rData){
+MGBox::MGBox(MGBox&& box2)noexcept:m_sdim(box2.m_sdim), m_range(m_rData){
 	if(m_sdim<=3){
 		for(int i=0; i<m_sdim; i++)
 			m_rData[i]=box2.m_rData[i];
@@ -148,7 +148,7 @@ MGBox& MGBox::operator= (const MGBox& box2){
 }
 
 //Move Assignment.
-MGBox& MGBox::operator=(MGBox&& box2){
+MGBox& MGBox::operator=(MGBox&& box2)noexcept{
 	if(m_sdim>3)
 		delete[] m_range;
 	m_sdim=box2.m_sdim;

@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGEReal_HH_
-#define _MGEReal_HH_
+#pragma once
+
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -139,4 +139,3 @@ friend class MGInterval;
 };
 
 /** @} */ // end of BASE group
-#endif

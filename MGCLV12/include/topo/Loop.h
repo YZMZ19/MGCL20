@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGLoop_HH_
-#define _MGLoop_HH_
+#pragma once
 
 #include "mg/Curve.h"
 #include "topo/LSPoint_vector.h"
@@ -125,7 +124,7 @@ MGLoop(std::unique_ptr<MGCurve>& param_curve, std::unique_ptr<MGCurve>& world_cu
 ///does nothing.
 MGLoop& operator=(const MGGel& gel2);
 MGLoop& operator=(const MGLoop& gel2);
-MGLoop& operator=(MGLoop&& gel2);
+MGLoop& operator=(MGLoop&& gel2)noexcept;
 
 ///Object transformation.
 MGLoop& operator+=(const MGVector& v);
@@ -744,4 +743,3 @@ extern MG_DLL_DECLR void build_loops(
 extern MG_DLL_DECLR std::unique_ptr<MGLoop> trim_out_subloop(const MGLEPoint& ts, const MGLEPoint& te);
 
 /** @} */ // end of TOPO group
-#endif

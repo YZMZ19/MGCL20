@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined(AFX_SYS2GL_H__1EC223A1_C0D3_4AA7_80BD_89392C970098__INCLUDED_)
-#define AFX_SYS2GL_H__1EC223A1_C0D3_4AA7_80BD_89392C970098__INCLUDED_
-
+#pragma once
 #include "mgGL/SysGL.h"
 
 /** @addtogroup DisplayHandling
@@ -47,5 +45,3 @@ private:
 };
 
 /** @} */ // end of DisplayHandling group
-
-#endif // !defined(AFX_SYS2GL_H__1EC223A1_C0D3_4AA7_80BD_89392C970098__INCLUDED_)

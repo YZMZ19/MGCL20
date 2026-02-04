@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGFOuterCurve_HH_
-#define _MGFOuterCurve_HH_
+#pragma once
 
 #include <iosfwd>
 #include "mg/MGCL.h"
@@ -70,4 +69,3 @@ private:
 };
 
 ///@endcond
-#endif

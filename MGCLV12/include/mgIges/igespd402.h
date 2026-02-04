@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD402_H__)
-#define __MGIGESPD402_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -44,5 +43,3 @@ public:
 
 	std::vector<int> m_members;///<vector of directory entries of the group member.
 };
-
-#endif // __MGIGESPD402_H__

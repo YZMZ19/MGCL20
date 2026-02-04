@@ -1,12 +1,4 @@
-
-#if !defined(_VBOBYANCHORPT__INCLUDED_)
-#define _VBOBYANCHORPT__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
-
-
 #include "mgGL/Color.h"
 #include "mgGL/VBO.h"
 #include "mgGL/VBOElement.h"
@@ -60,4 +52,3 @@ protected:
 
 
 /** @} */ // end of DisplayHandling group
-#endif //_VBOBYANCHORPT__INCLUDED_

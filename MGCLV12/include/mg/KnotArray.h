@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGKnotArray_HH_
-#define _MGKnotArray_HH_
+#pragma once
+
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -105,4 +105,3 @@ private:
 };
 
 /** @} */ // end of BASE group
-#endif

@@ -148,7 +148,7 @@ MGMatrix::MGMatrix(const MGMatrix& mat)
 }
 
 //Move constructor.
-MGMatrix::MGMatrix(MGMatrix&& mat)
+MGMatrix::MGMatrix(MGMatrix&& mat)noexcept
 :m_sdim(mat.m_sdim), m_matrix(mat.m_matrix){
 	mat.m_matrix=nullptr;
 	mat.m_sdim=0;
@@ -692,7 +692,7 @@ MGMatrix& MGMatrix::operator=(const MGMatrix& mat){
 }
 
 //Move Assignment
-MGMatrix& MGMatrix::operator=(MGMatrix&& mat){
+MGMatrix& MGMatrix::operator=(MGMatrix&& mat)noexcept {
 	delete[] m_matrix;
 	m_matrix=mat.m_matrix;
 	mat.m_matrix=nullptr;

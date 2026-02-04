@@ -114,4 +114,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-

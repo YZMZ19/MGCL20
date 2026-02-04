@@ -30,13 +30,13 @@ static char THIS_FILE[] = __FILE__;
 //
 
 //Move Constructor;
-MGFPline::MGFPline(MGFPline&& fpl)
+MGFPline::MGFPline(MGFPline&& fpl)noexcept
 :m_face(fpl.m_face), m_uvline(fpl.m_uvline.release()){ ; }
 
 // Operator overload
 //
 //Move Assignment
-MGFPline& MGFPline::operator= (MGFPline&& fpl){
+MGFPline& MGFPline::operator= (MGFPline&& fpl)noexcept {
 	m_face=fpl.m_face;
 	m_uvline.reset(fpl.m_uvline.release());
 	return *this;

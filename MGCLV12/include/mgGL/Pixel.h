@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno             */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPixel_HH_
-#define _MGPixel_HH_
+#pragma once
 
 #include "mg/MGCL.h"
 
@@ -66,4 +65,3 @@ pixelData m_pixel;//One pixel data.
 };
 
 /** @} */ // end of DisplayHandling group
-#endif

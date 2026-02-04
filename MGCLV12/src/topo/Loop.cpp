@@ -183,7 +183,7 @@ MGLoop& MGLoop::operator=(const MGLoop& loop2){
 	m_perim_num_s = loop2.m_perim_num_s, m_perim_num_e = loop2.m_perim_num_e;
 	return *this;
 }
-MGLoop& MGLoop::operator=(MGLoop&& loop2){
+MGLoop& MGLoop::operator=(MGLoop&& loop2)noexcept{
 	if(this==&loop2)
 		return *this;
 

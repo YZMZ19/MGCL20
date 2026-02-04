@@ -1,6 +1,4 @@
-#ifndef _mgTL2LPline_HH_
-#define _mgTL2LPline_HH_
-
+#pragma once
 #include "Tl2/TL2parameter.h"
 #include "Tl2/TL2Polyline.h"
 
@@ -225,4 +223,3 @@ inline bool isUndefinedConcavity(double concavity) {
 };
 
 /** @} */ // end of UseTessellation group
-#endif

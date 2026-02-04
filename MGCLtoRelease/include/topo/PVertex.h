@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPVertex_HH_
-#define _MGPVertex_HH_
+#pragma once
 
 #include "mg/Default.h"
 #include "topo/PCell.h"
@@ -44,7 +43,7 @@ MGPVertex():MGPCell(),m_edge(nullptr),m_t(0.){;};
 ///Copy constructor.
 ///Parent edge will be cleared.
 MGPVertex(const MGPVertex& v):MGPCell(),m_edge(nullptr), m_t(v.m_t){;};
-MGPVertex(MGPVertex&& v):MGPCell(),m_edge(nullptr), m_t(v.m_t){;};
+MGPVertex(MGPVertex&& v)noexcept:MGPCell(),m_edge(nullptr), m_t(v.m_t){;};
 
 ///Copy constructor with parent edge e.
 ///e is set as the parent edge.
@@ -58,7 +57,7 @@ explicit MGPVertex(double t, MGEdge* e= nullptr):MGPCell(), m_edge(e), m_t(t){;}
 ///Assignment.
 ///Binder and partner relation and edge pointer will be cleared, 
 MGPVertex& operator=(const MGPVertex& gel2);
-MGPVertex& operator=(MGPVertex&& gel2);
+MGPVertex& operator=(MGPVertex&& gel2)noexcept;
 
 ///Get binder.
 MGBVertex* binder_vertex()const;
@@ -146,4 +145,3 @@ MG_DLL_DECLR friend MGIfstream& operator>> (MGIfstream& buf, MGPVertex& pv);
 };
 
 /** @} */ // end of TOPO group
-#endif

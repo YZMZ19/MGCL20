@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPlane_HH_
-#define _MGPlane_HH_
+#pragma once
 #include <memory>
 #include "mg/drawParam.h"
 #include "mg/Position.h"
@@ -800,4 +799,3 @@ friend class MGStraight;
 };
 
 /** @} */ // end of GEO group
-#endif

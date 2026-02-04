@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPPRep_HH_
-#define _MGPPRep_HH_
+#pragma once
 /** @file */
 /** @addtogroup GEORelated
  *  @{
@@ -41,8 +40,8 @@ MGPPRep();
 ~MGPPRep(){if(m_coef) delete[] m_coef;};
 MGPPRep(const MGPPRep&);///Copy constructor.
 MGPPRep& operator= (const MGPPRep&);///Copy assignment.
-MGPPRep(MGPPRep&&);		///Move constructor.
-MGPPRep& operator= (MGPPRep&&);///Move assignment.
+MGPPRep(MGPPRep&&)noexcept;		///Move constructor.
+MGPPRep& operator= (MGPPRep&&)noexcept;///Move assignment.
 
 
 ///Constructor of dummy PP-Rep of specified size.
@@ -160,4 +159,3 @@ private:
 };
 
 /** @} */ // end of GEORelated group
-#endif

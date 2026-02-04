@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __IGESOFSTREAM_H__)
-#define __IGESOFSTREAM_H__
+#pragma once
 
 #include <fstream>
 #include <string>
@@ -131,4 +130,3 @@ private:
 };
 
 /** @} */ // end of FileInputOutput group
-#endif // __IGESOFSTREAM_H__

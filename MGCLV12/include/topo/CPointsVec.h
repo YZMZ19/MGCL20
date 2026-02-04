@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _mgCPointsVec_HH_
-#define _mgCPointsVec_HH_
+#pragma once
 
 #include <memory>
 #include <iosfwd>
@@ -188,4 +187,3 @@ MG_DLL_DECLR friend std::ostream& operator<< (std::ostream& out, const mgCPoints
 };
 
 ///@endcond
-#endif

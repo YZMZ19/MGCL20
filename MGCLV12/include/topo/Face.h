@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGFace_HH_
-#define _MGFace_HH_
+#pragma once
 
 #include <vector>
 #include "mg/Default.h"
@@ -76,7 +75,7 @@ MGFace() = default;
 
 ///Copy constructor.
 MGFace(const MGFace& face);
-MGFace(MGFace&& face);
+MGFace(MGFace&& face)noexcept;
 
 ///Constructor.
 MGFace(const MGFace& face, bool boundaryIsNecessary);
@@ -126,7 +125,7 @@ MGFace(UniqueSurface&& surf,
 ///does nothing.
 MGFace& operator=(const MGGel& gel2);
 MGFace& operator=(const MGFace& gel2);
-MGFace& operator=(MGFace&& f2);
+MGFace& operator=(MGFace&& f2)noexcept;
 
 /// Faceに平行移動を行ないオブジェクトを生成する。
 ///Translation of the Face
@@ -1127,4 +1126,3 @@ MG_DLL_DECLR MGPosition MGClosest_to_curves(
 );
 
 /** @} */ // end of TOPO group
-#endif

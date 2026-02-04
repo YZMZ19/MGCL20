@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGOscuCircleData_HH_
-#define _MGOscuCircleData_HH_
+#pragma once
 /** @file */
 /** @addtogroup GEORelated
  *  @{
@@ -74,4 +73,3 @@ private:
 };
 
 /** @} */ // end of GEORelated group
-#endif

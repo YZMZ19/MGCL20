@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSBRepVecTP_HH_
-#define _MGSBRepVecTP_HH_
+#pragma once
 
 #include <assert.h>
 #include "mg/LBRep.h"
@@ -60,8 +59,8 @@ MGSBRepVecTP()=default;//so set that no TPs' are specified.
 ~MGSBRepVecTP()=default;
 MGSBRepVecTP(const MGSBRepVecTP&);///Copy constructor.
 MGSBRepVecTP& operator= (const MGSBRepVecTP&)=delete;///Copy assignment.
-MGSBRepVecTP(MGSBRepVecTP&&);	///Move constructor.
-MGSBRepVecTP& operator= (MGSBRepVecTP&&);///Move assignment.
+MGSBRepVecTP(MGSBRepVecTP&&)noexcept;	///Move constructor.
+MGSBRepVecTP& operator= (MGSBRepVecTP&&)noexcept;///Move assignment.
 
 
 ///Conversion constructor from ordinary MGSBRepTP.
@@ -140,4 +139,3 @@ MYVEC* vecTP(){return m_TP;};
 };
 
 /** @} */ // end of GEORelated group
-#endif

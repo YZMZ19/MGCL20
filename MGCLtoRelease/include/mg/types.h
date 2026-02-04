@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGGEL_TID_HH_
-#define _MGGEL_TID_HH_
+#pragma once
 
 #include <utility>
 
@@ -157,4 +156,3 @@ enum MGGEL_KIND{
 typedef std::pair<MGGEL_KIND,MGGEL_TID> MGAbstractGel;
 
 /** @} */ // end of GelRelated group
-#endif

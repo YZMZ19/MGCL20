@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSSisect_list_HH_
-#define _MGSSisect_list_HH_
+#pragma once
 /** @file */
 /** @addtogroup IsectContainer
  *  @{
@@ -116,4 +115,3 @@ std::ostream& toString(std::ostream& ostrm)const override;
 };
 
 /** @} */ // end of IsectContainer group
-#endif

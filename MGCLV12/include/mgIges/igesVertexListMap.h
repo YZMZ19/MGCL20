@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESVertexListMap_H__)
-#define __MGIGESVertexListMap_H__
+#pragma once
 
 #include <map>
 #include <vector>
@@ -48,5 +47,3 @@ private:
 	///then MGBVertex* vertex=m_VerticesVector[i][k], where i=m_PD502toVertexMap[pd502].
 	std::vector< std::vector<MGBVertex*> > m_VerticesVector;
 };
-
-#endif /// __MGIGESVertexListMap_H__

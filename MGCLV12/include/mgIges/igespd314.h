@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD314_H__)
-#define __MGIGESPD314_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -46,5 +45,3 @@ public:
 	float m_rgb[3];///<RGB percetage data. 0<= m_rgb[.] <=100.
 	std::string m_color_name;///<color name.
 };
-
-#endif // __MGIGESPD314_H__

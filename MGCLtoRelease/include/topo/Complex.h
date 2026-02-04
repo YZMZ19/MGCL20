@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGComplex_HH_
-#define _MGComplex_HH_
-
+#pragma once
 #include <list>
 #include <map>
 #include "mg/Box.h"
@@ -43,7 +41,7 @@ virtual ~MGComplex();
 ///When parent is not specified, this is ordinary world complex.
 /// Not a boundary complex.
 MGComplex(const MGComplex& complex);
-MGComplex(MGComplex&& complex);
+MGComplex(MGComplex&& complex)noexcept;
 
 ///Construct of one cell.
 explicit MGComplex(const MGCell& cell);
@@ -243,4 +241,3 @@ friend class MGFace;
 };
 
 /** @} */ // end of TOPO group
-#endif

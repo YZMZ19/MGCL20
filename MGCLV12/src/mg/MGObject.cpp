@@ -51,7 +51,7 @@ MGObject::MGObject(const MGObject& obj2)
 }
 
 //Move constructor.
-MGObject::MGObject(MGObject && obj2)
+MGObject::MGObject(MGObject && obj2)noexcept
 :MGAttribedGel(std::move(obj2)),m_appearance(std::move(obj2.m_appearance)),
 m_box(std::move(obj2.m_box)){
 }
@@ -61,7 +61,7 @@ MGObject::~MGObject() {///Destructor.
 }
 
 //Move assignment.
-MGObject& MGObject::operator=(MGObject && obj2){
+MGObject& MGObject::operator=(MGObject && obj2)noexcept {
 	MGAttribedGel::operator=(std::move(obj2));
 	m_appearance=std::move(obj2.m_appearance);
 	m_box=std::move(obj2.m_box);

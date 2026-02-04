@@ -58,8 +58,8 @@ MGCompositeCurve(){	;};
 ~MGCompositeCurve();
 MGCompositeCurve(const MGCompositeCurve&);///Copy constructor.
 MGCompositeCurve& operator= (const MGCompositeCurve&);///Copy assignment.
-MGCompositeCurve(MGCompositeCurve&&);		///Move constructor.
-MGCompositeCurve& operator= (MGCompositeCurve&&);///Move assignment.
+MGCompositeCurve(MGCompositeCurve&&)noexcept;		///Move constructor.
+MGCompositeCurve& operator= (MGCompositeCurve&&)noexcept;///Move assignment.
 
 ///Constructor of one curve.
 ///crv is a newed object pointer and MGCompositeCurve takes the ownership.

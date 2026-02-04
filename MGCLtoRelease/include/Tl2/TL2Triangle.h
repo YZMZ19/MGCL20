@@ -1,6 +1,4 @@
-#ifndef _mgTL2Triangle_HH_
-#define _mgTL2Triangle_HH_
-
+#pragma once
 #include <vector>
 #include "mg/MGCL.h"
 #include "mg/Position.h"
@@ -79,4 +77,3 @@ private:
 };
 
 /** @} */ // end of UseTessellation group
-#endif

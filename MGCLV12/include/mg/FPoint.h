@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGFPoint_HH_
-#define _MGFPoint_HH_
+#pragma once
 
 #include "mg/Position.h"
 class MGFSurface;
@@ -82,5 +81,3 @@ MG_DLL_DECLR MGVector normal(const MGFPoint& uv);
 MG_DLL_DECLR MGUnit_vector unit_normal(const MGFPoint& uv);
 
 /** @} */ // end of GEORelated group
-
-#endif

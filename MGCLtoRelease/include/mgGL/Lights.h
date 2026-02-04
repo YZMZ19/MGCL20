@@ -3,10 +3,6 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 #pragma once 
-
-#ifndef _MGLIGHTS_HH_
-#define _MGLIGHTS_HH_
-
 #include "mgGL/GLAttrib.h"
 
 class MGOfstream;
@@ -123,4 +119,3 @@ virtual std::ostream& toString(std::ostream&) const;
 };
 
 /** @} */ // end of GLAttrib group
-#endif // _MGLIGHTS_HH_

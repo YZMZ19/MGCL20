@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGKnot_HH_
-#define _MGKnot_HH_
+#pragma once
+
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -25,7 +25,7 @@ public:
 MG_DLL_DECLR friend std::ostream& operator<< (std::ostream&, const MGKnot& );
 
 ////////////Constructor////////////
-MGKnot():m_multiplicity(0){;};	///Default Constructor
+MGKnot() = default;	///Default Constructor
 
 ///*****This is the fundamental constructor.*****
 MGKnot(
@@ -65,10 +65,9 @@ int dump(MGOfstream& ) const;
 int restore(MGIfstream& );
 
 private:
-	double	m_value;			///<Knot value.
-	int		m_multiplicity;		///<multiplicity of the value.
+	double	m_value=0.;			///<Knot value.
+	int		m_multiplicity=0;		///<multiplicity of the value.
 
 };
 
 /** @} */ // end of BASE group
-#endif

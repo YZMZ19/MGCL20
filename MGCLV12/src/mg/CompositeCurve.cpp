@@ -72,7 +72,7 @@ MGCompositeCurve::MGCompositeCurve(const MGCompositeCurve& original)
 		m_composite[j]=(**i).clone();
 }
 //Move constructor.
-MGCompositeCurve::MGCompositeCurve(MGCompositeCurve&& original)
+MGCompositeCurve::MGCompositeCurve(MGCompositeCurve&& original)noexcept
 :MGCurve(std::move(original)), m_composite(original.number_of_curves()){
 	iterator i=original.begin(), ie=original.end();
 	for(int j=0; i!=ie; i++, j++){
@@ -116,7 +116,7 @@ MGCompositeCurve& MGCompositeCurve::operator=(const MGGel& gel2){
 		operator=(*gel2_is_this);
 	return *this;
 }
-MGCompositeCurve& MGCompositeCurve::operator=(MGCompositeCurve&& original){
+MGCompositeCurve& MGCompositeCurve::operator=(MGCompositeCurve&& original)noexcept{
 	MGCurve::operator=(std::move(original));
 	iterator i=begin(), ie=end();
 	for(; i!=ie; i++)

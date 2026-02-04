@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGDefault_HH_
-#define _MGDefault_HH_
+#pragma once
+
 /** @addtogroup BASE
  *  @{
  */
@@ -159,4 +159,3 @@ static const MGKnotVector& infinite_knot_vector(){return mgINFINITE_KNOT_VECTOR;
 };
 
 /** @} */ // end of BASE group
-#endif

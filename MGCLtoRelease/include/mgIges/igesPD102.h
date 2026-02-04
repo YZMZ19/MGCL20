@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD102_H__)
-#define __MGIGESPD102_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -43,5 +42,3 @@ public:
 
 	std::vector<int> m_curve_DEs;	///<pointer to each member curve's directory entry.
 };
-
-#endif // __MGIGESPD102_H__

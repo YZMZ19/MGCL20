@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGUnit_vector_HH_
-#define _MGUnit_vector_HH_
+#pragma once
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -90,4 +89,3 @@ MGUnit_vector UnitNormal(
 );
 
 /** @} */ // end of BASE group
-#endif

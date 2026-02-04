@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSYSGLList_HH_
-#define _MGSYSGLList_HH_
+#pragma once
 
 #include <vector>
 #include <utility>
@@ -33,30 +32,33 @@ class MG_DLL_DECLR mgSysGLList{
 
 public:
 
-typedef std::list<mgSysGL*> container_type;
-
+typedef std::list<std::unique_ptr<mgSysGL>> container_type;
 typedef container_type::iterator iterator;
 typedef container_type::const_iterator const_iterator;
 
+private:
+	///In m_sysgls mgSysGL pointers are stored.
+	container_type m_sysgls;			///<list of mgSysGL.
+
+public:
 ///////////////Constructor/////////////
 
-mgSysGLList();
+mgSysGLList()=default;
 
 ///Copy constructor.
-mgSysGLList(const mgSysGLList& list2);
+mgSysGLList(mgSysGLList&& list2) = default;
+mgSysGLList(const mgSysGLList& list2)=delete;
 
 ////////////Destructor////////////////
-~mgSysGLList();
+~mgSysGLList()=default;
 
 ////////////////Operator overload//////////////////
 
 ///Assignment operator.
-mgSysGLList& operator=(const mgSysGLList& list2);
+mgSysGLList& operator=(mgSysGLList&& list2) = default;
+mgSysGLList& operator=(const mgSysGLList& list2)=delete;
 
 /// オペレーション
-
-///const_iterator begin()const{return m_sysgls.begin();};
-///iterator begin(){return m_sysgls.begin();};
 
 ///Clear the list. Delete all the display lists.
 void clear();
@@ -95,17 +97,12 @@ mgSysGL* push_front(int fc, const MGGel* oi);
 
 ///sysgl must be a newed object, and the ownership will be 
 ///transfered to this.
-void push_back(mgSysGL* sysgl);
+void push_back(mgSysGL*&& sysgl);
 
 ///Get the size of this list.
 int size()const{return int(m_sysgls.size());};
 
-private:
-
-///In m_sysgls mgSysGL pointers are stored.
-container_type m_sysgls;			///<list of mgSysGL.
 
 };
 
 /** @} */ // end of DisplayHandling group
-#endif

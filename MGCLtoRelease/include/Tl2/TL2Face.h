@@ -1,5 +1,4 @@
-#ifndef _mgTL2Face_HH_
-#define _mgTL2Face_HH_
+#pragma once
 
 #include <vector>
 #include <map>
@@ -184,5 +183,3 @@ bool splitByBridges(
 );
 
 /** @} */ // end of UseTessellation group
-
-#endif

@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGTolerance_HH_
-#define _MGTolerance_HH_
+#pragma once
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -345,4 +344,3 @@ MG_DLL_DECLR bool MGRight_angle(double cos_data);
 MG_DLL_DECLR bool MGZero_angle(double data);
 
 /** @} */ // end of BASE group
-#endif

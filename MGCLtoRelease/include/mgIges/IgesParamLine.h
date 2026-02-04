@@ -3,8 +3,7 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 
-#if !defined( __MGIGESPARAMLINE_H__)
-#define __MGIGESPARAMLINE_H__
+#pragma once
 
 #include <memory>
 #include <string>
@@ -39,5 +38,3 @@ private:
 	int m_DE_back_pointer;	///<Data entry back pointer. The line number is
 					///<obtained by MGIges::DEpointer_to_lnumber().
 };
-
-#endif // __MGIGESPARAMLINE_H__

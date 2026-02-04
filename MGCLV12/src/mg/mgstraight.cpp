@@ -36,7 +36,7 @@ MGStraight::MGStraight(const MGStraight& sl)
 m_knotV(nullptr), m_root_point(sl.m_root_point), m_sparam(sl.m_sparam){;}
 
 //Move constructor.
-MGStraight::MGStraight(MGStraight&& sl)
+MGStraight::MGStraight(MGStraight&& sl)noexcept
 :MGCurve(std::move(sl)), m_direction(std::move(sl.m_direction))
 , m_sparam(sl.m_sparam), m_endparam(sl.m_endparam)
 , m_knotV(sl.m_knotV), m_root_point(std::move(sl.m_root_point)){
@@ -884,7 +884,7 @@ MGStraight& MGStraight::operator=(const MGStraight& sl2){
 }
 
 //Move assignment.
-MGStraight& MGStraight::operator=(MGStraight&& sl2){
+MGStraight& MGStraight::operator=(MGStraight&& sl2)noexcept {
 	MGCurve::operator=(std::move(sl2));
 	m_direction=std::move(sl2.m_direction);
 	m_endparam=sl2.m_endparam;

@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD122_H__)
-#define __MGIGESPD122_H__
+#pragma once
 
 #include "mgiges/IgesPD.h"
 
@@ -46,5 +45,3 @@ public:
 	double m_terminate_point[3];///<(x,y,z) coordinates of the terminate point of
 						///<the start point of the generatrix.
 };
-
-#endif // __MGIGESPD122_H__

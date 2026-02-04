@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGGelPosition_HH_
-#define _MGGelPosition_HH_
+#pragma once
 
 #include <iosfwd>
 #include <vector>
@@ -223,4 +222,3 @@ private:
 };
 
 /** @} */ // end of GelRelated group
-#endif

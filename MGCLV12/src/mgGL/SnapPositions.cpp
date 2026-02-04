@@ -35,12 +35,6 @@ MGSnapPositions::MGSnapPositions(snap_kind kind)
 :m_snap_kind(kind){
 }
 
-///Copy constructor.
-MGSnapPositions::MGSnapPositions(const MGSnapPositions& sp)
-:mgVBO(sp),m_obj_nums(sp.m_obj_nums),m_snap_kind(sp.m_snap_kind)
-,m_positions(sp.m_positions){
-}
-
 ///Assignment
 MGSnapPositions& MGSnapPositions::operator=(
 	const MGSnapPositions& sp
@@ -48,6 +42,13 @@ MGSnapPositions& MGSnapPositions::operator=(
 	m_obj_nums=sp.m_obj_nums;
 	m_snap_kind=sp.m_snap_kind;
 	m_positions=sp.m_positions;
+	return *this;
+}
+MGSnapPositions& MGSnapPositions::operator=(MGSnapPositions&& sp)
+noexcept {
+	m_obj_nums = std::move(sp.m_obj_nums);
+	m_snap_kind = sp.m_snap_kind;
+	m_positions = std::move(sp.m_positions);
 	return *this;
 }
 

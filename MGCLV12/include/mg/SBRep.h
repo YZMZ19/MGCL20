@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno             */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSBRep_HH_
-#define _MGSBRep_HH_
+#pragma once
 
 #include <vector>
 #include <assert.h>
@@ -1309,4 +1308,3 @@ MG_DLL_DECLR bool is_valid_perim(std::unique_ptr<MGLBRep> perims[4]);
 MG_DLL_DECLR bool is_valid_perim(const MGLBRep* perims[4]);
 
 /** @} */ // end of GEO group
-#endif

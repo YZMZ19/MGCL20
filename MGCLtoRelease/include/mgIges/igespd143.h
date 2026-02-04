@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD143_H__)
-#define __MGIGESPD143_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -46,5 +45,3 @@ public:
 	int m_surface_DE;///<Directory entry of the untrimmed(base) surface.
 	std::vector<int> m_boundaries;///<vector of directory entries of the boundary entity(MGIgesPD141).
 };
-
-#endif // __MGIGESPD143_H__

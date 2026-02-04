@@ -3,10 +3,6 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 #pragma once 
-
-#ifndef _MGSPOTLIGHT_HH_
-#define _MGSPOTLIGHT_HH_
-
 #include "mgGL/PointLight.h"
 
 /** @addtogroup GLAttrib
@@ -131,4 +127,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif // _MGSPOTLIGHT_HH_

@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGEDIRECTORYENTRY_H__)
-#define __MGIGEDIRECTORYENTRY_H__
+#pragma once
 
 #include <memory>
 #include <string>
@@ -102,5 +101,3 @@ private:
 
 	std::unique_ptr<MGIgesPD> m_ParamData;
 };
-
-#endif // __MGIGEDIRECTORYENTRY_H__

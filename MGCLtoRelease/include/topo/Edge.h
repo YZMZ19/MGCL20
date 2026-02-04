@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGEdge_HH_
-#define _MGEdge_HH_
+#pragma once
 
 #include <map>
 #include "mg/Box.h"
@@ -651,4 +650,3 @@ friend class MGIgesIfstream;
 };
 
 /** @} */ // end of TOPO group
-#endif

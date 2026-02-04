@@ -4,9 +4,6 @@
 /********************************************************************/
 #pragma once 
 
-#ifndef _MGPickObjects_HH_
-#define _MGPickObjects_HH_
-
 #include <vector>
 #include "mg/AbstractGels.h"
 #include "mg/PickObject.h"
@@ -212,4 +209,3 @@ protected:
 };
 
 /** @} */ // end of MGObjectRelated group
-#endif // _MGPickObjects_HH_

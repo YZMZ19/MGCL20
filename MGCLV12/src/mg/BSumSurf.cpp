@@ -69,7 +69,8 @@ MGBSumSurf::MGBSumSurf(const MGBSumSurf& rhs):MGSurface(rhs)
 }
 
 //Move constructor.
-MGBSumSurf::MGBSumSurf(MGBSumSurf&& rhs):MGSurface(std::move(rhs))
+MGBSumSurf::MGBSumSurf(MGBSumSurf&& rhs)noexcept
+:MGSurface(std::move(rhs))
 ,m_g1(rhs.m_g1),m_g2(rhs.m_g2),m_g12(rhs.m_g12){
 	rhs.m_g1=rhs.m_g2=rhs.m_g12=nullptr;
 }
@@ -85,7 +86,7 @@ MGBSumSurf::~MGBSumSurf(){
 ////////// Operator Overload //////////
 
 //Move Assignment.
-MGBSumSurf& MGBSumSurf::operator=(MGBSumSurf&& rhs){
+MGBSumSurf& MGBSumSurf::operator=(MGBSumSurf&& rhs)noexcept {
 	MGSurface::operator=(std::move(rhs));
 	delete m_g1; m_g1=rhs.m_g1;
 	delete m_g2; m_g2=rhs.m_g2;

@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGCylinder_HH_
-#define _MGCylinder_HH_
+#pragma once
+
 #include "mg/Position.h"
 #include "mg/Unit_vector.h"
 #include "mg/CSisects.h"
@@ -519,4 +519,3 @@ std::unique_ptr<MGSBRep> surf1D(const MGPlane& plane)const override{
 };
 
 /** @} */ // end of GEO group
-#endif

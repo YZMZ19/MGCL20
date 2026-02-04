@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGisect_HH_
-#define _MGisect_HH_
+#pragma once
 
 /** @defgroup IsectContainer Intersection Containers
  *  Containers of intersection of MGObject subclasses, 
@@ -100,4 +99,3 @@ inline std::ostream& operator<< (std::ostream& ostrm, const MGisect& is){
 }
 
 /** @} */ // end of IsectContainer group
-#endif

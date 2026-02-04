@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPoint_HH_
-#define _MGPoint_HH_
+#pragma once
 
 #include "mg/Geometry.h"
 #include "mg/Position.h"
@@ -231,4 +230,3 @@ private:
 };
 
 /** @} */ // end of GEO group
-#endif

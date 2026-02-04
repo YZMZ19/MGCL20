@@ -1,6 +1,4 @@
-#ifndef _mgTL2Fans_HH_
-#define _mgTL2Fans_HH_
-
+#pragma once
 #include <vector>
 #include "Tl2/TL2Fan.h"
 #include "Tl2/TL2Triangle.h"
@@ -175,4 +173,3 @@ void triangulate(
 );
 
 /** @} */ // end of UseTessellation group
-#endif

@@ -77,8 +77,8 @@ explicit MGVector(int sdim=0);
 ~MGVector(){if(m_sdim>3) delete[] m_element;}
 MGVector(const MGVector&);///Copy constructor.
 MGVector& operator= (const MGVector&);///Copy assignment.
-MGVector(MGVector&&);		///Move constructor.
-MGVector& operator= (MGVector&&);///Move assignment.
+MGVector(MGVector&&)noexcept;		///Move constructor.
+MGVector& operator= (MGVector&&)noexcept;///Move assignment.
 
 ///Construct 2D vector by providing each element data.
 MGVector(double x, double y);
@@ -167,13 +167,9 @@ double anglepai(const MGVector& v2)const{return angle(v2);};
 /// v1.angle2pai(v2,N)+v2.angle2pai(v1,N)=2*pai always holds.
 double angle2pai(const MGVector& v2, const MGVector& N)const;
 
-/// 自身のベクトルと与えられたベクトルのなす角度を cosΘ で返却する
-
-/// 自身か与えられたベクトルが零ベクトルの時は、cosΘは 1.0 とする
 ///Compute angle in cosine of two vectors.
+///When either vector is zero vector, return 1.0.
 double cangle(const MGVector&) const;
-
-/// 自身のベクトルと与えられたベクトルのなす角度の sin値を返却
 
 ///Compute angle in sine of two vectors.
 /// sanlge>=0.
@@ -293,8 +289,7 @@ bool parallel(const MGVector& ) const;
 ///         =2., their directions are completely opposite.
 double parallelism(const MGVector& v2) const;
 
-/// 自身のベクトルをベクトル(v2)に射影したベクトルを求める。
-/// v2 が 零ベクトルのとき(*this)が返る。
+/// Project this vector onto v2. When v2 is zero vector, return *this.
 MGVector project(const MGVector& v2) const;
 
 ///Reference to i-th element.
@@ -397,9 +392,7 @@ inline double parallelism(const MGVector& v1, const MGVector& v2) {
 	return v1.parallelism(v2);
 };
 
-/// V1をベクトル(v2)に射影したベクトルを求める。
-
-/// v2 が 零ベクトルのときV1が返る。
+///Project vector V1 onto vector V2. When V2 is zero vector, return V1.
 MG_DLL_DECLR MGVector project(const MGVector& V1, const MGVector& V2);
 
 };

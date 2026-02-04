@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGLBRepEndC_HH_
-#define _MGLBRepEndC_HH_
+#pragma once
+
 #include "mg/MGCL.h"
 #include "mg/Vector.h"
 
@@ -125,5 +125,3 @@ private:
 };
 
 /** @} */ // end of GEORelated group
-
-#endif

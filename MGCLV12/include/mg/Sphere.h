@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSphere_HH_
-#define _MGSphere_HH_
+#pragma once
 #include "mg/Position.h"
 #include "mg/Unit_vector.h"
 #include "mg/CSisects.h"
@@ -489,4 +488,3 @@ void compute_uv(const MGPosition& P, double&u, double&v)const;
 };
 
 /** @} */ // end of GEO group
-#endif

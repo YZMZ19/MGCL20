@@ -59,7 +59,7 @@ MGSPointSeq::MGSPointSeq(const MGSPointSeq& rhs)
 }
 
 //Move constructor.
-MGSPointSeq::MGSPointSeq(MGSPointSeq&& rhs)
+MGSPointSeq::MGSPointSeq(MGSPointSeq&& rhs)noexcept
 : m_capacityu(rhs.m_capacityu),m_capacityv(rhs.m_capacityv)
 , m_sdim(rhs.m_sdim)
 , m_lengthu(rhs.m_lengthu), m_lengthv(rhs.m_lengthv)
@@ -531,7 +531,7 @@ MGSPointSeq& MGSPointSeq::operator=(const MGSPointSeq& sp2){
 	return *this;
 }
 //Move Assignment
-MGSPointSeq& MGSPointSeq::operator=(MGSPointSeq&& rhs){
+MGSPointSeq& MGSPointSeq::operator=(MGSPointSeq&& rhs)noexcept{
 	if(m_spoint)
 		delete m_spoint;
 	m_spoint=rhs.m_spoint;

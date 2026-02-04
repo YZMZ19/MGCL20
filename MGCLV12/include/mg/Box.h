@@ -58,8 +58,8 @@ explicit MGBox(int dim=0):m_sdim(0), m_range(nullptr){if(dim) get_area(dim);};
 ~MGBox(){if(m_sdim>3) delete[] m_range;};
 MGBox(const MGBox& rhs);//Copy constructor.
 MGBox& operator=(const MGBox& rhs);//Copy assignment.
-MGBox(MGBox&& rhs);//Move constructor.
-MGBox& operator=(MGBox&& rhs);//Move assignment.
+MGBox(MGBox&& rhs)noexcept;//Move constructor.
+MGBox& operator=(MGBox&& rhs)noexcept;//Move assignment.
 
 ///Comparison
 bool operator== (const MGBox& box2) const;

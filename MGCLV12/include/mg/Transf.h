@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGTransf_HH_
-#define _MGTransf_HH_
+#pragma once
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -52,6 +51,8 @@ MG_DLL_DECLR friend std::ostream& operator<< (std::ostream&, const MGTransf&);
 /// General Space dimension Constructor.
 ///When dim>=1, MGMatrix is initialized as a unit matrix.
 explicit MGTransf(int dim=0);
+MGTransf(const MGTransf&) = default;
+MGTransf(MGTransf&&)=default;
 
 ///Construct Transf from a matrix and a vector.
 ///***** This is the fundamental constructor.*****
@@ -102,6 +103,9 @@ MGTransf(
     const MGPosition& Q0, const MGPosition& Q1);
 
 //////////// Operator overload. /////////
+
+MGTransf& operator= (const MGTransf&) = default;
+MGTransf& operator= (MGTransf&&) = default;
 
 ///Reference (i,j)-th element.
 double operator() (int i, int j) const{return ref(i,j);};
@@ -250,4 +254,3 @@ private:
 
 
 /** @} */ // end of BASE group
-#endif

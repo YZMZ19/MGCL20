@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD504_H__)
-#define __MGIGESPD504_H__
+#pragma once
 
 #include <vector>
 #include "mg/Position.h"
@@ -87,5 +86,3 @@ void write_out_into_string(
 	std::vector<MGIges504Edge> m_edges;///<m_edges[0] is dummy. This is because list index
 			///<of PD508 starts from 1.
 };
-
-#endif /// __MGIGESPD504_H__

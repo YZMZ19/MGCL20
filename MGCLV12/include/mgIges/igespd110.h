@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD110_H__)
-#define __MGIGESPD110_H__
+#pragma once
 
 #include "mg/Position.h"
 #include "mgiges/IgesPD.h"
@@ -50,5 +49,3 @@ public:
 	double m_start[3];		///<(x, y, z) of the start point.
 	double m_terminate[3];	///<(x, y, z) of the terminate point.
 };
-
-#endif // __MGIGESPD110_H__

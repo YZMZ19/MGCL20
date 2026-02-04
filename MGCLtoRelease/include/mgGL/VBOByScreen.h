@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __VBOBYSCREEN_H__)
-#define __VBOBYSCREEN_H__
-
+#pragma once
 #include "mgGL/VBO.h"
 
 class MGPosition;
@@ -80,4 +78,3 @@ protected:
 };
 
 /** @} */ // end of DisplayHandling group
-#endif //__VBOBYSCREEN_H__

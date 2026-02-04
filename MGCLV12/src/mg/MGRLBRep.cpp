@@ -689,7 +689,7 @@ MGRLBRep& MGRLBRep::operator=(const MGGel& gel2){
 		operator=(*gel2_is_this);
 	return *this;
 }
-MGRLBRep& MGRLBRep::operator=(MGGel&& gel2){
+MGRLBRep& MGRLBRep::operator=(MGGel&& gel2)noexcept {
 	MGRLBRep* gel2_is_this=dynamic_cast<MGRLBRep*>(&gel2);
 	if(gel2_is_this)
 		operator=(std::move(*gel2_is_this));

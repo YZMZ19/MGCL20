@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD158_H__)
-#define __MGIGESPD158_H__
+#pragma once
 
 #include <vector>
 #include "mg/Sphere.h"
@@ -46,5 +45,3 @@ public:
 	double m_radius;	///<radius of the sphere.
 	double m_center[3];///<center coordinates of the sphere.
 };
-
-#endif // __MGIGESPD158_H__

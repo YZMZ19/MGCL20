@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPlaneImage_HH_
-#define _MGPlaneImage_HH_
+#pragma once
 
 #include <memory>
 #include "mg/Plane.h"
@@ -178,4 +177,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif

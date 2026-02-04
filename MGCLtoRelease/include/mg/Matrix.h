@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGMatrix_HH_
-#define _MGMatrix_HH_
+#pragma once
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -45,8 +44,8 @@ explicit MGMatrix(int sdim=0) :MGMatrix(sdim, 1.){ ; };///initialized as a unit 
 ~MGMatrix(){if(m_matrix) delete[] m_matrix;};
 MGMatrix(const MGMatrix&);///Copy constructor.
 MGMatrix& operator=(const MGMatrix& mat);
-MGMatrix(MGMatrix&&);		///Move constructor.
-MGMatrix& operator= (MGMatrix&&);///Move assignment.
+MGMatrix(MGMatrix&&)noexcept;		///Move constructor.
+MGMatrix& operator= (MGMatrix&&)noexcept;///Move assignment.
 
 ///  Construct 2D matrix from two vectors.
 MGMatrix(const MGVector&, const MGVector&);
@@ -324,4 +323,3 @@ MG_DLL_DECLR MGVector& operator*= (MGVector& v, const MGMatrix& m);
 MG_DLL_DECLR MGUnit_vector& operator*= (MGUnit_vector& v,const MGMatrix&);
 
 /** @} */ // end of BASE group
-#endif

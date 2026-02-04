@@ -1,3 +1,4 @@
+#pragma once
 #include "StdAfx.h"
 #include "Tl2/TL2LPline.h"
 

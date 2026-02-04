@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGStraight_HH_
-#define _MGStraight_HH_
-
+#pragma once
 #include "mg/EReal.h"
 #include "mg/Position.h"
 #include "mg/Unit_vector.h"
@@ -73,8 +71,8 @@ MGStraight();	///void constructor.
 ~MGStraight(){if(m_knotV) delete m_knotV;};	///Destructor.
 MGStraight(const MGStraight& sl);///Copy constructor.
 MGStraight& operator=(const MGStraight& sl);///assignment.
-MGStraight(MGStraight&& sl);		///Move constructor.
-MGStraight& operator= (MGStraight&& rhs);///Move assignment.
+MGStraight(MGStraight&& sl)noexcept;		///Move constructor.
+MGStraight& operator= (MGStraight&& rhs)noexcept;///Move assignment.
 
 
 ///Straight specifying all the member data. All of the data are employed as 
@@ -772,4 +770,3 @@ MGPSRELATION relation_coincide1(
 };
 
 /** @} */ // end of GEO group
-#endif

@@ -124,7 +124,7 @@ MGBPointSeq::MGBPointSeq(const MGBPointSeq& bp)
 }
 
 //Move constructor.
-MGBPointSeq::MGBPointSeq(MGBPointSeq&& bp)
+MGBPointSeq::MGBPointSeq(MGBPointSeq&& bp)noexcept
 :m_sdim(bp.m_sdim),m_length(bp.m_length),m_capacity(bp.m_capacity),
 m_bpoint(bp.m_bpoint){
 	bp.m_bpoint=nullptr;
@@ -772,7 +772,7 @@ MGBPointSeq& MGBPointSeq::operator= (const MGBPointSeq& bp2){
 }
 										  
 //Moove Assignment
-MGBPointSeq& MGBPointSeq::operator= (MGBPointSeq&& bp2){
+MGBPointSeq& MGBPointSeq::operator= (MGBPointSeq&& bp2)noexcept {
 	if(this!=&bp2){
 		if(m_bpoint)
 			delete[] m_bpoint;

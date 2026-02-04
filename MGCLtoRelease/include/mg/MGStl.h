@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGStl_HH_
-#define _MGStl_HH_
-
+#pragma once
 #include <map>
 #include "mg/drawParam.h"
 #include "mg/object.h"
@@ -355,5 +353,3 @@ void AddTL2Data(
 };
 
 /** @} */ // end of MGObjectRelated group
-
-#endif

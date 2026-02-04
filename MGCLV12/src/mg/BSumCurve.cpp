@@ -51,7 +51,7 @@ MGBSumCurve::MGBSumCurve(const MGBSumCurve& curve)
 }
 
 //Move constructor.
-MGBSumCurve::MGBSumCurve(MGBSumCurve&& curve)
+MGBSumCurve::MGBSumCurve(MGBSumCurve&& curve)noexcept
 :MGCurve(curve),m_g1(curve.m_g1),m_g2(curve.m_g2),m_g12(curve.m_g12){
 	curve.m_g1=curve.m_g2=curve.m_g12=nullptr;
 }
@@ -98,7 +98,7 @@ MGBSumCurve& MGBSumCurve::operator=(const MGBSumCurve& crv2){
 }
 
 //Move Assignment.
-MGBSumCurve& MGBSumCurve::operator=(MGBSumCurve&& crv2){
+MGBSumCurve& MGBSumCurve::operator=(MGBSumCurve&& crv2)noexcept{
 	MGCurve::operator=(crv2);
 	delete m_g1; m_g1=crv2.m_g1;
 	delete m_g2; m_g2=crv2.m_g2;

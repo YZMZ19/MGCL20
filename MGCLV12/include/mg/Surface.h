@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-
-#ifndef _MGSurface_HH_
-#define _MGSurface_HH_
+#pragma once
 #include <memory>
 #include <vector>
 #include "mg/Default.h"
@@ -1421,4 +1419,3 @@ double get_length(
 }
 
 /** @} */ // end of GEO group
-#endif

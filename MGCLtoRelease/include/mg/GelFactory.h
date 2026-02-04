@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined(MGINCLUDEGUARD_GELFACTORY__)
-#define MGINCLUDEGUARD_GELFACTORY__
+#pragma once
+
 #include <map>
 #include "mg/MGCL.h"
 
@@ -147,5 +147,3 @@ public:
 #define AUTO_GEL_REGISTER(classname, gelname) \
 	static MGAutoGelRegister<classname> \
 		GEL_REG_MAKE_UNIQUE_NAME( glreg__ ) (gelname);
-
-#endif // defined(MGINCLUDEGUARD_GELFACTORY__)

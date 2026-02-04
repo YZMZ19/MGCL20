@@ -2,14 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-
-#if !defined(_MGVBOLEAF__INCLUDED_)
-#define _MGVBOLEAF__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif // _MSC_VER > 1000
-
 #include "StdAfx.h"
 #include "mgGL/glslprogram.h"
 #include "mgGL/Color.h"
@@ -219,4 +212,3 @@ private:
 };
 
 /** @} */ // end of DisplayHandling group
-#endif // !defined(_MGVBOLEAF__INCLUDED_)

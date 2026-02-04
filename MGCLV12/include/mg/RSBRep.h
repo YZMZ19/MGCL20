@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGRSBRep_HH_
-#define _MGRSBRep_HH_
-
+#pragma once
 #include "mg/Position.h"
 #include "mg/SBRep.h"
 
@@ -688,4 +686,3 @@ extern MG_DLL_DECLR void Binominal(int m, double* bc);
 };
 
 /** @} */ // end of GEO group
-#endif

@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD510_H__)
-#define __MGIGESPD510_H__
+#pragma once
 
 #include <vector>
 #include "mg/Position.h"
@@ -56,5 +55,3 @@ public:
 			///<When m_outer_loop_identified=true, m_loops[0] is the outer loop, else
 			///<all of the loops are inner loops.
 };
-
-#endif // __MGIGESPD510_H__

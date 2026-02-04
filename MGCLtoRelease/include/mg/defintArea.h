@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGDefintArea_HH_
-#define _MGDefintArea_HH_
+#pragma once
 #include "mg/MGCL.h"
 
 /// @cond
@@ -38,5 +37,3 @@ public:
 };
 
 /// @endcond
-
-#endif

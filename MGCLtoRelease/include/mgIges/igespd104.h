@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD104_H__)
-#define __MGIGESPD104_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -53,5 +52,3 @@ public:
 	double m_X1, m_Y1;///<the start point coordinate of the conic arc in (x,y) plane.
 	double m_X2, m_Y2;///<the terminate point coordinate of the conic arc in (x,y) plane.
 };
-
-#endif // __MGIGESPD104_H__

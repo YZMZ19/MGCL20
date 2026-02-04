@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-
-#ifndef _MGStaticGLAttrib_HH_
-#define _MGStaticGLAttrib_HH_
+#pragma once
 
 class MGColor;
 #include "mg/MGCL.h"
@@ -67,4 +65,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif //#ifndef _MGStaticGLAttrib_HH_

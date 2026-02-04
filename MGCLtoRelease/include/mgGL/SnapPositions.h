@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPositions_HH_
-#define _MGPositions_HH_
-
+#pragma once
 #include <vector>
 #include <list>
 #include <set>
@@ -53,7 +51,8 @@ enum snap_kind{
 MGSnapPositions(snap_kind kind=nopos);
 
 ///Copy constructor.
-MGSnapPositions(const MGSnapPositions& sp);
+MGSnapPositions(const MGSnapPositions& sp)=default;
+MGSnapPositions(MGSnapPositions&& sp) = default;
 
 ///Virtual Destructor
 virtual ~MGSnapPositions();
@@ -69,6 +68,7 @@ void append_position_data(std::vector<MGPosition>& points)const;
 
 ///Assignment
 MGSnapPositions& operator=(const MGSnapPositions& sp);
+MGSnapPositions& operator=(MGSnapPositions&& sp)noexcept;
 
 ///Extract candidate position data into this.
 void extract(
@@ -158,4 +158,3 @@ snap_kind m_snap_kind;
 };
 
 /** @} */ // end of GLAttrib group
-#endif

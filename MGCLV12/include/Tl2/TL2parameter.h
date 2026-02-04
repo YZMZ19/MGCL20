@@ -1,6 +1,4 @@
-#ifndef _mgTL2parameter_HH_
-#define _mgTL2parameter_HH_
-
+#pragma once
 #include <vector>
 #include "mg/MGCL.h"
 #include "mg/drawParam.h"
@@ -191,4 +189,3 @@ int findConcaveVertex(
 );
 
 /** @} */ // end of UseTessellation group
-#endif

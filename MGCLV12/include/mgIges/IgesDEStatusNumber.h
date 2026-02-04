@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGEDESTATUSNUMBER_H__)
-#define __MGIGEDESTATUSNUMBER_H__
+#pragma once
 
 #include <string>
 #include "mg/MGCL.h"
@@ -52,5 +51,3 @@ private:
 				///<4:Logical/Positional, 5:2D Parametric, 6:Construction Geometry;
 	short m_Hierarchy;///<0:Global top down, 1:Global defer, 2:Use hierarchy property;
 };
-
-#endif // __MGIGEDESTATUSNUMBER_H__

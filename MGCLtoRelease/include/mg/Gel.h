@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGGel_HH_
-#define _MGGel_HH_
+#pragma once
 
 #include "StdAfx.h"
 #include "mg/MGCL.h"
@@ -121,4 +120,3 @@ long abstractGelId(long typeId);
 MG_DLL_DECLR MGGel* MGNullGel(long TID);
 
 /** @} */ // end of GelRelated group
-#endif

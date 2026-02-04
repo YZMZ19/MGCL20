@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSurfCurve_HH_
-#define _MGSurfCurve_HH_
+#pragma once
 
 #include "mg/Default.h"
 #include "mg/Curve.h"
@@ -451,4 +450,3 @@ friend class MGPlane;
 };
 
 /** @} */ // end of GEO group
-#endif

@@ -7,8 +7,7 @@
  * @file Texture.h
  * @brief ƒNƒ‰ƒX MGGridCursor ‚ÌéŒ¾
  */
-#ifndef _mgTexture_HH
-#define _mgTexture_HH
+#pragma once
 
 #include "mg/MGCL.h"
 
@@ -132,4 +131,3 @@ private:
 };///_mgTexture_HH
 
 /** @} */ // end of GLAttrib group
-#endif

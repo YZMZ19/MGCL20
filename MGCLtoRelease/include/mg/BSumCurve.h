@@ -40,8 +40,8 @@ MGBSumCurve();
 ~MGBSumCurve();
 MGBSumCurve(const MGBSumCurve&);///<Copy constructor.
 MGBSumCurve& operator= (const MGBSumCurve&);///<Copy assignment.
-MGBSumCurve(MGBSumCurve&&);		///<Move constructor.
-MGBSumCurve& operator= (MGBSumCurve&&);///<Move assignment.
+MGBSumCurve(MGBSumCurve&&)noexcept;		///<Move constructor.
+MGBSumCurve& operator= (MGBSumCurve&&)noexcept;///<Move assignment.
 
 ///constructor of three curves.
 ///The ownership of g1, g2, and g12 will be transfered to this MGBSumCurve.

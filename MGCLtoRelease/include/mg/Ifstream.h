@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGIfstream_HH_
-#define _MGIfstream_HH_
+#pragma once
 
 #include <stdio.h>
 #include <fstream>
@@ -161,5 +160,3 @@ friend class MGGroup;
 };
 
 /** @} */ // end of FileInputOutput group
-
-#endif	//#ifndef _MGIfstream_HH_

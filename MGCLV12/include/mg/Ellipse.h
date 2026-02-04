@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGEllipse_HH_
-#define _MGEllipse_HH_
+#pragma once
 
 #include "mg/Curve.h"
 #include "mg/Position.h"
@@ -797,4 +796,3 @@ friend class MGSphere;
 };
 
 /** @} */ // end of GEO group
-#endif

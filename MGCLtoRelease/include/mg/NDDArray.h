@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGNDDArray_HH_
-#define _MGNDDArray_HH_
+#pragma once
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -39,8 +38,8 @@ MGNDDArray():m_capacity(0),m_length(0),m_current(0),m_element(nullptr){;};///voi
 virtual ~MGNDDArray(){if(m_element) delete[] m_element;};
 MGNDDArray(const MGNDDArray& rhs);//Copy constructor.
 MGNDDArray& operator=(const MGNDDArray& rhs);//Copy assignment.
-MGNDDArray(MGNDDArray&& rhs);//Move constructor.
-MGNDDArray& operator=(MGNDDArray&& rhs);//Move assignment.
+MGNDDArray(MGNDDArray&& rhs) noexcept;//Move constructor.
+MGNDDArray& operator=(MGNDDArray&& rhs)noexcept;//Move assignment.
 
 
 /// Constructor MGNDDArray of size n and lenght=n.
@@ -292,4 +291,3 @@ private:
 };
 
 /** @} */ // end of BASE group
-#endif

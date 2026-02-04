@@ -2,9 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGRLBRep_HH_
-#define _MGRLBRep_HH_
-
+#pragma once
 #include "mg/LBRep.h"
 
 // MGRLBRep.h
@@ -40,7 +38,9 @@ MG_DLL_DECLR friend MGRLBRep operator+ (const MGVector& v, const MGRLBRep& lb);
 MG_DLL_DECLR friend MGRLBRep operator* (double scale, const MGRLBRep&);
 
 ///Default constructor.
-MGRLBRep(){ ; };
+MGRLBRep()=default;
+MGRLBRep(const MGRLBRep&) = default;
+MGRLBRep(MGRLBRep&&) = default;
 
 ///Construct Line NURBS, providing all the member data.
 ///***** This is the fundamental constructor(when homogeneous=1).*****
@@ -113,7 +113,9 @@ MGRLBRep(
 ///When the leaf object of this and crv2 are not equal, this assignment
 ///does nothing.
 MGRLBRep& operator=(const MGGel& gel2);
-MGRLBRep& operator=(MGGel&& gel2);
+MGRLBRep& operator=(MGGel&& gel2)noexcept;
+MGRLBRep& operator=(const MGRLBRep& gel2)=default;
+MGRLBRep& operator=(MGRLBRep&& gel2)noexcept = default;
 
 ///Transformation object construction
 MGRLBRep operator+ (const MGVector& ) const;
@@ -863,4 +865,3 @@ MG_DLL_DECLR int MGRLBRep_ellipse_weight
 ///@endcond
 
 /** @} */ // end of GEO group
-#endif

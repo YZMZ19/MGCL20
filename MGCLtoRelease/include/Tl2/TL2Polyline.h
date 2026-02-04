@@ -1,6 +1,4 @@
-#ifndef _mgTL2Polyline_HH_
-#define _mgTL2Polyline_HH_
-
+#pragma once
 #include "mg/LBRep.h"
 #include "topo/Complex.h"
 
@@ -190,4 +188,3 @@ const mgTL2Polyline* TL2Polyline(const MGEdge* edg);
 const mgTL2Polyline* TL2Polyline(MGComplex::const_iterator ei);
 
 /** @} */ // end of UseTessellation group
-#endif

@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSSisect_HH_
-#define _MGSSisect_HH_
+#pragma once
 /** @addtogroup IsectContainer
  *  @{
  */
@@ -34,18 +33,18 @@ private:
 					///<surface. 交線の第１surface のパラメータ(u,v)による表現
 	std::unique_ptr<MGCurve> m_param2;	///<(u,v) representaion of the line of the second
 					///<surface. 交線の第2surface のパラメータ(u,v)による表現
-	MGSSRELATION m_rel;	///<Two surfaces relationship at the intersection line.
+	MGSSRELATION m_rel= MGSSRELATION::MGSSREL_UNKNOWN;///<Two surfaces relationship at the intersection line.
 					///<交線における両Surfaceの関係。
 
 public:
 
 ////////Special member functions/////////
-MGSSisect():m_rel(MGSSRELATION::MGSSREL_UNKNOWN){;};	///void constructor.
-~MGSSisect()=default;			///Destructor.
-MGSSisect(const MGSSisect& ssi)=delete;///Copy constructor.
-MGSSisect& operator= (const MGSSisect& rhs)=delete;///Copy assignment.
-MGSSisect(MGSSisect&& ssi);		///Move constructor.
-MGSSisect& operator= (MGSSisect&& rhs);///Move assignment.
+MGSSisect() = default;	///void constructor.
+~MGSSisect() = default;	///Destructor.
+MGSSisect(const MGSSisect& ssi) = delete;///Copy constructor.
+MGSSisect& operator= (const MGSSisect& rhs) = delete;///Copy assignment.
+MGSSisect(MGSSisect&& ssi) = default;		///Move constructor.
+MGSSisect& operator= (MGSSisect&& rhs) = default;///Move assignment.
 
 ///Construct providing all the raw data.
 ///The ownership of iline, param1, and param2 are all transfered to MGSSisect.
@@ -148,4 +147,3 @@ void set_null();
 };
 
 /** @} */ // end of IsectContainer group
-#endif

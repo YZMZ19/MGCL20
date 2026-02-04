@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGCurveParameter_HH_
-#define _MGCurveParameter_HH_
+#pragma once
 
 #include <math.h>
 #include "mg/nlbit.h"
@@ -75,5 +74,3 @@ int getCurveParameter2(
 };
 
 /** @} */ // end of ALGORITHM group
-
-#endif

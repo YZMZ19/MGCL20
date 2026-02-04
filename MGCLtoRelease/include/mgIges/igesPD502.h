@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD502_H__)
-#define __MGIGESPD502_H__
+#pragma once
 
 /// @file
 ///	@brief  Declaration for class MGIgesPD502.
@@ -53,5 +52,3 @@ public:
 	std::vector<MGPosition> m_vertices;///<m_vertices[0] is dummy. This is because
 			///<list index of MGIges504Edge's m_Svertex/m_Tvertex starts from 1.
 };
-
-#endif // __MGIGESPD502_H__

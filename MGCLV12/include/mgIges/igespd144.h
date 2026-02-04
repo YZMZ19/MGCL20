@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD144_H__)
-#define __MGIGESPD144_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -56,5 +55,3 @@ public:
 	int m_outer_boudary_DE;///<outer boundary DE of the parametric space curve.
 	std::vector<int> m_inner_boundaries;///<vector of directory entry of the inner boundary entities.
 };
-
-#endif // __MGIGESPD144_H__

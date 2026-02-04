@@ -49,7 +49,7 @@ MGSBRepTP::MGSBRepTP(const MGSBRepTP& tp){
 }
 
 //Move Constructor
-MGSBRepTP::MGSBRepTP(MGSBRepTP&& tp){
+MGSBRepTP::MGSBRepTP(MGSBRepTP&& tp)noexcept{
 	for(int i=0; i<4; i++){
 		m_TP[i]=tp.m_TP[i];
 		tp.m_TP[i]=nullptr;
@@ -66,7 +66,7 @@ MGSBRepTP& MGSBRepTP::operator=(const MGSBRepTP& tp){
 }
 
 //Move Assignment.
-MGSBRepTP& MGSBRepTP::operator=(MGSBRepTP&& tp){
+MGSBRepTP& MGSBRepTP::operator=(MGSBRepTP&& tp)noexcept {
 	for(int i=0; i<4; i++){
 		if(m_TP[i])
 			delete m_TP[i];

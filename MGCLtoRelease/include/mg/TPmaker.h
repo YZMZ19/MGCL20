@@ -8,8 +8,7 @@
  *
  *  Declaration for class %mgTPmaker.
  */
-#if !defined(__mgTPmaker_H__)
-#define __mgTPmaker_H__
+#pragma once
 #include <vector>
 #include "mg/Vector.h"
 #include "mg/LBRep.h"
@@ -68,5 +67,3 @@ private:
 
 };
 /** @}*/ //GEORelated
-
-#endif // __mgTPmaker_H__

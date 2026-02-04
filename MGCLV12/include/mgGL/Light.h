@@ -4,9 +4,6 @@
 /********************************************************************/
 #pragma once 
 
-#ifndef _MGLIGHT_HH_
-#define _MGLIGHT_HH_
-
 #include "mgGL/GLAttrib.h"
 
 class MGOfstream;
@@ -165,4 +162,3 @@ MGLight& set_light(const MGLight& gel2);
 };
 
 /** @} */ // end of GLAttrib group
-#endif // _MGLIGHT_HH_

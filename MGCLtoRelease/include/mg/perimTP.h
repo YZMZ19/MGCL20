@@ -8,8 +8,7 @@
  *
  *  Declaration for class %mgPerimTP and its family.
  */
-#if !defined(__mgPerimTP_H__)
-#define __mgPerimTP_H__
+#pragma once
 #include <iostream>
 #include <vector>
 #include "mg/LBRep.h"
@@ -109,5 +108,3 @@ protected:
 	bool need_negate(double cmnargs, double cmnarge) const;	
 };
 /** @} */ // end of GEORelated group
-
-#endif // __mgPerimTP_H__

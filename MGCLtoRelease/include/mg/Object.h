@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGObject_HH_
-#define _MGObject_HH_
+#pragma once
 
 #include "mg/MGCL.h"
 #include "mg/Box.h"
@@ -52,8 +51,8 @@ MGObject():m_appearance(nullptr){;};	///void constructor.
 virtual ~MGObject();///Destructor.
 MGObject(const MGObject&);///Copy constructor.
 MGObject& operator= (const MGObject& obj2){return set_object(obj2);};;///Copy assignment.
-MGObject(MGObject&&);		///Move constructor.
-MGObject& operator= (MGObject&&);///Move assignment.
+MGObject(MGObject&&)noexcept;		///Move constructor.
+MGObject& operator= (MGObject&&)noexcept;///Move assignment.
 
 ///Object transformation.
 virtual MGObject& operator+=(const MGVector& v)=0;
@@ -187,4 +186,3 @@ friend MGCell;
 };
 
 /** @} */ // end of MGObjectRelated group
-#endif

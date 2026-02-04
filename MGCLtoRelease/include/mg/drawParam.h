@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGDrawParam_HH_
-#define _MGDrawParam_HH_
+#pragma once
 
 #include <iosfwd>
 #include "mg/MGCL.h"
@@ -133,5 +132,3 @@ double compute_curve_tolerance(
 ///@endcond
 
 /** @} */ // end of BASE group
-
-#endif

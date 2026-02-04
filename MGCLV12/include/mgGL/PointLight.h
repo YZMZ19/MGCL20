@@ -4,9 +4,6 @@
 /********************************************************************/
 #pragma once 
 
-#ifndef _MGPOINTLIGHT_HH_
-#define _MGPOINTLIGHT_HH_
-
 #include "mgGL/Light.h"
 
 class MGOfstream;
@@ -132,4 +129,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif // _MGPOINTLIGHT_HH_

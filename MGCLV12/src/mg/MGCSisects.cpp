@@ -79,7 +79,7 @@ void MGCSisects::append(
 
 // Adds the MGCSisects to the end of the list.
 void MGCSisects::append(MGCSisects&& list){
-	assert(object1()==list.object1() && object2()==list.object2());
+	//assert(object1()==list.object1() && object2()==list.object2());
 	m_list.splice(m_list.end(),std::move(list.m_list));
 }
 

@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGKnotVector_HH_
-#define _MGKnotVector_HH_
+#pragma once
+
 /** @file */
 /** @addtogroup BASE
  *  @{
@@ -41,7 +41,7 @@ MG_DLL_DECLR friend std::ostream& operator<<(std::ostream& strm, const MGKnotVec
 MGKnotVector(const MGKnotVector& rhs)=default;//Copy constructor.
 MGKnotVector& operator=(const MGKnotVector& rhs)=default;//Copy assignment.
 MGKnotVector(MGKnotVector&& rhs)=default;//Move constructor.
-MGKnotVector& operator=(MGKnotVector&& rhs)noexcept=default;//Move assignment.
+MGKnotVector& operator=(MGKnotVector&& rhs)=default;//Move assignment.
 
 /// Construct garbage knot vector of specified size.
 explicit MGKnotVector(
@@ -251,4 +251,3 @@ void new_knot_coef(const MGKnotVector&, ///< old knot vector.
 };
 
 /** @} */ // end of BASE group
-#endif

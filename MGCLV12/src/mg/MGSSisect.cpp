@@ -21,21 +21,6 @@ static char THIS_FILE[] = __FILE__;
 // Constructor
 //
 
-// Move Constructor;
-MGSSisect::MGSSisect(MGSSisect&& ssi):m_rel(ssi.m_rel),
-m_iline(ssi.m_iline.release()),
-m_param1(ssi.m_param1.release()), m_param2(ssi.m_param2.release()){
-;}
-
-//Move Assignment
-MGSSisect& MGSSisect::operator= (MGSSisect&& rhs){
-	m_rel=rhs.m_rel;
-	m_iline.reset(rhs.m_iline.release());
-	m_param1=std::move(rhs.m_param1);
-	m_param2=std::move(rhs.m_param2);
-	return *this;
-}
-
 //Construct providing all the raw data.
 //Copy version. Copy of the three curves will take place.
 MGSSisect::MGSSisect (

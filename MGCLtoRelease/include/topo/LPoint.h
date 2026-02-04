@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGLPoint_HH_
-#define _MGLPoint_HH_
+#pragma once
 
 #include <iosfwd>
 #include "mg/MGCL.h"
@@ -64,4 +63,3 @@ private:
 };
 
 /** @} */ // end of TOPORelated group
-#endif

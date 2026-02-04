@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGLEPoint_HH_
-#define _MGLEPoint_HH_
+#pragma once
+
 /** @file */
 /** @addtogroup IsectContainer
  *  @{
@@ -146,4 +146,3 @@ private:
 };
 
 /** @} */ // end of IsectContainer group
-#endif

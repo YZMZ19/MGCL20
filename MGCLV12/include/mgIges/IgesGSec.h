@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESGSEC_H__)
-#define __MGIGESGSEC_H__
+#pragma once
 
 #include <string>
 #include "mg/MGCL.h"
@@ -70,4 +69,3 @@ public:
 };
 
 /** @} */ // end of FileInputOutput group
-#endif // __MGIGESGSEC_H__

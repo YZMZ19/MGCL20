@@ -39,7 +39,7 @@ MGPVertex& MGPVertex::operator=(const MGPVertex& pv){
 	MGPCell::operator=(pv);
 	return *this;
 }
-MGPVertex& MGPVertex::operator=(MGPVertex&& pv){
+MGPVertex& MGPVertex::operator=(MGPVertex&& pv)noexcept {
 	if(this==&pv)
 		return *this;
 

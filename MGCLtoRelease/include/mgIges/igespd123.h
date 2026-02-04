@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD123_H__)
-#define __MGIGESPD123_H__
+#pragma once
 
 #include "mgiges/IgesPD.h"
 
@@ -48,5 +47,3 @@ private:
 
 	double m_xyz[3];///<(x,y,z) coordinates of the direction vector.
 };
-
-#endif // __MGIGESPD123_H__

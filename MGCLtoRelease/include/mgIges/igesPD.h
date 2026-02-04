@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD_H__)
-#define __MGIGESPD_H__
+#pragma once
 
 #include "mgiges/Iges.h"
 
@@ -56,5 +55,3 @@ private:
 	int m_type_number;
 	MGIgesDirectoryEntry* m_DEpointer;	///<DE pointer of this parameter data.
 };
-
-#endif // __MGIGESPD_H__

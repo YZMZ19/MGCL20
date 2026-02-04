@@ -3,13 +3,7 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 /// SnapAttrib.h: MGSnapAttrib クラスのインターフェイス
-#if !defined(AFX_SNAPATTRIB_H__3704A1F4_AAA3_4021_98F4_087C5A16006B__INCLUDED_)
-#define AFX_SNAPATTRIB_H__3704A1F4_AAA3_4021_98F4_087C5A16006B__INCLUDED_
-
-#if _MSC_VER > 1000
 #pragma once
-#endif /// _MSC_VER > 1000
-
 #include <bitset>
 #include <iosfwd>
 #include "mg/MGCL.h"
@@ -119,4 +113,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif // !defined(AFX_SNAPATTRIB_H__3704A1F4_AAA3_4021_98F4_087C5A16006B__INCLUDED_)

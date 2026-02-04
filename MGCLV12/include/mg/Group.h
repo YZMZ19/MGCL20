@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGGroup_HH_
-#define _MGGroup_HH_
+#pragma once
 
 #include "mg/AttribedGel.h"
 
@@ -346,4 +345,3 @@ friend class MGOfstream;
 };
 
 /** @} */ // end of GelRelated group
-#endif

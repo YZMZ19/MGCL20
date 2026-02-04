@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPosition_list_HH_
-#define _MGPosition_list_HH_
+#pragma once
 /** @file */
 /** @addtogroup IsectContainer
  *  @{
@@ -288,4 +287,3 @@ bool add(
 };
 
 /** @} */ // end of IsectContainer group
-#endif

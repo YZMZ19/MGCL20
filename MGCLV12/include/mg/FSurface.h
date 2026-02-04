@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGFSurface_HH_
-#define _MGFSurface_HH_
+#pragma once
 
 #include <memory>
 #include <vector>
@@ -1073,4 +1072,3 @@ public:
 ///@endcond
 
 /** @} */ // end of MGObjectRelated group
-#endif

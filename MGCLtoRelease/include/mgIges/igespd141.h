@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD141_H__)
-#define __MGIGESPD141_H__
+#pragma once
 
 #include <vector>
 #include "mgiges/IgesPD.h"
@@ -70,5 +69,3 @@ public:
 	int m_surface_DE;///<Directory entry of the untrimmed surface(base surface).
 	std::vector<MGIges141Edge> m_edges;///<vector of MGIges141Edge.
 };
-
-#endif // __MGIGESPD141_H__

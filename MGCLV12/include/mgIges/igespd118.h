@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD118_H__)
-#define __MGIGESPD118_H__
+#pragma once
 
 #include "mgiges/IgesPD.h"
 
@@ -45,5 +44,3 @@ public:
 						///<=1:Join 1st to last, and last to 1st.
 	short m_developable_flag;///<=0:Possibly not developable, =1:developable.
 };
-
-#endif // __MGIGESPD118_H__

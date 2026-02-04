@@ -3,9 +3,7 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 // CurveContinuity.h
-
-#if !defined( __MGCurveContinuity_H__)
-#define __MGCurveContinuity_H__
+#pragma once
 
 #include "mg/Unit_vector.h"
 #include "mg/Position.h"
@@ -97,4 +95,3 @@ private:
 };
 
 /** @} */ // end of GEORelated group
-#endif //__MGCurveContinuity_H__

@@ -8,9 +8,7 @@
  *
  *  Declaration for class %mgTPOnFaceBoundary.
  */
-#if !defined(__mgTPOnFaceBoundary_H__)
-#define __mgTPOnFaceBoundary_H__
-
+#pragma once
 #include <iostream>
 #include <vector>
 #include "mg/TrimmedCurve.h"
@@ -99,5 +97,3 @@ private:
 	);
 };
 /** @}*/ //GEORelated
-
-#endif // __mgTPOnFaceBoundary_H__

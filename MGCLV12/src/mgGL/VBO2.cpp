@@ -149,6 +149,8 @@ void mgVBO::drawPointSeq(
 	}
 }
 
+#ifndef _CONSOLE
+
 //Draw 3D curve in the topology's star cell world coordinates.
 ///obj is a boundary of the star cell, and the curves are extracted from the
 ///boundary of the star cell and drawn.
@@ -303,6 +305,7 @@ void mgVBO::drawPoints(
 			Vertex(*i);
 	End();
 }
+#endif
 
 ///Draw a polyline using openGL functions.
 ///When clodes=true, 1st and last points will be connected.
@@ -352,6 +355,8 @@ void mgVBO::drawPolyline(size_t nPoints, const MGPosition line[], bool closed){
 	}
 	End();
 }
+
+#ifndef _CONSOLE
 
 ///Draw a line from start to end.
 void mgVBO::drawStraight(const MGPosition& end, const MGPosition& start){
@@ -622,11 +627,13 @@ void mgVBO::drawShade(
 	for(; i!=iend; i++)
 		drawShade(*i,target,polygonMode);
 }
+#endif
 
 #ifdef _CONSOLE
 //World coordinates
 void mgVBO::drawString(const CString& str, const MGPosition& P, const MGColor* colr) {
-	std::cout << "mgVBO::drawString:str=" << str << ", P=" << P << ", colr=" << colr << std::endl;
+	std::wcout << "mgVBO::drawString:str=" << (LPCTSTR)str << ", P=";
+	std::cout << P << ", colr=" << colr << std::endl;
 }
 void mgVBO::drawString(const std::string& str, const MGPosition& P, const MGColor* colr) {
 	std::cout << "mgVBO::drawString:str=" << str << ", P=" << P << ", colr=" << colr << std::endl;
@@ -635,12 +642,14 @@ void mgVBO::drawString(const char* str, const MGPosition& P, const MGColor* colr
 	std::cout << "mgVBO::drawString:str=" << *str << ", P=" << P << ", colr=" << colr << std::endl;
 }
 void mgVBO::drawString(const wchar_t* str, const MGPosition& P, const MGColor* colr) {
-	std::cout << "mgVBO::drawString:str=" << *str << ", P=" << P << ", colr=" << colr << std::endl;
+	std::wcout << "mgVBO::drawString:str=" << *str;
+	std::cout<< ", P=" << P << ", colr=" << colr << std::endl;
 }
 
 //Screen coordinates
 void mgVBO::drawStringByScreen(const CString& str, const MGPosition& P, const MGColor* colr) {
-	std::cout << "mgVBO::drawStringByScreen:str=" << str << ", P=" << P << ", colr=" << colr << std::endl;
+	std::wcout << "mgVBO::drawStringByScreen:str=" << (LPCTSTR)str;
+	std::cout<< ", P=" << P << ", colr=" << colr << std::endl;
 }
 void mgVBO::drawStringByScreen(const std::string& str, const MGPosition& P, const MGColor* colr) {
 	std::cout << "mgVBO::drawStringByScreen:str=" << str << ", P=" << P << ", colr=" << colr << std::endl;
@@ -649,7 +658,8 @@ void mgVBO::drawStringByScreen(const char* str, const MGPosition& P, const MGCol
 	std::cout << "mgVBO::drawStringByScreen:str=" << str << ", P=" << P << ", colr=" << colr << std::endl;
 }
 void mgVBO::drawStringByScreen(const wchar_t* str, const MGPosition& P, const MGColor* colr) {
-	std::cout << "mgVBO::drawStringByScreen:str=" << str << ", P=" << P << ", colr=" << colr << std::endl;
+	std::wcout << "mgVBO::drawStringByScreen:str=" << str;
+	std::cout << ", P=" << P << ", colr=" << colr << std::endl;
 }
 
 #else //_CONSOLE

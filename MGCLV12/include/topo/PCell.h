@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGPCell_HH_
-#define _MGPCell_HH_
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -147,4 +146,3 @@ friend void merge_2bcells(MGPCell& pcell1, MGPCell& pcell2);
 };
 
 /** @} */ // end of TOPO group
-#endif

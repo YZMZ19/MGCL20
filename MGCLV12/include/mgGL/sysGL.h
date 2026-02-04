@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGSYSGL_HH_
-#define _MGSYSGL_HH_
+#pragma once
 
 #include <iosfwd>
 #include "mg/MGCL.h"
@@ -101,4 +100,3 @@ private:
 };
 
 /** @} */ // end of DisplayHandling group
-#endif

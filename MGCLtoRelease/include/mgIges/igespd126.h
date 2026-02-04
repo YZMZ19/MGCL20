@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD126_H__)
-#define __MGIGESPD126_H__
+#pragma once
 
 #include "mg/Position.h"
 #include "mg/LBRep.h"
@@ -62,5 +61,3 @@ public:
 			///<m_end_param=m_knots[nBrep],
 	double m_normal[3];///<Normal vector of the plane if the NURBS is planar.
 };
-
-#endif // __MGIGESPD126_H__

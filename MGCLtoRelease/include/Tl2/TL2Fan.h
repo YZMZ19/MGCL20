@@ -1,10 +1,7 @@
-#ifndef _mgTL2Fan_HH_
-#define _mgTL2Fan_HH_
-
+#pragma once
 #include <algorithm>
 #include <vector>
 #include <iosfwd>
-
 #include "mg/MGCL.h"
 
 /****************************************************************/
@@ -122,4 +119,3 @@ friend std::ostream& operator<< (std::ostream& out, const mgTL2Fan& fan);
 };
 
 /** @} */ // end of UseTessellation group
-#endif

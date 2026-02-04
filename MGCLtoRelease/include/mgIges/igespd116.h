@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD116_H__)
-#define __MGIGESPD116_H__
+#pragma once
 
 #include "mg/Point.h"
 #include "mgiges/IgesPD.h"
@@ -52,5 +51,3 @@ public:
 	double m_coordinates[3];///<(x, y, z) of the point.
 	int m_display_symbolDE;	///<Directory entry of the subfigure definition of the display symbol.
 };
-
-#endif // __MGIGESPD116_H__

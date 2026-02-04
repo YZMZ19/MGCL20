@@ -32,25 +32,26 @@ MGVector::MGVector ( double x, double y)
 	m_element[0]=x; m_element[1]=y;
 }
 
-// ｘ，ｙ，ｚを指定して3Dベクトルを生成する
+///Construct 3D vector by providing each element data.
 MGVector::MGVector(double x, double y, double z)
 : MGVector(3) {
 	m_element[0]=x; m_element[1]=y;	m_element[2]=z;
 }
 
-// ｘ，ｙ，ｚ, wを指定して4Dベクトルを生成する
+///Construct 4D vector by providing each element data.
 MGVector::MGVector(double x, double y, double z, double w)
 : MGVector(4){
 	m_element[0]=x; m_element[1]=y;	m_element[2]=z; m_element[3]=w;
 }
 
-// 初期値　v ですべてのエレメントを初期化してベクトルを生成する。
+///Vector of same value for each coordinate element.
 MGVector::MGVector(int dim, double v)
 : MGVector(dim) {
 	for(int i=0; i<dim; i++) m_element[i]=v;
 }
 
-// double の配列でcoordinate valueを指定しベクトルを生成する。
+///Vector from array of double v[sdim].
+///***** This is the fundamental constructor.*****
 MGVector::MGVector(int dim, const double* v)
 : MGVector(dim) {
 	for(int i=0; i<dim; i++) m_element[i]=v[i];
@@ -116,7 +117,7 @@ MGVector::MGVector(const MGVector& v)
 }
 
 // Move Constructor
-MGVector::MGVector(MGVector&& v)
+MGVector::MGVector(MGVector&& v)noexcept
 	:m_sdim(v.m_sdim), m_length(v.m_length){
 	if(m_sdim>3){
 		m_element=v.m_element;
@@ -151,7 +152,7 @@ MGVector& MGVector::operator =(const MGVector& v){
 }
 
 //Move Assignment
-MGVector& MGVector::operator =(MGVector&& v){
+MGVector& MGVector::operator =(MGVector&& v)noexcept {
 	int dimNew=v.m_sdim;
 	if(dimNew<=3){
 		if(m_sdim>3){
@@ -188,7 +189,6 @@ MGVector& MGVector::operator=(const double* data){
 	return *this;
 }
 
-// ふたつのベクトルの加算
 //Addition of two vectors.
 MGVector operator+(const MGVector& vec1,const MGVector& vec2){
 	int dim=vec1.m_sdim;
@@ -207,7 +207,7 @@ MGVector operator+(const MGVector& vec1,const MGVector& vec2){
 	return temp;//RVO
 }
 
-// 自身のベクトルに与えられたベクトルを加算して自身のベクトルとする
+///Addition of two vectors.
 MGVector& MGVector::operator+= (const MGVector &vec2) {
 	int dim1=sdim(); int dim2=vec2.sdim();
 	int i;
@@ -222,7 +222,7 @@ MGVector& MGVector::operator+= (const MGVector &vec2) {
 	return *this;
 }
 
-// 単項マイナス。自身のベクトルを反転し、オブジェクトを生成
+///Unary minus. Negate all the elements of the vector.
 MGVector MGVector::operator- () const{
 	MGVector temp(m_sdim);
 	for(int i=0; i<m_sdim; i++) temp.m_element[i] = -m_element[i];
@@ -230,7 +230,6 @@ MGVector MGVector::operator- () const{
 	return temp;
 }
 
-// ベクトルの減算
 //Subtraction of two vectors.
 MGVector operator-(const MGVector& vec1,const MGVector& vec2){
 	int dim=vec1.m_sdim;
@@ -249,7 +248,7 @@ MGVector operator-(const MGVector& vec1,const MGVector& vec2){
 	return temp;//RVO
 }
 
-// 自身のベクトルと与えられたベクトルの減算を行い自身のベクトルとする
+///Subtraction of two vectors.
 MGVector& MGVector::operator-= (const MGVector &vec2) {
 	int dim1=sdim(); int dim2=vec2.sdim();
 	int i;
@@ -264,7 +263,6 @@ MGVector& MGVector::operator-= (const MGVector &vec2) {
 	return *this;
 }
 
-// スカラーの乗算を行いオブジェクトを生成
 //Scalar multiplication.
 MGVector operator*(const MGVector& vec1,double scale){
 	int sd=vec1.m_sdim;
@@ -275,21 +273,20 @@ MGVector operator*(const MGVector& vec1,double scale){
 	return new_vec;//RVO
 }
 
-// スカラーの乗算を行い自身のベクトルとする
+///Scalar multiplication.
 MGVector& MGVector::operator*= (double scale){
 	for(int i=0; i<m_sdim; i++) m_element[i] *= scale;
 	if(m_length>=0.) m_length*=fabs(scale);
 	return *this;
 }
 
-//ベクタの外積
 //vector product of two vectors.
 MGVector operator*(const MGVector& vec1,const MGVector& vec2){
 	MGVector v(vec1); 
 	return v*=vec2;
 }
 
-// ベクトルの外積を行い自身のベクトルとする
+///Update own vector by vector product output, changes to 3D vector.
 MGVector& MGVector::operator*= (const MGVector &vec2){
 	double d0,d1,d2;
 	int dim=sdim(), dim2=vec2.sdim();
@@ -346,9 +343,6 @@ MGVector& MGVector::operator*= (const MGVector &vec2){
 	}
 }
 
-// トランスフォームを行いオブジェクトを生成
-
-// ベクトルの内積
 //Inner product of two vectors.
 double operator%(const MGVector& vec1,const MGVector& vec2){
 	int dim=vec1.sdim(); int dim2=vec2.sdim();
@@ -359,7 +353,6 @@ double operator%(const MGVector& vec1,const MGVector& vec2){
 	return product;
 }
 
-// スカラー除算を行いオブジェクトを生成
 //Scalar division.
 MGVector operator/(const MGVector& vec1,double scale){
 	int sd=vec1.m_sdim;
@@ -371,7 +364,7 @@ MGVector operator/(const MGVector& vec1,double scale){
 	return new_vec;//RVO
 }
 
-// スカラーの除算を行い自身のベクトルとする
+///Scalar division.
 MGVector& MGVector::operator/= (double scalar){
 	for(int i=0; i<m_sdim; i++) m_element[i] /= scalar;
 	if(m_length>0.) m_length/=fabs(scalar);
@@ -406,7 +399,6 @@ std::partial_ordering MGVector::operator<=>(const MGVector& v2)const {
 //Member Function
 //
 
-// 自身のベクトルと与えられたベクトルのなす角度を Radian で返却
 //Compute angle in radian of two vectors.
 // 0<= angle <pai.
 double MGVector::angle(const MGVector& vec2) const{
@@ -436,8 +428,8 @@ double MGVector::angle2pai(const MGVector& v2, const MGVector& N)const{
 	return MGAngle(ca,sa);
 }
 
-// 自身のベクトルと与えられたベクトルのなす角度を cosΘ で返却する
-// 自身か与えられたベクトルが零ベクトルの時は、cosΘは 1.0 とする
+///Compute angle in cosine of two vectors.
+///When either vector is zero vector, return 1.0.
 double MGVector::cangle ( const MGVector & vec2 ) const {
 	double cos_theta;
 	double ll=len()*vec2.len();
@@ -555,7 +547,7 @@ bool MGVector::is_collinear(
 	return (v2 - *this).parallel(v3-*this);
 }
 
-// ベクトルの長さを返却する 
+///Return vector length.
 double MGVector::len() const {
 	//std::lock_guard<std::mutex> g(m);//For thread safety
 	if(m_length < 0.){
@@ -569,15 +561,13 @@ double MGVector::len() const {
 	return m_length;
 }
 
-// 自身のベクトルを単位ベクトル化しオブジェクトを生成する
+///Generate unit vector from the vector.
 MGUnit_vector MGVector::normalize() const{
 	return MGUnit_vector(*this);
 }
 
-// 自身のベクトルと与えられたベクトルが垂直かどうか返却する
-// 垂直の時、True(1) を返却
+///Test if two vectors are orthogonal, i.e. cross at right angle.
 bool MGVector::orthogonal(const MGVector &vec2) const{
-	// *this と vec2 のcosΘを取得し、π/2 の時 垂直 （True(1)）
 	return MGRight_angle(cangle(vec2));
 }
 
@@ -601,10 +591,8 @@ MGVector MGVector::orthogonize(const MGVector& vec2)const{
 	return MGUnit_vector(v212)*len();
 }
 
-// 自身のベクトルと与えられたベクトルが平行かどうか返却する
-// 平行の時、True(1) を返却 
+///Test if two vectors are parallel.
 bool MGVector::parallel(const MGVector &vec2) const{
-	// *this と vec2 のsinΘを取得し、零の時 平行
 	return MGZero_angle(sangle(vec2));
 }
 
@@ -622,9 +610,7 @@ double MGVector::parallelism(const MGVector& v2) const {
 	return ang;
 }
 
-// 自身のベクトルをベクトル(v2)に射影したベクトルを求める。
-// v2 が 零ベクトルのとき(*this)が返る。
-//Project this onto the vector v2.
+/// Project this vector onto v2. When v2 is zero vector, return *this.
 MGVector MGVector::project(const MGVector& v2) const{
 	double v2ip = v2 % v2;
 	if(MGMZero(v2ip)) return *this;//If v2 is zero vector.
@@ -651,10 +637,10 @@ void MGVector::resize(int new_sdim){
 	m_sdim=new_sdim; m_length=-1.;
 }
 
-// 自身のベクトルと与えられたベクトルのなす角度の sinΘ の絶対値を返却する
+///Compute angle in sine of two vectors.
+/// sanlge>=0.
 double MGVector::sangle(const MGVector &vec2) const{
 	double sin_theta;
-	// 自身か与えられたベクトルが零ベクトルの場合 sinΘを0.0 にする
 	double len12=len()*vec2.len();
     if(MGMZero(len12))
 		sin_theta = 0.0;
@@ -701,13 +687,11 @@ void MGVector::set_unit(){
 		(*this)=MGUnit_vector();
 	}else{
 		double length=len();
-		// 自身のベクトルが零ベクトルの時はデフォルトベクトルを生成
 		int i, dimm1=m_sdim-1;
-		if(MGMZero(length)){
+		if (MGMZero(length)) {//when zero vector, return default unit vector
 			for(i=0; i<dimm1; i++) m_element[i]=0.;
 			m_element[dimm1]=1.;
 		}else if(!MGREqual(length, 1.)){
-	   // 零ベクトル以外は与えられたベクトルの成分を長さで割る
 			for(i=0; i<m_sdim; i++) m_element[i]=m_element[i]/length;
 		}
 		m_length=1.;
@@ -748,38 +732,36 @@ void MGVector::swap(int i, int j){
 	m_element[i]=m_element[j]; m_element[j]=x;
 }
 
-// ベクトルが単位ベクトルかどうか返却する。単位ベクトルの時、True(1) を返却
+///Test if the vector is unit.
 bool MGVector::is_unit_vector() const {
 	double length=len();
-	// 長さが Tolerance を考慮した 1.0 の時 true;
 	return MGREqual(length, 1.);
 }
 
-// 自身のベクトルが零ベクトルかどうか返却する
+///Return true when the vector is a zero vector.
 bool MGVector::is_zero_vector() const{
 	return *this % *this <= MGTolerance::wc_zero_sqr();
 	//return MGAZero(len());
 }
 
-// ３つのベクトルから求められる行列の行列式の値を返却する
-double MGDeterminant(const MGVector& v1, const MGVector& v2,
-                     const MGVector& v3 ) 
-{
+///Determinant of 3 by 3 matrix of 3 vectors.
+double MGDeterminant(
+	const MGVector& v1, const MGVector& v2, const MGVector& v3
+){
     return v1.ref(0)*v2.ref(1)*v3.ref(2) - v3.ref(0)*v2.ref(1)*v1.ref(2)
 		+  v3.ref(0)*v1.ref(1)*v2.ref(2) - v1.ref(0)*v3.ref(1)*v2.ref(2)
 		+  v2.ref(0)*v3.ref(1)*v1.ref(2) - v2.ref(0)*v1.ref(1)*v3.ref(2);
 }
 
-// ベクトルのスカラーの乗算を行いオブジェクトを生成
+//Scalar multiplication of scalar and vector.
 MGVector operator *(double scal, const MGVector& vec) {
 	return vec*scal;
 }
 
 namespace MGCL {
 
-// V1をベクトル(v2)に射影したベクトルを求める。
-// v2 が 零ベクトルのときV1が返る。
-MGVector project(const MGVector& V1, const MGVector& V2){
+	///Project vector V1 onto vector V2. When V2 is zero vector, return V1.
+	MGVector project(const MGVector& V1, const MGVector& V2){
 	return V1.project(V2);
 }
 

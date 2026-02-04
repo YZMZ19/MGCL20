@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGFPline_HH_
-#define _MGFPline_HH_
+#pragma once
 
 class MGCurve;
 class MGFSurface;
@@ -36,8 +35,8 @@ MGFPline():m_face(nullptr){;};	///void constructor.
 ~MGFPline()=default;			///Destructor.
 MGFPline(const MGFPline& fpl)=delete;///Copy constructor.
 MGFPline& operator= (const MGFPline& fpl)=delete;///Copy assignment.
-MGFPline(MGFPline&& fpl);		///Move constructor.
-MGFPline& operator= (MGFPline&& fpl);///Move assignment.
+MGFPline(MGFPline&& fpl)noexcept;		///Move constructor.
+MGFPline& operator= (MGFPline&& fpl)noexcept;///Move assignment.
 
 ///Construct from all the necessary data.
 MGFPline(
@@ -83,5 +82,3 @@ private:
 };
 
 /** @} */ // end of GEORelated group
-
-#endif

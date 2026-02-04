@@ -1,6 +1,4 @@
-#ifndef _mgTL2Triangles_HH_
-#define _mgTL2Triangles_HH_
-
+#pragma once
 #include "Tl2/TL2Triangle.h"
 
 /****************************************************************/
@@ -130,4 +128,3 @@ private:
 };
 
 /** @} */ // end of UseTessellation group
-#endif

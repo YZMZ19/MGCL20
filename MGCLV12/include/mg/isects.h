@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGisects_HH_
-#define _MGisects_HH_
+#pragma once
+
 /** @file */
 /** @addtogroup IsectContainer
  *  @{
@@ -175,4 +175,3 @@ template<class T>
 const T& isectCast(MGisects::const_iterator is){ return *static_cast<const T*>(is->get()); };
 
 /** @} */ // end of IsectContainer group
-#endif

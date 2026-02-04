@@ -1,6 +1,5 @@
 /********************************************************************/
-#ifndef _MGGLFBO_HH_
-#define _MGGLFBO_HH_
+#pragma once
 
 
 #include <GL/glew.h>
@@ -98,4 +97,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif //_MGGLFBO_HH_

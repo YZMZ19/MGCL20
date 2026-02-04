@@ -4,9 +4,6 @@
 /********************************************************************/
 #pragma once 
 
-#ifndef _MGMaterial_HH_
-#define _MGMaterial_HH_
-
 #include "mgGL/GLAttrib.h"
 #include "mgGL/RenderAttr.h"
 #include "mgGL/Appearance.h"
@@ -126,4 +123,3 @@ private:
 };
 
 /** @} */ // end of GLAttrib group
-#endif // _MGMaterial_HH_

@@ -360,10 +360,9 @@ void project(
 mgSysGL* push_back_to_sysgl(int fc,const MGGel* oi=0){return m_sysgllist.push_back(fc,oi);};
 mgSysGL* push_front_to_sysgl(int fc,const MGGel* oi=0){return  m_sysgllist.push_front(fc,oi);};
 
-///Push back (function_code, object id) to the end or the beginning of
-///system display list. sysgl must be a newed object, and the ownership will be
-///transfered to this.
-void push_back_to_sysgl(mgSysGL* sysgl){m_sysgllist.push_back(sysgl);};
+///Push back mgSysGL to the end of the system display list.
+///sysgl must be a newed object, and the ownership will be transfered to this.
+void push_back_to_sysgl(mgSysGL*&& sysgl){m_sysgllist.push_back(std::move(sysgl));};
 
 ///Rotate the current view by the angle along the vector(x,y,z),
 ///performs a counterclockwise rotation of angle about

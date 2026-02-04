@@ -54,7 +54,7 @@ MGComplex::MGComplex(
 }
 MGComplex::MGComplex(
 	MGComplex&& complex	//Original complex.
-):MGObject(std::move(complex)), m_parent_cell(nullptr)
+)noexcept:MGObject(std::move(complex)), m_parent_cell(nullptr)
 , m_pcells(std::move(complex.m_pcells)){
 }
 MGComplex::~MGComplex() {

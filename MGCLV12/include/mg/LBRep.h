@@ -59,7 +59,7 @@ virtual ~MGLBRep()=default;
 MGLBRep(const MGLBRep&)=default;
 MGLBRep(MGLBRep&&)=default;
 MGLBRep& operator=(const MGLBRep&)=default;
-MGLBRep& operator=(MGLBRep&&)noexcept =default;
+MGLBRep& operator=(MGLBRep&&)=default;
 
 ///Default(dummy) constructor.
 ///Dummy constructor that specifies area length.

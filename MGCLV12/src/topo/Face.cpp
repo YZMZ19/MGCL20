@@ -94,7 +94,7 @@ MGFace::MGFace(const MGFace& face):MGFace(face,true){
 }
 
 //Move constructor.
-MGFace::MGFace(MGFace&& face):MGCell(std::move(face)),
+MGFace::MGFace(MGFace&& face)noexcept:MGCell(std::move(face)),
 m_box_param(std::move(face.m_box_param)), m_boundaries(std::move(face.m_boundaries)){
 	for(auto& loop : boundaries()){
 		loop->set_parent(*this);
@@ -184,7 +184,7 @@ MGFace& MGFace::operator=(const MGFace& face){
 	m_box_param=face.m_box_param;
 	return *this;
 }
-MGFace& MGFace::operator=(MGFace && f2){
+MGFace& MGFace::operator=(MGFace && f2)noexcept{
 	if(this==&f2)
 		return *this;
 

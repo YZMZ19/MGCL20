@@ -4,12 +4,15 @@
 /********************************************************************/
 #pragma once
 
-class MGColor;
-class mgTL2Triangles;
 #include "StdAfx.h"
 #include "mg/drawParam.h"
 #include "mgGL/GLAttrib.h"
 #include "mgGL/Color.h"
+class MGColor;
+class mgTL2Triangles;
+class MGBox;
+class MGBPointSeq;
+class MGSPointSeq;
 
 #ifndef _CONSOLE
 
@@ -20,11 +23,7 @@ class mgTL2Triangles;
 #include "mgGL/VBOLeafBuilder.h"
 
 class MGPosition;
-class MGBox;
-class MGBPointSeq;
-class MGSPointSeq;
 class MGCurve;
-class MGSPointSeq;
 class MGCell;
 class MGStl;
 class MGAttribedGel;
@@ -651,6 +650,21 @@ public:
 };
 class MG_DLL_DECLR mgVBO {
 public:
+	void drawArrow(const MGPosition pos[4]);
+	void drawBox(const MGBox& box);
+	void drawPointSeq(
+		const MGBPointSeq& bp,///<Target points.
+		bool draw_points = true	///<True if points be drawn.
+	);
+	void drawPointSeq(
+		const MGSPointSeq& sp,///<Target points.
+		bool draw_points = true	///<True if points be drawn.
+	);
+	void drawPolyline(const MGBPointSeq& line, bool closed = false);
+	void drawPolyline(const std::vector<MGPosition>& line, bool closed = false);
+	void drawPolyline(size_t nPoints, const MGPosition line[], bool closed = false);
+
+
 	void initializeVBO(MGCL::VIEWMODE viewMode = MGCL::DONTCARE) {
 		std::cout << "mgVBO::initializeVBO, viewMode="<< viewMode << std::endl;
 	}
@@ -687,6 +701,10 @@ public:
 		std::cout << "mgVBO::drawPoint(" << x << ", " << y << ", " << z << ")"
 			<<",size="<<size<<std::endl;
 	}
+	void drawPoint(const MGPosition& pos, double size = -1.) {
+		drawPoint(pos[0], pos[1], pos[2], size);
+	}
+
 	void drawShade(
 		const mgTL2Triangles& tris,///<target triangulated data to draw.
 		MGCL::DRAW_TARGET target = MGCL::SHADING,///<When target=WIRE, built elements are
@@ -696,6 +714,18 @@ public:
 		std::cout << "mgVBO::drawShade, tris=" << &tris << ",target="<<target
 			<< ", polygonMode=" << polygonMode << std::endl;
 	}
+
+	///Draw a string with a color.
+	void drawString(const char* str, const MGPosition& P, const MGColor* colr = nullptr);
+	void drawString(const wchar_t* str, const MGPosition& P, const MGColor* colr = nullptr);
+	void drawString(const CString& str, const MGPosition& P, const MGColor* colr = nullptr);
+	void drawString(const std::string& str, const MGPosition& P, const MGColor* colr = nullptr);
+
+	///Screen coordinate type.
+	void drawStringByScreen(const char* str, const MGPosition& P, const MGColor* colr = nullptr);
+	void drawStringByScreen(const wchar_t* str, const MGPosition& P, const MGColor* colr = nullptr);
+	void drawStringByScreen(const CString& str, const MGPosition& P, const MGColor* colr = nullptr);
+	void drawStringByScreen(const std::string& str, const MGPosition& P, const MGColor* colr = nullptr);
 
 };
 class MG_DLL_DECLR mgLightModeSwitcher {

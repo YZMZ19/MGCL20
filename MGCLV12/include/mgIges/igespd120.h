@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD120_H__)
-#define __MGIGESPD120_H__
+#pragma once
 
 #include "mgiges/IgesPD.h"
 
@@ -43,5 +42,3 @@ public:
 	double m_start_angle;///<start angle of revolution in radian.
 	double m_terminate_angle;///<terminate angle of revolution in radian.
 };
-
-#endif // __MGIGESPD120_H__

@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD142_H__)
-#define __MGIGESPD142_H__
+#pragma once
 
 #include "mgiges/IgesIfstream.h"
 #include "mgiges/IgesOfstream.h"
@@ -69,5 +68,3 @@ public:
 	int m_param_curve_DE;///<Directory entry of the parametric space curve of the surface.
 	int m_model_curve_DE;///<Directory entry of the curve(in the model space).
 };
-
-#endif // __MGIGESPD142_H__

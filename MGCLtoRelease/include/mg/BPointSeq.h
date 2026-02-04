@@ -41,7 +41,6 @@ public:
 ///translation by a vector.
 MG_DLL_DECLR friend MGBPointSeq operator+(const MGVector& v, const MGBPointSeq& b);
 
-///BPointをスケーリングしてできるオブジェクトを生成する。
 ///Generates a object by scaling.
 MG_DLL_DECLR friend MGBPointSeq operator* (double scale, const MGBPointSeq&);
 
@@ -57,8 +56,8 @@ explicit MGBPointSeq(int capacity=0, int dim=0);
 ~MGBPointSeq(){if(m_bpoint) delete[] m_bpoint;};///<Dtor.
 MGBPointSeq(const MGBPointSeq& rhs);///<Copy constructor.
 MGBPointSeq& operator=(const MGBPointSeq& rhs);///<Copy assignment.
-MGBPointSeq(MGBPointSeq&& rhs);///<Move constructor.
-MGBPointSeq& operator=(MGBPointSeq&& rhs);///<Move assignment.
+MGBPointSeq(MGBPointSeq&& rhs)noexcept;///<Move constructor.
+MGBPointSeq& operator=(MGBPointSeq&& rhs)noexcept;///<Move assignment.
 
 
 ///Construct a MGBPointSeq by copying original MGBPointSeq,
@@ -105,19 +104,15 @@ double operator()(int i, int j) const{return ref(i,j);};
 ///Extract (i,j) coordinate values for 0<=j<sdim() as a vector.
 MGVector operator() (int i) const;
 
-/// 曲線の平行移動を行いオブジェクトを生成する。
 ///Generates an object by translation.
 MGBPointSeq operator+(const MGVector& v) const;
 
-/// 与ベクトルだけ曲線を平行移動して自身とする。
 ///Updates an object by translation.
 MGBPointSeq& operator+= (const MGVector&);
 
-/// 曲線の逆方向に平行移動を行いオブジェクトを生成する。
 ///Generates an object by translation.
 MGBPointSeq operator- (const MGVector&) const;
 
-/// 与ベクトルだけ曲線をマイナス方向に平行移動して自身とする。
 ///Updates the object by translation.
 MGBPointSeq& operator-= (const MGVector&);
 
@@ -133,35 +128,27 @@ MGBPointSeq operator- (const MGBPointSeq& bp2) const;
 ///Subtract operation of two BPointSeq.
 MGBPointSeq& operator-= (const MGBPointSeq& bp2);
 
-/// 与えられたスケールで曲線の変換を行いオブジェクトを生成する。
 ///Generates an object by multiplying scale to the original.
 MGBPointSeq operator* (double scale) const;
 
-/// 与えられたスケールで曲線の変換を行い自身の曲線とする。
 ///Updates the object by multiplying scale.
 MGBPointSeq& operator*= (double scale);
 
-/// 与えられたスケールで曲線の変換を行いオブジェクトを生成する。
 ///Generates an object by multiplying scale to the original.
 MGBPointSeq operator/ (double scale) const;
 
-/// 与えられたスケールで曲線の変換を行い自身の曲線とする。
 ///Updates the object by multiplying scale.
 MGBPointSeq& operator/= (double scale);
 
-/// 与えられた変換で曲線の変換を行いオブジェクトを生成する。
 ///Generates an object by multiplying matrix to the original.
 MGBPointSeq operator* (const MGMatrix&) const;
 
-/// 与えられた変換で曲線の変換を行い自身の曲線とする。
 ///Updates the object by multiplying matrix.
 MGBPointSeq& operator*= (const MGMatrix&);
 
-/// 与えられた変換で曲線のトランスフォームを行いオブジェクトを生成する。
 ///Generates an object by multiplying transformation to the original.
 MGBPointSeq operator* (const MGTransf&) const;
 
-/// 与えられた変換で曲線のトランスフォームを行い自身とする。
 ///Updates the object by multiplying transformation.
 MGBPointSeq& operator*= (const MGTransf&);							  
 

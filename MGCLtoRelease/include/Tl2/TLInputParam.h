@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _mgTLInputParam_HH_
-#define _mgTLInputParam_HH_
+#pragma once
 
 ////////////
 
@@ -90,4 +89,3 @@ private:
 };
 
 /** @} */ // end of UseTessellation group
-#endif

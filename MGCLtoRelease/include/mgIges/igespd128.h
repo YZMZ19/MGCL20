@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD128_H__)
-#define __MGIGESPD128_H__
+#pragma once
 
 #include <vector>
 #include "mg/Position.h"
@@ -79,5 +78,3 @@ public:
 		///<that is, m_start_paramV=m_knotsV[m_degreeV], or m_start_paramV=m_knots[orderV-1].
 		///<m_end_paramV=m_knots[nBrepV],
 };
-
-#endif // __MGIGESPD128_H__

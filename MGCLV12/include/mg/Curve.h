@@ -3,8 +3,7 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 
-#ifndef _MGCurve_HH_20190406
-#define _MGCurve_HH_20190406
+#pragma once
 
 #include <vector>
 #include <memory>
@@ -1219,5 +1218,3 @@ MG_DLL_DECLR MGRLBRep* convert_to_rational(const MGCurve& curve);
 };
 
 /** @} */ // end of GEO group
-
-#endif

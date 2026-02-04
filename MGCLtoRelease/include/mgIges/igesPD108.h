@@ -2,8 +2,7 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#if !defined( __MGIGESPD108_H__)
-#define __MGIGESPD108_H__
+#pragma once
 
 #include <vector>
 #include "mg/Plane.h"
@@ -48,5 +47,3 @@ public:
 	double m_ref_point[3];///<Reference point on the plane(at which symbol be displayed).
 	double m_symbol_size;///<Symbol size to display.
 };
-
-#endif // __MGIGESPD108_H__

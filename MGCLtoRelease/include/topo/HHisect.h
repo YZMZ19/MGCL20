@@ -2,8 +2,8 @@
 /* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
 /* All rights reserved.                                             */
 /********************************************************************/
-#ifndef _MGHHisect_HH_
-#define _MGHHisect_HH_
+#pragma once
+
 /** @file */
 /** @addtogroup IsectContainer
  *  @{
@@ -238,4 +238,3 @@ const MGObject& isect()const{return *m_iline;};
 };
 
 /** @} */ // end of IsectContainer group
-#endif

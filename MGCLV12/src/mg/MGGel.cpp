@@ -68,12 +68,6 @@ bool MGGel::type_is(const MGAbstractGels& types)const{
 //The output string is the same as std::cout<<MGGel.
 std::string MGGel::string_content()const{
 	std::ostringstream s;
-//#ifdef WIN32
-#ifdef _WIN32
-	//added by Tomoko.
-	//Global Localeをセットすること。
-	s.imbue(std::locale::empty());
-#endif
 	toString(s);
 	return s.str();
 }

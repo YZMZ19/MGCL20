@@ -48,7 +48,7 @@ MGNDDArray& MGNDDArray::operator=(const MGNDDArray& vec2){
 }
 
 //Move constructor.
-MGNDDArray::MGNDDArray(MGNDDArray&& nd)
+MGNDDArray::MGNDDArray(MGNDDArray&& nd)noexcept
 :m_capacity(nd.m_capacity), m_length(nd.m_length),
 m_element(nd.m_element),m_current(nd.m_current){
 	nd.m_element=nullptr;
@@ -56,7 +56,7 @@ m_element(nd.m_element),m_current(nd.m_current){
 }
 
 //Move Assignment
-MGNDDArray& MGNDDArray::operator=(MGNDDArray&& nd){ 
+MGNDDArray& MGNDDArray::operator=(MGNDDArray&& nd)noexcept {
 	m_capacity=nd.m_capacity;
 	m_length=nd.m_length;
 	m_current=nd.m_current;
