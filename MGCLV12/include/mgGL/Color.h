@@ -1,5 +1,5 @@
 /********************************************************************/
-/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
+/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno             */
 /* All rights reserved.                                             */
 /********************************************************************/
 
@@ -9,7 +9,6 @@
 
 class MGOfstream;
 class MGIfstream;
-class MGColors;
 class mgVBO;
 class MGPixel;
 
@@ -26,8 +25,8 @@ class MG_DLL_DECLR MGColor:public MGGLAttrib{
 
 public:
 
-/// Color enumuration.
-/// This is completely compatible to GDI+ color enumuration.
+/// Color enumeration.
+/// This is completely compatible to GDI+ color enumeration.
 
 ///The color id from 1 to 8(black to white) is the id of IGES.
 enum ColorID{
@@ -220,7 +219,7 @@ MGColor* clone()const;
 ///Invoke appropriate OpenGL fucntion to the drawing environment.
 void exec()const;
 
-///vboに対して色属性をセットする
+///set color to vbo. This is used when the color attribute is applied to vbo.
 void exec(mgVBO& vbo)const;
 
 float* color(){return m_color;};
@@ -311,26 +310,7 @@ int out_to_IGES(
 private:
 
     float m_color[4] = { 0.,0.,0.,1. };///<color data.
-	static MGColors m_colors;///<color instance;
-
-	friend class MGColors;
-
 };
-
-///@cond
-
-///MGColors defines standard MGColor array that can be accessed through ColorID.
-class MG_DLL_DECLR MGColors{
-public:
-	const MGColor& color(int i){return *(m_colors[i]);};
-	~MGColors();
-private:
-	MGColor** m_colors;
-	MGColors();
-	friend class MGColor;
-};
-
-///@endcond
 
 #ifndef _CONSOLE
 

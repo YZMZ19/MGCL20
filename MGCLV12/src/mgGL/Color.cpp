@@ -164,7 +164,18 @@ const static unsigned int mgColorValue[MGColor::endID]={
     0xFFF5F5F5,//WhiteSmokeV		//gray4
     0xFF9ACD32 //YellowGreenV        
 };
-			   
+	
+///MGColors defines standard MGColor array that can be accessed through ColorID.
+class MGColors {
+public:
+	const MGColor& color(int i) { return *(m_colors[i]); };
+	~MGColors();
+private:
+	MGColor** m_colors;
+	MGColors();
+	friend class MGColor;
+};
+
 MGColors::MGColors(){
 	MGColors::m_colors=new MGColor*[MGColor::endID+1];
 	MGColors::m_colors[0]=new MGColor(mgColorValue[MGColor::White]);
@@ -219,7 +230,8 @@ int MGColor::getColorIdOrValue(
 //Get the color instance reference by the color id.
 const MGColor& MGColor::get_instance(MGColor::ColorID id){
 	assert(id<MGColor::endID);
-	return m_colors.color(id);
+	static MGColors colors;///<color instance;
+	return colors.color(id);
 }
 
 //Get unsigned integer value of a color id.

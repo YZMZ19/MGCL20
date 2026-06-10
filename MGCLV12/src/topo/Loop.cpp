@@ -527,9 +527,8 @@ bool MGLoop::closest_world(
 		return false;
 
 	double tc=sl.closest(srf->center());
-	MGUnit_vector sldir=sl.direction();
 	const MGPosition origin=sl.eval(tc);
-	MGMatrix M; M.set_axis(sldir,2);
+	MGMatrix M; M.set_axis(sl.direction().normalize(), 2);
 
 	std::vector<std::unique_ptr<MGBox>> boxps(bnum);
 	std::vector<mgBCPair> boxes(bnum);

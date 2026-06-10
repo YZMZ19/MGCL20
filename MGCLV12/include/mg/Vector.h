@@ -80,6 +80,12 @@ MGVector& operator= (const MGVector&);///Copy assignment.
 MGVector(MGVector&&)noexcept;		///Move constructor.
 MGVector& operator= (MGVector&&)noexcept;///Move assignment.
 
+/// <summary>
+/// initialize MGVector by initializer list.
+/// </summary>
+/// <param name="data"></param>
+MGVector(std::initializer_list<double> data);
+
 ///Construct 2D vector by providing each element data.
 MGVector(double x, double y);
 

@@ -89,28 +89,28 @@ extern MG_DLL_DECLR const char* _MGCL_FILE;
 // <<<<<<<<<<4/20/2001>>>>>>>>>>>> //
 // たとえば4.10の場合は MGCL0410になる。
 
-///  π 値の設定
-const double mgPAI = 3.1415926535897932384626433833;
+///  define pai(π)
+constexpr double mgPAI = 3.1415926535897932384626433833;
 
 /// @var mgHALFPAI
 /// @brief π/2 値の設定
-const double mgHALFPAI = mgPAI/2.;
+constexpr double mgHALFPAI = mgPAI/2.;
 
 /// 2.0 * π 値の設定
-const double mgDBLPAI = mgPAI*2.;
+constexpr double mgDBLPAI = mgPAI*2.;
 
 /// <summary>
 /// Define common angle data in radian.
 /// </summary>
-const double mg30DEGREE = 0.5235987755983 ; //30 degree in radian.
-const double mg45DEGREE = 0.78539816339745; //45 degree in radian.
-const double mg60DEGREE = 1.0471975511966 ; //60 degree in radian.
+constexpr double mg30DEGREE = 0.5235987755983 ; //30 degree in radian.
+constexpr double mg45DEGREE = 0.78539816339745; //45 degree in radian.
+constexpr double mg60DEGREE = 1.0471975511966 ; //60 degree in radian.
 
 ///
 ///Infinite value Definition. This value is used in MGEReal class
 ///to identify infinite value of double.
 ///
-const double mgInfiniteVal = 1.e+20;
+constexpr double mgInfiniteVal = 1.e+20;
 
 ///Infinite type.
 enum class MGINFINITE_TYPE {

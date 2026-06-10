@@ -1,5 +1,5 @@
 /********************************************************************/
-/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno          */
+/* Copyright (c) 2019 System fugen G.K. and Yuzi Mizuno             */
 /* All rights reserved.                                             */
 /********************************************************************/
 #include "StdAfx.h"
@@ -18,7 +18,6 @@ static char THIS_FILE[] = __FILE__;
 //Version no. definition. This is used in MGIfstream/MGOfstream.cpp.
 extern MG_DLL_DECLR const char* _MGCL_VER = "MGCL1203";
 extern MG_DLL_DECLR const char* _MGCL_FILE = "File System fugen,Inc";
-MGColors MGColor::m_colors=MGColors();
 
 #ifndef _CONSOLE
 

@@ -26,6 +26,12 @@ MGVector::MGVector(int dim)
 	if(!dim) m_length=0.;
 }
 
+MGVector::MGVector(std::initializer_list<double> data)
+:MGVector((int)data.size()) {
+    int i=0;
+    for (auto& v : data) m_element[i++]=v;
+}
+
 //Construct 2D vector by providing each element data.
 MGVector::MGVector ( double x, double y)
 :MGVector(2){
