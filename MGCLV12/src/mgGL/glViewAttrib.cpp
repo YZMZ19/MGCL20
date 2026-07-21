@@ -63,8 +63,8 @@ void MGglViewAttrib::compute_viewing_environment(
 	m_near=diam10/tan_theta2;
 	m_far=m_near+diam10;
 	double eyeLength=m_near+.5*diam10;
-	MGUnit_vector eyeP(m_eyeP);
-	m_eyeP=eyeP*eyeLength;
+	m_eyeP.set_unit();
+	m_eyeP *= eyeLength;
 }
 
 #define INITIAL_BOX_SCALE INITIAL_SCALE*1.1

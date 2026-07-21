@@ -5,7 +5,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/tolerance.h"
-#include "mg/Unit_vector.h"
 #include "mg/MGStl.h"
 #include "Tl2/TL2Triangle.h"
 #include "Tl2/TL2Triangles.h"
@@ -65,16 +64,16 @@ void MGStl::AddTL2Data(
 			MGPosition xyz2=trisData_is_uv ? MGPosition(surf.eval(tri[i+2])) : tri[i+2];
 			int id2=IdentifyPosition(xyz2,VertexMap);
 
-			MGUnit_vector N;
+			MGVector N;
 			m_indices.push_back(id0);
 			if(geoType== mgTESTRIANG::mgTESTRIANG_FAN || !(i%2)){
 				m_indices.push_back(id1);
 				m_indices.push_back(id2);
-				N=UnitNormal(xyz0,xyz1,xyz2);
+				N= MGCL::UnitNormal(xyz0,xyz1,xyz2);
 			}else{
 				m_indices.push_back(id2);
 				m_indices.push_back(id1);
-				N=UnitNormal(xyz0,xyz2,xyz1);
+				N= MGCL::UnitNormal(xyz0,xyz2,xyz1);
 			}
 			// 三角形の法線ベクトルを求める
 			m_vecNormlTriang.push_back(N);

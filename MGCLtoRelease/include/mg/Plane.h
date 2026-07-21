@@ -6,7 +6,6 @@
 #include <memory>
 #include "mg/drawParam.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/Surface.h"
 #include "mg/SBRep.h"
 #include "mgGL/VBO.h"
@@ -34,17 +33,16 @@ class MGFace;
 ///plane function f(u,v)= m_root_point + u*m_uderiv + v*m_vderiv,
 ///where u and v are two parameter of surface representation. 
 ///m_d(the distance from the origin) and m_normal(plane's unit normal) are
-///also hold to save the computation.
+///also held to save the computations.
 /// MGPlaneクラスは３次元空間における平面を表すクラスである。
 /// MGPlaneクラスでは以下のようなパラメータ表現を使用します。
 /// Point(u,v) = m_root_point + u * m_uderiv + v * m_vderiv
 class MG_DLL_DECLR MGPlane :public MGSurface{
 
-	MGUnit_vector	m_normal;	///<Normal of the plane 平面の法線ベクトル.
+	MGVector	m_normal;///<(Unit) Normal of the plane. This is always a unit vector.
 	double		m_d;
-	///<Distance from the origin(0,0,0) 平面の陰関数表現
+	///<Distance from the origin(0,0,0)
 	///< (m_d=ax+by+cz+....where m_normal=(a,b,c,....))
-	///< すなわちm_dは原点と平面の距離.
 	mutable std::unique_ptr<MGKnotVector> m_uknotV;
 	mutable std::unique_ptr<MGKnotVector> m_vknotV;
 	///<When knot_vector_u,v() is invoked, the knot vector will be set,
@@ -52,11 +50,8 @@ class MG_DLL_DECLR MGPlane :public MGSurface{
 	
 protected:
 	MGPosition	m_root_point;	///<A point on the plane,
-	///<平面のパラメータ表現の基点.
 	MGVector	m_uderiv;	///<U direction vector,
-	///<平面のパラメータ表現のｕ方向.
 	MGVector	m_vderiv;	///<V direction vector,
-	///< 平面のパラメータ表現のｖ方向.
 
 public:
 
@@ -92,14 +87,14 @@ MGPlane(
 
 ///Plane from normal of the plane and the distance from the origin(0,0,0).
 MGPlane(
-	const MGUnit_vector& normal,///<Normal of the plane.
+	const MGVector& normal,///<Normal of the plane.
 	double d			///<distance from origin of the plane.
 						///<When normal=(a,b,c,....), d=a*x+b*y+c*z+.... .
 );
 
 ///Plane from a point on the plane and the normal.
 MGPlane(
-	const MGUnit_vector& normal,
+	const MGVector& normal,
 	const MGPosition& p
 );
 
@@ -111,7 +106,7 @@ MGPlane(
 
 ///Plane from a point on the plane, u and v direction vector of the plane.
 
-///The plane's (uderiv, vderiv) are transfomred to a orthnormal system.
+///The plane's (uderiv, vderiv) are transfomred to an orthnormal system.
 ///***** This is the fundamental constructor.*****
 MGPlane(
 	const MGVector& uderiv,
@@ -377,7 +372,7 @@ MGPosition negate_param(const MGPosition& uv, int is_u=1)const;
 ///Return the normal of the plane, 平面の法線を返却する.
 MGVector normal(double u, double v) const{return m_normal;}
 MGVector normal(const MGPosition& uv) const{return m_normal;}
-const MGUnit_vector& normal() const{return m_normal;}
+const MGVector& normal() const{return m_normal;}
 
 ///Update this plane so that m_uderiv, m_vderiv, m_normal
 /// construct a orthonormal system.
@@ -671,8 +666,8 @@ bool flat(
 	int& direction,	///<   1: u-direction is more non flat,
 					///<   0: v-direction is more non flat.
 	MGPosition& P,	///<Position of the flat plane will be output.
-	MGUnit_vector& N///<Normal of the flat plane will be output.
-)const;
+	MGVector& N///<Normal of the flat plane will be output.
+)const override;
 
 ///Test if the surface is flat or not within the parameter value rectangle of uvbox.
 ///Function's return value is:

@@ -49,18 +49,18 @@ void MGIgesPD190::getOrigin(const MGIgesIfstream& ifs, MGPosition& origin)const{
 }
 
 //Get the plane normal into nromal.
-void MGIgesPD190::getNormal(const MGIgesIfstream& ifs, MGUnit_vector& normal)const{
+void MGIgesPD190::getNormal(const MGIgesIfstream& ifs, MGVector& normal)const{
 	const MGIgesFstream::UniqueDE& de=ifs.directoryEntry(m_normalDE);
 	assert(de->EntityTypeNumber()==DIRECTION);
 	if(de->EntityTypeNumber()!=DIRECTION){
-		normal=MGVector(0.,0.,1.);
+		normal=mgZ_UVEC;
 		return;
 	}
 	const std::unique_ptr<MGIgesPD>& pd=de->paramData();
 	const MGIgesPD123* pd123=static_cast<const MGIgesPD123*>(pd.get());
 	MGVector dir;
 	pd123->convert_to_vector(dir);
-	normal=dir;
+	normal=dir.normalize();
 }
 
 //Get the plane reference direction(REFDIR) into refdir.
@@ -117,7 +117,7 @@ MGPlane* MGIgesIfstream::convert_planeSurface(
 
 	const MGIgesPD190* pd190=static_cast<const MGIgesPD190*>(pd.get());
 	MGPosition origin; pd190->getOrigin(*this,origin);
-	MGUnit_vector normal; pd190->getNormal(*this,normal);
+	MGVector normal; pd190->getNormal(*this,normal);
 	MGPlane* pl;
 	if(de.FormNumber()==0)//Unparameterized.
 		pl=new MGPlane(normal,origin);

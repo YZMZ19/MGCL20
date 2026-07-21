@@ -382,10 +382,10 @@ bool MGCylinder::flat(
 	int& direction,	//   1: u-direction is more non flat.
 					//   0: v-direction is more non flat.
 	MGPosition& P,	//Position of the flat plane will be output.
-	MGUnit_vector& N//Normal of the flat plane will be output.
+	MGVector& N//Unit Normal of the flat plane will be output.
 )const{
 	direction=1;
-	N=normal(uvbox.mid());
+	N=unit_normal(uvbox.mid());
 	const MGInterval& urange=uvbox[0];
 	const MGInterval& vrange=uvbox[1];
 	MGEllipse el(mgORIGIN_2D,
@@ -435,7 +435,7 @@ bool MGCylinder::flat_tess(
 	MGVector P=Pn[0]; MGVector VN=Nn[0]; 
 	for(i=1; i<3; i++){P+=Pn[i]; VN+=Nn[i];}
 	P/=3.;
-	MGUnit_vector N(VN);
+	MGVector N(VN.normalize());
 
 	double x, d=P%N;
 	double dist[3];
@@ -490,8 +490,8 @@ int MGCylinder::isect_direction(
 	isect_dt(uvuvS[m1],uvuvS[m1+1],du2,dv2,acuRatio);
 	du=du2;
 	dv=dv2;
-	const MGUnit_vector& pln=pl->normal();
-	MGUnit_vector axisv=m_axis.direction();
+	const MGVector& pln=pl->normal();
+	MGVector axisv=m_axis.direction().normalize();
 	double angl=pln%axisv;
 	if(fabs(angl)<.01) return 0;
 	return 1;

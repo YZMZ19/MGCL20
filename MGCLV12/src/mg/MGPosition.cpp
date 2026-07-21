@@ -112,6 +112,14 @@ MGPosition& MGPosition::operator/= (double a){
 	return *this;
 }
 
+//Test if two vectors are equal.
+bool MGPosition::operator==(const MGPosition& p2)const {
+	return (*this - p2).is_zero_vector();
+}
+bool MGPosition::operator==(const MGVector& p2)const {
+	return (*this - p2).is_zero_vector();
+}
+
 //Friend Function
 
 //Test if P1, P2, and P3 are on a single straight line.

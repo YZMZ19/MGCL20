@@ -18,7 +18,6 @@ class MGBPointSeq;
 class MGPosition;
 class MGVector;
 class MGTransf;
-class MGUnit_vector;
 class MGCurve;
 class MGEllipse;
 class MGStraight;
@@ -88,7 +87,6 @@ std::unique_ptr<MGSBRep> approximate_as_SBRep(
 )const;
 
 ///Compute average chord length along u(is_u==false) or v(is_u==true).
-
 ///Function's return value is the chord length.
 double average_chord_length(
 	int is_u,///< =0, or 1. Indicates if para is u-value(is_u=1) or v(is_u=0).
@@ -99,7 +97,6 @@ double average_chord_length(
 )const;
 
 ///Generate arrow data of the tangent along u and v and the normal.
-
 ///Arrow at the parameter value (u,v) of the surface.
 ///data[0] is the origin of the u-tangent arrow, data[1] is the top of the u-tangent arrow,
 ///data[2], [3] are two bottoms of u-tangent arrowhead.
@@ -120,7 +117,6 @@ virtual int bdim_u() const {return 1;}
 virtual int bdim_v() const {return 1;}
 
 ///Return minimum box that includes limitted surface by uvrange.
-
 /// 入力のパラメータ範囲の曲線部分を囲むボックスを返す.
 virtual MGBox box_limitted(
 	const MGBox& uvrange	///< Parameter Range of the curve.
@@ -154,7 +150,6 @@ virtual MGSurface& change_range(
 
 
 ///Obtain coefficient's space dimension.
-
 ///This function is used in isect_start etc.
 virtual int coef_sdim() const{return sdim();};
 
@@ -162,7 +157,6 @@ virtual int coef_sdim() const{return sdim();};
 MGFSurface* clone_fsurface()const override{return copy_surface();};
 
 ///Get the clone of this as a MGFace.
-
 ///If this is MGSurface, it is converted to MGFace.
 MGFace* clone_as_face()const;
 
@@ -171,7 +165,6 @@ virtual MGPosition closest(const MGPosition& point) const;
 
 
 ///Compute the closest point on all the perimeters of the surface.
-
 ///The point is returned as the parameter value (u,v) of this surface.
 virtual MGPosition closest_on_perimeter(const MGPosition& point)const;
 virtual MGPosition closest_on_perimeter(const MGStraight& sl)const;
@@ -185,13 +178,11 @@ virtual MGPosition closest_on_boundary(const MGStraight& sl) const{
 
 
 ///Construct new surface object by copying to newed area.
-
 ///User must delete this copied object by "delete".
 virtual MGSurface* clone() const override =0;
 
 
 ///compute sample point of the surface to get the approximate plane.
-
 ///The approximate plane is of the surface
 ///within the parameter range (u0,v0) to (u1, v1).
 void compute_sample_point(
@@ -201,13 +192,12 @@ void compute_sample_point(
 	double v1,///<Parameter range.
 	MGPosition Pn[9],	///<sample points will be output.
 	MGPosition& center,	///<center of the sample points will be output.
-	MGUnit_vector& normal,///<average normal of Nn[] will be output.
+	MGVector& normal,///<average unit normal of Nn[] will be output.
 	MGVector* Nn_in=0		///<9 normals of the surface will be output when Nn_in specified.
 )const;
 
 
 ///Construct new surface object by changing the original object's space dimension.
-
 ///User must delete this copied object by "delete".
 virtual MGSurface* copy_change_dimension(
 	int sdim,			///< new space dimension
@@ -217,17 +207,16 @@ virtual MGSurface* copy_change_dimension(
 
 
 ///Compute surface curvatures.
-
 ///value[0]=K:Gaussian curvature=k1*k2, value[1]=H:Mean curvature=(k1+k2)/2,
 ///value[2]=k1:minimum curvature, and value[3]=k2=maximum curvature.
 ///N is the unit normal vector at position (u,v).
 void curvatures(
-	const MGPosition& uv, double value[4], MGUnit_vector& N) const;
+	const MGPosition& uv, double value[4], MGVector& N) const;
 void curvatures(
-	double u, double v, double value[4], MGUnit_vector& N) const;
+	double u, double v, double value[4], MGVector& N) const;
 
 ///Compute direction unit vector of the geometry.
-MGUnit_vector direction(const MGPosition& param) const;
+MGVector direction(const MGPosition& param) const;
 
 
 ///Draw 3D curve in world coordinates.
@@ -240,7 +229,6 @@ virtual void drawWire(
 
 
 ///Construct new curve object by copying to newed area.
-
 ///User must delete this copied object by "delete".
 MGSurface* copy_surface() const;
 
@@ -377,13 +365,13 @@ MGFSurface* fsurface(){return this;};
 void fundamentals(
 	const MGPosition&uv,	///<Surface parameter value (u,v)
 	double Q[6],			///<Fundamental quantities will be returned.
-	MGUnit_vector& UN		///<Normal vector at uv will be returned.
+	MGVector& UN		///<Unit Normal vector at uv will be returned.
 )const;
 void fundamentals(
 	double u,	///<Surface parameter u value of (u,v)
 	double v,	///<Surface parameter v value of (u,v)
 	double Q[6],			///<Fundamental quantities will be returned.
-	MGUnit_vector& N		///<Normal vector at uv will be returned.
+	MGVector& N		///<Unit Normal vector at uv will be returned.
 )const;
 
 ///Compute the approximate plane in the parameter range from (u0, v0) to (u1,v1).
@@ -1103,18 +1091,17 @@ virtual void TPatPerimeter(
 virtual MGSURFACE_TYPE type() const=0;
 
 ///Compute unit normal vector at uv.
-MGUnit_vector unit_normal(const MGPosition& uv) const;
+MGVector unit_normal(const MGPosition& uv) const;
 
 ///Compute unit normal vector at uv.
-MGUnit_vector unit_normal(double u,double v) const;
+MGVector unit_normal(double u,double v) const;
 
 ///Get the name of the class.
 virtual std::string whoami()const{return "Surface";};
 
 protected:
 
-///Test if the surface is flat or not.
-	
+///Test if the surface is flat or not.	
 ///Test is done within the parameter value rectangle of uvbox.
 ///Function's return value is:
 ///	true: if the surface is flat
@@ -1130,7 +1117,7 @@ virtual bool flat(
 	int& direction,	///<   1: u-direction is more non flat.
 					///<   0: v-direction is more non flat.
 	MGPosition& P,	///<Position of the flat plane will be output.
-	MGUnit_vector& N///<Normal of the flat plane will be output.
+	MGVector& N///<Unit normal of the flat plane will be output.
 )const;
 
 ///Default intersection program of MGSurface.

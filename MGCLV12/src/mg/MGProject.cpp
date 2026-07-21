@@ -6,7 +6,6 @@
 #include "mg/Bisection.h"
 #include "mg/Box.h"
 #include "mg/Knot.h"
-#include "mg/Unit_vector.h"
 #include "mg/CParam_list.h"
 #include "mg/Position_list.h"
 #include "mg/Straight.h"

@@ -8,7 +8,6 @@
 #include "mg/Default.h"
 #include "mg/drawParam.h"
 #include "mg/BPointSeq.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position.h"
 #include "mg/Curve.h"
 #include "mg/FSurface.h"
@@ -839,11 +838,11 @@ void trim(
 )const;
 
 ///Compute unit normal vector at uv.
-MGUnit_vector unit_normal(const MGPosition& uv) const
+MGVector unit_normal(const MGPosition& uv) const
 {	return surface()->unit_normal(uv.ref(0), uv.ref(1));};
 
 ///Compute unit normal vector at (u,v).
-MGUnit_vector unit_normal(double u,double v) const
+MGVector unit_normal(double u,double v) const
 {	return surface()->unit_normal(u, v);};
 
 ///Get the name of the class.

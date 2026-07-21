@@ -455,7 +455,7 @@ int MGStl::SaveAscii(
 	// output normal of triangle and cordinate of vertex to file
 	for(size_t i = 0; i < nTriang; i++){
 		// Get triangle normal
-		const MGUnit_vector& normal = m_vecNormlTriang[i];
+		const MGVector& normal = m_vecNormlTriang[i];
 		// facet normal
 		fout << "    facet normal  " << normal(0) << " " << normal(1)<< " " << normal(2) << " " << std::endl;
 		// outerloop
@@ -526,7 +526,7 @@ int MGStl::SaveBinary(
 	// 各三角形の情報を書き込む
 	for(int i = 0; i < nTriang; i++){
 		// 三角形の面法線ベクトルを書き込む
-		const MGUnit_vector& normal = m_vecNormlTriang[i];
+		const MGVector& normal = m_vecNormlTriang[i];
 		for(int j = 0; j < 3; j++){
 			fNormal = float(normal[j]);
 			fout.write((char*)&fNormal, 4);
@@ -688,7 +688,7 @@ void MGStl::push_back_triangle(
 	triangleMap& VertexMap
 ){
 	// 3点から面の法線を求め、メンバ変数にpush_backする
-	m_vecNormlTriang.push_back(UnitNormal(pos1, pos2, pos3));
+	m_vecNormlTriang.push_back(MGCL::UnitNormal(pos1, pos2, pos3));
 
 	// m_indicesに頂点のインデックスをpush_backし
 	// m_vecPosに重複なくMGPositionをpush_backする
@@ -715,7 +715,7 @@ void MGStl::set_all_data(
 // Update the all normals of the triangles.
 void MGStl::update_normals(){
 	size_t nTri = m_indices.size() / 3;
-	std::vector<MGUnit_vector> work(nTri);
+	std::vector<MGVector> work(nTri);
 
 	for(size_t i = 0; i < nTri; ++i){
 		int vid[3];
@@ -724,7 +724,7 @@ void MGStl::update_normals(){
 		assert(size_t(vid[1]) < m_vecPos.size());
 		assert(size_t(vid[2]) < m_vecPos.size());
 
-		work[i] = UnitNormal(
+		work[i] = MGCL::UnitNormal(
 			m_vecPos[vid[0]],
 			m_vecPos[vid[1]],
 			m_vecPos[vid[2]]);
@@ -770,7 +770,7 @@ int MGStl::SaveObjFormatFromStl(
 	// 法線ベクトルの出力
 	for(int j = 0; j < nTriang; j++){
 		// 法線ベクトルの取得
-		const MGUnit_vector& normal = m_vecNormlTriang[j];
+		const MGVector& normal = m_vecNormlTriang[j];
 		fout << "vn " << normal(0) << " " << normal(1) << " " << normal(2) << std::endl;
 	}
 

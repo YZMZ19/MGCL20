@@ -54,7 +54,7 @@ void get_all_derivatives(
 			if (vectp.eval(perim, utaui, N)) {//get Normal of tangent plane.
 				deri = surf.eval(utaui, vm, 0, 1);
 				double vlen = deri.len();
-				deri = MGUnit_vector(N*deri*N)*vlen;
+				deri = (N*deri*N).normalize()*vlen;
 				deris_u.store_at(i2, deri);
 				utau(i2++) = utaui;
 			}
@@ -91,7 +91,7 @@ void get_all_derivatives(
 			if (vectp.eval(perim, vtauj, N)) {//Normal of tangent plane at surf(um,vtau[j]).
 				deri = surf.eval(um, vtauj, 1, 0);
 				double vlen = deri.len();
-				deri = MGUnit_vector(N*deri*N)*vlen;
+				deri = (N*deri*N).normalize()*vlen;
 				deris_v.store_at(j2, deri);
 				vtau(j2++) = vtauj;
 			}

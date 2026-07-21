@@ -478,13 +478,14 @@ void buildByL2ApproximateWithKTV(
 
 //The sweep surface is defined as:
 //rail(say c(u)) is the rail and the straight line segments
-//from C(u)+start_dist*uvec to C(u)+end_dist*uvec are the generatrix.
-//The surface is expressed as: S(u,v)=c(u)+uvec*v,
+//from C(u)+start_dist*N to C(u)+end_dist*N are the generatrix.
+//The surface is expressed as: S(u,v)=c(u)+N*v,
 //for rail.param_s()<=u<=rail.param_e(), start_dist<=v<=end_dist.
+///Here, N=uvec.normalize().
 void buildSweep(
-	const MGLBRep& rail,		//Sweep(rail) crv.
-	const MGUnit_vector& uvec,	///<Sweep Direction.
-	double start_dist,			///<distance to start edge.
+	const MGLBRep& rail,	//Sweep(rail) crv.
+	const MGVector& uvec,	///<Sweep Direction.
+	double start_dist,		///<distance to start edge.
 	double end_dist			///<distance to end edge.
 );
 
@@ -492,11 +493,12 @@ void buildSweep(
 
 ///The sweep surface is defined as:
 ///st(say c(t)) is the rail and the straight line segments from
-///C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+///C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 void buildSweep(
-	const MGStraight& rail,		///<Sweep crv.
-	const MGUnit_vector& uvec,	///<Sweep Direction.
-	double start_dist,			///<distance to start edge.
+	const MGStraight& rail,	///<Sweep crv.
+	const MGVector& uvec,	///<Sweep Direction.
+	double start_dist,		///<distance to start edge.
 	double end_dist			///<distance to end edge.
 );
 

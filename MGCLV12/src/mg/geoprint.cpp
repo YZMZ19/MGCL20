@@ -603,17 +603,6 @@ ostream& operator<< (ostream& o, const MGTransf& trn1){
 		<<trn1.m_translation;
 	return o;
 }
-//////////// MGUnit_vector ////////////
-/*ostream& operator<< (ostream& out, const MGUnit_vector& unit) {
-	int dim=unit.sdim();
-	out <<"U(";
-	for(int i=0; i<dim; i++){
-		out<<unit.m_element[i];
-		if(i<dim-1) out<<",";
-	}
-	out<<")";
-	return out;
-}*/
 
 //////////// MGVector ////////////
 ostream& operator<< (ostream& out, const MGVector& vec){

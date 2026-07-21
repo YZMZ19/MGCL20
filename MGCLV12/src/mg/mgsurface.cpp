@@ -5,7 +5,6 @@
 #include "StdAfx.h"
 #include "mg/Box.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position_list.h"
 #include "mg/Transf.h"
 #include "mg/Straight.h"
@@ -56,13 +55,12 @@ void MGSurface::arrow(const MGBox& box, double u,double v, MGPosition data[10])c
 	data[0]=eval(u,v);
 	MGVector du=eval(u,v,1,0),dv=eval(u,v,0,1);
 	double len=box.len()*arrow_length;
-	MGUnit_vector ndu(du), ndv(dv);
+	MGVector ndu(du.normalize()), ndv(dv.normalize());
 	du=ndu*len; dv=ndv*len;
 	MGPosition& P=data[0];
 	MGCL::one_arrow(P,du,dv,data[1],data[2],data[3]);
 	MGCL::one_arrow(P,dv,du,data[4],data[5],data[6]);
-	MGUnit_vector N(du*dv);
-	MGCL::one_arrow(P,N*len,du,data[7],data[8],data[9]);
+	MGCL::one_arrow(P, (du*dv).normalize()*len, du, data[7],data[8],data[9]);
 }
 
 //Return box of the parameter space of the surface.
@@ -174,9 +172,8 @@ MGPosition MGSurface::closest_on_perimeter(const MGStraight& sl)const{
 	if(!pnum)
 		return center_param();
 
-	MGUnit_vector sldir=sl.direction();
 	const MGPosition& origin=sl.root_point();
-	MGMatrix M; M.set_axis(sldir,2);
+	MGMatrix M; M.set_axis(sl.direction(),2);
 
 	std::vector<UniqueCurve> perims(pnum);
 	std::vector<const MGBox*> boxes(pnum);
@@ -230,11 +227,13 @@ MGPosition MGPosition::closest(const MGSurface& surf) const{
 //value[2]=k1:minimum curvature, and value[3]=k2=maximum curvature.
 //N is the unit normal vector at position (u,v).
 void MGSurface::curvatures(
-	const MGPosition& uv, double value[4], MGUnit_vector& N) const{
+	const MGPosition& uv, double value[4], MGVector& N
+) const{
 	curvatures(uv[0], uv[1], value, N);
 }
 void MGSurface::curvatures(
-	double u, double v, double value[4], MGUnit_vector& N) const{
+	double u, double v, double value[4], MGVector& N
+) const{
 	double Q[6];
 	fundamentals(u,v,Q,N);
 	double EG=Q[0]*Q[2];
@@ -261,8 +260,8 @@ void MGSurface::curvatures(
 }
 
 //Compute direction unit vector of the geometry.
-MGUnit_vector MGSurface::direction(const MGPosition& param)const{
-	return normal(param);
+MGVector MGSurface::direction(const MGPosition& param)const{
+	return unit_normal(param);
 }
 
 //Test if pline has the same direction to world_curve, assuming that
@@ -470,14 +469,14 @@ MGVector MGSurface::evaluate(
 void MGSurface::fundamentals(
 	const MGPosition&uv,	//Surface parameter value (u,v)
 	double Q[6],
-	MGUnit_vector& N)		//Normal vector at uv will be returned.
+	MGVector& N)		//Unit Normal vector at uv will be returned.
 const{
 	fundamentals(uv[0], uv[1], Q, N);
 }
 void MGSurface::fundamentals(
 	double u, double v,		//Surface parameter value (u,v)
 	double Q[6],
-	MGUnit_vector& N)		//Normal vector at (u,v) will be returned.
+	MGVector& N)		//Unit Normal vector at (u,v) will be returned.
 const{
 	MGPosition f;	// Positional data.
 	MGVector  fu;	// df(u,v)/du
@@ -539,7 +538,7 @@ void MGSurface::compute_sample_point(
 	double v1,
 	MGPosition Pn[9],	//9 sample points will be output.
 	MGPosition& center,	//center of the sample points will be output.
-	MGUnit_vector& N,	//average normal of Nn[] will be output. 
+	MGVector& N,	//average unit normal of Nn[] will be output. 
 	MGVector* Nn_in		//9 normals of the surface will be output.
 )const{
 	MGVector NnLocal[9];
@@ -562,7 +561,7 @@ void MGSurface::compute_sample_point(
 	center=Pn[0]; MGVector VN=Nn[0]; 
 	for(i=1; i<9; i++){center+=Pn[i]; VN+=Nn[i];}
 	center/=9.;
-	N=VN;
+	N=VN.normalize();
 }
 
 //Test if the surface is flat or not within the parameter value rectangle of uvbox.
@@ -580,7 +579,7 @@ bool MGSurface::flat(
 	int& direction,	//   1: u-direction is more non flat.
 					//   0: v-direction is more non flat.
 	MGPosition& P,	//Position of the flat plane will be output.
-	MGUnit_vector& N//Normal of the flat plane will be output.
+	MGVector& N//Unit Normal of the flat plane will be output.
 )const{
 	const MGInterval& urng=uvbox[0];
 	double u0=urng[0], u1=urng[1];
@@ -668,7 +667,7 @@ void MGSurface::get_approximate_plane(
 )const{
 	MGPosition Pn[9];
 	MGPosition center;
-	MGUnit_vector N;
+	MGVector N;
 	compute_sample_point(u0,u1,v0,v1,Pn,center,N);
 	
 	int i;	//id of Pn[].
@@ -708,7 +707,7 @@ bool test_to_get_approximate_plane(
 	const MGPosition Pn[9],
 	const MGVector Nn[9],
 	const MGPosition& center,///<center of the sample points will be output.
-	const MGUnit_vector& N,
+	const MGVector& N,
 	double surface_tol,	//tolerance allowed for the deviation from the plane to the surface.
 	double angle,		//angle allowed for the normal of the plane and the normals of the
 						//surface.
@@ -727,8 +726,8 @@ bool test_to_get_approximate_plane(
 	}
 
 	MGPlane plane2(N,center);
-	MGUnit_vector xaxis=MGVector(plane2.eval(plane2.uv(Pn[2])),plane2.eval(plane2.uv(Pn[0])));
-	MGUnit_vector yaxis=N*xaxis;
+	MGVector xaxis(plane2.eval(plane2.uv(Pn[2])),plane2.eval(plane2.uv(Pn[0])));
+	MGVector yaxis = N * xaxis; yaxis.set_unit();
 	plane=MGPlane(xaxis,yaxis,center);
 	MGBox uvrange;
 	for(i=0; i<9; i++){
@@ -770,7 +769,7 @@ bool MGSurface::test_and_get_approximate_plane(
 	MGPosition Pn[9];
 	MGVector Nn[9];
 	MGPosition center;
-	MGUnit_vector N;
+	MGVector N;
 	compute_sample_point(u0,u1,v0,v1,Pn,center,N,Nn);
 	return test_to_get_approximate_plane(Pn,Nn,center,N,surface_tol,angle,plane,width,height);
 }
@@ -822,7 +821,7 @@ MGVector MGSurface::normal(double u,double v) const
 {	return eval(u,v,1,0)*eval(u,v,0,1);}
 
 //Compute unit normal vector at uv.
-MGUnit_vector MGSurface::unit_normal(const MGPosition& uv) const
+MGVector MGSurface::unit_normal(const MGPosition& uv) const
 {	return unit_normal(uv.ref(0), uv.ref(1));}
 
 #define MAX_LOOP_NUM 100
@@ -867,16 +866,16 @@ void MGSurface::nearest_non_degenerated(double& u,double& v) const{
 }
 
 //Compute unit normal vector at uv.
-MGUnit_vector MGSurface::unit_normal(double u,double v)const{
+MGVector MGSurface::unit_normal(double u,double v)const{
 	MGVector fu(eval(u,v,1,0)), fv(eval(u,v,0,1));
-	MGVector norml=fu*fv;
+	MGVector norml=(fu*fv).normalize();
 	double err_sqr=MGTolerance::mach_zero();
 	if((norml%norml)>=err_sqr)
 		return norml;
 
 	nearest_non_degenerated(u,v);
 	fu=eval(u,v,1,0); fv=eval(u,v,0,1);
-	return fu*fv;
+	return (fu * fv).normalize();
 }
 
 // 点がSpline上にあるか調べる。Spline上であれば，そのパラメータ値を，
@@ -1299,8 +1298,6 @@ MGPosition_list MGSurface::perps(
 	double erroru=tu.param_error()*2., errorv=tv.param_error()*2.;
 	double errorM=MGTolerance::wc_zero()*-1.;
 	MGPosition P0,P1,P2,P3;
-	MGVector N0,N1,N2,N3;
-	MGUnit_vector PN0,PN1,PN2,PN3;
 
 	int kvm1=kv-1;
 	int bdimu=bdim_u(), bdimv=bdim_v();
@@ -1325,28 +1322,24 @@ MGPosition_list MGSurface::perps(
 					double vn=v+vspan, v2=v+vspan*.5;
 
 					P0=eval(u,v); P1=eval(un,v);
-					N0=normal(u2,v);
-					PN0=N0*(P1-P0);
+					MGVector PN0= (normal(u2, v) * (P1-P0)).normalize();
 					double d0=PN0%P-PN0%eval(u2,v);
 					if(d0<errorM)
 						continue;
 
 					P2=eval(un,vn);
-					N1=normal(un,v2);
-					PN1=N1*(P2-P1);
+					MGVector PN1= (normal(un, v2) *(P2-P1)).normalize();
 					double d1=PN1%P-PN1%eval(un,v2);
 					if(d1<errorM)
 						continue;
 
 					P3=eval(u,vn);
-					N2=normal(u2,vn);
-					PN2=N2*(P3-P2);
+					MGVector PN2= (normal(u2, vn) *(P3-P2)).normalize();
 					double d2=PN2%P-PN2%eval(u2,vn);
 					if(d2<errorM)
 						continue;
 
-					N3=normal(u,v2);
-					PN3=N3*(P0-P3);
+					MGVector PN3= (normal(u, v2) *(P0-P3)).normalize();
 					double d3=PN3%P-PN3%eval(u,v2);
 					if(d3<errorM)
 						continue;
@@ -1883,7 +1876,7 @@ bool MGSurface::is_flat_and_small(
 )const{
 	MGPosition Pn[9];
 	MGPosition C;//center.
-	MGUnit_vector Nc;//Normal at C.
+	MGVector Nc;//Normal at C.
 	double u0=bx[0][0], u1=bx[0][1];
 	double v0=bx[1][0], v1=bx[1][1];
 	compute_sample_point(u0,u1,v0,v1,Pn,C,Nc);

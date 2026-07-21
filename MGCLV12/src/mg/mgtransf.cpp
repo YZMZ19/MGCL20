@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Vector.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position.h"
 #include "mg/Matrix.h"
 #include "mg/Transf.h"
@@ -66,12 +65,11 @@ MGTransf::MGTransf(double scalex, double scaley)
 }
 
 // Construct 2D space Transf to transform data for 'origin' to be origin
-// and for 'unit' to be x-coordimate.
-MGTransf::MGTransf(const MGUnit_vector& unit, //unit vector to be x-coordinate
+// and for 'vec' to be x-coordimate.
+MGTransf::MGTransf(const MGVector& vec, //vector to be x-coordinate
                    const MGPosition& origin)  //origin to be origin.
 {
-//	assert(unit.sdim()==2);
-    m_affine.set_x_axis(unit);
+    m_affine.set_x_axis(vec);
 	m_translation=-origin*m_affine;
 }
 
@@ -90,11 +88,10 @@ MGTransf::MGTransf(double scalex, double scaley, double scalez)
 //  VectorÇÃÇ©ÇÌÇËÇ…óºVectorÇä‹ÇﬁïΩñ ì‡Ç≈íºåÇ∑ÇÈÇÊÇ§ïœä∑ÇµÇΩVectorÇ
 //  égópÇ∑ÇÈÅB
 MGTransf::MGTransf ( 
-    const MGUnit_vector& uvecx,
-    const MGUnit_vector& uvecy,
+    const MGVector& uvecx,
+    const MGVector& uvecy,
     const MGPosition& origin)
 {
-//	assert(uvecx.sdim()<=3 && uvecy.sdim()<=3);
     m_affine.set_xy_axis(uvecx,uvecy);
 	m_translation=-origin*m_affine;
 }

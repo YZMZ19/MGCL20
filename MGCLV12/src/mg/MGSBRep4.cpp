@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Vector.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position.h"
 #include "mg/Position_list.h"
 #include "mg/LBRep.h"
@@ -227,7 +226,7 @@ int MGSBRep::planar(
 	) const{
 	double u0=param_s_u(), u1=param_e_u();
 	double v0=param_s_v(), v1=param_e_v();
-	MGUnit_vector N=(normal(u0,v0)+normal(u0,v1)+normal(u1,v0)+normal(u1,v1));
+	MGVector N=(normal(u0,v0)+normal(u0,v1)+normal(u1,v0)+normal(u1,v1)).normalize();
 	MGPosition P=(eval(u0,v0)+eval(u0,v1)+eval(u1,v0)+eval(u1,v1)
 					+eval((u0+u1)*.5,(v0+v1)*.5))/5.;
 	plane=MGPlane(N,P);
@@ -257,7 +256,7 @@ int MGSBRep::planar(
 )const{
 	MGBox uvb=param_range()&uvbox;
 	MGPosition P; 
-	MGUnit_vector N;
+	MGVector N;
 	int direction;
 	if(!flat(uvb,tol,direction,P,N)){
 		if(divideU) *divideU=direction;

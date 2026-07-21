@@ -51,7 +51,7 @@ void MGIgesPD192::getOrigin(const MGIgesIfstream& ifs, MGPosition& origin)const{
 }
 
 //Get the plane normal into nromal.
-void MGIgesPD192::getNormal(const MGIgesIfstream& ifs, MGUnit_vector& normal)const{
+void MGIgesPD192::getNormal(const MGIgesIfstream& ifs, MGVector& normal)const{
 	const MGIgesFstream::UniqueDE& de=ifs.directoryEntry(m_normalDE);
 	assert(de->EntityTypeNumber()==DIRECTION);
 	if(de->EntityTypeNumber()!=DIRECTION){
@@ -62,7 +62,7 @@ void MGIgesPD192::getNormal(const MGIgesIfstream& ifs, MGUnit_vector& normal)con
 	const MGIgesPD123* pd123=static_cast<const MGIgesPD123*>(pd.get());
 	MGVector dir;
 	pd123->convert_to_vector(dir);
-	normal=dir;
+	normal=dir.normalize();
 }
 
 //Get the plane reference direction(REFDIR) into refdir.
@@ -122,16 +122,16 @@ MGCylinder* MGIgesIfstream::convert_cylinder(
 
 	const MGIgesPD192* pd192=static_cast<const MGIgesPD192*>(pd.get());
 	MGPosition origin; pd192->getOrigin(*this,origin);
-	MGUnit_vector normal; pd192->getNormal(*this,normal);
+	MGVector normal; pd192->getNormal(*this,normal);
 
 	MGVector refdir(1.,0.,0.);
-	MGUnit_vector U, V;
+	MGVector U, V;
 	if(de.FormNumber()==1){//Parameterized.
 		pd192->getRefdir(*this,refdir);
-		U=refdir-(normal%refdir)*normal;
-		V=normal*U;
+		U=(refdir-(normal%refdir)*normal).normalize();
+		V=(normal*U).normalize();
 	}else{
-		normal.orthonormal(refdir,U,V);
+		normal.orthonormalize(refdir,U,V);
 	}
 	double r=pd192->getRadius();
 	MGInterval rng(0.,mgDBLPAI);

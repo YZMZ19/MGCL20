@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Box.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position_list.h"
 #include "mg/KnotVector.h"
 #include "mg/KnotArray.h"

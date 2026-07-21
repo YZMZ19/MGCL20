@@ -7,7 +7,6 @@
 #include "mg/Box.h"
 #include "mg/Position.h"
 #include "mg/Transf.h"
-#include "mg/Unit_vector.h"
 #include "mg/CParam_list.h"
 #include "mg/CCisects.h"
 #include "mg/CSisects.h"
@@ -58,11 +57,10 @@ MGPosition MGStraight::closest(const MGCurve& curve2)const{
 	if(sl2)
 		return closestSL(*sl2);
 
-	MGUnit_vector sldir=direction();
 	const MGPosition p_on_crv2=curve2.center();
 	MGPosition origin=eval_position_unlimitted(perp_param(p_on_crv2));
 
-	MGMatrix M; M.set_axis(sldir,2);
+	MGMatrix M; M.set_axis(direction(),2);
 	std::unique_ptr<MGCurve> crv2dP(curve2.clone());
 	MGCurve& crv2d=*crv2dP;
 	crv2d-=origin;
@@ -592,7 +590,7 @@ MGPSRELATION MGStraight::relation(
 			return relation_coincide(sl2,ip);
 		}else{
 			// “ñ’¼ü‚©‚ç©g‚Ì’¼ü‚ğŠÜ‚Ş•½–Ê‚ğì¬‚·‚éB
-			MGUnit_vector N=m_direction*sl2.m_direction;
+			MGVector N=m_direction*sl2.m_direction;
 			//N is normal to both m_direction and s.m_direction.
 			MGMatrix mat(3); mat.set_axis(N,2);
 			MGStraight tsl1=(*this)*mat; //sl1 is 2D straightline on x-y plane.

@@ -71,7 +71,7 @@ void MGOpenGLView::copy(const MGglViewAttrib& glatr){
 	setLookAtMat();
 
 	const MGVector& upV=glatr.view_up_vector();
-	MGUnit_vector XAxis=upV*eye_position();
+	MGVector XAxis=(upV*eye_position()).normalize();
 	for(int i=0; i<3; i++){
 		m_XAxis_current[i]=(float)XAxis[i];
 		m_center_current[i]=(float)glatr.m_center[i];

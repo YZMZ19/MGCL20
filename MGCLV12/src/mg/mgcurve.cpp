@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Box.h"
-#include "mg/Unit_vector.h"
 #include "mg/Transf.h"
 #include "mg/Position.h"
 #include "mg/Point.h"
@@ -585,12 +584,12 @@ double MGCurve::curvature(double d)const{
 }
 
 // Curve上の与ポイントでの単位接ベクトルを返却する。
-MGUnit_vector MGCurve::direction(double d) const{
-	return MGUnit_vector (eval_deriv(d));
+MGVector MGCurve::direction(double d) const{
+	return (eval_deriv(d)).normalize();
 }
 
 //Compute direction unit vector of the geometry.
-MGUnit_vector MGCurve::direction(const MGPosition& param) const{
+MGVector MGCurve::direction(const MGPosition& param) const{
 	return direction(param(0));
 }
 
@@ -630,7 +629,7 @@ void MGCurve::extrapolated_pp(
 	}else{
 		if(at_start)
 			v1*=-1.;
-		MGUnit_vector g1(v1);
+		MGVector g1(v1.normalize());
 		MGVector v12=v1*v2;
 		double v12len=v12.len();
 		MGVector g2(0.,0.,0.);
@@ -639,7 +638,7 @@ void MGCurve::extrapolated_pp(
 		if(MGMZero(v12len)){
 			curvature=torsion=0.;
 		}else{
-			g2=MGUnit_vector(v12)*g1;
+			g2=v12.normalize()*g1;
 			curvature=v12len/v1len/v1len2;
 			torsion=MGDeterminant(v1,v2,v3)/v12len/v12len;
 		}
@@ -867,7 +866,7 @@ bool MGCurve::is_linear(MGStraight& straight)const{
 	int ndiv=intersect_dnum();
 	double ts=param_s(), te=param_e();
 	double tmid=(ts+te)*.5;
-	MGUnit_vector dir=eval(tmid,1);
+	MGVector dir=eval(tmid,1).normalize();
 	MGPosition Ps=eval(tmid);
 	straight=MGStraight(MGSTRAIGHT_TYPE::MGSTRAIGHT_UNLIMIT,dir,Ps);
 	double dt=(te-ts)/double(ndiv), para;
@@ -1442,10 +1441,8 @@ int MGCurve::perp_point(
 //sl is the eye projection line whose direction is from yon to hither, and if
 //sl had multiple intersection points, The closest point to the eye will be selected.
 MGPosition MGCurve::pick_closest(const MGStraight& sl)const{
-	MGUnit_vector sldir=sl.direction();
 	const MGPosition& origin=sl.root_point();
-
-	MGMatrix M; M.set_axis(sldir,2);
+	MGMatrix M; M.set_axis(sl.direction(),2);
 	std::unique_ptr<MGCurve> crv2dP(clone());
 	MGCurve& crv2d=*crv2dP;
 	crv2d-=origin;

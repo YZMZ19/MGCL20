@@ -30,7 +30,7 @@ class MGEllipseTTR: public MGCurveParameter{
 	double m_r;	//radius of the target arc.
 	double m_rabs;//absolute value of m_r.
 	double m_t2guess;// initial guess parameter of m_curve2.
-	const MGUnit_vector& m_normal;//The normal of the plane where the arc lies on.
+	const MGVector m_normal;//The normal of the plane where the arc lies on.
 	mutable double m_t2obtained;
 		//When solution found, m_t2obtained will be the tangent point parameter of curve2.
 	mutable MGPosition m_center;
@@ -44,9 +44,10 @@ MGEllipseTTR(
 	double t2guess,		//guess parameter value of crv2.
 	const MGCurve& crv2,//curve2.
 	double r,	//radius of the target arc.
-	const MGUnit_vector& normal//The normal of the plane where the arc lies on.
+	const MGVector& normal//The normal of the plane where the arc lies on.
 ):MGCurveParameter(crv1.param_range(),MGTolerance::wc_zero_sqr())
-,m_curve1(crv1),m_t2guess(t2guess),m_curve2(crv2),m_r(r),m_rabs(r),m_normal(normal){
+,m_curve1(crv1),m_t2guess(t2guess)
+,m_curve2(crv2),m_r(r),m_rabs(r),m_normal(normal.normalize()){
 	if(m_rabs<0.) m_rabs*=-1.;
 	m_r2=r*r;
 };
@@ -61,7 +62,7 @@ double operator()(
 )const{
 	MGVector tan1=m_curve1.eval(t,1);
 	MGPosition P1=m_curve1.eval(t);
-	MGUnit_vector N1=m_normal*tan1;
+	MGVector N1=(m_normal*tan1).normalize();
 	if((N1%(m_curve2.eval(m_t2guess)-P1))<0.){
 		N1.negate();
 	}
@@ -94,16 +95,17 @@ double curve2_param(){return m_t2obtained;};
 MGEllipse::MGEllipse(
 	const MGCurve&			crv1,	//I:基本線1
 	const MGCurve&			crv2,	//I:基本線2
-	const MGUnit_vector&	normal,	//I:基本線のノーマルベクトル
+	const MGVector&	normal,	//I:基本線のノーマルベクトル
 	double					r,//I:コーナーＲの半径
 	double&					t1,		//I:基本線１の初期パラメータ(コーナーＲを作成する側を指定)
 									//O:コーナーＲと接する基本線１のパラメータ値
 	double&					t2,		//I:基本線２の初期パラメータ(コーナーＲを作成する側を指定)
 									//O:コーナーＲと接する基本線２のパラメータ値
-	int&					rc)		//O:リターンコード
-:MGCurve(crv1),m_gprange(0),m_knotV(0){
+	int&					rc		//O:リターンコード
+):MGCurve(crv1),m_gprange(0),m_knotV(0){
 	MGEllipseTTR ttr(crv1,t2,crv2,r,normal);
-	ttr.set_delta(crv1.param_span()/crv1.divide_number());
+	double delta = crv1.param_span() / crv1.divide_number();
+	ttr.set_delta(delta);
 	rc=ttr.getCurveParameter(t1);
 	if(rc)
         return;
@@ -126,19 +128,19 @@ MGEllipse::MGEllipse(
 
 //Utility class for MGEllipse constructor of curve1, 2, and tangent point on crv1.
 class MGEllipseTTP: public MGCurveParameter{
-	const MGUnit_vector& m_normal;//The normal of the plane where the arc lies on.
-	const MGUnit_vector& m_N1;	//curve1's normal at the point P1.
+	const MGVector m_normal;//The normal of the plane where the arc lies on.
+	const MGVector m_N1;	//curve1's normal at the point P1.
 	const MGPosition& m_P1;		//curve1's point which is the end of the arc.
 	const MGCurve& m_crv2;		//curve2.
 
 public:
 MGEllipseTTP(
-	const MGUnit_vector& normal,//The normal of the plane where the arc lies on.
-	const MGUnit_vector& N1,	//curve1's normal at the point P1.
+	const MGVector& normal,//The normal of the plane where the arc lies on.
+	const MGVector& N1,	//curve1's normal at the point P1.
 	const MGPosition& P1,		//curve1's point which is the end of the arc.
 	const MGCurve& crv2			//curve2.
 ):MGCurveParameter(crv2.param_range(),MGTolerance::wc_zero_sqr())
-,m_normal(normal), m_N1(N1), m_P1(P1), m_crv2(crv2){;};
+,m_normal(normal.normalize()), m_N1(N1.normalize()), m_P1(P1), m_crv2(crv2){;};
 
 //return the difference of the two radii. That is,
 //let Q be the intersection of the straight from m_P1 to m_N1 and from P2 to normal at P2
@@ -147,20 +149,20 @@ MGEllipseTTP(
 double operator()(
 	double t	//is a parameter of m_curv2;
 )const{
-	MGUnit_vector N2=normal2(t);
+	MGVector N2=normal2(t);
 	MGVector p12=getP12(t);
 	double p12n1=p12%m_N1, p12n2=p12%N2, n12=m_N1%N2;
 	return (p12n1*p12n1-p12n2*p12n2)/(1.-n12*n12);
 };
 
-MGUnit_vector normal2(double t2)const{
-	return m_normal*m_crv2.eval(t2,1);
+MGVector normal2(double t2)const{
+	return (m_normal*m_crv2.eval(t2,1)).normalize();
 };
 MGVector getP12(double t2)const{
 	return m_crv2.eval(t2)-m_P1;
 };
 double radius(double t2)const{
-	MGUnit_vector N2=normal2(t2);
+	MGVector N2=normal2(t2);
 	double n12=m_N1%N2;
 	MGVector p12=getP12(t2);
 	return (p12%m_N1-(p12%N2)*n12)/(1.-n12*n12);
@@ -183,7 +185,7 @@ double radius(double t2)const{
 MGEllipse::MGEllipse(
 	const MGCurve&			crv1,	//curve1
 	const MGCurve&			crv2,	//curve2
-	const MGUnit_vector&	normal,	//normal of the plane 2 curvs lie on
+	const MGVector&	normal,	//normal of the plane 2 curvs lie on
 	double					t1,		//tangent point's parameter of crv1.
 	double&					t2,		//guess parameter value of crv2 is input initially,
 							//correct tangent point's parameter will be output when rc=0.
@@ -191,7 +193,7 @@ MGEllipse::MGEllipse(
 ):MGCurve(crv1),m_gprange(0), m_knotV(0){
 	MGVector tan1=crv1.eval(t1,1);
 	MGPosition P1=crv1.eval(t1);
-	MGUnit_vector N1=normal*tan1;
+	MGVector N1=(normal*tan1).normalize();
 	MGEllipseTTP radius_diff(normal,N1,P1,crv2);
 	double delta=crv2.param_span()/crv2.divide_number();
 	radius_diff.set_delta(delta);
@@ -225,7 +227,7 @@ MGEllipse::MGEllipse(
 	const MGCurve& crv1,	//I:基本線1(始点)
 	const MGCurve& crv2,	//I:基本線2(通過点)
 	const MGCurve& crv3,	//I:基本線3(終点)
-	const MGUnit_vector& normal,//I:基本線のノーマルベクトル
+	const MGVector& normal,//I:基本線のノーマルベクトル
 	double& t1,		//I:基本線1の初期パラメータ(コーナーＲの始点近辺)
 		 			//O:コーナーＲの始点における基本線１のパラメータ値
 	double& t2,		//I:基本線2の初期パラメータ(コーナーＲの通過点近辺)
@@ -243,8 +245,9 @@ MGEllipse::MGEllipse(
 		P1=crv1.eval(t1), P2=crv2.eval(t2), P3=crv3.eval(t3);
 		MGPosition posM((P1+P2+P3)/3.);	//重心
 		MGVector tan1=crv1.eval(t1,1), tan2=crv2.eval(t2,1), tan3=crv3.eval(t3,1);
-		MGUnit_vector T1(tan1), T2(tan2), T3(tan3);
-		MGUnit_vector N1(normal*T1), N2(normal*T2), N3(normal*T3);
+		MGVector T1(tan1.normalize()), T2(tan2.normalize()), T3(tan3.normalize());
+		MGVector N1(normal*T1), N2(normal*T2), N3(normal*T3);
+		N1.set_unit(); N2.set_unit(); N3.set_unit();
 		//垂直ベクトルは、３点の重心方向になるようにする
 		if(((posM-P1)%N1) < 0.0)
 			N1.negate();
@@ -288,7 +291,7 @@ class MGEllipseTPR: public MGCurveParameter{
 	const MGCurve& m_curve;	//curve.
 	double m_r;	//radius of the target arc.
 	const MGPosition& m_P2;	//end point of the arc.
-	const MGUnit_vector& m_normal;//The normal of the plane where the arc lies on.
+	const MGVector m_normal;//The normal of the plane where the arc lies on.
 	mutable MGPosition m_center;
 		//When solution found, m_center will be the center of the arc.
 	double m_r2;	//square of m_r.
@@ -299,9 +302,9 @@ MGEllipseTPR(
 	const MGCurve& crv,//curve.
 	double r,	//radius of the target arc.
 	const MGPosition& P2,
-	const MGUnit_vector& normal//The normal of the plane where the arc lies on.
+	const MGVector& normal//The normal of the plane where the arc lies on.
 ):MGCurveParameter(crv.param_range(),MGTolerance::wc_zero_sqr())
-,m_curve(crv),m_P2(P2),m_r(fabs(r)),m_normal(normal),m_r2(r*r){
+,m_curve(crv),m_P2(P2),m_r(fabs(r)),m_normal(normal.normalize()),m_r2(r*r){
 };
 
 //return the difference of the two radii. That is,
@@ -313,7 +316,8 @@ double operator()(
 )const{
 	MGVector tan1=m_curve.eval(t,1);
 	MGPosition P1=m_curve.eval(t);
-	MGUnit_vector N1=m_normal*tan1;
+	MGVector N1=m_normal*tan1;
+	N1.set_unit();
 	MGVector p12=m_P2-P1;
 	if(N1%p12<0.){
 		N1.negate();
@@ -339,7 +343,7 @@ MGPosition& center(){return m_center;};
 MGEllipse::MGEllipse (
 	const MGCurve&			crv,				//I:基本線
 	const MGPosition&		P2,				//I:円弧端点
-	const MGUnit_vector&	normal,				//I:基本線のノーマルベクトル
+	const MGVector&	normal,				//I:基本線のノーマルベクトル
 	double					r,			//I:コーナーＲの半径
 	double&					t,				//I:基本線の初期パラメータ(コーナーＲを作成する側を指定)
 												//O:コーナーＲと接する基本線のパラメータ値
@@ -373,7 +377,7 @@ MGEllipse::MGEllipse (
 MGEllipse::MGEllipse (
 	const MGCurve&			crv,	//I:基本線
 	const MGPosition&		P2,		//I:円弧端点
-	const MGUnit_vector&	normal,	//I:基本線のノーマルベクトル
+	const MGVector&	normal,	//I:基本線のノーマルベクトル
 	double t				//I:R止まり点のパラメータ
 ):MGCurve(crv),m_gprange(0), m_knotV(0){
 	MGPosition P1=crv.eval(t);
@@ -381,7 +385,7 @@ MGEllipse::MGEllipse (
 	MGVector V=Q-P1;
 
 	MGVector T=crv.eval(t,1);
-	MGUnit_vector N=normal*T;//Normal at t.
+	MGVector N=(normal*T).normalize();//Normal at t.
 	if(N%V<0.)
 		N.negate();//The arc is always on the side of the vector V.
 	if(T%V<0.)

@@ -5,7 +5,6 @@
 #pragma once
 
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/CSisects.h"
 #include "mg/Surface.h"
 #include "mg/Ellipse.h"
@@ -397,7 +396,7 @@ bool flat(
 	int& direction,	///<   1: u-direction is more non flat.
 					///<   0: v-direction is more non flat.
 	MGPosition& P,	///<Position of the flat Cylinder will be output.
-	MGUnit_vector& N///<Normal of the flat Cylinder will be output.
+	MGVector& N///<Unit Normal of the flat Cylinder will be output.
 )const;
 
 ///This is the same as flat except that this does not have the arguments P, N.

@@ -60,7 +60,7 @@ m_ColorSpecified(false),m_NormalSpecified(false),m_TextureSpecified(false)
 		mgGLSL::printOpenGLError(glErr);
 	}
 
-	float* area=new float[m_count*4];//Maximum arear is reserved.
+	float* area=new float[m_count*4];//Maximum area is reserved.
 	unsigned baseSize=sizeof(float)*m_count;
 	unsigned sizeV(baseSize*3), sizeC(0), sizeN(0), sizeT(0);
 	unsigned sizeTotal=sizeV;

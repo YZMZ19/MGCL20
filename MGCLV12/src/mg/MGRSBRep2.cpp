@@ -87,8 +87,7 @@ MGCSisects MGRSBRep::isectSl(
 	if(!sbx.crossing(sl))
 		return list;
 
-	MGUnit_vector SLD=sl.direction();
-	MGMatrix mat; mat.to_axis(SLD,2);	//Matrix to transform SLD to be z axis.
+	MGMatrix mat; mat.to_axis(sl.direction(),2);//Matrix to transform dir to be z axis.
 
 	double u0,u1,v0,v1;
 	bool uvbox_is_null=uvbox.is_null();
@@ -154,7 +153,7 @@ int MGRSBRep::planar(
 		)const{
 	double u0=param_s_u(), u1=param_e_u();
 	double v0=param_s_v(), v1=param_e_v();
-	MGUnit_vector N=(normal(u0,v0)+normal(u0,v1)+normal(u1,v0)+normal(u1,v1));
+	MGVector N=(normal(u0,v0)+normal(u0,v1)+normal(u1,v0)+normal(u1,v1)).normalize();
 	MGPosition P=(eval(u0,v0)+eval(u0,v1)+eval(u1,v0)+eval(u1,v1)
 					+eval((u0+u1)*.5,(v0+v1)*.5))/5.;
 	plane=MGPlane(N,P);
@@ -191,7 +190,7 @@ int MGRSBRep::planar(
 	int i,j,k;
 
 	MGBox uvb=param_range()&uvbox;
-	MGUnit_vector N;
+	MGVector N;
 	MGPosition P;
 	int direction;
 	if(!flat(uvb,tol,direction,P,N)){

@@ -3,7 +3,6 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 #include "StdAfx.h"
-#include "mg/Unit_vector.h"
 #include "mg/Matrix.h"
 #include "mg/CParam_list.h"
 #include "mg/Position_list.h"
@@ -393,7 +392,7 @@ MGCParam_list MGRLBRep::isect_3D(
 //Parameter values of this at intersection points will be returned.
 //MGVector N is the normal vector of the plane.
 MGCParam_list MGRLBRep::isect_nD(						
-	const MGVector& N,		// Normal of (n+1)-dimension plane.
+	const MGVector& N,	// Normal of (n+1)-dimension plane.
 	int dimension,		// Number of dimension n.
 	int coordinate		// Coordinate kind of n-dimensional sub NURBS.
 )const{

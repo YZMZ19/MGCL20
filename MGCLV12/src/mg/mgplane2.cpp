@@ -7,7 +7,6 @@
 #include "mg/Interval.h"
 #include "mg/Box.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/Matrix.h"
 #include "mg/Transf.h"
 #include "mg/Curve.h"

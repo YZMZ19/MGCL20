@@ -15,7 +15,6 @@
 #include "mg/Transf.h"
 #include "mg/KnotVector.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 
 //  MGDefault.h
 //  Header for class MGDefault

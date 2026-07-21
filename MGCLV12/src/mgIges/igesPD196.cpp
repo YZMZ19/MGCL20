@@ -49,8 +49,8 @@ void MGIgesPD196::getCenter(const MGIgesIfstream& ifs, MGPosition& center)const{
 	pd116->convert_to_position(center);
 }
 
-//Get the plane normal into nromal.
-void MGIgesPD196::getAxis(const MGIgesIfstream& ifs, MGUnit_vector& axis)const{
+//Get the plane normal into nromal, which is a unit vector.
+void MGIgesPD196::getAxis(const MGIgesIfstream& ifs, MGVector& axis)const{
 	const MGIgesFstream::UniqueDE& de=ifs.directoryEntry(m_axisDE);
 	assert(de->EntityTypeNumber()==DIRECTION);
 	if(de->EntityTypeNumber()!=DIRECTION){
@@ -61,7 +61,7 @@ void MGIgesPD196::getAxis(const MGIgesIfstream& ifs, MGUnit_vector& axis)const{
 	const MGIgesPD123* pd123=static_cast<const MGIgesPD123*>(pd.get());
 	MGVector dir;
 	pd123->convert_to_vector(dir);
-	axis=dir;
+	axis=dir.normalize();
 }
 
 //Get the plane reference direction(REFDIR) into refdir.
@@ -129,8 +129,7 @@ MGSphere* MGIgesIfstream::convert_sphere(
 		return new MGSphere(center,r);//nonparameterized sphere.
 
 	//Parameterized.
-	MGVector refdir;
-	MGUnit_vector B;
+	MGVector refdir, B;
 	pd196->getAxis(*this,B);
 	pd196->getRefdir(*this,refdir);
 	return new MGSphere(center,r,B,refdir);//parameterized sphere.

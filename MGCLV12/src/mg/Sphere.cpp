@@ -57,18 +57,19 @@ MGSphere::MGSphere(
 }
 
 // Construct a  whole sphere from the center and the radius.
-//Let MGUnit_vector N(B*M), M2(N*B). Then (M2,N,B) makes a orthonormal system,
-//and this sphere is parameterized as:
-//F(u,v)=cntr+radis*cos(v)(M*cos(u)+N*sin(u))+radis*sin(v)*B.
+// Let N=(B*M).normalize(), M2=(N*B).normalize(), and Bu=B.normalize().
+// Then (M2,N,Bu) makes a orthonormal system,
+// and this sphere is parameterized as:
+// F(u,v)=cntr+radis*cos(v)(M*cos(u)+N*sin(u))+radis*sin(v)*Bu.
 MGSphere::MGSphere(
 	const MGPosition& cntr,	// Sphere center.
-	double radius,			// Sphere radius.
-	const MGUnit_vector& B,	//axis
+	double radius,		// Sphere radius.
+	const MGVector& B,	//axis
 	const MGVector& M //reference direciotn that is approximately perpendiculat to B.
 ):MGSurface(){
-	MGVector B2=B*radius;
-	MGUnit_vector N2U=B*M; MGVector N2=N2U*radius;
-	MGUnit_vector M2U=N2U*B; MGVector M2=M2U*radius;
+	MGVector B2=B.normalize()*radius;
+	MGVector N2= (B * M).normalize() *radius;
+	MGVector M2= (N2 * B).normalize() *radius;
 	m_ellipseu=MGEllipse(mgORIGIN,M2,N2,MGInterval(0.,mgDBLPAI));
 	m_ellipsev=MGEllipse(cntr,N2,B2,MGInterval(-mgHALFPAI,mgHALFPAI));
 }
@@ -96,7 +97,7 @@ MGSphere::MGSphere(
 	m_ellipsev.limit(MGInterval(-mgHALFPAI,mgHALFPAI));
 	const MGVector& N=m_ellipsev.major_axis();
 	const MGVector& B=m_ellipsev.minor_axis();
-	MGUnit_vector M=N*B;
+	MGVector M=(N*B).normalize();
 	m_ellipseu=MGEllipse(mgORIGIN,M*(N.len()),N,MGInterval(0.,mgDBLPAI));
 }
 
@@ -111,7 +112,7 @@ MGSphere::MGSphere(
 	m_ellipsev.limit(MGInterval(-mgHALFPAI,mgHALFPAI));
 	const MGVector& N=m_ellipsev.major_axis();
 	const MGVector& B=m_ellipsev.minor_axis();
-	MGUnit_vector M=N*B;
+	MGVector M = (N * B).normalize();
 	m_ellipseu=MGEllipse(mgORIGIN,M*(N.len()),N,urange);
 }
 
@@ -590,7 +591,7 @@ MGCSisects MGSphere::isectSl(
 	MGPosition Q=sl2.eval(tsl);
 	double d=(Q-C()).len();
 	double l=sqrt(r*r-d*d);
-	MGUnit_vector sldir(sl2.direction());
+	MGVector sldir(sl2.direction().normalize());
 	MGPosition P1=Q+sldir*l, P2=Q-sldir*l;
 		//Two intersection points with the infinite straight line .
 	double t1,t2, u,v;

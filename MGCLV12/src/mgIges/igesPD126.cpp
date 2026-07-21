@@ -47,7 +47,7 @@ m_start_param(lb.param_s()),m_end_param(lb.param_e()){
 		m_planar=1;
 	if(lb.is_closed())
 		m_closed=1;
-	const MGUnit_vector& N=pl.normal();
+	const MGVector& N=pl.normal();
 	m_normal[0]=N[0];m_normal[1]=N[1];m_normal[2]=N[2];
 }
 
@@ -63,7 +63,7 @@ m_start_param(lb.param_s()),m_end_param(lb.param_e()){
 		m_planar=1;
 	if(lb.is_closed())
 		m_closed=1;
-	const MGUnit_vector& N=pl.normal();
+	const MGVector& N=pl.normal();
 	m_normal[0]=N[0];m_normal[1]=N[1];m_normal[2]=N[2];
 
 	int n=lb.bdim();

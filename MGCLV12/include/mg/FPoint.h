@@ -78,6 +78,6 @@ MG_DLL_DECLR MGVector eval(
 MG_DLL_DECLR MGVector normal(const MGFPoint& uv);
 
 ///Compute unit normal vector at uv.
-MG_DLL_DECLR MGUnit_vector unit_normal(const MGFPoint& uv);
+MG_DLL_DECLR MGVector unit_normal(const MGFPoint& uv);
 
 /** @} */ // end of GEORelated group

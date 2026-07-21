@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Box.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position.h"
 #include "mg/Position_list.h"
 #include "mg/Transf.h"
@@ -556,7 +555,7 @@ int MGFSurface::isect_direction_with_direction(
 	double& du,				//Incremental value sign of the parameter kind of
 	double& dv)const		//isect_direction_with_direction will be output.
 {
-	MGUnit_vector Su=eval(u,v,1,0), Sv=eval(u,v,0,1);
+	MGVector Su=eval(u,v,1,0).normalize(), Sv = eval(u, v, 0, 1).normalize();
 	int is_u=0;
 	double err=MGTolerance::wc_zero(); err*=err*.1;
 	double Sut=Su%tangent, Svt=Sv%tangent;

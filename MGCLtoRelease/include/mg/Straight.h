@@ -5,7 +5,6 @@
 #pragma once
 #include "mg/EReal.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/Curve.h"
 
 // MGStraight.h
@@ -91,7 +90,6 @@ explicit MGStraight(
 );
 
 ///Straight from straight line type, direction vector, and an origin.
-
 ///This constrcutor converts input vec to a unit vector.
 ///If you do not like the conversion, use set_straight().
 MGStraight(
@@ -108,7 +106,6 @@ MGStraight(
 );
 
 ///MGSTRAIGHT_SEGMENT straight from two points.
-
 ///Start point is start and end point is end.
 ///Parameter value of the start point is set to be 0.
 MGStraight(
@@ -128,14 +125,12 @@ MGStraight(
 
 ///Straight line from direction vector, end point parameter, and an origin.
 MGStraight(
-	const MGUnit_vector& v,	///<Unit direction vector
-	double d,				///<Parameter value of end point
+	const MGVector& v,	///< direction vector. When this is not unit, this will be converted to the unit vector.
+	double d,			///<Parameter value of end point
 	const MGPosition& p= mgORIGIN///<Origin
 );
 	
-///Construct the infinite straight line that is a perpendicular bisect
-///of the two point P1 and P2.
-
+///Construct the infinite straight line that is a perpendicular bisector of the two point P1 and P2.
 ///Constructed straight is normal to the vector N.
 ///The line's direction is N*(P2-P1).
 ///N is the normal of the plane that P1, P2, and the constructed line lie on.
@@ -145,9 +140,7 @@ explicit MGStraight(
 	const MGVector& N///<Normal.
 );
 
-///Construct the unlimitted straight that pass through the point uv,
-///and the direction is the middle vector of (-v0, v1).
-
+///Construct the unlimitted straight that pass through the point uv, and whose direction is the middle vector of (-v0, v1).
 ///All of v0, v1, uv, and this straight are objects of space dimension 2.
 explicit MGStraight(
 	const MGVector& v0,	//a vector whose end is uv.
@@ -288,7 +281,7 @@ double curvature( double ) const{return 0.;};
 double curvilinear_integral(double t1, double t2)const;
 
 ///Return direction vector of the line at a parameter.
-MGUnit_vector direction(double)const{return m_direction;};
+MGVector direction(double)const{return m_direction.normalize();};
 
 ///Return direction vector of the line.
 const MGVector& direction()const{return m_direction;};
@@ -654,16 +647,16 @@ MGPosition start_point() const;
 ///};
 MGSTRAIGHT_TYPE straight_type() const;
 
-///Return sweep surface of this.
-
+///Return sweep surface of this straight.
 ///Returned is a newed MGSurface, must be deleted.
 ///The sweep surface is defined as:
 ///This curve(say c(t)) is the rail and the straight line segments from
-///C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+///C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* sweep(
-	const MGUnit_vector& uvec,	///<Sweep Direction.
-	double start_dist,			///<distance to start edge.
-	double end_dist				///<distance to end edge.
+	const MGVector& uvec,	///<Sweep Direction.
+	double start_dist,		///<distance to start edge.
+	double end_dist			///<distance to end edge.
 )const;
 
 ///Return curve type, i.e. MGCURVE_STRAIGHT.

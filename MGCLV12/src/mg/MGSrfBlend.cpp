@@ -36,9 +36,9 @@ MGVector get_2nd(const MGVector& first,const MGVector& second_guess,double curva
 	if(MGRZero(second_guess.len()))
 		return second_guess;
 
-	MGUnit_vector e2(second_guess);
-	double len=first.len()*curvature;
-	return e2*len;
+	MGVector e2(second_guess); e2.set_unit();
+	e2 *=first.len()*curvature;	
+	return e2;
 }
 
 //ノットをあわせた後の境界線、ブレンド関数、データポイントから点列を求める。
@@ -453,7 +453,7 @@ void get_derivatives(
 				MGVector N=tp.TP(perim).eval(tauj);
 					//Normal of tangent plane at surf(um,vtau[j]).
 				double vlen=deri.len();
-				deri=MGUnit_vector(N*deri*N)*vlen;
+				deri=(N*deri*N).normalize()*vlen;
 			}
 			deris.store_at(j, deri);
 		}

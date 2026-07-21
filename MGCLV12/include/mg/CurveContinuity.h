@@ -5,7 +5,6 @@
 // CurveContinuity.h
 #pragma once
 
-#include "mg/Unit_vector.h"
 #include "mg/Position.h"
 class MGCurve;
 
@@ -45,23 +44,23 @@ public:
 	///Get the curve2 position(start or end) that is closest to curve1.
 	const MGPosition& P2()const{return m_P2;};
 
-	///Get the distance ot P1() and P2().
+	///Get the distance of P1() and P2().
 	double distance()const{return m_dist;};
 
-	///Get the tangent as P1().
-	const MGUnit_vector& tan1()const{return m_tan1;};
+	///Get the tangent at P1(), is unit.
+	const MGVector& tan1()const{return m_tan1;};
 
-	///Get the tangent as P2().
-	const MGUnit_vector& tan2()const{return m_tan2;};
+	///Get the tangent at P2(), is unit.
+	const MGVector& tan2()const{return m_tan2;};
 
 	///tan1 and tan2's angle in radian.
 	double tandiff()const{return m_tandiff;};
 
-	///Get curvature direction at P1().
-	const MGUnit_vector& normal1()const{return m_normal1;};
+	///Get curvature direction at P1(), is unit.
+	const MGVector& normal1()const{return m_normal1;};
 
-	///Get curvature direction at P2().
-	const MGUnit_vector& normal2()const{return m_normal2;};
+	///Get curvature direction at P2(), is unit.
+	const MGVector& normal2()const{return m_normal2;};
 	
 	///Get the normal1 and normal2's angle in radian.
 	double normaldiff()const{return m_normaldiff;};
@@ -83,14 +82,14 @@ private:
 	MGPosition m_P2; ///<positional data at m_param2.
 	double m_dist; ///< distance between two curve's endpoints.
 
-	MGUnit_vector m_tan1; ///< tangent at m_param1
-	MGUnit_vector m_tan2; ///< tangent at m_param2
+	MGVector m_tan1; ///< tangent at m_param1, is unit.
+	MGVector m_tan2; ///< tangent at m_param2, is unit.
 	double m_tandiff; ///< angle between [t1] and [t2] in radian
 
 	double m_curvature1; ///< curvature at m_param1
 	double m_curvature2; ///< curvature at m_param2
-	MGUnit_vector m_normal1; ///< curvature direction at m_param1
-	MGUnit_vector m_normal2; ///< curvature direction at m_param2
+	MGVector m_normal1; ///< curvature direction at m_param1, is unit.
+	MGVector m_normal2; ///< curvature direction at m_param2, is unit.
 	double m_normaldiff;///< angle between the two curvature direction in radian
 };
 

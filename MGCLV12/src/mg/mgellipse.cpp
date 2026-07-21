@@ -7,7 +7,6 @@
 #include "mg/Interval.h"
 #include "mg/Box.h"
 #include "mg/Transf.h"
-#include "mg/Unit_vector.h"
 #include "mg/Straight.h"
 #include "mg/Ellipse.h"
 #include "mg/LBRep.h"
@@ -143,9 +142,9 @@ MGEllipse::MGEllipse(
 ):MGCurve(),m_center(p),m_normal(v),m_r(fabs(d)),m_circle(1)
 ,m_gprange(0),m_knotV(0){
 	m_prange[0]=0.0; m_prange[1]=mgDBLPAI;
-	if(d<0.) m_normal = -m_normal;
-	MGUnit_vector m,n;
-	m_normal.orthonormal(m_normal, m, n);
+	if(d<0.) m_normal.negate();
+	MGVector m,n;
+	m_normal.orthonormalize(m_normal, m, n);
 	m_m =m_r*m; m_n =m_r*n;
 }
 
@@ -155,9 +154,9 @@ MGEllipse::MGEllipse(
 	const MGPosition& start,		// 始点             
 	double d,						// Angle in radian. 
 	const MGVector& v				// 法線             
-):MGCurve(),m_center(center),m_normal(v),m_m(start,center),m_circle(1)
+):MGCurve(),m_center(center),m_normal(v.normalize()),m_m(start,center),m_circle(1)
 ,m_gprange(0),m_knotV(0){
-	if(d<0.0) {m_normal=-m_normal; d=-d;}
+	if(d<0.0) { m_normal.negate(); d=-d;}
 	if(d >= mgDBLPAI){
 		m_prange[0]=0.0; m_prange[1]=mgDBLPAI;
 	}else{
@@ -167,8 +166,8 @@ MGEllipse::MGEllipse(
 
 	// 法線と長軸から短軸を作成する。
 	if (m_m.parallel(m_normal)){
-		MGUnit_vector m, n;
-		m_normal.orthonormal(m_normal, m, n);
+		MGVector m, n;
+		m_normal.orthonormalize(m_normal, m, n);
 		m_m =m_r*m; m_n =m_r*n;
 	}else{
 		m_n=m_r*((m_normal*m_m).normalize());
@@ -190,14 +189,14 @@ MGEllipse::MGEllipse (
 	const MGVector& v2,		// 直線の方向ベクトル２
 	double d				// 半径                
 ):MGCurve(),m_r(fabs(d)),m_circle(1), m_gprange(0),m_knotV(0){
-	MGUnit_vector m(v1); MGUnit_vector n(v2);
-	MGUnit_vector v3 = (m+n)/2.0; // 2つの直線の２等分線の単位方向ベクトル
+	MGVector m(v1.normalize()), n(v2.normalize());
+	MGVector v3 = (m+n).normalize(); // 2つの直線の２等分線の単位方向ベクトル
 	double ang=m.angle(n);        // v1,v2のなす角度を求める。
 
-	m_normal=n*m;
+	m_normal=(n*m).normalize();
 	if(m_normal.parallel(m)) {
-		MGUnit_vector mm,N;
-		m_normal.orthonormal(m_normal, mm, N);
+		MGVector mm,N;
+		m_normal.orthonormalize(m_normal, mm, N);
 		m_m =m_r*mm; m_n = m_r*N;
 		m_center=p+v3;
 	}
@@ -236,6 +235,7 @@ MGEllipse::MGEllipse (
 	MGPosition se2=(start+end)/2.0;
 
 	double endAngle;
+	MGVector M, N;
 	if(start == through && start == end && through == end){
 		// ３点が誤差範囲内で一致する。
 		m_center = (start+through+end)/3.;
@@ -248,12 +248,11 @@ MGEllipse::MGEllipse (
 		// 通過点が始点か終点に一致するときstart-endが直径の半円を作成する。
 		m_center = se2;
 		m_m = MGVector(start,m_center);
-		MGUnit_vector N;
 		if(m_center.sdim()==2){
 			m_normal = mgZ_UVEC;
-			N=MGVector(2,m_normal*m_m);
+			N=MGVector(2,m_normal*m_m).normalize();
 		}else
-			MGUnit_vector(m_m).orthonormal(m_m, N, m_normal);
+			m_m.orthonormalSystem(m_m, M, N, m_normal);
 		m_r = m_m.len();
 		m_n = m_r*N;
 		endAngle=mgPAI;	// パラメータ範囲の設定
@@ -261,12 +260,11 @@ MGEllipse::MGEllipse (
 		// 始点と終点が一致するときstart-throughが直径の真円を作成する。
 		m_center = st2;	// 始終点と通過点の中点を中心にする。
 		m_m = MGVector(start,m_center);// 中心から始点へのベクトルが長軸。
-		MGUnit_vector N;
 		if(m_center.sdim()==2){
 			m_normal = mgZ_UVEC;
-			N=MGVector(2,m_normal*m_m);
+			N=MGVector(2,m_normal*m_m).normalize();
 		}else
-			MGUnit_vector(m_m).orthonormal(m_m, N, m_normal);
+			m_m.orthonormalSystem(m_m, M, N, m_normal);
 		m_r = m_m.len();
 		m_n = m_r*N;
 		endAngle=mgDBLPAI;	// パラメータ範囲の設定
@@ -275,12 +273,12 @@ MGEllipse::MGEllipse (
 		// 始点終点の中点を中心にする。
 		m_center = se2;
 		m_m = MGVector(start,m_center);// 中心から始点へのベクトルを長軸とする。
-		MGUnit_vector N;
 		if(m_center.sdim()==2){
 			m_normal = mgZ_UVEC;
-			N=MGVector(2,m_normal*m_m);
+			N=MGVector(2,m_normal*m_m).normalize();
 		}
-		else MGUnit_vector(m_m).orthonormal(m_m, N, m_normal);
+		else
+			m_m.orthonormalSystem(m_m, M, N, m_normal);
 		m_r = m_m.len();
 		m_n = m_r*N;
 		endAngle=mgPAI;	// パラメータ範囲の設定
@@ -288,7 +286,7 @@ MGEllipse::MGEllipse (
 		// ３点がばらばらで直線上に乗らないとき中心点を求める。
 		// 求める点は始点ー通過点、通過点ー終点２つの線分の
 		// 垂直２等分線の交点なので２つの垂直２等分線を作成する。
-		MGUnit_vector N=TE*TS;
+		N=(TE*TS).normalize();
 		MGStraight s1(MGSTRAIGHT_TYPE::MGSTRAIGHT_UNLIMIT,TS*N,st2);//始点ー通過点の垂直２等分線
 		MGStraight s2(MGSTRAIGHT_TYPE::MGSTRAIGHT_UNLIMIT,TE*N,et2);//通過点ー終点の垂直２等分線
 		MGCCisect isect;
@@ -311,7 +309,7 @@ MGEllipse::MGEllipse (
 //radius r is able to have minus value, in which case the longer part of the
 //arc out of the whole circle is constructed.
 //The center of the circle C is:
-//C=M+MGUnit_vector(sign(r)*N*(start-end))*sqrt(r*r-d*d),
+//C=M+(sign(r)*N*(start-end)).normalize()*sqrt(r*r-d*d),
 //where M=(start+end)*.5, and d is the distance between start and M.
 MGEllipse::MGEllipse(
   double r,		//radius
@@ -324,10 +322,10 @@ MGEllipse::MGEllipse(
 	double d=start.distance(M);
 	if(MGAZero(d))
 		whole_circle=true;
-	double sign=1.; if(r<0.) sign=-1.;
-	MGUnit_vector N2(N*sign);
-	MGUnit_vector SE(end-start), MtoC, SE2;
-	N2.orthonormal(SE,SE2,MtoC);
+	double sign=(r<0.)  ? -1. : 1.;
+	MGVector N2(N*sign);
+	MGVector SE(end-start), MtoC, SE2;
+	N2.orthonormalize(SE, SE2, MtoC);
 	double ctom=r*r-d*d;if(ctom<0.) ctom=0.;
 	MGPosition C=M+MtoC*sqrt(ctom);
 	double ang=mgDBLPAI;
@@ -356,7 +354,7 @@ MGEllipse::MGEllipse(
 ///The circle lies on the plane that the three points start, end, and reference
 ///lie on.
 ///The center of the circle C is:
-///C=M+MGUnit_vector(sign(r)*N*(end-start))*sqrt(r*r-d*d),
+///C=M+(sign(r)*N*(end-start)).normalize()*sqrt(r*r-d*d),
 ///where M=(start+end)*.5, d is the distance between start and M,
 ///and N=(reference-start)*(end-start).
 ///That is, if r>0., the position reference indicates on which side
@@ -386,7 +384,7 @@ MGEllipse::MGEllipse(
 ):MGCurve(),m_gprange(0),m_knotV(0){
 	MGVector T=end-start;
 	MGVector N=dir_s*T;//normal of the arc.
-	MGUnit_vector C=N*dir_s;
+	MGVector C=(N*dir_s).normalize();
 	double r=T.len()/2./dir_s.sangle(T);//radius of the arc.
 	MGPosition center=start+r*C;//cneter of the arc.
 	double ang=mgDBLPAI;
@@ -1135,12 +1133,12 @@ void MGEllipse::set_param(
 void MGEllipse::set_normal_r_c(){
 	double a=m_m.len(), b=m_n.len();
 	m_r=sqrt((a*a+b*b)/2.);
-	MGUnit_vector m,n;
+	MGVector m,n;
 	if(a>=b){
-		m=m_m; m.orthonormal(m_n,n,m_normal);
+		m_m.orthonormalSystem(m_n, m, n, m_normal);
 	}else{
-		n=m_n; n.orthonormal(m_m,m,m_normal);
-		m_normal=-m_normal;
+		m_n.orthonormalSystem(m_m, n, m, m_normal);
+		m_normal.negate();
 	}
 	m_circle=(m_m.orthogonal(m_n) && MGREqual2(a,b));
 }

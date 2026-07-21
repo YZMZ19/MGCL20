@@ -136,6 +136,10 @@ MGPosition& operator*= (const MGTransf&);
 ///Scaling of the position.
 MGPosition& operator/= (double);
 
+///comparison
+bool operator==(const MGPosition& p2)const;
+bool operator==(const MGVector& p2)const;//p2 is treated as a position.
+
 ///Compute an angle around a normal.
 
 ///Let this be the center of the rotation, then compute the angle rotated 

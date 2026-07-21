@@ -5,7 +5,6 @@
 #pragma once
 
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mgiges/IgesIfstream.h"
 #include "mgiges/IgesPD.h"
 
@@ -28,8 +27,8 @@ public:
 	///Get the plane origin(LOCATION) into origin.
 	void getOrigin(const MGIgesIfstream& ifs, MGPosition& origin)const;
 
-	///Get the plane normal into nromal.
-	void getNormal(const MGIgesIfstream& ifs, MGUnit_vector& normal)const;
+	///Get the plane normal into nromal, which is a unit vector.
+	void getNormal(const MGIgesIfstream& ifs, MGVector& normal)const;
 
 	///Get the plane reference direction(REFDIR) into refdir.
 	void getRefdir(const MGIgesIfstream& ifs, MGVector& refdir)const;

@@ -7,7 +7,6 @@
 
 #include "mg/Object.h"
 #include "mg/Box.h"
-//#include "mg/Unit_vector.h"
 
 //Define MGGeometry Class.
 class MGBox;
@@ -20,7 +19,6 @@ class MGCurve;
 class MGSurface;
 class MGPoint;
 class MGVector;
-class MGUnit_vector;
 
 /** @defgroup GEO Geometry (sub) classes
  *  MGGeometry is top abstract class for MGPoint, MGCurve, and MGSurface.
@@ -88,7 +86,7 @@ virtual MGGeometry* copy_change_dimension(
 )const=0;
 
 ///Compute direction unit vector of the geometry.
-virtual MGUnit_vector direction(const MGPosition& param) const;
+virtual MGVector direction(const MGPosition& param) const;
 
 /// Evaluate n'th derivative data. n=0 means positional data evaluation.
 virtual MGVector evaluate(

@@ -5,7 +5,6 @@
 #pragma once
 
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/Sphere.h"
 #include "mgiges/IgesIfstream.h"
 #include "mgiges/IgesPD.h"
@@ -29,8 +28,8 @@ public:
 	///Get the sphere center(LOCATION) into origin.
 	void getCenter(const MGIgesIfstream& ifs, MGPosition& center)const;
 
-	///Get the plane normal into nromal.
-	void getAxis(const MGIgesIfstream& ifs, MGUnit_vector& axis)const;
+	///Get the plane normal into nromal, which is a unit vector.
+	void getAxis(const MGIgesIfstream& ifs, MGVector& axis)const;
 
 	///Get the sphere reference direction(REFDIR) into refdir.
 	void getRefdir(const MGIgesIfstream& ifs, MGVector& refdir)const;

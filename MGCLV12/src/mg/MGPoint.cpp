@@ -3,7 +3,6 @@
 /* All rights reserved.                                             */
 /********************************************************************/
 #include "StdAfx.h"
-#include "mg/Unit_vector.h"
 #include "mg/Box.h"
 #include "mg/Matrix.h"
 #include "mg/Transf.h"
@@ -71,7 +70,7 @@ MGPoint* MGPoint::copy_change_dimension(
 
 //Compute direction unit vector of the geometry.
 //For the point, this is undefined.
-MGUnit_vector MGPoint::direction(
+MGVector MGPoint::direction(
 	const MGPosition& param
 )const{
 	return MGDefault::z_unit_vector();

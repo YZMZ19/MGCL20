@@ -254,10 +254,10 @@ void MGStl::display_arrows(mgSysGL& sgl)const{
 		// 矢印の先端座標に加えるベクトルを計算
 		const MGVector& head_rootx = vecX * .3;
 		// 三角形の任意の辺のベクトルを取得し、面の法線べクトルとの積算を行う
-		MGUnit_vector arrowVec = (m_vecPos[m_indices[i3+1]]- m_vecPos[m_indices[i3]]).normalize();
-		arrowVec *= m_vecNormlTriang[i];
+		MGVector arrowVec = (m_vecPos[m_indices[i3+1]]- m_vecPos[m_indices[i3]]).normalize();
+		arrowVec *= m_vecNormlTriang[i]; arrowVec.set_unit();
 		// 矢印の先端座標に加えるもう１つのベクトルを計算
-		const MGVector& head_rooty = arrowVec*(.5*.3*vecX.len());
+		MGVector head_rooty = arrowVec*(.5*.3*vecX.len());
 		// 矢印の両端の座標を計算
 		pos[2]=pos[1]-head_rootx+head_rooty;
 		pos[3]=pos[1]-head_rootx-head_rooty;

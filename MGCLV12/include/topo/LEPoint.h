@@ -9,7 +9,6 @@
  *  @{
  */
 
-#include "mg/Unit_vector.h"
 #include "topo/Complex.h"
 
 class MGLCisect;
@@ -97,8 +96,8 @@ bool equal_position(const MGLEPoint& le2) const;
 bool equal_position(const MGPosition& P) const;
 
 ///Compute a vector at the MGLEPoint point that goes inside the face
-///and perpendicular to the boundary loop.
-MGUnit_vector inner_vector()const;
+///and perpendicular to the boundary loop, which is a unit vector.
+MGVector inner_vector()const;
 
 ///test if this is the end point of the loop.
 bool is_end_point()const;

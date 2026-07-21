@@ -73,5 +73,5 @@ MGVector eval(
 MGVector normal(const MGFPoint& fp){ return fp.fsurface().normal(fp.uv());}
 
 ///Compute unit normal vector at uv.
-MGUnit_vector unit_normal(const MGFPoint& fp)
+MGVector unit_normal(const MGFPoint& fp)
 {return fp.fsurface().unit_normal(fp.uv());}

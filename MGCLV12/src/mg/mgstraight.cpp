@@ -6,7 +6,6 @@
 #include "mg/Box.h"
 #include "mg/Position.h"
 #include "mg/Transf.h"
-#include "mg/Unit_vector.h"
 #include "mg/CParam_list.h"
 #include "mg/Straight.h"
 #include "mg/LBRep.h"
@@ -113,12 +112,12 @@ MGStraight::MGStraight (
 	m_root_point = Ps - Ts * m_direction;
 }
 
-// 始点、単位方向ベクトル、終点のパラメータ値を指定して直線を生成する。
+// 始点、方向ベクトル、終点のパラメータ値を指定して直線を生成する。
 MGStraight::MGStraight (
-	const MGUnit_vector & v,
+	const MGVector& v,	///<direction vector. When this is not  unit, this will be converted to the unit vector.
 	double d,
 	const MGPosition& p
-):MGCurve(),m_direction(v),m_sparam(0.0),m_endparam(d),
+):MGCurve(),m_direction(v.normalize()),m_sparam(0.0),m_endparam(d),
 	m_root_point(p),m_knotV(nullptr){
 	int dimv=v.sdim(), dimp=p.sdim();
 	if(dimv<dimp) m_direction=MGVector(dimp,v);
@@ -486,7 +485,7 @@ bool MGStraight::is_coplanar(const MGCurve& curve2, MGPlane& plane)const{
 			plane=MGPlane(*sl2,root_point());
 			return true;
 		}else{
-			MGUnit_vector normal=direction()*sl2->direction();
+			MGVector normal=(direction()*sl2->direction()).normalize();
 			plane=MGPlane(normal,root_point());
 			return plane.on(sl2->root_point());
 		}

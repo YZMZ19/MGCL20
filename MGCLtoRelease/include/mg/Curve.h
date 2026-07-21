@@ -22,7 +22,6 @@
 class MGInterval;
 class MGBox;
 class MGVector;
-class MGUnit_vector;
 class MGPosition_list;
 class MGTransf;
 class MGCParam_list;
@@ -289,12 +288,12 @@ virtual double curvilinear_integral() const{
 };
 
 ///Compute direction unit vector of the geometry.
-MGUnit_vector direction(const MGPosition& param) const;
+///Returned is a unit vector of the tangent vector at the given parameter value.
+MGVector direction(const MGPosition& param) const;
 
 ///Return tangent vector at the given point.
-
-/// 与えられた点における曲線の接ベクトルを返す。
-virtual MGUnit_vector direction(double) const;
+///Returned is a unit vector of the tangent vector at the given parameter value.
+virtual MGVector direction(double) const;
 
 ///////display member function.
 
@@ -559,14 +558,13 @@ virtual bool is_startpoint_parameter(double t)const;
 virtual bool is_endpoint_parameter(double t)const;
 
 ///Test if the vector from P to this->eval(t) is perpendicular.
-
 ///Perpendicular to the tangent of this curve at t.
 bool is_perpendicular(const MGPosition& P, double t)const;
 
 ///Test if this cure is linear or not, that is, is straight or not.
-
-///MGStraight expression will be out to straight even if this is linear or not.
-///Function's return value is true if linear.
+/// MGStraight expression straight that is most equla to this curve
+/// will be output.
+/// Function's return value is true if linear.
 virtual bool is_linear(MGStraight& straight)const;
 
 ///Test if this cure is planar or not.
@@ -963,9 +961,10 @@ virtual MGPosition start_point() const;
 ///Returned is a newed MGSurface, must be deleted.
 ///The sweep surface is defined as:
 ///This curve(say c(t)) is the rail and the straight line segments from
-///C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+///C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 virtual MGSurface* sweep(
-	const MGUnit_vector& uvec,	///<Sweep Direction.
+	const MGVector& uvec,	///<Sweep Direction.
 	double start_dist,			///<distance to start edge.
 	double end_dist			///<distance to end edge.
 ) const =0;
@@ -1204,7 +1203,7 @@ MG_DLL_DECLR double Torsion(
 MG_DLL_DECLR void one_arrow(
 	const MGPosition& root,	///<root of the arrow
 	const MGVector& vecx,	///<the vector from the roo to the head of the arrrow
-	const MGUnit_vector& vecy,///<vecy that is normal to the vector from root to head
+	const MGVector& vecy,///<vecy that is normal to the vector from root to head
 	MGPosition& head,		///<head of the arrow will be returned.
 	MGPosition& headtail1,	///<two tail of arrowhead line segments will be returned.
 	MGPosition& headtail2	///<2nd tail.

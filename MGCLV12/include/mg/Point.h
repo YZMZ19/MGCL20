@@ -115,7 +115,7 @@ MGPoint* copy_change_dimension(
 
 ///Compute direction unit vector of the geometry.
 ///For the point, this is undefined.
-MGUnit_vector direction(const MGPosition& param) const;
+MGVector direction(const MGPosition& param) const;
 
 ///Draw 3D curve in world coordinates.
 ///The object is converted to curve(s) and is drawn.

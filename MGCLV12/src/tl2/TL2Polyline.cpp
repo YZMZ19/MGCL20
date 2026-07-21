@@ -284,7 +284,7 @@ double mgTL2Polyline::angle2Uline(double t)const{
 		Vcrv=crvOnSrf.eval(para_t,1);
 	}
 	MGVector Vu=srf.eval(uvt,1);
-	MGUnit_vector N=srf.unit_normal(uvt);
+	MGVector N=srf.unit_normal(uvt);
 	return Vu.angle2pai(Vcrv,N);
 }
 
@@ -309,7 +309,7 @@ double mgTL2Polyline::angle2Uline_at_i(int i)const{
 		}
 	}
 	MGVector Vu=srf.eval(uvt,1);
-	MGUnit_vector N=srf.unit_normal(uvt);
+	MGVector N=srf.unit_normal(uvt);
 	return Vu.angle2pai(Vcrv,N);
 }
 
@@ -496,12 +496,10 @@ MGPosition mgTL2Polyline::xyz(int i, bool need_normal)const{
 	const mgTL2parameter& para=TL2param();
 	const MGSurface& srf=para.get_surface();
 	MGPosition uvi=uv(i);
-	MGPosition N;
 	int sdim=need_normal ? 6:3;
 	MGPosition xyzPN(sdim);
 	if(need_normal){
-		N=srf.unit_normal(uvi);
-		xyzPN.store_at(3,N);
+		xyzPN.store_at(3, srf.unit_normal(uvi));
 	}
 	short ids[3];
 	bool on_boundary=get_id_from_VertexID(i,ids);

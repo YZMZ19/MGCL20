@@ -6,7 +6,6 @@
 #include "mg/Box.h"
 #include "mg/Position_list.h"
 #include "mg/Transf.h"
-#include "mg/Unit_vector.h"
 #include "mg/Curve.h"
 #include "mg/Straight.h"
 #include "mg/SurfCurve.h"
@@ -84,7 +83,8 @@ int MGEllipse::intersect_dnum()const{
 //Function's return value is true if linear.
 bool MGEllipse::is_linear(MGStraight& straight)const{
 	double ts=(param_s()+param_e())*.5;
-	straight=MGStraight(MGUnit_vector(eval(ts,1)),MGPosition(eval(ts)));
+	straight=MGStraight(MGSTRAIGHT_TYPE::MGSTRAIGHT_UNLIMIT, 
+		eval(ts,1).normalize(), MGPosition(eval(ts)));
 	return false;
 }
 
@@ -127,21 +127,21 @@ MGCCisects MGEllipse::isect(
 	MGCCisects list(this, &st); // ƒŠƒXƒg‚Ì—Ìˆæ‚ð“¾‚é
 	if(!has_common(st)) return list;
 
-	if((st.direction()).orthogonal(m_normal)){
+	if(st.direction().orthogonal(m_normal)){
 		// When st and ellipse are parallel
 
 		MGVector vt(m_center, st.root_point());
-		if(vt.is_zero_vector() | m_normal.orthogonal(vt)){
+		if(vt.is_zero_vector() || m_normal.orthogonal(vt)){
 		//When ellipse and straight line lie on a same plane.
 			double t[2],angle[2]; int tangen;
 			MGTransf tr(m_m, m_n, m_center); // tr is transform to transform
 			// ellipes to lie on xy plane and the center to be origin.
 			MGPosition stpt=st.root_point()*tr;
-			MGUnit_vector dir=st.direction()*tr.affine();
-			double dirlen=st.direction_len();
+			MGVector dir=(st.direction()*tr.affine()).normalize();
 			int n=isect2d(stpt, dir,t,angle,tangen);
 			if(n){
 				double p;
+				double dirlen = st.direction_len();
 				for(int i=0; i<n; i++){
 					if(st.in_range(p=t[i]/dirlen)){
 						MGCCRELATION rel= MGCCRELATION::MGCCREL_ISECT;
@@ -357,10 +357,10 @@ MGPosition_list MGEllipse::perps(
 	int n;
 	MGPosition_list list;
 
-	MGUnit_vector sl_dir=sl.direction(), el_normal=normal();
+	MGVector sl_dir=sl.direction().normalize(), el_normal = normal();
 	if(sl_dir.parallel(el_normal)){
 	//1. When sl is normal to ellipse plane.
-		MGVector lvec=sl.direction();
+		const MGVector& lvec=sl.direction();
 		MGPosition lpoint=sl.root_point();
 		double r=lvec%m_normal;
 		if(!MGMZero(r)){
@@ -526,8 +526,9 @@ std::unique_ptr<MGCurve> MGEllipse::oneD(
 	return std::unique_ptr<MGCurve>(el1);
 }
 
-//Compute intesection points of  2D ellipse whose center is origin and
-//a straight line of 2D.
+/// Compute intesection points of this 2D ellipse and the unlimit straight line of 2D
+/// whose center is origin and direction is dir.
+/// Return value of isect2D is number of intersetion points: 0, 1, or 2.
 int MGEllipse::isect2d(
 	const MGPosition& sp,//Start point of straight line.
 	const MGVector& dir, //Direction unit vector of the straight line
@@ -535,8 +536,6 @@ int MGEllipse::isect2d(
 	double angle[2],	// angles of ellipse in radian.
 	int& tangen			// Return if isect is tangent point(1) or not(0).
 	) const{
-//Return value of isect2D is number of intersetion points: 0, 1, or 2.
-
 	double a=m_m.len(), b=m_n.len(); //Length of x and y axis.
 		//parameter arrangement value of the straight when using sp1 instead of sp.
 	if(m_m.orthogonal(m_n)){//When normal ellipse.

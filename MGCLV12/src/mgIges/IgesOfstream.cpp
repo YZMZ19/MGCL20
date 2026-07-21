@@ -339,17 +339,16 @@ int MGStraight::out_to_IGES(
 )const{
 	MGPosition P1=start_point(), P2=end_point();
 	int formnumber=1;
+	MGVector D = direction().normalize();
 	if(infinite_above()){
+		P2 = P1 + D;
 		if(infinite_below()){
 			P1=root_point();
-			P2=P1+MGUnit_vector(direction());
 			formnumber=2;
-		}else{
-			P2=P1+MGUnit_vector(direction());
 		}
 	}else if(infinite_below()){
 		P1=P2;
-		P2=P1-MGUnit_vector(direction());
+		P2=P1-D;
 	}else
 		formnumber=0;
 

@@ -6,7 +6,6 @@
 #include "mg/Interval.h"
 #include "mg/Box.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/Matrix.h"
 #include "mg/Transf.h"
 #include "mg/Curve.h"
@@ -56,8 +55,8 @@ MGPlane::MGPlane(
 	m_vderiv(dim,plane.m_vderiv,start1,start2),
 	m_root_point(dim,plane.m_root_point,start1,start2){
 	invalidateBox();
-	MGUnit_vector U=m_uderiv,V;
-	U.orthonormal(m_vderiv, V, m_normal);
+	MGVector U, V;
+	m_uderiv.orthonormalSystem(m_vderiv, U, V, m_normal);
 	m_d=m_normal%m_root_point;
 }
 
@@ -69,16 +68,15 @@ MGPlane::MGPlane(
 	const double* root_point//When root_point!=0, root_point[.] are (x,y,z) values of the root point.
 ):MGSurface(){
 	MGVector v(3,g);
-	m_normal=v;
+	m_normal=v.normalize();
 	double vlen=v.len();
 	if(MGMZero(vlen))
 		m_d=0.;
 	else
 		m_d=g[3]/vlen;
 	m_root_point=m_normal*m_d;
-	MGUnit_vector U,V;
-	m_normal.orthonormal(m_normal, U, V);
-	m_uderiv=U; m_vderiv=V;
+	MGVector N;
+	m_normal.orthonormalSystem(m_normal, N, m_uderiv, m_vderiv);
 	if(root_point){//When root point is specified.
 		m_root_point=eval(uv(MGPosition(3,root_point)));
 	}
@@ -86,47 +84,40 @@ MGPlane::MGPlane(
 
 // 平面のノーマルと平面の原点からの距離を指定して面を生成する。
 MGPlane::MGPlane(
-	const MGUnit_vector& normal,	//Normal of the plane.
+	const MGVector& normal,	//Normal of the plane.
 	double d				//distance from origin of the plane.
 							//When normal=(a,b,c,...), d=a*x+b*y+c*z+.... .
-):MGSurface(), m_normal(normal), m_d(d), m_root_point(normal*d){
-	MGUnit_vector U,V;
-	m_normal.orthonormal(m_normal, U, V);
-	m_uderiv=U; m_vderiv=V;
+):MGSurface(), m_normal(normal), m_d(d){
+	m_normal.orthonormalize(m_normal, m_uderiv, m_vderiv);
+	m_root_point=m_normal*m_d;
 }
 
 // 点と平面のノーマルを指定して面を生成する。
 MGPlane::MGPlane (
-	const MGUnit_vector& norml,
+	const MGVector& norml,
 	const MGPosition& p
-):MGSurface(), m_normal(norml), m_d(p%norml), m_root_point(p){
-	MGUnit_vector U,V;
-	m_normal.orthonormal(m_normal, U, V);
-	m_uderiv=U; m_vderiv=V;
+):MGSurface(), m_normal(norml), m_root_point(p){
+	m_normal.orthonormalize(m_normal, m_uderiv, m_vderiv);
+	m_d = m_normal % m_root_point;
 }
 
 // 直線と直線に乗らない点を指定して面を生成する。
 MGPlane::MGPlane(
 	const MGStraight& st,
 	const MGPosition& point
-):MGSurface(), m_root_point(point), m_uderiv(st.direction().normalize()){
-	MGUnit_vector U,V;
-	U=m_uderiv;
-	U.orthonormal(st.root_point()-m_root_point, V, m_normal);
-	m_vderiv=V;
+):MGSurface(), m_root_point(point), m_uderiv(st.direction()){
+	m_uderiv.orthonormalize(st.root_point()-m_root_point, m_vderiv, m_normal);
 	m_d=m_normal%m_root_point;
 }
 
 // 点、ｕ方向、ｖ方向を指定して平面を生成する。
-MGPlane::MGPlane (
+MGPlane::MGPlane(
 	const MGVector& u,
 	const MGVector& v,
 	const MGPosition& p
-):MGSurface(), m_root_point(p) ,m_uderiv(u),m_vderiv(v){
-	MGUnit_vector uunit=u,vunit, normal;
-	uunit.orthonormal(v, vunit, normal);
-	m_normal=normal;
-	m_d=p%m_normal;
+) :MGSurface(), m_root_point(p), m_uderiv(u){
+	m_uderiv.orthonormalize(v, m_vderiv, m_normal);
+	m_d=m_normal%m_root_point;
 }
 
 // Construct a plane by interpolating two planes.
@@ -153,9 +144,7 @@ MGPlane::MGPlane(
 		m_normal=e1.interpolate_by_rotate(t,e2,ratio);
 	    m_d=plane1.distance()*ratio[0] + plane2.distance()*ratio[1];
 
-		MGUnit_vector uunit,vunit;
-		m_normal.orthonormal(m_normal, uunit, vunit);
-		m_uderiv=uunit; m_vderiv=vunit;
+		m_normal.orthonormalize(m_normal, m_uderiv, m_vderiv);
 	}
 	m_root_point=m_normal*m_d;
 }
@@ -247,10 +236,9 @@ void MGPlane::change_dimension(
 	int start2) 		// Source order of this object.
 {
 	m_uderiv=MGVector(sdim,m_uderiv,start1,start2);
-	m_vderiv=MGVector(sdim,m_vderiv,start1,start2);
+	MGVector V(sdim,m_vderiv,start1,start2);
 	m_root_point=MGPosition(sdim,m_root_point,start1,start2);
-	MGUnit_vector U=m_uderiv,V;
-	U.orthonormal(m_vderiv, V, m_normal);
+	m_uderiv.orthonormalize(V, m_vderiv, m_normal);
 	m_d=m_normal%m_root_point;
 	invalidateBox();
 }
@@ -354,7 +342,7 @@ bool MGPlane::flat(
 	int& direction,	//   1: u-direction is more non flat.
 					//   0: v-direction is more non flat.
 	MGPosition& P,	//Position of the flat plane will be output.
-	MGUnit_vector& N//Normal of the flat plane will be output.
+	MGVector& N//Unit Normal of the flat plane will be output.
 )const{
 	direction=1;
 	P=m_root_point;
@@ -695,19 +683,22 @@ MGPosition  MGPlane::uv(const MGPosition& p) const{
 }
 
 // Vectorを平面に投影したVectorの平面のパラメータ表現(u,v)を求める。
+///Return uv parameter of the point projected from point p to the plane.
+///p is the end of the vector v originated from the root_point().
 MGVector  MGPlane::uv(const MGVector& vec) const{
-	double u,v;
+	MGVector uv(2);
+	double& u=uv(0), &v=uv(1);
 	if(m_uderiv.orthogonal(m_vderiv)){
 		u=(vec%m_uderiv)/(m_uderiv%m_uderiv);
 		v=(vec%m_vderiv)/(m_vderiv%m_vderiv);
 	}else{
-		MGUnit_vector uunit,vunit;
-		m_normal.orthonormal(m_uderiv,uunit,vunit);
-		v=(vec%vunit)/(m_vderiv%vunit);
-		m_normal.orthonormal(m_vderiv,vunit,uunit);
-		u=(vec%uunit)/(m_uderiv%uunit);
+		MGVector U,V,N;
+		m_normal.orthonormalSystem(m_uderiv, N, U, V);
+		v=(vec%V)/(m_vderiv%V);
+		m_normal.orthonormalSystem(m_vderiv, N, V, U);
+		u=(vec%U)/(m_uderiv%U);
 	}
-	return MGVector(u,v);
+	return uv;
 }
 
 //////////Operator overload 演算子の多重定義/////////////
@@ -812,8 +803,8 @@ MGPlane& MGPlane::operator*= (const MGMatrix& mat){
 	m_root_point *= mat;
 	m_uderiv = m_uderiv * mat;
 	m_vderiv = m_vderiv * mat;
-	MGUnit_vector uunit=m_uderiv,vunit;
-	uunit.orthonormal(m_vderiv, vunit, m_normal);
+	MGVector uunit=m_uderiv,vunit;
+	uunit.orthonormalize(m_vderiv, vunit, m_normal);
 	m_d=m_root_point%m_normal;
 	invalidateBox();
 	return *this;
@@ -831,8 +822,8 @@ MGPlane& MGPlane::operator*= (const MGTransf& t) {
 	m_root_point *= t;
 	m_uderiv = m_uderiv * t.affine();
 	m_vderiv = m_vderiv * t.affine();
-	MGUnit_vector uunit=m_uderiv, vunit;
-	uunit.orthonormal(m_vderiv, vunit, m_normal);
+	MGVector uunit=m_uderiv, vunit;
+	uunit.orthonormalize(m_vderiv, vunit, m_normal);
 	m_d=m_root_point%m_normal;
 	invalidateBox();
 	return *this;

@@ -457,7 +457,7 @@ void getCurvature(
 
 ){
 	double curvature[4];
-	MGUnit_vector N;
+	MGVector N;
 	surf.curvatures(uv,curvature,N);
 	curvaData.resize(7);
 	curvaData(0)=curvature[kind];
@@ -554,7 +554,7 @@ void mgVBO::drawSTL(
 	GLenum polygonMode//Polygon mode to draw, GLPOINT, GL_LINE, or GLFILL.
 ){
 	const std::vector<MGPosition>& vertices = stl.positions();
-	const std::vector<MGUnit_vector>& normals = stl.normals();
+	const std::vector<MGVector>& normals = stl.normals();
 
 	Begin(GL_TRIANGLES,target);// 描画を開始
 	size_t nTriang(normals.size()); // 三角形の個数だけループ

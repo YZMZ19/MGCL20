@@ -23,16 +23,17 @@ static char THIS_FILE[] = __FILE__;
 
 //The sweep surface is defined as:
 //rail(say c(u)) is the rail and the straight line segments
-//from C(u)+start_dist*uvec to C(u)+end_dist*uvec are the generatrix.
-//The surface is expressed as: S(u,v)=c(u)+uvec*v,
+//from C(u)+start_dist*N to C(u)+end_dist*N are the generatrix.
+//The surface is expressed as: S(u,v)=c(u)+N*v,
 //for rail.param_s()<=u<=rail.param_e(), start_dist<=v<=end_dist.
+///Here, N=uvec.normalize().
 void MGSBRep::buildSweep(
-	const MGLBRep& rail,		//Sweep(rail) crv.
-	const MGUnit_vector& uvec,	//Sweep Direction.
-	double start_dist,			//distance to start edge.
+	const MGLBRep& rail,	//Sweep(rail) crv.
+	const MGVector& uvec,	//Sweep Direction.
+	double start_dist,		//distance to start edge.
 	double end_dist			//distance to end edge.
 ){
-	MGVector N = uvec;
+	MGVector N = uvec.normalize();
 	if (start_dist > end_dist) {
 		double save = end_dist;
 		end_dist = start_dist;
@@ -61,16 +62,17 @@ void MGSBRep::buildSweep(
 
 //The sweep surface is defined as:
 //rail(say c(u)) is the rail and the straight line segments
-//from C(u)+start_dist*uvec to C(u)+end_dist*uvec are the generatrix.
-//The surface is expressed as: S(u,v)=c(u)+uvec*v,
+//from C(u)+start_dist*N to C(u)+end_dist*N are the generatrix.
+//The surface is expressed as: S(u,v)=c(u)+N*v,
 //for rail.param_s()<=u<=rail.param_e(), start_dist<=v<=end_dist.
+///Here, N=uvec.normalize().
 void MGSBRep::buildSweep(
 	const MGStraight& rail,		//rail crv.
-	const MGUnit_vector& uvec,	//Sweep Direction.
+	const MGVector& uvec,	//Sweep Direction.
 	double start_dist,			//distance to start edge.
 	double end_dist			//distance to end edge.
 ){
-	MGVector N = uvec;
+	MGVector N = uvec.normalize();
 	if (start_dist > end_dist) {
 		double save = end_dist;
 		end_dist = start_dist;
@@ -99,16 +101,17 @@ void MGSBRep::buildSweep(
 
 //The sweep surface is defined as:
 //rail(say c(u)) is the rail and the straight line segments
-//from C(u)+start_dist*uvec to C(u)+end_dist*uvec are the generatrix.
-//The surface is expressed as: S(u,v)=c(u)+uvec*v,
+//from C(u)+start_dist*N to C(u)+end_dist*N are the generatrix.
+//The surface is expressed as: S(u,v)=c(u)+N*v,
 //for rail.param_s()<=u<=rail.param_e(), start_dist<=v<=end_dist.
+///Here, N=uvec.normalize().
 void MGRSBRep::buildSweep(
-	const MGRLBRep& rail,		//Sweep crv.
-	const MGUnit_vector& uvec,	//Sweep Direction.
-	double start_dist,			//distance to start edge.
+	const MGRLBRep& rail,	//Sweep crv.
+	const MGVector& uvec,	//Sweep Direction.
+	double start_dist,		//distance to start edge.
 	double end_dist			//distance to end edge.
 ){
-	MGVector N = uvec;
+	MGVector N = uvec.normalize();
 	if (start_dist > end_dist) {
 		double save = end_dist;
 		end_dist = start_dist;
@@ -140,9 +143,10 @@ void MGRSBRep::buildSweep(
 //Returned is a newed MGSurface, must be deleted.
 //The sweep surface is defined as:
 //This curve(say c(t)) is the rail and the straight line segments from
-//C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+//C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* MGLBRep::sweep(
-	const MGUnit_vector& uvec,		//Sweep Direction.
+	const MGVector& uvec,		//Sweep Direction.
 	double start_dist,				//distance to start edge.
 	double end_dist) const			//distance to end edge.
 {
@@ -155,9 +159,10 @@ MGSurface* MGLBRep::sweep(
 //Returned is a newed MGSurface, must be deleted.
 //The sweep surface is defined as:
 //This straight(say c(t)) is the rail and the straight line segments from
-//C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+//C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* MGStraight::sweep(
-	const MGUnit_vector& uvec,		//Sweep Direction.
+	const MGVector& uvec,		//Sweep Direction.
 	double start_dist,				//distance to start edge.
 	double end_dist) const			//distance to end edge.
 {
@@ -170,9 +175,10 @@ MGSurface* MGStraight::sweep(
 //Returned is a newed MGSurface, must be deleted.
 //The sweep surface is defined as:
 //This curve(say c(t)) is the rail and the straight line segments from
-//C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+//C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* MGRLBRep::sweep(
-	const MGUnit_vector& uvec,		//Sweep Direction.
+	const MGVector& uvec,		//Sweep Direction.
 	double start_dist,				//distance to start edge.
 	double end_dist) const			//distance to end edge.
 {
@@ -185,9 +191,10 @@ MGSurface* MGRLBRep::sweep(
 //Returned is a newed MGSurface, must be deleted.
 //The sweep surface is defined as:
 //This curve(say c(t)) is the rail and the straight line segments from
-//C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+//C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* MGEllipse::sweep(
-	const MGUnit_vector& uvec,		//Sweep Direction.
+	const MGVector& uvec,		//Sweep Direction.
 	double start_dist,				//distance to start edge.
 	double end_dist) const			//distance to end edge.
 {
@@ -200,9 +207,10 @@ MGSurface* MGEllipse::sweep(
 //Returned is a newed MGSurface, must be deleted.
 //The sweep surface is defined as:
 //This curve(say c(t)) is the rail and the straight line segments from
-//C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+//C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* MGTrimmedCurve::sweep(
-	const MGUnit_vector& uvec,		//Sweep Direction.
+	const MGVector& uvec,		//Sweep Direction.
 	double start_dist,				//distance to start edge.
 	double end_dist) const			//distance to end edge.
 {
@@ -216,9 +224,10 @@ MGSurface* MGTrimmedCurve::sweep(
 //Returned is a newed MGSurface, must be deleted.
 //The sweep surface is defined as:
 //This curve(say c(t)) is the rail and the straight line segments from
-//C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+//C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* MGSurfCurve::sweep(
-	const MGUnit_vector& uvec,		//Sweep Direction.
+	const MGVector& uvec,		//Sweep Direction.
 	double start_dist,				//distance to start edge.
 	double end_dist) const			//distance to end edge.
 {

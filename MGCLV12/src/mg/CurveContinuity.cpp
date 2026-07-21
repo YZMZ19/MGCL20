@@ -77,7 +77,7 @@ MGCurveContinuity::MGCurveContinuity(
 
 	m_P1=curve1.eval(m_param1);
 	m_P2=curve2.eval(m_param2);
-	MGUnit_vector b1, b2;
+	MGVector b1, b2;
 	double tor1, tor2;
 	curve1.Frenet_frame(m_param1, m_tan1, m_normal1, b1, m_curvature1, tor1);
 	curve2.Frenet_frame(m_param2, m_tan2, m_normal2, b2, m_curvature2, tor2);

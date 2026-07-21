@@ -100,8 +100,8 @@ void MGStraight::drawWire(
 	if(infinite_below()) t0=-INFINITE_LINE_LENGTH;
 
 	double len=direction_len()*INFINITE_LINE_LENGTH/20.;
-	MGUnit_vector X(direction()); MGVector Y, Z;
-	X.orthonormal(X,Y,Z);
+	MGVector X(direction()), Y, Z;
+	X.orthonormalize(X,Y,Z);
 	MGVector Y2(Y*len);
 	MGVector P0=eval(t0), P1=eval(t1), V;
 

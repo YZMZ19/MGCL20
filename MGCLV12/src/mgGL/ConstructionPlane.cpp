@@ -36,7 +36,7 @@ MGConstructionPlane::MGConstructionPlane(
 	int vline_num,		//number of lines along v axis.
 	double nspan		//span length along normal axis.
 ):m_disabled(false),m_bind_to_grid(false)
-,m_plane(MGUnit_vector(plane.u_deriv()),MGUnit_vector(plane.v_deriv()),MGPosition(plane.root_point()))
+,m_plane((plane.u_deriv()).normalize(), (plane.v_deriv()).normalize(), MGPosition(plane.root_point()))
 ,m_uspan(uspan), m_vspan(vspan), m_nspan(nspan)
 ,m_unum(uline_num), m_vnum(vline_num)
 {
@@ -59,7 +59,7 @@ MGConstructionPlane::MGConstructionPlane(
 	assert(uline_num>0 && vline_num>0);
 	assert(uspan>0. && vspan>0. && nspan>0.);
 	m_plane=MGPlane(
-		MGUnit_vector(MGVector(3,uaxis)),MGUnit_vector(MGVector(3,vaxis)),MGPosition(3,origin));
+		(MGVector(3,uaxis)).normalize(), (MGVector(3,vaxis)).normalize(), MGPosition(3,origin));
 }
 
 ///Obtain the grid data of this.
@@ -79,7 +79,7 @@ void MGConstructionPlane::get_grid_data(
 
 void MGConstructionPlane::set_plane(const MGPlane& plane){
 	m_plane=MGPlane(
-		MGUnit_vector(plane.u_deriv()),MGUnit_vector(plane.v_deriv()),MGPosition(plane.root_point()));
+		(plane.u_deriv()).normalize(), (plane.v_deriv()).normalize(), MGPosition(plane.root_point()));
 	setDirty(true);
 }
 

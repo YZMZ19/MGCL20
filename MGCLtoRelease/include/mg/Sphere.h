@@ -4,7 +4,6 @@
 /********************************************************************/
 #pragma once
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/CSisects.h"
 #include "mg/Surface.h"
 #include "mg/Ellipse.h"
@@ -64,13 +63,14 @@ MGSphere(
 );
 
 /// Construct a  whole sphere from the center and the radius.
-///Let MGUnit_vector N(B*M), M2(N*B). Then (M2,N,B) makes a orthonormal system,
-///and this sphere is parameterized as:
-///F(u,v)=cntr+radis*cos(v)(M*cos(u)+N*sin(u))+radis*sin(v)*B.
+/// Let N=(B*M).normalize(), M2=(N*B).normalize(), and Bu=B.normalize().
+/// Then (M2,N,Bu) makes a orthonormal system,
+/// and this sphere is parameterized as:
+/// F(u,v)=cntr+radis*cos(v)(M*cos(u)+N*sin(u))+radis*sin(v)*Bu.
 MGSphere(
 	const MGPosition& cntr,	///< Sphere center.
 	double radius,			///< Sphere radius.
-	const MGUnit_vector& B,	///<axis
+	const MGVector& B,	///<axis
 	const MGVector& M ///<reference direciotn that is approximately perpendiculat to B.
 );
 

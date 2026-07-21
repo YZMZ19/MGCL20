@@ -17,7 +17,7 @@
 // Header for MGVector.
 
 //Forward Declaration
-class MGUnit_vector;
+class MGPosition;
 class MGIfstream;
 class MGOfstream;
 class MGIgesOfstream;
@@ -155,7 +155,6 @@ MGVector& operator*= (const MGVector& vec2);
 ///Scalar division.
 MGVector& operator/= (double scale);
 
-//////////// Member Function ////////////
 
 ///Compute angle in radian of two vectors.
 /// 0<= angle <pai.
@@ -205,13 +204,11 @@ const double* data()const{return m_element;};
 double* data(){return m_element;};
 
 /// Generate a vector by interpolating two vectors.
-
 ///Input scalar is a ratio and when zero, output vector is a copy of *this.
 /// New vector vnew=(1-t)*(*this)+t*vec2.
 MGVector interpolate(double t, const MGVector& vec2) const;
 
 /// Generate a vector by interpolating two vectors by rotation.
-
 /// Input scalar t is a ratio and when t is zero,
 /// output vector is a copy of *this and when t=1., 	output is vec2.
 /// New vector vnew=a*(*this)+b*vec2, where
@@ -225,7 +222,6 @@ MGVector interpolate_by_rotate(
 ) const;
 
 ///Test if this and v2 are on a single straight line.
-
 ///Function's return value is true if the three points are on a straight,
 ///false if not.
 bool is_collinear(
@@ -233,7 +229,6 @@ bool is_collinear(
 )const{	return (*this).parallel(v2);}
 
 ///Test if this, v2, and v3 are on a single straight line.
-
 ///Function's return value is true if the three points are on a straight,
 ///false if not.
 bool is_collinear(
@@ -256,20 +251,33 @@ double len() const;
 ///Negate the vector.
 void negate(){operator*=(-1.);};
 
-///Generate unit vector from the vector.
-MGUnit_vector normalize() const;
+///Generate the unit vector from the vector.
+MGVector normalize() const;
 
 ///Test if two vectors are orthogonal, i.e. cross at right angle.
 bool orthogonal(const MGVector& ) const;
 
-///Update this to unit vector, then compute orthonormal system.
-
+///Update this to a unit vector, then compute orthonormal system.
 ///(*this, v1, v2) organizes orthonormal system of 3D, that is
 ///this, v1, and v2 are all unit.
 ///If sv.orthogonal(*this), v1=sv.normalize().
 ///This is supposed not to be parallel to sv.
 void orthonormalize(const MGVector& sv
-	, MGVector& v1, MGVector& v2);
+	, MGVector& v1, MGVector& v2
+);
+
+/// Compute orthonormal system, given subvector sv.
+/// (v0, v1, v2) organizes orthonormal system of 3D, that is
+/// v0(unit V of this), v1, and v2 are all unit, and
+/// v0=v1*v2, v1=v2*v0, v2=v0*v1.
+/// If sv.orthogonal(*this), v1=sv.normalize().
+/// This is supposed to be not parallel to sv.
+void orthonormalSystem(
+	const MGVector& sv,//nearly equal to v1.
+	MGVector& v0,
+	MGVector& v1,
+	MGVector& v2
+)const;
 
 ///Iges output. PD123=Direction.
 ///Function's return value is the directory entry id created.
@@ -279,7 +287,6 @@ int out_to_IGES(
 )const;
 
 ///Compute the vector that is orthogonal to vec2 and is closest to this.
-
 ///"closest" means that the angle of the two vectors is minimum and
 ///the two vector length are equal.
 MGVector orthogonize(const MGVector& vec2)const;
@@ -305,7 +312,6 @@ double ref(int i) const{
 }
 
 ///Resize the vector, that is , change space dimension.
-
 ///When this is enlarged, the extra space will contain garbages.
 void resize(int new_sdim);
 
@@ -319,7 +325,6 @@ void set_null();
 void set_unit();
 
 ///Store vec2 data into *this.
-
 ///Store length is vec2.len().
 ///Storing will be done rap-around. That is, if id i or j reached to
 ///each sdim(), the id will be changed to 0.
@@ -330,7 +335,6 @@ void store_at(
 );
 
 ///Store vec2 data into *this.
-
 ///Storing will be done rap-around. That is, if id i or j reached to
 ///each sdim(), the id will be changed to 0.
 void store_at(
@@ -355,8 +359,8 @@ virtual int restore(MGIfstream& );
 ///Get the name of the class.
 virtual std::string whoami()const { return "V"; };
 
-	///Set data at element i.
 protected:
+	///Set data at element i.
 	///This should be used with care, since m__length will not be set.
 	///Maintenance of m_length should be done by the user, that is, m_length=-1
 	///must set if updated.
@@ -371,7 +375,6 @@ friend class MGSBRep;
 namespace MGCL{
 
 ///Compute the angel around the normal N in radian range[0., 2*pia).
-
 ///angle(v1,v2,N)+angle(v2,v1,N)=2*pai always holds.
 inline double angle(const MGVector& V1, const MGVector& V2, const MGVector& N) {
 	return V1.angle2pai(V2, N);
@@ -400,6 +403,16 @@ inline double parallelism(const MGVector& v1, const MGVector& v2) {
 
 ///Project vector V1 onto vector V2. When V2 is zero vector, return V1.
 MG_DLL_DECLR MGVector project(const MGVector& V1, const MGVector& V2);
+
+///Get the unit normal of the triangle (P0, P1, P2).
+///UnitNormal(P0,P1,P2)=-UnitNormal(P0,P2,P1).
+///(V1,V2,UnitNOrmal) organizes orthonormal system, where
+///V1=(P1-P0).normalize(), V2=(P2-P1).normalize().
+MGVector UnitNormal(
+	const MGPosition& P0, // 三角形の頂点の座標
+	const MGPosition& P1,
+	const MGPosition& P2
+);
 
 };
 

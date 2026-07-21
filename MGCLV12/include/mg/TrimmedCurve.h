@@ -20,7 +20,6 @@
 class MGInterval;
 class MGBox;
 class MGVector;
-class MGUnit_vector;
 class MGPosition;
 class MGTransf;
 class MGCParam_list;
@@ -397,9 +396,10 @@ int sdim() const{return m_curve->sdim();};
 ///Returned is a newed MGSurface, must be deleted.
 ///The sweep surface is defined as:
 ///This curve(say c(t)) is the rail and the straight line segments from
-///C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+///C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* sweep(
-	const MGUnit_vector& uvec,	///<Sweep Direction.
+	const MGVector& uvec,	///<Sweep Direction.
 	double start_dist,			///<distance to start edge.
 	double end_dist				///<distance to end edge.
 )const;				

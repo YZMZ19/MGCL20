@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Tolerance.h"
-#include "mg/Unit_vector.h"
 #include "mg/Geometry.h"
 #include "mg/Point.h"
 #include "topo/PCell.h"
@@ -182,12 +181,6 @@ MGPosition MGCell::center() const{
 	if(m_extent)
 		cntr=m_extent->evaluate(center_param());
 	return cntr;
-}
-
-//Obtain the direction of the cell.
-MGUnit_vector MGCell::direction() const{
-	MGPosition param=center_param();
-	return extent()->direction(param);
 }
 
 //Free(but does not delete) the extent geometry.

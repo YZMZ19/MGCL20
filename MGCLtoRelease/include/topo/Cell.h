@@ -101,9 +101,6 @@ virtual MGCell* clone() const override =0;
 ///Does not copy the binder cell of this.
 virtual MGCell* cloneWithoutBoundary() const = 0;
 
-///Obtain the direction of the cell.
-virtual MGUnit_vector direction() const;
-
 ///Draw 3D point(vertex) in world coordinates.
 ///The object is converted to point(s) and is drawn.
 ///This is valid only for topology objects or MGPoint.

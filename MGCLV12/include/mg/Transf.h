@@ -16,7 +16,6 @@
 //  Defines class MGTransf
 
 //  Forward Declarations
-class MGUnit_vector;
 class MGPosition;
 class MGIfstream;
 class MGOfstream;
@@ -74,9 +73,9 @@ MGTransf (int sdim, const MGTransf& transf,
 MGTransf(double scalex, double scaley);
 
 /// Construct 2D space Transf to transform data for 'origin' to be
-///origin(0,0,0) and for 'unit' to be x-coordimate.
-MGTransf(const MGUnit_vector& unit,  ///< unit vector to be x-coordinate.
-         const MGPosition& origin	 ///<origin to be origin.
+///origin(0,0,0) and for vect to be x-coordimate.
+MGTransf(const MGVector& vec,	  ///< vector to be x-coordinate.
+         const MGPosition& origin ///<origin to be origin.
 );
 
 //////////// 3D Constructor.////////////
@@ -85,14 +84,11 @@ MGTransf(const MGUnit_vector& unit,  ///< unit vector to be x-coordinate.
 ///No translation.
 MGTransf(double scalex, double scaley, double scalez);
 
-///3D Transf to transform P to be origin(0,0,0), uvecx to be x-axis
-///and uvecy to be y-axis.
-
-///If uvecx and uvecy does not cross at right angle, uvecy will be
-///transformed.
-MGTransf(const MGUnit_vector& uvecx, ///<1st unit vector.
-         const MGUnit_vector& uvecy, ///<2nd unit vector
-         const MGPosition& P		///<origin
+///3D Transf to transform P be origin(0,0,0), uvecx be x-axis and uvecy be y-axis.
+///If uvecx and uvecy are not orthogonal, uvecy will be so rotated.
+MGTransf(const MGVector& uvecx, ///<1st vector.
+         const MGVector& uvecy, ///<2nd vector
+         const MGPosition& P	///<origin
  );	
 
 ///Transf to transform the line segment (P0, P1) to the line segment(Q0, Q1)

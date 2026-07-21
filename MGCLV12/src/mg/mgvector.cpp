@@ -5,7 +5,6 @@
 #include "StdAfx.h"
 #include "mg/Vector.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 #include "mg/Tolerance.h"
 #include "mg/Default.h"
 
@@ -379,22 +378,19 @@ MGVector& MGVector::operator/= (double scalar){
 
 //Test if two vectors are equal.
 bool MGVector::operator==(const MGVector& v2)const{
-	return (*this - v2).is_zero_vector();
-	/*const MGVector& v1=*this;
+	const MGVector& v1=*this;
 	double dif = (v1 - v2).len();
+	if (MGRZero(dif))
+		return true;
+
 	double len1 = v1.len(), len2 = v2.len();
-	if(len1>=len2){
-		if(len1<=MGTolerance::mach_zero())
-			return true;
-		else
-			return MGRZero2(dif,len1);
-	}else{
-		if(len2<=MGTolerance::mach_zero())
-			return true;
-		else
-			return MGRZero2(dif,len2);
-	}*/
+	double lenmax = len1 > len2 ? len1 : len2;
+	if (lenmax <= MGTolerance::mach_zero())
+		return true;
+	else
+		return MGRZero2(dif, lenmax);
 }
+
 std::partial_ordering MGVector::operator<=>(const MGVector& v2)const {
 	if (*this == v2)
 		return std::partial_ordering::equivalent;
@@ -568,8 +564,10 @@ double MGVector::len() const {
 }
 
 ///Generate unit vector from the vector.
-MGUnit_vector MGVector::normalize() const{
-	return MGUnit_vector(*this);
+MGVector MGVector::normalize() const{
+	MGVector temp(*this);
+	temp.set_unit();
+	return temp;
 }
 
 ///Test if two vectors are orthogonal, i.e. cross at right angle.
@@ -584,9 +582,46 @@ bool MGVector::orthogonal(const MGVector &vec2) const{
 ///This is supposed not to be parallel to sv.
 void MGVector::orthonormalize(const MGVector& sv
 	, MGVector& v1, MGVector& v2){
-	set_unit();
-	MGUnit_vector v0(*this);
-	v0.orthonormal(sv, v1, v2);
+	orthonormalSystem(sv, *this, v1, v2);
+}
+
+/// Compute orthonormal system, given subvector sv.
+/// (v0, v1, v2) organizes orthonormal system of 3D, that is
+/// v0(unit V of this), v1, and v2 are all unit, and
+/// v0=v1*v2, v1=v2*v0, v2=v0*v1.
+/// If sv.orthogonal(*this), v1=sv.normalize().
+/// This is supposed to be not parallel to sv.
+void MGVector::orthonormalSystem(
+	const MGVector& sv,//nearly equal to v1.
+	MGVector& v0,
+	MGVector& v1,
+	MGVector& v2
+)const {
+	v0 = normalize();
+	v2 = v0 * sv;
+	if (MGMZero(v2.len())) {//If sv is parallel to v0, then v2 is zero vector.
+		if (v0 == mgZ_UVEC) v1 = MGVector(1., 0.);
+		else if (v0 == -mgZ_UVEC) v1 = MGVector(0., 1.);
+		else {
+			double dx = fabs(ref(0)), dy = fabs(ref(1)), dz = fabs(ref(2));
+			v1 = MGVector(0., 0., 1.);
+			if (MGRZero(dz))
+				v1 = MGVector(-ref(1), ref(0));
+			else if (dx > dz) {
+				if (dz > dy)
+					v1 = MGVector(0., 1., 0.);//dy is min.
+			}
+			else if (dy > dx)
+				v1 = MGVector(1., 0., 0.);//dx is min.
+			else
+				v1 = MGVector(0., 1., 0.);//dy is min.
+		}
+		// Normalize m and n.
+		v2 = v0 * v1;
+	}
+	v2.set_unit();
+	v1 = v2 * v0;
+	v1.set_unit();
 }
 
 //Compute the vector that is orthogonal to vec2 and is closest to this.
@@ -594,7 +629,9 @@ void MGVector::orthonormalize(const MGVector& sv
 //the two vector length are equal.
 MGVector MGVector::orthogonize(const MGVector& vec2)const{
 	MGVector v212=vec2*(*this)*vec2;
-	return MGUnit_vector(v212)*len();
+	v212.set_unit();
+	v212 *= len();
+	return v212;
 }
 
 ///Test if two vectors are parallel.
@@ -690,7 +727,7 @@ void MGVector::set_null(){
 //Change this to a unit vector.
 void MGVector::set_unit(){
 	if(!m_sdim){
-		(*this)=MGUnit_vector();
+		(*this)= MGDefault::z_unit_vector();
 	}else{
 		double length=len();
 		int i, dimm1=m_sdim-1;
@@ -700,8 +737,8 @@ void MGVector::set_unit(){
 		}else if(!MGREqual(length, 1.)){
 			for(i=0; i<m_sdim; i++) m_element[i]=m_element[i]/length;
 		}
-		m_length=1.;
 	}
+	m_length = 1.;
 }
 
 //Store vec2 data into *this.
@@ -770,5 +807,19 @@ namespace MGCL {
 	MGVector project(const MGVector& V1, const MGVector& V2){
 	return V1.project(V2);
 }
+
+	///Get the unit normal of the triangle (P0, P1, P2).
+	///UnitNormal(P0,P1,P2)=-UnitNormal(P0,P2,P1).
+	///(V1,V2,UnitNOrmal) organizes orthonormal system, wher
+	///V1=P1-P0, V2=P2-P1.
+	MGVector UnitNormal(
+		const MGPosition& P0, // 三角形の頂点の座標
+		const MGPosition& P1,
+		const MGPosition& P2
+	) {
+		MGVector vector1(P1 - P0);
+		MGVector vector2(P2 - P0);
+		return (vector1 * vector2).normalize();
+	}
 
 }

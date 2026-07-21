@@ -16,7 +16,6 @@
 //
 //  Forward Declarations
 class MGVector;
-class MGUnit_vector;
 class MGTransf;
 class MGIfstream;
 class MGOfstream;
@@ -70,7 +69,7 @@ MGMatrix(
 /// any number, i.e. can be more than 3.
 MGMatrix(const MGVector& vec, double angle);
 
-///Construct a matrix to rotate in (axis1, axis2) plane by algle theta,
+///Construct a matrix to rotate in (axis1, axis2) plane by angle theta,
 ///where angle is defined as cosv=cos(angle), and sinv=sin(angle).
 MGMatrix(
 	int dim,	///<Space dimension(can be more than 3).
@@ -131,12 +130,12 @@ void convert_to_glMatrix(
 ///  行列式の値を返却。
 double determinant() const;
 
-///Construct a matrix to transform a unit vector on an axis
-/// to a vector 'uvec', and replace own matrix with it.
-///Inverse matrix of to_axis.
+/// Construct a matrix to transform a unit vector on an axis
+/// to a unit vector of 'uvec', and replace own matrix with it.
+/// Inverse matrix of to_axis.
 /// axis can be any number(can be more than 2).
 MGMatrix& from_axis(
-  const MGUnit_vector& uvec,///< Unit vector for an axis.
+	const MGVector& uvec,///< a vector for an axis, used after normalization.
   int axis=0				///< Axis kind 0:x, 1:y, 2:z, ...
  );
 
@@ -158,11 +157,11 @@ void resize(int nsdim);
 ///Return space dimension
 int sdim() const{return m_sdim;}
 
-/// Construct 2D space Matrix to transform for 'unit' to be x-coordimate, and
+/// Construct 2D space Matrix to transform for 'vec' to be x-coordimate, and
 /// replace own Matrix with it.
 /// 2D version of to_axis.
 MGMatrix& set_x_axis(
-	const MGUnit_vector& unit ///<unit vector to be x-coordinate
+	const MGVector& vec ///<a vector to be x-coordinate, used after normalization.
 );
 
 ///  原点を通り、指定Vectorに関して鏡面変換する 2D Matrixを作成し，
@@ -179,20 +178,20 @@ MGMatrix& set_rotate_2D(double angle);
 ///The angle is given by cval as cos(angle) and sval as sin(angle).
 MGMatrix& set_rotate_2D(double cval, double sval);
 
-///Construct a 3D matrix to transform a vector 'uvec' to be one of the axises,
+/// Construct a 3D matrix to transform a vector 'uvec' to be one of the axises,
 /// and replace own matrix. Inverse matrix of set_vector.
 /// 3D version of to_axis.
 MGMatrix& set_axis(
-  const MGUnit_vector& uvec,	///< Unit vector to be an axis.
-  int axis=0				///< Axis kind 0:x, 1:y, 2:z.
+  const MGVector& uvec,	///< a vector to be an axis, used after normalization.		.
+  int axis=0			///< Axis kind 0:x, 1:y, 2:z.
 );
 
-///Construct a matrix to transform a unit vector on an axis
-/// to a vector 'uvec', and replace own matrix with it.
-///Inverse matrix of set_axis.
+/// Construct a matrix to transform a unit vector on an axis
+/// to a unit vector of 'uvec', and replace own matrix with it.
+/// Inverse matrix of set_axis.
 /// 3D version of from_axis.
 MGMatrix& set_vector(
-  const MGUnit_vector& uvec,	///< Unit vector for an axis.
+  const MGVector& uvec,	///< a vector for an axis, used after normalization.
   int axis=0				///< Axis kind 0:x, 1:y, 2:z.
 );
 
@@ -202,11 +201,10 @@ MGMatrix& set_vector(
 ///  クトルのかわりに両ベクトルを含む平面内で直交するよう変換したベクトルを
 ///  使用する。
 ///3D Matrix to transform uvecx to be x-axis and uvecy to be y-axis.
-///If uvecx and uvecy does not cross at right angle, uvecy will be
-///transformed.
+///If uvecx and uvecy are not orthogonal, uvecy will be so rotated to be orthogonal to uvecx.
 MGMatrix& set_xy_axis(
-	const MGUnit_vector& uvecx,	///<Unit vector 1 for x axis.
-    const MGUnit_vector& uvecy///<Unit vector 2 for y axis.
+	const MGVector& uvecx,///< vector 1 for x axis, used after normalization.
+    const MGVector& uvecy///< vector 2 for y axis, used after normalization.
 );
 
 ///  X軸、Y軸を各々、与えられた２つの単位ベクトルにするよう原点の周りに
@@ -218,8 +216,8 @@ MGMatrix& set_xy_axis(
 /// This is the inverse matrix of set_xy_axis().
 ///If uvecy does not cross uvecx at right angle, uvecy is transformed to do so.
 MGMatrix& set_xy_vector(
-	const MGUnit_vector& uvecx,	///<Unit vector 1 for x axis.
-    const MGUnit_vector& uvecy///<Unit vector 2 for y axis.
+	const MGVector& uvecx,///<a vector 1 for x axis, used after	normalization.
+    const MGVector& uvecy///<a vector 2 for y axis, used after normalization.
 );
 
 ///  原点を通り、指定Vectorに垂直な平面に関して鏡面変換する 3D Matrix
@@ -266,11 +264,11 @@ void set_null();
 ///Transpose matrix.
 MGMatrix transpose() const;
 
-///Construct a matrix to transform a vector 'uvec' to be one of the axises,
+/// Construct a matrix to rotate a vector 'uvec' to be one of the axises,
 /// and replace own matrix. Inverse matrix of from_axis.
 /// axis can be any number(can be more than 2).
 MGMatrix& to_axis(
-	const MGUnit_vector& uvec,	///< Unit vector to be an axis.
+	const MGVector& uvec,	///< a vector to be an axis, used after normalization.
 	int axis=0				///< Axis kind 0:x, 1:y, 2:z, ...
 );
 
@@ -316,10 +314,5 @@ MGPosition operator*(const MGPosition& p1, const MGMatrix& mat) {
 /// マトリックスによるベクトルの変換を行い自身のベクトルとする
 ///Matrix transformation of the vector.
 MG_DLL_DECLR MGVector& operator*= (MGVector& v, const MGMatrix& m);
-
-/// マトリックスによるベクトルの変換を行い自身のベクトルとする
-///Update own vector by matrix transformation.
-///The result is unit of transformed vector.
-MG_DLL_DECLR MGUnit_vector& operator*= (MGUnit_vector& v,const MGMatrix&);
 
 /** @} */ // end of BASE group

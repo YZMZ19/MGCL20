@@ -123,9 +123,9 @@ MGVector MGLEPoint::eval_star(int nderi)const{
 }
 
 //Compute a vector at the MGLEPoint point that goes inside the face
-//and perpendicular to the boundary loop.
-MGUnit_vector MGLEPoint::inner_vector()const{
-	return MGVector(0.,0.,1.)*eval(1);
+///and perpendicular to the boundary loop, which is a unit vector.
+MGVector MGLEPoint::inner_vector()const{
+	return (MGVector(0.,0.,1.)*eval(1)).normalize();
 }
 
 ///test if this is the end point of the edge.

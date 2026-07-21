@@ -20,7 +20,7 @@ static char THIS_FILE[] = __FILE__;
 // Implementation of MGGeometry.
 
 //Compute direction unit vector of the geometry.
-MGUnit_vector MGGeometry::direction(const MGPosition& param) const{
+MGVector MGGeometry::direction(const MGPosition& param) const{
 	return mgZ_UVEC;
 }
 

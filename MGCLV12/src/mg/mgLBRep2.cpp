@@ -180,7 +180,7 @@ MGCCisects MGLBRep::C1isect(const MGStraight& line) const{
 	MGPosition p; double t1,t2;
 	MGCParam_list clist;
 	if(sdim()<=2 && line.sdim()<=2){
-		MGUnit_vector direction=line.direction();
+		MGVector direction=line.direction().normalize();
 		MGVector normal(-direction.ref(1),direction.ref(0));
 			//Normal to line.
 		double dist=normal%line.root_point(); //Distance from the origin.
@@ -204,8 +204,8 @@ MGCCisects MGLBRep::C1isect(const MGStraight& line) const{
 			}
 			return list;
 		default:	//BRep is on a plane or a general 3D line.
-			MGUnit_vector x_axis=line.direction();
-			MGUnit_vector y_axis=plane.normal()*x_axis;
+			MGVector x_axis=line.direction().normalize();
+			MGVector y_axis=(plane.normal()*x_axis).normalize();
 			MGTransf tr(x_axis, y_axis, line.root_point());
 			MGLBRep lb2=(*this)*tr;
 			clist=lb2.isect_1D(0.,1);

@@ -6,7 +6,6 @@
 #include "cskernel/Blgi2d.h"
 #include "mg/Tolerance.h"
 #include "mg/Vector.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position.h"
 #include "mg/Transf.h"
 #include "mg/Position_list.h"
@@ -67,14 +66,14 @@ void get_angle(
 		//at the tie's start(theta0) or end(theta1) point will be output.
 ){
 	double s0=tie.param_s(), s1=tie.param_e();
-	MGUnit_vector E1=tie.eval(s1)-tie.eval(s0);
+	MGVector E1=(tie.eval(s1)-tie.eval(s0)).normalize();
 
 //at the start of the tie.
-	MGUnit_vector T0,N0,B0;
+	MGVector T0,N0,B0;
 	double crvtr0,torsn0;
 	tie.Frenet_frame(s0,T0,N0,B0,crvtr0,torsn0);
 
-	MGUnit_vector E20=T0*E1;//is the normal of the virtual surface.
+	MGVector E20=T0*E1;//is the normal of the virtual surface.
 	is_straight_tie0=false;
 	if(MGRZero(crvtr0)){
 		if(E1.parallel(T0)) is_straight_tie0=true;
@@ -83,11 +82,11 @@ void get_angle(
 	theta0=E20.angle(B0);
 
 //at the end of the tie.
-	MGUnit_vector T1,N1,B1;
+	MGVector T1,N1,B1;
 	double crvtr1,torsn1;
 	tie.Frenet_frame(s1,T1,N1,B1,crvtr1,torsn1);
 
-	MGUnit_vector E21=E1*T1;//is the normal of the virtual surface.
+	MGVector E21=T1*E1;//is the normal of the virtual surface.
 	is_straight_tie1=false;
 	if(MGRZero(crvtr1)){
 		if(E1.parallel(T1)) is_straight_tie0=true;

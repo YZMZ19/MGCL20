@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Box.h"
-#include "mg/Unit_vector.h"
 #include "mg/Transf.h"
 #include "mg/Straight.h"
 #include "mg/Ellipse.h"
@@ -324,7 +323,7 @@ void MGCurve::arrow(double t, MGPosition data[4])const{
 void MGCL::one_arrow(
 	const MGPosition& root,	//root of the arrow
 	const MGVector& vecx,	//the vector from the root to the head of the arrrow
-	const MGUnit_vector& vecy,//vecy that is normal to the vector from root to head
+	const MGVector& vecy,//vecy that is normal to the vector from root to head
 	MGPosition& head,		//head of the arrow will be returned.
 	MGPosition& headtail1,	//two tail of arrowhead line segments will be returned.
 	MGPosition& headtail2
@@ -334,7 +333,7 @@ void MGCL::one_arrow(
 
 	head=root+vecx;
 	MGVector head_rootx=vecx*head_length,
-			 head_rooty=vecy*(.5*head_length*vecx.len());
+			 head_rooty=vecy.normalize()*(.5*head_length*vecx.len());
 	headtail1=head-head_rootx+head_rooty;
 	headtail2=head-head_rootx-head_rooty;
 }

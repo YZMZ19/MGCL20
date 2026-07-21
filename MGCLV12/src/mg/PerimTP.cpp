@@ -196,8 +196,8 @@ size_t mgPerimTP::buidTpVec(const std::vector<const MGFSurface*>& faces){
 			}
 
 			// Reject crossed common.
-			MGUnit_vector v1 = perimeter().direction(prm1s);
-			MGUnit_vector v2 = wcurvej.direction(prm2s);
+			MGVector v1 = perimeter().direction(prm1s).normalize();
+			MGVector v2 = wcurvej.direction(prm2s).normalize();
 			double inp = fabs(v1%v2);
 			if(!MGAZero(inp - 1.))
 				continue;

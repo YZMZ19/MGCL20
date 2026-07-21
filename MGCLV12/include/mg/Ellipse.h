@@ -6,7 +6,6 @@
 
 #include "mg/Curve.h"
 #include "mg/Position.h"
-#include "mg/Unit_vector.h"
 
 // MGEllipse.h
 // header for class MGEllipse
@@ -113,7 +112,7 @@ MGEllipse(
 ///radius r is able to have minus value, in which case the longer part of the
 ///arc out of the whole circle is constructed.
 ///The center of the circle C is:
-///C=M+MGUnit_vector(sign(r)*N*(end-start))*sqrt(r*r-d*d),
+///C=M+(sign(r)*N*(end-start)).normalize()*sqrt(r*r-d*d),
 ///where M=(start+end)*.5, and d is the distance between start and M.
 MGEllipse(
   double r,		///<radius
@@ -127,7 +126,7 @@ MGEllipse(
 ///The circle lies on the plane that the three points start, end, and reference
 ///lie on.
 ///The center of the circle C is:
-///C=M+MGUnit_vector(sign(r)*N*(end-start))*sqrt(r*r-d*d),
+///C=M+(sign(r)*N*(end-start)).normalize()*sqrt(r*r-d*d),
 ///where M=(start+end)*.5, d is the distance between start and M,
 ///and N=(reference-start)*(end-start).
 ///That is, if r>0., the position reference indicates on which side
@@ -203,7 +202,7 @@ MGEllipse(
 MGEllipse (
 	const MGCurve& crv1,			///<I:基本線1
 	const MGCurve& crv2,			///<I:基本線2
-	const MGUnit_vector& normal,	///<I:基本線のノーマルベクトル
+	const MGVector& normal,	///<I:基本線のノーマルベクトル
 	double dRadius,					///<I:コーナーＲの半径
 	double& t1,						///<I:基本線１の初期パラメータ(コーナーＲを作成する側を指定)
 									///<O:コーナーＲと接する基本線１のパラメータ値
@@ -228,7 +227,7 @@ MGEllipse (
 MGEllipse (
 	const MGCurve&			crv1,	///<I:基本線1
 	const MGCurve&			crv2,	///<I:基本線2
-	const MGUnit_vector&	normal,	///<I:基本線のノーマルベクトル
+	const MGVector&	normal,	///<I:基本線のノーマルベクトル
 	double					t1,		///<I:基本線1上のＲ止まり点のパラメータ値
 	double&					t2,		///<I:基本線2の初期パラメータ(コーナーＲを作成する側を指定)
 									///<O:コーナーＲと接する基本線２のパラメータ値
@@ -248,7 +247,7 @@ MGEllipse (
 	const MGCurve&			crv1,	///<I:基本線1(始点)
 	const MGCurve&			crv2,	///<I:基本線2(通過点)
 	const MGCurve&			crv3,	///<I:基本線3(終点)
-	const MGUnit_vector&	normal,	///<I:基本線のノーマルベクトル
+	const MGVector&	normal,	///<I:基本線のノーマルベクトル
 	double&					t1,		///<I:基本線1の初期パラメータ(コーナーＲの始点近辺)
 									///<O:コーナーＲの始点における基本線１のパラメータ値
 	double&					t2,		///<I:基本線2の初期パラメータ(コーナーＲの通過点近辺)
@@ -270,7 +269,7 @@ MGEllipse (
 MGEllipse (
 	const MGCurve&			crv,	///<I:基本線
 	const MGPosition&		pos,	///<I:円弧端点
-	const MGUnit_vector&	normal,	///<I:基本線のノーマルベクトル
+	const MGVector&	normal,	///<I:基本線のノーマルベクトル
 	double					dRadius,///<I:コーナーＲの半径
 	double&					dParam,	///<I:基本線の初期パラメータ(コーナーＲを作成する側を指定)
 									///<O:コーナーＲと接する基本線１のパラメータ値
@@ -283,7 +282,7 @@ MGEllipse (
 MGEllipse (
 	const MGCurve& crv,		///<I:基本線
 	const MGPosition& P2,	///<I:円弧端点
-	const MGUnit_vector& normal,///<I:基本線のノーマルベクトル
+	const MGVector& normal,///<I:基本線のノーマルベクトル
 	double t				///<I:R止まり点のパラメータ
 );
 
@@ -566,7 +565,7 @@ const MGVector& minor_axis() const {return m_n;};
 double minor_len() const {return m_n.len();};
 
 ///Return normal:楕円のある平面の法線ベクトルを返却する。
-const MGUnit_vector& normal() const {return m_normal;};
+const MGVector& normal() const {return m_normal;};
 
 ///Test if given point is on the curve or not. If yes, return parameter
 ///value of the curve. Even if not, return nearest point's parameter.
@@ -664,9 +663,10 @@ void set_arc(
 ///Output is a newed MGSurface, must be deleted.
 ///The sweep surface is defined as:
 ///This curve(say c(t)) is the rail and the straight line segments from
-///C(t)+start_dist*uvec to C(t)+end_dist*uvec are the generatrix.
+///C(t)+start_dist*N to C(t)+end_dist*N are the generatrix.
+///Here, N=uvec.normalize().
 MGSurface* sweep(
-	const MGUnit_vector& uvec,	///<Sweep Direction.
+	const MGVector& uvec,	///<Sweep Direction.
 	double start_dist,			///<distance to start edge.
 	double end_dist			///<distance to end edge.
 ) const;	
@@ -715,8 +715,7 @@ private:
 
 ///Member data(メンバデータ)
 	MGPosition	m_center;	///<Center(中心点)
-	MGUnit_vector m_normal;	///<Normal of plane the ellipse lies on
-							///<(楕円のある平面の法線ベクトル)*
+	MGVector m_normal;	///<Normal of the plane this ellipse lies on, always unit vector.
 	MGVector	m_m;		///<Major axis(長軸)
 	MGVector	m_n;		///<Minor axis(短軸)
 	double		m_r;	///< sqrt((a*a+b*b)/2) where a=m_m.len(), b=m_n.len()
@@ -752,9 +751,9 @@ void copy_ellipse_data(const MGEllipse& ellipse2);
 ///(tolerance included).
 bool in_radian_range(double angle) const;
 
-///Compute intesection points of  2D ellipse whose center is origin and
-///a straight line of 2D.
-///Return value of isect2D is number of intersetion points: 0, 1, or 2.
+/// Compute intesection points of this 2D ellipse and the unlimit straight line of 2D
+/// whose center is origin and direction is dir.
+/// Return value of isect2D is number of intersetion points: 0, 1, or 2.
 int isect2d(
 	const MGPosition& sp,	///<Start point of straight line.
 	const MGVector& dir,	///<Direction unit vector of the straight line

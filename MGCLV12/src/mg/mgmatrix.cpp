@@ -4,7 +4,6 @@
 /********************************************************************/
 #include "StdAfx.h"
 #include "mg/Vector.h"
-#include "mg/Unit_vector.h"
 #include "mg/Matrix.h"
 #include "mg/Transf.h"
 #include "mg/Tolerance.h"
@@ -80,16 +79,11 @@ MGMatrix::MGMatrix(const MGVector& vec, double angle)
 :m_sdim(0), m_matrix(nullptr){
 	to_axis(vec,0);
     // this = To transform vec to x-axis.
+	MGMatrix& M = *this;
 
 	MGMatrix temp; temp.set_rotate_2D(angle);
-	MGMatrix m2=MGMatrix(3,temp,1,0);
-	//m2= Rotation about x-axis.
-
-	MGMatrix m3; m3.from_axis(vec,0);
-	// m3 = To transform x-axis to vec.
-
-	MGMatrix& M=*this;
-	M*=m2;
+	M*= MGMatrix(3, temp, 1, 0); //Rotation about x - axis.
+	MGMatrix m3; m3.from_axis(vec, 0);// m3 = To transform x-axis to vec.
 	M*=m3;
 }
 
@@ -206,11 +200,11 @@ double MGMatrix::determinant() const{
 	return value;
 }
 
-//Construct a matrix to transform one of the axises to a vector 'uvec',
+// Construct a matrix to transform one of the axises to a vector 'uvec',
 // and replace own matrix with it. Inverse matrix of to_axis.
 // axis can be any number(can be more than 2).
 MGMatrix& MGMatrix::from_axis(
-	const MGUnit_vector& uvec,	// Unit vector to be an axis.
+	const MGVector& uvec,	// Unit vector to be an axis.
 	int axis				// Axis kind 0:x, 1:y, 2:z, ...
 ){
 //This program produce matrix by inversing to_axis matrix,
@@ -222,9 +216,10 @@ MGMatrix& MGMatrix::from_axis(
 
 	int i,j;
 	int axis1=axis, axis2;
-	MGUnit_vector unit=uvec;
+	MGVector unit=uvec.normalize();
+	MGVector uvecUnit = unit;
 	double len, len1, len2, max_len, cosv, sinv;
-	MGMatrix mat_inverse(dim, 1.), m1, m2;
+	MGMatrix mat_inverse(dim, 1.);
 	MGMatrix& M=*this;
 
 	//Compute matrix mat_inverse to rotate for axis1 element to be zero
@@ -242,11 +237,10 @@ MGMatrix& MGMatrix::from_axis(
 		len1=unit.ref(axis1); len2=unit.ref(axis2);
 		len=sqrt(len1*len1+len2*len2);
 		cosv=len1/len; sinv=len2/len;
-		m1=MGMatrix(dim,axis1,axis2,sinv,cosv); mat_inverse*=m1;
+		mat_inverse *= MGMatrix(dim, axis1, axis2, sinv, cosv);
 		//Above mat_inverse is to rotate for axis1 element to be zero.
-		m2=MGMatrix(dim,axis1,axis2,sinv,-cosv);
-		M=m2*M;
-		unit=uvec*mat_inverse;
+		M= MGMatrix(dim, axis1, axis2, sinv, -cosv)*M;
+		unit= uvecUnit *mat_inverse;
 	}
 	return *this;
 }
@@ -294,9 +288,7 @@ MGMatrix& MGMatrix::reflection(const MGVector& vec){
 	for(int i=0; i<sdim(); i++) M(i,0) *= -1.;
 	//Reflection about x-axis.
 
-	MGMatrix m2; m2.from_axis(vec,0);
-	// m2 = To transform x-axis to vec.
-
+	MGMatrix m2; m2.from_axis(vec,0);// m2 = To transform x-axis to vec.
 	return M*=m2;
 }
 
@@ -314,16 +306,17 @@ double MGMatrix::scale()const{
 	return sqrt(a);
 }
 
-// Construct 2D space Matrix to transform for 'unit' to be x-coordimate, and
+// Construct 2D space Matrix to transform for 'vec' to be x-coordimate, and
 // replace own Matrix.
 MGMatrix& MGMatrix::set_x_axis(
-	const MGUnit_vector& unit) //unit vector to be x-coordinate
+	const MGVector& vec) //vector to be x-coordinate
 {
-	assert(unit.sdim()==2);
+	assert(vec.sdim()==2);
 
+	const MGVector U = vec.normalize();
 	if(m_sdim!=2) resize(2);
 	MGMatrix& M=*this;
-    double x=unit(0); double y=unit(1);
+    double x=U[0]; double y=U[1];
 	M(0,0)=x; M(0,1)=-y;
 	M(1,0)=y; M(1,1)=x;
 	return *this;
@@ -332,8 +325,8 @@ MGMatrix& MGMatrix::set_x_axis(
 //  原点を通り、指定Vectorに関して鏡面変換する 2D Matrixを作成し，
 //  既存のMatrixと入れ換える。
 MGMatrix& MGMatrix::set_reflect_2D(const MGVector& vec1){
-     const MGUnit_vector uvec1(MGVector(2,vec1));
-	 double x=uvec1(0); double y=uvec1(1); double twoxy=2.*x*y;
+     const MGVector uvec1(MGVector(2,vec1).normalize());
+	 double x=uvec1[0]; double y=uvec1[1]; double twoxy=2.*x*y;
 	 double x2my2=x*x-y*y;
 	if(m_sdim!=2) resize(2);
 
@@ -390,18 +383,18 @@ MGMatrix& MGMatrix::set_rotate_2D(double cval, double sval){
 //Construct a 3D matrix to transform a vector to be one of the axises,
 // and replace own matrix.
 MGMatrix& MGMatrix::set_axis(
-	const MGUnit_vector& uvec,	//Unit vector to be an axis.
-	int axis)				// Axis number 0:x, 1:y, 2:z.
-{
+	const MGVector& uvec,	//a vector to be an axis.
+	int axis				// Axis number 0:x, 1:y, 2:z.
+){
 	assert(axis<3);
-
+	MGVector U = uvec.normalize();
 	int i,j,k;
 	i=axis; if(axis>=3) i=2;
 	j=i+1; if(j>=3) j=0; k=j+1; if(k>=3) k=0;
 	
 	double d2[3];
 	for(int n=0; n<3; n++){
-		double a=uvec.ref(n);
+		double a=U.ref(n);
 		d2[n]=a*a;
 	}
 	double dij=d2[i]+d2[j]; double dki=d2[k]+d2[i];
@@ -411,39 +404,40 @@ MGMatrix& MGMatrix::set_axis(
 	if(dij>=dki){
 		d=sqrt(dij);
 		// 1. Rotate around k-axis.
-		M(i,i)=uvec.ref(i)/d; M(i,j)=-uvec.ref(j)/d;
+		M(i,i)=U.ref(i)/d; M(i,j)=-U.ref(j)/d;
 		M(j,i)=-M(i,j);      M(j,j)=M(i,i);
 		// 2. Rotate around j-axis.
-		m2(i,i)=d;             m2(i,k)=-uvec.ref(k);
-		m2(k,i)=uvec.ref(k);   m2(k,k)=m2(i,i);
+		m2(i,i)=d;             m2(i,k)=-U.ref(k);
+		m2(k,i)=U.ref(k);   m2(k,k)=m2(i,i);
 	}else{
 		d=sqrt(dki);
 		// 1. Rotate around j-axis.
-		M(i,i)=uvec.ref(i)/d; M(i,k)=-uvec.ref(k)/d;
+		M(i,i)=U.ref(i)/d; M(i,k)=-U.ref(k)/d;
 		M(k,i)=-M(i,k);      M(k,k)=M(i,i);
 		// 2. Rotate around k-axis.
-		m2(i,i)=d;             m2(i,j)=-uvec.ref(j);
-		m2(j,i)=uvec.ref(j);   m2(j,j)=m2(i,i);
+		m2(i,i)=d;             m2(i,j)=-U.ref(j);
+		m2(j,i)=U.ref(j);   m2(j,j)=m2(i,i);
 	}
 	M*=m2;
 	return *this;
 }
 
-//Construct a matrix to transform a unit vector on an axis
-// to a vector 'uvec', and replace own matrix with it.
-//Inverse matrix of set_axis.
+// Construct a matrix to transform a unit vector on an axis
+// to the unit vector 'uvec', and replace own matrix with it.
+// Inverse matrix of set_axis.
 MGMatrix& MGMatrix::set_vector(
-	const MGUnit_vector& uvec,	// Unit vector to be an axis.
+	const MGVector& uvec,	// a vector to be an axis.
 	int axis)				// Axis number 0:x, 1:y, 2:z.
 {
 	assert(uvec.sdim()<=3 && axis<3);
 
+	const MGVector U = uvec.normalize();
 	int i,j,k;
 	i=axis; j=i+1; if(j>=3) j=0; k=j+1; if(k>=3) k=0;
 	
 	double d2[3];
 	for(int n=0; n<3; n++){
-		double a=uvec(n); d2[n]=a*a;
+		double a=U[n]; d2[n]=a*a;
 	}
 	double dij=d2[i]+d2[j]; double dki=d2[k]+d2[i];
 
@@ -453,18 +447,18 @@ MGMatrix& MGMatrix::set_vector(
 	if(dij>=dki){
 		d=sqrt(dij);
 		// 1. Rotate around j-axis.
-		M(i,i)=d;        M(i,k)=uvec(k);
-		M(k,i)=-uvec(k);  M(k,k)=M(i,i);
+		M(i,i)=d;        M(i,k)=U[k];
+		M(k,i)=-U[k];  M(k,k)=M(i,i);
 		// 2. Rotate around k-axis.
-		m1(i,i)=uvec(i)/d; m1(i,j)=uvec(j)/d;
+		m1(i,i)=U[i]/d; m1(i,j)=U[j]/d;
 		m1(j,i)=-m1(i,j);  m1(j,j)=m1(i,i);
 	}else{
 		d=sqrt(dki);
 		// 1. Rotate around k-axis.
-		M(i,i)=d;         M(i,j)=uvec(j);
-		M(j,i)=-uvec(j);   M(j,j)=M(i,i);
+		M(i,i)=d;         M(i,j)=U[j];
+		M(j,i)=-U[j];   M(j,j)=M(i,i);
 		// 2. Rotate around j-axis.
-		m1(i,i)=uvec(i)/d; m1(i,k)=uvec(k)/d;
+		m1(i,i)=U[i]/d; m1(i,k)=U[k]/d;
 		m1(k,i)=-m1(i,k);  m1(k,k)=m1(i,i);
 	}
 	M*=m1;
@@ -477,15 +471,15 @@ MGMatrix& MGMatrix::set_vector(
 //  クトルのかわりに両ベクトルを含む平面内で直交するよう変換したベクトルを
 //  使用する。
 MGMatrix& MGMatrix::set_xy_axis(
-	const MGUnit_vector& uvecx,	//Unit vector 1 for x axis.
-	const MGUnit_vector& uvecy)	//Unit vector 2 for y axis.
-{
+	const MGVector& uvecx,	//a vector 1 for x axis.
+	const MGVector& uvecy	//a vector 2 for y axis.
+){
 	assert(uvecx.sdim()<=3 && uvecy.sdim()<=3);
 	MGMatrix mx(3,1.);
 	MGMatrix& M=*this;
 	M.set_axis(uvecx, 0);// M=the matrix to transform uvecx as x-axis.
 
-	MGVector vecy=uvecy*M;
+	MGVector vecy=uvecy.normalize()*M;
 	double a=vecy[1], b=vecy[2];
 	double dvecy=sqrt(a*a+b*b);
 	if(dvecy>MGTolerance::mach_zero()){
@@ -504,8 +498,8 @@ MGMatrix& MGMatrix::set_xy_axis(
 //  使用する。
 // This is the inverse matrix of set_xy_axis().
 MGMatrix& MGMatrix::set_xy_vector(
-	const MGUnit_vector& uvecx,	//Unit vector 1 for x axis.
-	const MGUnit_vector& uvecy)	//Unit vector 2 for y axis.
+	const MGVector& uvecx,	//a vector 1 for x axis, used after normalization.
+	const MGVector& uvecy)	//a vector 2 for y axis, used after normalization.
 {
 	assert(uvecx.sdim()<=3 && uvecy.sdim()<=3);
 
@@ -515,7 +509,7 @@ MGMatrix& MGMatrix::set_xy_vector(
 	ay(0)=M(1,0); ay(1)=M(1,1); ay(2)=M(1,2);
 	//ay is the transformed vector of y-axis by matrix M.
 
-	MGUnit_vector vy=(uvecx*uvecy)*uvecx;//vy is normalized uvecy.
+	MGVector vy=(uvecx*uvecy)*uvecx;
 	double cval=ay.cangle(vy); double sval=ay.sangle(vy);
 	if((ay*vy)%uvecx < 0.) sval=-sval;
 	MGMatrix mat2; mat2.set_rotate_3D(uvecx, cval, sval);
@@ -635,14 +629,15 @@ void MGMatrix::set_null(){
 // and replace own matrix. Inverse matrix of from_axis.
 // axis can be any number(can be more than 2).
 MGMatrix& MGMatrix::to_axis(
-	const MGUnit_vector& uvec,	// Unit vector to be an axis.
+	const MGVector& uvec,	// a vector to be an axis, used after normalization.
 	int axis)				// Axis kind 0:x, 1:y, 2:z, ...
 {
 	int dim=uvec.sdim(); if(axis>=dim) dim=axis+1;
 	MGMatrix& M=*this=MGMatrix(dim);
 
 	int i,j;
-	MGUnit_vector unit=uvec;
+	MGVector unit=uvec.normalize();
+	MGVector uvecUnit = unit;
 	double len, len1, len2, max_len, cosv, sinv;
 	int axis1=axis, axis2;
 	//Compute matrix to rotate for axis1 element to be zero
@@ -662,7 +657,7 @@ MGMatrix& MGMatrix::to_axis(
 		cosv=len1/len; sinv=len2/len;
 		M*=MGMatrix(dim,axis1,axis2,sinv,cosv);
 		//Above MGMatrix(...) is to rotate for axis1 element to be zero.
-		unit=uvec*M;
+		unit= uvecUnit *M;
 	}
 	return *this;
 }
@@ -750,13 +745,6 @@ MGVector& operator*= (MGVector& v,const MGMatrix& mat1){
 		v(i)=a;
 	}
 	return v;
-}
-
-// マトリックスによるベクトルの変換を行い自身のベクトルとする
-//Update own vector by matrix transformation.
-//The result is unit of transformed vector.
-MGUnit_vector& operator*= (MGUnit_vector& v,const MGMatrix& mat){
-	return v=MGVector(v)*mat;
 }
 
 //  自身のMatrixと与えられたMatrixの乗算を行いオブジェクトを

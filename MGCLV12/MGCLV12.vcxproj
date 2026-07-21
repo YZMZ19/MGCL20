@@ -439,7 +439,6 @@ copy  $(MGCLProject)\include\mgiges $(OUT_DIR)include\mgiges
     <ClInclude Include="include\mg\Transf.h" />
     <ClInclude Include="include\mg\TrimmedCurve.h" />
     <ClInclude Include="include\mg\types.h" />
-    <ClInclude Include="include\mg\Unit_vector.h" />
     <ClInclude Include="include\mg\Vector.h" />
     <ClInclude Include="include\StdAfx.h" />
     <ClInclude Include="include\targetver.h" />
@@ -1132,7 +1131,6 @@ copy  $(MGCLProject)\include\mgiges $(OUT_DIR)include\mgiges
     <ClCompile Include="src\mg\mgtolerance.cpp" />
     <ClCompile Include="src\mg\mgtransf.cpp" />
     <ClCompile Include="src\mg\MGTrimmedCurve.cpp" />
-    <ClCompile Include="src\mg\mgunit_vector.cpp" />
     <ClCompile Include="src\mg\mgvector.cpp" />
     <ClCompile Include="src\mg\PerimTP.cpp" />
     <ClCompile Include="src\mg\PickObject.cpp" />

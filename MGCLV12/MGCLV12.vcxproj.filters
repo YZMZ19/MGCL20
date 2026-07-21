@@ -908,9 +908,6 @@
     <ClInclude Include="include\mg\types.h">
       <Filter>ヘッダー ファイル\Geo</Filter>
     </ClInclude>
-    <ClInclude Include="include\mg\Unit_vector.h">
-      <Filter>ヘッダー ファイル\Geo</Filter>
-    </ClInclude>
     <ClInclude Include="include\mgGL\VBO.h">
       <Filter>ヘッダー ファイル\GL</Filter>
     </ClInclude>
@@ -1904,9 +1901,6 @@
       <Filter>ソース ファイル\Geo</Filter>
     </ClCompile>
     <ClCompile Include="src\mg\MGTrimmedCurve.cpp">
-      <Filter>ソース ファイル\Geo</Filter>
-    </ClCompile>
-    <ClCompile Include="src\mg\mgunit_vector.cpp">
       <Filter>ソース ファイル\Geo</Filter>
     </ClCompile>
     <ClCompile Include="src\mgGL\Name.cpp">

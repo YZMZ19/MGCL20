@@ -8,7 +8,6 @@
 #include <vector>
 #include <deque>
 #include "mg/Default.h"
-#include "mg/Unit_vector.h"
 #include "mg/Position_list.h"
 #include "mg/LBRep.h"
 #include "mgGL/VBO.h"
@@ -665,10 +664,10 @@ void trim(
 )const;
 
 ///Compute unit normal vector at uv.
-virtual MGUnit_vector unit_normal(const MGPosition& uv) const=0;
+virtual MGVector unit_normal(const MGPosition& uv) const=0;
 
 ///Compute unit normal vector at (u,v).
-virtual MGUnit_vector unit_normal(double u,double v) const=0;
+virtual MGVector unit_normal(double u,double v) const=0;
 
 protected:
 

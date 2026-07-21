@@ -108,7 +108,7 @@ MGSBRepTP::MGSBRepTP(const MGSurface& brep)
 		int len = dataPoint.length();
 		MGBPointSeq bp1(len, brep.sdim());
 		for(i = 0; i < len; i++){
-			MGPosition pos;
+			MGVector pos;
 			switch (iperim){
 			case 0:
 				pos = brep.unit_normal(dataPoint(i), param_s_v);

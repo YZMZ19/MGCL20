@@ -64,8 +64,7 @@ MGCSisects MGSBRep::isectSl(
 	if(!sbx.crossing(sl))
 		return list;
 
-	MGUnit_vector SLD=sl.direction();
-	MGMatrix mat; mat.to_axis(SLD,2);	//Matrix to transform SLD to be z axis.
+	MGMatrix mat; mat.to_axis(sl.direction(),2);//Matrix to transform dir to be z axis.
 
 	double u0,u1,v0,v1;
 	bool uvbox_is_null=uvbox.is_null();
@@ -256,8 +255,8 @@ std::unique_ptr<MGSBRep> MGSBRep::surf1D(
 	const MGPlane& pl
 )const{
 	MGVector cntr=pl.eval(pl.param(center()));
-	MGUnit_vector N=MGVector(3,pl.normal());//Plane Normal(Unit-vector).
-		//PN is the vector to translate pl to pass through the origin.
+	MGVector N=MGVector(3,pl.normal());//Plane Normal.
+
 	MGSPointSeq cp=surface_bcoef()-cntr;
 	MGMatrix mat; mat.to_axis(N,2);	//Matrix to transform N to be z axis.
 	cp*=mat;

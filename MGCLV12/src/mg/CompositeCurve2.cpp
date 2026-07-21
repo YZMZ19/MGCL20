@@ -151,7 +151,7 @@ std::vector<UniqueCurve> MGCompositeCurve::offset(
 //Return sweep surface from crv
 //Returned is a newed MGSurface, must be deleted.
 MGSurface* MGCompositeCurve::sweep(
-	const MGUnit_vector& uvec,			//Sweep Direction.
+	const MGVector& uvec,			//Sweep Direction.
 	double start_dist,					//distance to start edge.
 	double end_dist			//distance to end edge.
 )const{

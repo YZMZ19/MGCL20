@@ -125,7 +125,7 @@ void MGRSBRep::buildRevolutionSurface(
 	//of sl. If negative, circle is clockwise around N.
 ){
 	invalidateBox(); copy_appearance(rlb);
-	MGUnit_vector N(sl.direction());
+	MGVector N=sl.direction();
 	MGVector V=sl.nearest_to_origin();
 		//V is to translate sl to pass through origin.
 	MGMatrix mat_toZ;
@@ -138,8 +138,8 @@ void MGRSBRep::buildRevolutionSurface(
 	MGVector P_sample(2,cp(0)+cp(mid)+cp(n-1));
 	double ulen=P_sample.len()/3.;
 
-	MGUnit_vector U_sample(P_sample);
-	MGRLBRep circle(MGEllipse(MGPosition(0.,0.), MGPosition(U_sample), angle));
+	 P_sample.set_unit();
+	MGRLBRep circle(MGEllipse(MGPosition(0.,0.), MGPosition(P_sample), angle));
 	MGBPointSeq circle_cp(circle.non_homogeneous_bcoef());
 	int m=circle.bdim();
 	MGSPointSeq sfcpR(m,n,4);
@@ -152,7 +152,7 @@ void MGRSBRep::buildRevolutionSurface(
 	for(j=0; j<n; j++){
 	//Get non homogeneous coef in sfcp(.,.,0-2) and weight in sfcpR(.,.,3).
 		double weightv=rlb.coef(j,wid);
-		double len=U_sample%cp(j);
+		double len= P_sample %cp(j);
 		for(i=0; i<m; i++){
 			double weightu=circle.coef(i,2);
 			sfcpR(i,j,3)=weightu*weightv;

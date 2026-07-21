@@ -181,7 +181,7 @@ int MGSurface::offset_check_curva_one(
 				if(j == bdim_v() - 1)ndiv_v++;
 				for(l = 0; l < ndiv_v; l++){
 					double vparam = pcrv->knot(j) + (vspan * l), curva, torsion, radius;
-					MGUnit_vector T, N, B, norm;
+					MGVector T, N, B, norm;
 					pcrv->Frenet_frame(vparam, T, N, B, curva, torsion);
 					norm = unit_normal(uparam, vparam);
 					if((N % norm) * ofs_value <= 0 || MGMZero(curva))continue;

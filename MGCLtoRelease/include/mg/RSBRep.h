@@ -144,15 +144,15 @@ void buildRevolutionSurface(
 );
 
 ///Construct MGRSBRep by sweep NURBS and sweep length.
-
-//rail(say c(u)) is the rail and the straight line segments
-//from C(u)+start_dist*uvec to C(u)+end_dist*uvec are the generatrix.
-//The surface is expressed as: S(u,v)=c(u)+uvec*v,
-//for rail.param_s()<=u<=rail.param_e(), start_dist<=v<=end_dist.
+///rail(say c(u)) is the rail and the straight line segments
+///from C(u)+start_dist*N to C(u)+end_dist*N are the generatrix.
+///The surface is expressed as: S(u,v)=c(u)+N*v,
+///for rail.param_s()<=u<=rail.param_e(), start_dist<=v<=end_dist.
+///Here, N=uvec.normalize().
 void buildSweep(
-	const MGRLBRep& rlbrep,		///<Sweep crv.
-	const MGUnit_vector& uvec,	///<Sweep Direction.
-	double start_dist,			///<distance to start edge.
+	const MGRLBRep& rlbrep,	///<Sweep crv.
+	const MGVector& uvec,	///<Sweep Direction.
+	double start_dist,		///<distance to start edge.
 	double end_dist			///<distance to end edge.
 );
 

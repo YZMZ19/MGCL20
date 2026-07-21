@@ -35,12 +35,12 @@ class MG_DLL_DECLR MGStl : public MGObject{
 	/// ファイルから読み込んだ順で、座標の重複を取り除き、座標値が格納されている.
 	std::vector<MGPosition> m_vecPos;
 
-	/// STLファイルの図形を構成する各三角形の法線ベクトルの配列.
+	/// STLファイルの図形を構成する各三角形の単位法線ベクトルの配列.
 	/// ファイルから読み込まれた順で三角形の法線ベクトルが格納されている.
 	///m_vecNormlTriang.size()*3=m_indices.size().
-	///m_vecNormlTriang[i] is the normal of the triangle  m_indices[i], [i+1], [i+2] for
+	///m_vecNormlTriang[i] is the unit normal of the triangle  m_indices[i], [i+1], [i+2] for
 	///i=0, ..., m_indices.size()/3.
-	std::vector<MGUnit_vector> m_vecNormlTriang;
+	std::vector<MGVector> m_vecNormlTriang;
 
 	/// STLファイルの図形を構成する各三角形の各頂点に対応する
 	/// 座標の配列のインデックスを格納する配列.
@@ -203,8 +203,8 @@ const std::vector<MGPosition>& positions()const{return m_vecPos;};
 std::vector<MGPosition>& positions(){return m_vecPos;};
 
 ///return the ref to m_vecPos.
-const std::vector<MGUnit_vector>& normals()const{return m_vecNormlTriang;};
-std::vector<MGUnit_vector>& normals(){return m_vecNormlTriang;};
+const std::vector<MGVector>& normals()const{return m_vecNormlTriang;};
+std::vector<MGVector>& normals(){return m_vecNormlTriang;};
 
 /// 三角形の個数を取得する.
 /// 戻り値：三角形の個数.
