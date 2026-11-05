@@ -97,7 +97,7 @@ protected:
 		///<the elements.
 
 	mutable bool m_elementsShadeDirty:1;///<   =true if dirty and need to remake.
-	std::vector<UniqueVBOElement> m_elementsShade;///< VBO data for shading. Ths highlight data
+	std::vector<UniqueVBOElement> m_elementsShade;///< VBO data for shading. This highlight data
 		///<is stored in m_elements.
 		///<When m_elementsShade.size()=0 and m_gel->manifold_dimension()>=2, this means
 		///<m_gel's shading data is not made yet.
@@ -141,10 +141,9 @@ mgVBO(const mgVBO& vbo);
 ///Assignment.
 mgVBO& operator=(const mgVBO& vbo);
 
-virtual ~mgVBO();
+virtual ~mgVBO() override;
 
 ///VBO dataを初期化する。
-
 ///(1) display modeを表示にする
 ///(2) viewModeに従い、clearElements()をする
 ///(3) clearStaticAttributes()発信
@@ -164,7 +163,6 @@ virtual void draw(MGCL::VIEWMODE viewMode=MGCL::DONTCARE);
 virtual void redraw(MGCL::VIEWMODE viewMode=MGCL::DONTCARE);
 
 ///描画関数selectionDraw()は、Object選択のための表示処理をする。
-
 ///通常のdrawとの相違：///Colorとしてm_bufferIDを用い、size処理以外の
 ///attributesの処理（normal, texture, color)をしない。
 virtual void selectionDraw(MGCL::VIEWMODE viewMode=MGCL::DONTCARE);
@@ -220,7 +218,6 @@ unsigned getDName()const{return m_dname;};
 MGAttribedGel* gel()const{return m_gel;};
 
 ///Selectionに設定する名前を求める。
-
 ///=0のとき、名前の設定処理をしない。
 ///0(null) はこのmgVBOElementはmgVBOLeafであり、名前をもたないことを示す。
 ///名前はmgVBOだけが持つ
@@ -231,12 +228,10 @@ virtual GLuint getSelectionName()const;
 virtual bool is_made(MGCL::VIEWMODE viewMode=MGCL::DONTCARE);
 
 ///現在Begin()されているかどうかを調べる。
-
 ///Begin()され、End()の前であればtrueを返す
 bool is_InBegin();
 
 ///typeのmgVBOLeafをひとつ(Begin-Endでひとつ）作成して追加する。
-
 ///targetはBegin()-End()で作成されるmgVBOLeafをどのelementに入れるかを示す。
 ///target=WIRE:Wire(highlight用のelement(m_elements)
 ///target=SHADING:Shading用のelement(m_elementsShade).
@@ -248,7 +243,6 @@ bool is_InBegin();
 virtual void Begin(GLenum type, MGCL::DRAW_TARGET target= MGCL::WIRE);
 
 ///Begin()で始めたVBOをひとつのmgVBOLeafとして作成、追加する。
-
 ///polygonModeはBegin()のtypeがGL_QUAD_STRIP, GL_TRIANGLES, GL_TRIANGLE_STRIP, GL_TRIANGLE_FAN
 ///の際にのみ有効で、そのPolygonMode（GL_POINT, GL_LINE, GL_FILL)を指定する。
 ///作成されたmgVBOElement*が返されるがこのmgVBOElementはmgVBOが所有している。
@@ -256,18 +250,14 @@ virtual void Begin(GLenum type, MGCL::DRAW_TARGET target= MGCL::WIRE);
 virtual mgVBOLeaf* End(GLenum polygonMode=GL_FILL);
 
 ///Set dirty flag(s) of m_elements or m_elementsShade.
-
 ///is_dirty is true if dirty and need to remake.
 void setDirty(bool is_dirty=true, MGCL::DRAW_TARGET target= MGCL::WIRE_AND_SHADING)const;
 
-///Function IDをセットする.
-
-///setFunctionID()はBegin()-End()の間でのみ有効。
-//void setFunctionID(int functionID);
+///DrawTypeをセットする.
+///setDrawType()はBegin()-End()の間でのみ有効。
 void setDrawType(mgGLSL::DrawType drawType);
 
 ///Textureをsetする。
-
 ///textureは参照するのみ
 ///setTexture()はBegin()-End()の間でのみ有効。
 void setTexture(mgTexture* texture);

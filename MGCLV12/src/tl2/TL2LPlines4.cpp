@@ -451,7 +451,7 @@ void mgTL2LPlines::makeStrips(
 	};
 	const MGSurface& srf = eMax.TL2param().get_surface();
 	auto Pinner = [uvRequired, normal_is_required, &Suv, &srf](int i, int j) {
-		return uvRequired ? Suv(i,j) : xyz(srf, Suv(i,j), normal_is_required);
+		return uvRequired ? MGPosition(Suv(i,j) ): xyz(srf, Suv(i,j), normal_is_required);
 	};
 
 	bool equalBothSides = (m == md && n == nOpo);

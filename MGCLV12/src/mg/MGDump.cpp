@@ -950,7 +950,7 @@ int MGPPRep::restore(MGIfstream& buf){
 int MGPosition::dump(MGOfstream& buf) const{
 	int len = -1;
 	try{
-		MGVector::dump(buf);
+		m_vector.dump(buf);
 		len = dump_size();
 	}
 	catch(...){
@@ -963,7 +963,7 @@ int MGPosition::dump(MGOfstream& buf) const{
 int MGPosition::restore(MGIfstream& buf){  // 0:OK !0:NG -99:file not open
 	int len = -1;
 	try	{
-		MGVector::restore(buf);
+		m_vector.restore(buf);
 		len = dump_size();
 	}
 	catch (...){

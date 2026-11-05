@@ -20,6 +20,9 @@ static char THIS_FILE[] = __FILE__;
 // Represent a positional data. MGPosition is the same class as MGposition,
 // only is an alias name.
 
+MGPosition::MGPosition(std::initializer_list<double> data)
+: m_vector(data) {
+}
 
 //Let this be the center of the rotation, then compute the angle rotated 
 //around the normal from start to end.
@@ -38,20 +41,19 @@ double MGPosition::angle(
 
 //Clear all the elements by the value init.
 MGPosition& MGPosition::clear(double init){
-	static_cast<MGVector&>(*this).clear(init);
+	m_vector.clear(init);
 	return *this;
 }
 
 //Return the distance of this and P2.
 double MGPosition::distance(const MGPosition& P2)const{
-	return (static_cast<const MGVector&>(*this)
-			- static_cast<const MGVector&>(P2)).len();
+	return (m_vector - P2.m_vector).len();
 }
 
 // Generate a Position by interpolating two Position. Input scalar is
 // a ratio and when zero, output position is a copy of the own vector.
 MGPosition MGPosition::interpolate(double t2, const MGPosition& vec2) const{
-	return static_cast<const MGVector&>(*this).interpolate(t2,vec2);
+	return m_vector.interpolate(t2, vec2.m_vector);
 }
 
 //Operator Oveload
@@ -59,65 +61,45 @@ MGPosition MGPosition::interpolate(double t2, const MGPosition& vec2) const{
 //Update position data by array of double.
 //This space dimension's length data are copied from data*.
 MGPosition& MGPosition::operator=(const double* a){
-	MGVector::operator=(a);
+	m_vector.operator=(a);
 	return *this;
 }
 
 // 自身のPositionに与えられたVectorを加算して自身のPositionとする 
 MGPosition& MGPosition::operator+= (const MGVector& vec){
-	static_cast<MGVector&>(*this) +=vec;
+	m_vector +=vec;
 	return *this;
 }
 
 // 単項マイナス。自身のPositionを反転し、Positionを生成
 MGPosition MGPosition::operator- () const{
-	return -static_cast<const MGVector&>(*this);
+	return -m_vector;
 }
 
 // 自身のPositionから与えられたVectorを減算し自身のPositionとする
 MGPosition& MGPosition::operator-= (const MGVector& vec){
-	static_cast<MGVector&>(*this) -= vec;
+	m_vector -= vec;
 	return *this;
 }
 
 // Scalarの乗算を行い自身のPositionとする
 MGPosition& MGPosition::operator*= (double a){
-	static_cast<MGVector&>(*this)*=a;
-	return *this;
-}
-
-// MatrixによるPositionの変換を行い自身のPositionとする
-MGPosition& MGPosition::operator*= (const MGMatrix& mat){
-	static_cast<MGVector&>(*this) *= mat;
-	return *this;
-}
-
-// PositionのTransformを行いVectorを生成
-MGPosition operator*(const MGPosition& p1,const MGTransf& tr){
-	return p1*tr.affine()+tr.translation();
-}
-
-// PositionのTransformを行いPositionを生成して，
-// 自身のPositionとする
-MGPosition& MGPosition::operator*= (const MGTransf& tran){	
-	MGVector& V=static_cast<MGVector&>(*this);
-	V*= tran.affine();
-	V+= tran.translation();
+	m_vector*=a;
 	return *this;
 }
 
 // Scalar除算を行い自身のPositionとする
 MGPosition& MGPosition::operator/= (double a){
-	static_cast<MGVector&>(*this) /= a;
+	m_vector /= a;
 	return *this;
 }
 
 //Test if two vectors are equal.
 bool MGPosition::operator==(const MGPosition& p2)const {
-	return (*this - p2).is_zero_vector();
+	return (m_vector - p2.m_vector).is_zero_vector();
 }
 bool MGPosition::operator==(const MGVector& p2)const {
-	return (*this - p2).is_zero_vector();
+	return (m_vector - p2).is_zero_vector();
 }
 
 //Friend Function
@@ -130,4 +112,3 @@ bool is_collinear(
 	const MGPosition& P2,
 	const MGPosition& P3
 ){return P1.is_collinear(P2,P3);}
-

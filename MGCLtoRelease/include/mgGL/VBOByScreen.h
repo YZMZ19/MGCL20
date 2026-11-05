@@ -19,7 +19,7 @@ class MGPosition;
 ///(width, height). Here (x,y,width,height) are the values
 ///set by set_viewport(). 
 ///All of the coordinates are converted to the normalized device coordinate(NDC)
-///whose range is(-1,-1) to (1,1). Only z value given by the constructor or se_ZValue
+///whose range is(-1,-1) to (1,1). Only z value given by the constructor or set_ZValue
 ///is the NDC.
 class MG_DLL_DECLR mgVBOByScreen:public mgVBO{
 

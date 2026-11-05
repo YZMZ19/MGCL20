@@ -5,6 +5,7 @@
 // MGOpenGLView.cpp : インプリメンテーション ファイル
 //
 #include "StdAfx.h"
+//#include <chrono>
 #include "mg/Tolerance.h"
 #include "mg/Position.h"
 #include "mg/AttribedGel.h"
@@ -71,7 +72,7 @@ void MGOpenGLView::copy(const MGglViewAttrib& glatr){
 	setLookAtMat();
 
 	const MGVector& upV=glatr.view_up_vector();
-	MGVector XAxis=(upV*eye_position()).normalize();
+	MGVector XAxis=(upV*eye_position().vector()).normalize();
 	for(int i=0; i<3; i++){
 		m_XAxis_current[i]=(float)XAxis[i];
 		m_center_current[i]=(float)glatr.m_center[i];
@@ -97,6 +98,7 @@ void MGOpenGLView::drawScene(const MGPickObjects* pobjs){
 
 	mgGLSLProgram* glsl=mgGLSLProgram::getCurrentGLSLProgram();
 	glsl->setFuncType(mgGLSL::standard);
+	auto vm = viewMode();
 
 //1. Construction plane drawing
 	execDefaultStaticAttrib();
@@ -107,11 +109,17 @@ void MGOpenGLView::drawScene(const MGPickObjects* pobjs){
 //2. Target objects drawing
 	execDefaultStaticAttrib();
 	MGOpenGLView* gltarget= m_parent_glView ? m_parent_glView:this;
-	gltarget->m_display_list->draw(viewMode());
+	//auto start = std::chrono::high_resolution_clock::now();///////////////
+	gltarget->m_display_list->draw(vm);
+	/*auto end = std::chrono::high_resolution_clock::now();////////////////////////S
+	auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(end - start);/////////////
+	if ((vm == MGCL::SHADING || vm == MGCL::WIRE_AND_SHADING) &&    ////////////
+		dynamic_cast<MGGroup*>(gltarget->m_display_list->m_gel))   /////////////
+		std::cout << "MakeDisplay time=" << elapsed.count() << " micros" << std::endl;*/ ///////////////////////E
 
 //3. the system generated display drawing.
 	execDefaultStaticAttrib();
-	gltarget->m_sysgllist.draw_list(viewMode());
+	gltarget->m_sysgllist.draw_list(vm);
 
 //4.draw command specific pictures of parent OpenGLView.
 	drawCommandDrawer(gltarget->m_command_drawersCommon);
@@ -431,7 +439,7 @@ void MGOpenGLView::get_near_position(
 	unproject_to_sl_glv(sx,sy,sl);
 	std::unique_ptr<MGCurve> crv2(crv->clone());
 	const MGPosition rp=sl.root_point();
-	*crv2-=rp;
+	*crv2-=rp.vector();
 	MGMatrix mat; mat.set_axis(sl.direction(),2);
 	*crv2*=mat;
 	t=crv2->closest2D(MGDefault::origin_2D());

@@ -248,5 +248,13 @@ private:
 
 };
 
+///General transformation of the vector.
+MG_DLL_DECLR MGVector operator* (const MGVector& v, const MGTransf& tr);
+MG_DLL_DECLR MGVector& operator*= (MGVector& v, const MGTransf& tr);
+
+///General transformation of the position.
+MG_DLL_DECLR MGPosition operator*(const MGPosition& p, const MGTransf& tr);
+MG_DLL_DECLR MGPosition& operator*= (MGPosition& p, const MGTransf& tr);
+
 
 /** @} */ // end of BASE group

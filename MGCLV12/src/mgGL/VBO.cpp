@@ -571,7 +571,6 @@ mgGLSL::pushStaticGLAttrib();
 		}
 	}
 mgGLSL::popStaticGLAttrib();
-
 }
 
 ///draw()はmgVBOLeafが作成済み（not null)であれば作成処理を行わないが、
@@ -728,14 +727,8 @@ void mgVBO::setDirty(bool is_dirty, MGCL::DRAW_TARGET target)const{
 		m_elementsDirty=is_dirty;
 }
 
-///Function IDをセットする.
-///setFunctionID()はBegin()-End()の間でのみ有効。
-//void mgVBO::setFunctionID(int functionID){
-//	assert(is_InBegin());
-//	if(!is_InBegin())
-//		return;
-//	m_builder->setFunctionID(functionID);
-//}
+///DrawTypeをセットする.
+///setDrawType()はBegin()-End()の間でのみ有効。
 void mgVBO::setDrawType(mgGLSL::DrawType drawType){
 	assert(is_InBegin());
 	if(!is_InBegin())

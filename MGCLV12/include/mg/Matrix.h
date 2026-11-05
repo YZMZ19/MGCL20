@@ -301,18 +301,12 @@ MGMatrix multiply(const MGMatrix& m2) const;
 
 };
 
-/// マトリックスによるベクトルの変換を行いオブジェクトを生成
 ///Matrix transformation of the vector.
 MG_DLL_DECLR MGVector operator* (const MGVector& v, const MGMatrix& m);
+MG_DLL_DECLR MGVector& operator*= (MGVector& v, const MGMatrix& m);
 
 ///Matrix transformation of the position.
-inline
-MGPosition operator*(const MGPosition& p1, const MGMatrix& mat) {
-	return MGPosition(static_cast<const MGVector&>(p1) * mat);
-}
-
-/// マトリックスによるベクトルの変換を行い自身のベクトルとする
-///Matrix transformation of the vector.
-MG_DLL_DECLR MGVector& operator*= (MGVector& v, const MGMatrix& m);
+MG_DLL_DECLR MGPosition operator*(const MGPosition& p, const MGMatrix& mat);
+MG_DLL_DECLR MGPosition& operator*= (MGPosition& p, const MGMatrix&);
 
 /** @} */ // end of BASE group

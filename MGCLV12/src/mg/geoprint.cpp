@@ -616,6 +616,18 @@ ostream& operator<< (ostream& out, const MGVector& vec){
 	return out;
 }
 
+//////////// MGPosition ////////////
+ostream& operator<< (ostream& out, const MGPosition& p) {
+	int dim = p.sdim();
+	out << p.whoami() << "(";
+	for (int i = 0; i < dim; i++) {
+		out << p[i];
+		if (i < dim - 1) out << ",";
+	}
+	out << ")";
+	return out;
+}
+
 // MGINTERVAL_TYPEを標準出力に出力する。
 ostream & operator << (ostream & out, MGINTERVAL_TYPE rel){
 	const char* name[5]={

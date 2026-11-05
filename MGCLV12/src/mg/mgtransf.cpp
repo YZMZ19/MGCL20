@@ -348,3 +348,29 @@ bool MGTransf::operator== (const MGTransf& tran1) const{
 bool MGTransf::operator!= (const MGTransf& tran1) const{
          return !((*this)==tran1);
 }    
+
+// VectorのTransformを行いPositionを生成して自身のPositionとする
+MGVector& operator*= (MGVector& v, const MGTransf& tran) {
+	v *= tran.affine();
+	v += tran.translation();
+	return v	;
+}
+
+// PositionのTransformを行いVectorを生成
+MGVector operator*(const MGVector& v, const MGTransf& tr) {
+	return v * tr.affine() + tr.translation();
+}
+
+// PositionのTransformを行いPositionを生成して，
+// 自身のPositionとする
+MGPosition& operator*= (MGPosition& p, const MGTransf& tran) {
+	p.vector() *= tran.affine();
+	p.vector() += tran.translation();
+	return p;
+}
+
+// PositionのTransformを行いVectorを生成
+MGPosition operator*(const MGPosition& p, const MGTransf& tr) {
+	return p * tr.affine() + tr.translation();
+}
+

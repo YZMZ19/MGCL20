@@ -168,7 +168,7 @@ MGPoint& MGPoint::operator*=(const MGTransf& tr){
 // Constructor
 // Conversion Constructor from a point
 MGPosition::MGPosition(const MGPoint& point)
-:MGVector(point.position()) {
+:m_vector(point.position().vector()) {
 	;
 }
 

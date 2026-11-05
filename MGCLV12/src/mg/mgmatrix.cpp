@@ -747,6 +747,19 @@ MGVector& operator*= (MGVector& v,const MGMatrix& mat1){
 	return v;
 }
 
+// MatrixによるPositionの変換を行い自身のPositionとする
+MGPosition& operator*= (MGPosition& p, const MGMatrix& mat) {
+	p.vector() *= mat;
+	return p;
+}
+
+///Matrix transformation of the position.
+MGPosition operator*(const MGPosition& p, const MGMatrix& mat) {
+	MGPosition p2(p);
+	p2 *= mat;
+	return p2;
+}
+
 //  自身のMatrixと与えられたMatrixの乗算を行いオブジェクトを
 //  生成。
 MGMatrix MGMatrix::operator* (const MGMatrix& mat2) const{

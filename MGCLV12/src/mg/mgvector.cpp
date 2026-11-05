@@ -20,9 +20,9 @@ static char THIS_FILE[] = __FILE__;
 
 //void Constructor
 MGVector::MGVector(int dim)
-:m_sdim(dim),m_element(m_data),m_length(-1.){
+:m_sdim(dim),m_element(m_data)/*, m_length(-1.)*/ {
 	if(dim>3) m_element=new double[dim];
-	if(!dim) m_length=0.;
+	//if(!dim) m_length=0.;
 }
 
 MGVector::MGVector(std::initializer_list<double> data)
@@ -65,7 +65,7 @@ MGVector::MGVector(int dim, const double* v)
 //Construct a vector from a difference of two vectors.
 MGVector::MGVector(const MGVector& dvec,	//Destination point
 				   const MGVector& svec)	//Source point
-:m_sdim(0),m_element(m_data),m_length(-1.) {
+:m_sdim(0),m_element(m_data)/*,m_length(-1.)*/ {
 	int dimd=dvec.sdim(), dims=svec.sdim(), i;
 
 	if(dimd==dims){
@@ -80,14 +80,14 @@ MGVector::MGVector(const MGVector& dvec,	//Destination point
 		(*this) = dvec;
 		for(i=0; i<dims; i++) m_element[i] -=svec.m_element[i];
 	}
-	if(!sdim()) m_length=0.;
+	//if(!sdim()) m_length=0.;
 }
 		 
 //Construct Vector by copying old Vector, changing space dimension and
 //ordering of old coordinates.
 MGVector::MGVector(int dim, const MGVector& vec2,
 				   int start1, int start2)
-:m_sdim(dim),m_element(m_data),m_length(vec2.m_length) {
+:m_sdim(dim),m_element(m_data)/*,m_length(vec2.m_length)*/ {
 	if(m_sdim>3)
 		m_element=new double[dim];
 
@@ -104,7 +104,7 @@ MGVector::MGVector(int dim, const MGVector& vec2,
 		m_element[i++]=0.;
 		if(i>=dim) i=0;
 	}
-	if(dim<dim2) m_length=-1;
+	//if(dim<dim2) m_length=-1;
 }
 
 //Construct from std::vector<double>
@@ -115,7 +115,7 @@ MGVector::MGVector(const std::vector<double>& darrays)
 
 // Copy Constructor
 MGVector::MGVector(const MGVector& v)
-:m_sdim(v.m_sdim),m_length(v.m_length){
+:m_sdim(v.m_sdim)/*, m_length(v.m_length)*/ {
 	if(m_sdim>3) m_element=new double[m_sdim];
 	else m_element=m_data;
 	for(int i=0; i<m_sdim; i++) m_element[i]=v.m_element[i];
@@ -123,7 +123,7 @@ MGVector::MGVector(const MGVector& v)
 
 // Move Constructor
 MGVector::MGVector(MGVector&& v)noexcept
-	:m_sdim(v.m_sdim), m_length(v.m_length){
+	:m_sdim(v.m_sdim)/*, m_length(v.m_length)*/ {
 	if(m_sdim>3){
 		m_element=v.m_element;
 		v.m_element=nullptr;
@@ -135,10 +135,14 @@ MGVector::MGVector(MGVector&& v)noexcept
 	}
 }
 
+///<Conversion constructor from a position.	
+MGVector::MGVector(const MGPosition& P) :MGVector(P.vector()){
+}
+
 //Assignment
 MGVector& MGVector::operator =(const MGVector& v){
 	if(this==&v) return *this;
-	m_length=v.m_length;
+	//m_length=v.m_length;
 	int i,dim=v.m_sdim;
 	if(dim<=m_sdim){
 		if(dim<=3 && m_sdim>3){
@@ -175,14 +179,14 @@ MGVector& MGVector::operator =(MGVector&& v)noexcept {
 	}
 
 	m_sdim=dimNew;
-	m_length=v.m_length;
+	//m_length=v.m_length;
 	return *this;
 }
 
 //Access to i-th Inteval.
 double& MGVector::operator()(int i) { 
 	assert(i<sdim());
-	m_length=-1.;
+	//m_length=-1.;
 	return m_element[i];
 }
 
@@ -190,7 +194,7 @@ double& MGVector::operator()(int i) {
 //This space dimension's length data are copied from data*.
 MGVector& MGVector::operator=(const double* data){
 	for(int i=0; i<m_sdim; i++) m_element[i]=data[i];
-	m_length=-1.;
+	//m_length=-1.;
 	return *this;
 }
 
@@ -218,7 +222,7 @@ MGVector& MGVector::operator+= (const MGVector &vec2) {
 	int i;
 	if(dim1>=dim2){
 		for(i=0; i<dim2; i++) m_element[i] += vec2.m_element[i];
-		m_length=-1.;
+		//m_length=-1.;
 	}else{
 		for(i=0; i<dim1; i++) m_element[i] += vec2.m_element[i];
 		resize(dim2);
@@ -231,7 +235,7 @@ MGVector& MGVector::operator+= (const MGVector &vec2) {
 MGVector MGVector::operator- () const{
 	MGVector temp(m_sdim);
 	for(int i=0; i<m_sdim; i++) temp.m_element[i] = -m_element[i];
-	temp.m_length=m_length;
+	//temp.m_length=m_length;
 	return temp;
 }
 
@@ -259,7 +263,7 @@ MGVector& MGVector::operator-= (const MGVector &vec2) {
 	int i;
 	if(dim1>=dim2){
 		for(i=0; i<dim2; i++) m_element[i] -= vec2.m_element[i];
-		m_length=-1.;
+		//m_length=-1.;
 	}else{
 		for(i=0; i<dim1; i++) m_element[i] -= vec2.m_element[i];
 		resize(dim2);
@@ -274,14 +278,14 @@ MGVector operator*(const MGVector& vec1,double scale){
 	MGVector new_vec(sd);
 	for(int i=0; i<sd; i++)
 		new_vec.m_element[i]=vec1.m_element[i]*scale;
-	new_vec.m_length=fabs(scale)*vec1.m_length;
+	//new_vec.m_length=fabs(scale)*vec1.m_length;
 	return new_vec;//RVO
 }
 
 ///Scalar multiplication.
 MGVector& MGVector::operator*= (double scale){
 	for(int i=0; i<m_sdim; i++) m_element[i] *= scale;
-	if(m_length>=0.) m_length*=fabs(scale);
+	//if(m_length>=0.) m_length*=fabs(scale);
 	return *this;
 }
 
@@ -301,7 +305,7 @@ MGVector& MGVector::operator*= (const MGVector &vec2){
 		d1=vec2.ref(0)*ref(2) - vec2.ref(2)*ref(0);
 	    d2=vec2.ref(1)*ref(0) - vec2.ref(0)*ref(1);
 		m_element[0]=d0; m_element[1]=d1; m_element[2]=d2;
-		m_sdim=3; m_length=-1;
+		m_sdim=3; //m_length=-1;
 		return *this;
 	} else {
 		//When dim>3, find three id of this and vec2 that construct
@@ -333,7 +337,7 @@ MGVector& MGVector::operator*= (const MGVector &vec2){
 		double v1v2stheta=len()*vec2.len()*sa;
 		double vlen=sqrt(dmaxs);
 		if(m_sdim>3) delete[] m_element;
-		m_sdim=k1+1; m_length=-1.;
+		m_sdim=k1+1; //m_length=-1.;
 		if(m_sdim<=3) m_element=m_data; else m_element=new double[m_sdim];
 		for(i=0; i<m_sdim; i++) m_element[i]=0.;
 		if(MGMZero(vlen)){
@@ -364,15 +368,15 @@ MGVector operator/(const MGVector& vec1,double scale){
 	MGVector new_vec(sd);
 	for(int i=0; i<sd; i++)
 		new_vec.m_element[i] = vec1.m_element[i]/scale;
-	if(vec1.m_length>0.)
-		new_vec.m_length=vec1.m_length/fabs(scale);
+	/*if (vec1.m_length>0.)
+		new_vec.m_length=vec1.m_length/fabs(scale);*/
 	return new_vec;//RVO
 }
 
 ///Scalar division.
 MGVector& MGVector::operator/= (double scalar){
 	for(int i=0; i<m_sdim; i++) m_element[i] /= scalar;
-	if(m_length>0.) m_length/=fabs(scalar);
+	//if(m_length>0.) m_length/=fabs(scalar);
 	return *this;
 }
 
@@ -452,7 +456,7 @@ double MGVector::cangle ( const MGVector & vec2 ) const {
 //Clear all the elements by the value init.
 MGVector& MGVector::clear(double init){
 	for(int i=0; i<m_sdim; i++) m_element[i]=init;
-	m_length=-1.;
+	//m_length=-1.;
 	return *this;
 }
 
@@ -552,15 +556,16 @@ bool MGVector::is_collinear(
 ///Return vector length.
 double MGVector::len() const {
 	//std::lock_guard<std::mutex> g(m);//For thread safety
-	if(m_length < 0.){
+	//if(m_length < 0.){
 		double a=0., b;
 		for(int i=0; i<m_sdim; i++){
 			b=m_element[i];
 			a+=(b*b);
 		}
-		m_length=sqrt(a);
-	}
-	return m_length;
+		return sqrt(a);
+		//m_length=sqrt(a);
+	//}
+	//return m_length;
 }
 
 ///Generate unit vector from the vector.
@@ -677,7 +682,7 @@ void MGVector::resize(int new_sdim){
 			m_element=data;
 		}
 	}
-	m_sdim=new_sdim; m_length=-1.;
+	m_sdim=new_sdim; //m_length=-1.;
 }
 
 ///Compute angle in sine of two vectors.
@@ -721,7 +726,7 @@ void MGVector::set_null(){
 	if(m_sdim>3) delete[] m_element;
 	m_element=m_data;
 	m_sdim=0;
-	m_length=-1;
+	//m_length=-1;
 }
 
 //Change this to a unit vector.
@@ -738,7 +743,7 @@ void MGVector::set_unit(){
 			for(i=0; i<m_sdim; i++) m_element[i]=m_element[i]/length;
 		}
 	}
-	m_length = 1.;
+	//m_length = 1.;
 }
 
 //Store vec2 data into *this.
@@ -764,7 +769,7 @@ void MGVector::store_at(
 		if(i>=n1) i=0; if(j>=n2) j=0;
 		m_element[i++]=vec2.ref(j++);
 	}
-	m_length=-1.;
+	//m_length=-1.;
 }
 
 //swap the coordinates.

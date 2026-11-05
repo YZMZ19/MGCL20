@@ -454,8 +454,8 @@ void MGLBRep::buildByMixing2DLBRep(
 				brep2.on(b2,s2); p2=brep2.eval(s2);
 				diff=(p2-b2).len();
 				if(diff>error){		//brep2 differs from line, add point.
-					G.set(cod11)=p1.ref(0); G.set(cod12)=p1.ref(1);
-					G.set(coordinate1)=p2.ref(com21);
+					G(cod11)=p1.ref(0); G(cod12)=p1.ref(1);
+					G(coordinate1)=p2.ref(com21);
 					bp.insert_at(i+1,G); tau.add_data(tmid);
 					i+=1; n+=1; added+=1;
 				}

@@ -24,12 +24,11 @@ class MGSSisect;
 ///MGPosition_list is used to store curve or surface parameter as
 ///two objects intersection data.
 class MG_DLL_DECLR MGPosition_list{
-//We cannot use inheritance of std::list<MYELM> to make DLL.
+//We cannot use inheritance of std::list<MGPosition> to make DLL.
 
 public:
 
-	using MYELM = MGPosition;
-	using MYLIST = std::list<MYELM>;
+	using MYLIST = std::list<MGPosition>;
 
 	typedef MYLIST::reference              reference;
 	typedef MYLIST::const_reference        const_reference;
@@ -58,22 +57,22 @@ public:
 	void emplace_back(Args&&... args) { m_list.emplace_back(std::forward<Args>(args)...); };
 	iterator erase(iterator x) { return m_list.erase(x); };
 	iterator erase(iterator first, iterator last) { return m_list.erase(first, last); };
-	const MYELM& front() const { return m_list.front(); };
-	MYELM& front() { return m_list.front(); };
-	const MYELM& back() const { return m_list.back(); };
-	MYELM& back() { return m_list.back(); };
-	iterator insert(const_iterator it, const MYELM& x) { return m_list.insert(it, x); };
-	iterator insert(iterator it, MYELM&& x) { return m_list.insert(it, std::move(x)); };
+	const MGPosition& front() const { return m_list.front(); };
+	MGPosition& front() { return m_list.front(); };
+	const MGPosition& back() const { return m_list.back(); };
+	MGPosition& back() { return m_list.back(); };
+	iterator insert(const_iterator it, const MGPosition& x) { return m_list.insert(it, x); };
+	iterator insert(iterator it, MGPosition&& x) { return m_list.insert(it, std::move(x)); };
 	template <class InputIterator>
 	iterator insert(const_iterator it, InputIterator first, InputIterator last) {
 		return m_list.insert(it, first, last);
 	};
 	void pop_back() { m_list.pop_back(); };
 	void pop_front() { m_list.pop_front(); };
-	void push_back(const MYELM& x) { m_list.push_back(x); };
-	void push_front(const MYELM& x) { m_list.push_front(x); };
-	void push_back(MYELM&& x) { m_list.push_back(std::move(x)); };
-	void push_front(MYELM&& x) { m_list.push_front(std::move(x)); };
+	void push_back(const MGPosition& x) { m_list.push_back(x); };
+	void push_front(const MGPosition& x) { m_list.push_front(x); };
+	void push_back(MGPosition&& x) { m_list.push_back(std::move(x)); };
+	void push_front(MGPosition&& x) { m_list.push_front(std::move(x)); };
 	size_t size() const { return m_list.size(); };
 	void sort() { m_list.sort(); };
 

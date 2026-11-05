@@ -24,6 +24,7 @@ class MGIgesOfstream;
 
 ///Vector of a general n space dimension.
 class MG_DLL_DECLR MGVector {
+	friend class MGPosition;
 private:
 	//mutable std::mutex m;
 
@@ -32,7 +33,7 @@ protected:
 	int m_sdim;
 	double* m_element;///< data pointe, m_data when m_sdim<=3.
 	double m_data[3]={0.,0.,0.};///<For vector data of space dimension less or equal to 3.
-	mutable double m_length;///<To hold vector length if computed.
+	//mutable double m_length;///<To hold vector length if computed.
 						///<When length not computed, negative value will be set.
 
 public:
@@ -76,6 +77,7 @@ MG_DLL_DECLR friend double MGDeterminant(
 explicit MGVector(int sdim=0);
 ~MGVector(){if(m_sdim>3) delete[] m_element;}
 MGVector(const MGVector&);///Copy constructor.
+MGVector(const MGPosition& P);///conversion constructor.
 MGVector& operator= (const MGVector&);///Copy assignment.
 MGVector(MGVector&&)noexcept;		///Move constructor.
 MGVector& operator= (MGVector&&)noexcept;///Move assignment.
@@ -122,11 +124,16 @@ MGVector(
 ///Construct from std::vector<double>
 MGVector(const std::vector<double>& darrays);
 
-///Return i-th element of the vector.
-double operator() (int i) const{return ref(i);}  
+///Reference to i-th element.
+double ref(int i) const {
+	return (i< sdim()) ? m_element[i] : 0.;
+}
 
 ///Return i-th element of the vector.
-double operator[] (int i) const{return ref(i);}  
+double operator() (int i) const { return ref(i); };
+
+///Return i-th element of the vector.
+double operator[] (int i) const { return ref(i); };
 
 ///Access to i-th Inteval.
 ///This is left hand side value operator. If only regference is needed,
@@ -305,12 +312,6 @@ double parallelism(const MGVector& v2) const;
 /// Project this vector onto v2. When v2 is zero vector, return *this.
 MGVector project(const MGVector& v2) const;
 
-///Reference to i-th element.
-double ref(int i) const{ 
-	if(i<sdim()) return m_element[i];
-	else         return 0.;
-}
-
 ///Resize the vector, that is , change space dimension.
 ///When this is enlarged, the extra space will contain garbages.
 void resize(int new_sdim);
@@ -348,16 +349,16 @@ void store_at(
 void swap(int i, int j);
 
 ///Calculate dump size
-virtual int dump_size() const;
+int dump_size() const;
 
 ///Dump Function
-virtual int dump(MGOfstream& ) const;
+int dump(MGOfstream& ) const;
 
 ///Restore Function
-virtual int restore(MGIfstream& );
+int restore(MGIfstream& );
 
 ///Get the name of the class.
-virtual std::string whoami()const { return "V"; };
+std::string whoami()const { return "V"; };
 
 protected:
 	///Set data at element i.

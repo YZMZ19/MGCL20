@@ -139,7 +139,7 @@ MGVector evaluate(
 	const int* nderiv=0	///<Order of derivative of i-th parameter
 				///<in nderiv[i],
 				///<When nderiv=null, nderiv[i]=0 is assumed for all i.
-)const{return m_point;}
+)const{return m_point.vector();}
 
 /// Return This object's typeID
 long identify_type()const;
